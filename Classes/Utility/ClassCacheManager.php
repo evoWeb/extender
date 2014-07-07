@@ -1,27 +1,19 @@
 <?php
 namespace Evoweb\Extender\Utility;
-/***************************************************************
- *  Copyright notice
+/**
+ * (c) 2014 Sebastian Fischer <typo3@evoweb.de>
  *
- *  (c) 2014 Sebastian Fischer <typo3@evoweb.de>
- *  All rights reserved
+ * This file is part of the TYPO3 CMS project.
  *
- *  This script is part of the TYPO3 project. The TYPO3 project is
- *  free software; you can redistribute it and/or modify
- *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2 of the License, or
- *  (at your option) any later version.
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
  *
- *  The GNU General Public License can be found at
- *  http://www.gnu.org/copyleft/gpl.html.
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
  *
- *  This script is distributed in the hope that it will be useful,
- *  but WITHOUT ANY WARRANTY; without even the implied warranty of
- *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- *  GNU General Public License for more details.
- *
- *  This copyright notice MUST APPEAR in all copies of the script!
- ***************************************************************/
+ * The TYPO3 project - inspiring people to share!
+ */
 
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -48,6 +40,8 @@ class ClassCacheManager {
 	 * Rebuild the class cache
 	 *
 	 * @param array $parameters
+	 * @throws \Evoweb\Extender\Exception\FileNotFoundException
+	 * @throws \TYPO3\CMS\Core\Cache\Exception\InvalidDataException
 	 * @return void
 	 */
 	public function reBuild(array $parameters = array()) {
@@ -70,11 +64,11 @@ class ClassCacheManager {
 					// Get the file from sf_register itself, this needs to be loaded as first
 					$path = ExtensionManagementUtility::extPath($extensionKey) . 'Classes/' . $key . '.php';
 					if (!is_file($path)) {
-						throw new \Exception('given file "' . $path . '" does not exist');
+						throw new \Evoweb\Extender\Exception\FileNotFoundException('given file "' . $path . '" does not exist');
 					}
 					$code = $this->parseSingleFile($path, FALSE);
 
-					// Get the files from all other extensions that are extending this domain model class
+					// Get the files from all other extensions that are extending this domain model
 					if (is_array($entityConfiguration)) {
 						foreach ($entityConfiguration as $extendingExtension => $extendingFilepath) {
 							$path = GeneralUtility::getFileAbsFileName($extendingFilepath, FALSE);
