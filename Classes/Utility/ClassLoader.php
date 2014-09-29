@@ -76,7 +76,7 @@ class ClassLoader extends Core\ClassLoader {
 		$classCache = self::initializeCache();
 		if (!$classCache->has($cacheEntryIdentifier)) {
 			/** @var \Evoweb\Extender\Utility\ClassCacheManager $classCacheManager */
-			$classCacheManager = GeneralUtility::makeInstance('ClassCacheManager');
+			$classCacheManager = GeneralUtility::makeInstance('Evoweb\\Extender\\Utility\\ClassCacheManager');
 			$classCacheManager->reBuild();
 		}
 		$classCache->requireOnce($cacheEntryIdentifier);
