@@ -1,0 +1,31 @@
+{
+	"name": "evoweb/extender",
+	"type": "typo3-cms-framework",
+	"description": "Extending extbase domain models like a pro with extender",
+	"support" : {
+		"issues" : "https://forge.typo3.org/projects/extension-extender/issues"
+	},
+	"homepage": "http://www.evoweb.de",
+	"license": ["GPL-2.0+"],
+	"version": "6.2.2",
+	"keywords": [
+		"TYPO3 CMS",
+		"extbase",
+		"extending"
+	],
+
+	"autoload": {
+		"psr-4": {
+			"Evoweb\\Extender\\": "Classes/"
+		}
+	},
+	"require": {
+		"typo3/cms-core": "*"
+	},
+	"repositories": [
+		{
+			"type": "vcs",
+			"url": "https://git.typo3.org/TYPO3CMS/Extensions/extender.git"
+		}
+	]
+}
