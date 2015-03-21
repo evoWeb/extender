@@ -30,11 +30,9 @@ class ClassLoader extends Core\ClassLoader {
 	public static function registerAutoloader() {
 		/** @var \TYPO3\CMS\Core\Core\Bootstrap $bootstrap */
 		$bootstrap = Core\Bootstrap::getInstance();
-		/** @var \TYPO3\CMS\Core\Core\ClassAliasMap $classAliasMap */
-		$classAliasMap = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Core\\ClassAliasMap');
 
 		$classLoader = new self($bootstrap->getApplicationContext());
-		$classLoader->injectClassAliasMap($classAliasMap);
+		$classLoader->injectClassAliasMap($bootstrap->getEarlyInstance('TYPO3\\CMS\\Core\\Core\\ClassAliasMap'));
 
 		spl_autoload_register(array($classLoader, 'loadClass'), TRUE, TRUE);
 	}
