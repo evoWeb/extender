@@ -6,7 +6,7 @@ $EM_CONF[$_EXTKEY] = array(
 	'description' => '',
 	'category' => 'misc',
 	'shy' => 0,
-	'version' => '6.2.4',
+	'version' => '6.3.0',
 	'dependencies' => '',
 	'conflicts' => '',
 	'priority' => 'bottom',
@@ -21,13 +21,9 @@ $EM_CONF[$_EXTKEY] = array(
 	'author' => 'Sebastian Fischer',
 	'author_email' => 'typo3@evoweb.de',
 	'author_company' => 'evoweb',
-	'CGLcompliance' => '',
-	'CGLcompliance_note' => '',
 	'constraints' => array(
 		'depends' => array(
 			'typo3' => '6.2.0-6.2.99',
-			'extbase' => '6.2.0-6.2.99',
-			'fluid' => '6.2.0-6.2.99',
 		),
 		'conflicts' => array(
 		),

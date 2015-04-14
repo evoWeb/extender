@@ -33,7 +33,9 @@ class ClassCacheManager {
 	 * @return self
 	 */
 	public function __construct() {
-		$this->cacheInstance = ClassLoader::initializeCache();
+		/** @var \Evoweb\Extender\Utility\ClassLoader $classLoader */
+		$classLoader = GeneralUtility::makeInstance('Evoweb\\Extender\\Utility\\ClassLoader');
+		$this->cacheInstance = $classLoader->initializeCache();
 	}
 
 	/**
