@@ -19,5 +19,6 @@ namespace Evoweb\Extender\Exception;
  *
  * @author Sebastian Fischer <typo3@evoweb.de>
  */
-class FileNotFoundException extends \RuntimeException {
+class FileNotFoundException extends \RuntimeException
+{
 }
