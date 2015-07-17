@@ -1,9 +1,7 @@
 <?php
 namespace Evoweb\Extender\Exception;
 
-/**
- * (c) 2014 Sebastian Fischer <typo3@evoweb.de>
- *
+/*
  * This file is part of the TYPO3 CMS project.
  *
  * It is free software; you can redistribute it and/or modify it under
@@ -18,6 +16,8 @@ namespace Evoweb\Extender\Exception;
 
 /**
  * A file not found exception
+ *
+ * @author Sebastian Fischer <typo3@evoweb.de>
  */
 class FileNotFoundException extends \RuntimeException {
 }
