@@ -1,6 +1,6 @@
 {
 	"name": "evoweb/extender",
-	"type": "typo3-cms-framework",
+	"type": "typo3-cms-extension",
 	"description": "Extending extbase domain models like a pro with extender",
 	"support" : {
 		"issues" : "https://forge.typo3.org/projects/extension-extender/issues"
