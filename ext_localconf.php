@@ -20,4 +20,4 @@ $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['extender']
 
 // Configure clear cache post processing for extended domain model
 $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['clearCachePostProc'][] =
-    'EXT:extender/Classes/Utility/ClassCacheManager.php:\Evoweb\Extender\Utility\ClassCacheManager->reBuild';
+    'EXT:extender/Classes/Utility/ClassCacheManager.php:Evoweb\Extender\Utility\ClassCacheManager->reBuild';
