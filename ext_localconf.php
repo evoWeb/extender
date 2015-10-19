@@ -15,6 +15,7 @@ $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['extender']
     ),
 );
 
+
 \Evoweb\Extender\Utility\ClassLoader::registerAutoloader();
 
 
