@@ -69,7 +69,7 @@ class ClassCacheManager
                 foreach ($extensionConfiguration['extender'] as $entity => $entityConfiguration) {
                     $key = 'Domain/Model/' . $entity;
 
-                    // Get the file from sf_register itself, this needs to be loaded as first
+                    // Get the file to extend, this needs to be loaded as first
                     $path = ExtensionManagementUtility::extPath($extensionKey) . 'Classes/' . $key . '.php';
                     if (!is_file($path)) {
                         throw new \Evoweb\Extender\Exception\FileNotFoundException(
@@ -177,8 +177,8 @@ class ClassCacheManager
     protected function getPartialInfo($filePath)
     {
         return '/' . str_repeat('*', 71) . '
- * this is partial from: ' . $filePath . LF . str_repeat('*', 71) . '/
-	';
+ * this is partial from: ' . str_replace(PATH_site, '', $filePath) . LF . str_repeat('*', 71) . '/
+    ';
     }
 
     /**
