@@ -14,6 +14,7 @@ namespace Evoweb\Extender\Utility;
  * The TYPO3 project - inspiring people to share!
  */
 
+use TYPO3\CMS\Core\Core\Bootstrap;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -32,15 +33,19 @@ class ClassCacheManager
     protected $cacheInstance;
 
     /**
+     * @var \Composer\Autoload\ClassLoader
+     */
+    protected $composerClassLoader;
+
+    /**
      * Constructor
-     *
-     * @return self
      */
     public function __construct()
     {
         /** @var \Evoweb\Extender\Utility\ClassLoader $classLoader */
-        $classLoader = GeneralUtility::makeInstance('Evoweb\\Extender\\Utility\\ClassLoader');
+        $classLoader = GeneralUtility::makeInstance(\Evoweb\Extender\Utility\ClassLoader::class);
         $this->cacheInstance = $classLoader->initializeCache();
+        $this->composerClassLoader = Bootstrap::getInstance()->getEarlyInstance(\Composer\Autoload\ClassLoader::class);
     }
 
     /**
@@ -67,10 +72,8 @@ class ClassCacheManager
                 }
 
                 foreach ($extensionConfiguration['extender'] as $entity => $entityConfiguration) {
-                    $key = 'Domain/Model/' . $entity;
-
                     // Get the file to extend, this needs to be loaded as first
-                    $path = ExtensionManagementUtility::extPath($extensionKey) . 'Classes/' . $key . '.php';
+                    $path = $this->composerClassLoader->findFile($entity);
                     if (!is_file($path)) {
                         throw new \Evoweb\Extender\Exception\FileNotFoundException(
                             'given file "' . $path . '" does not exist'
@@ -84,7 +87,7 @@ class ClassCacheManager
                             $path = GeneralUtility::getFileAbsFileName($extendingFilepath, false);
                             if (!is_file($path) && !is_numeric($extendingExtension)) {
                                 $path = ExtensionManagementUtility::extPath($extendingExtension) .
-                                    'Classes/' . $key . '.php';
+                                    'Classes/Extending/' . $extendingFilepath . '.php';
                             }
                             $code .= $this->parseSingleFile($path);
                         }
@@ -95,7 +98,7 @@ class ClassCacheManager
 
                     // Add the new file to the class cache
                     $cacheEntryIdentifier = GeneralUtility::underscoredToLowerCamelCase($extensionKey) . '_' .
-                        str_replace('/', '', $key);
+                        str_replace('\\', '_', $entity);
                     $this->cacheInstance->set($cacheEntryIdentifier, $code);
                 }
             }

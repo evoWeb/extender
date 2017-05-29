@@ -3,20 +3,22 @@ defined('TYPO3_MODE') or die();
 
 
 // Register extender cache
-$GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['extender'] = array(
-    'frontend' => 'TYPO3\\CMS\\Core\\Cache\\Frontend\\PhpFrontend',
-    'backend' => 'TYPO3\\CMS\\Core\\Cache\\Backend\\FileBackend',
-    'groups' => array(
+$GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['extender'] = [
+    'frontend' => \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend::class,
+    'backend' => \TYPO3\CMS\Core\Cache\Backend\FileBackend::class,
+    'groups' => [
         'all',
         'system',
-    ),
-    'options' => array(
+    ],
+    'options' => [
         'defaultLifetime' => 0,
-    ),
-);
+    ],
+];
 
 
-\Evoweb\Extender\Utility\ClassLoader::registerAutoloader();
+if (class_exists(\Evoweb\Extender\Utility\ClassLoader::class)) {
+    \Evoweb\Extender\Utility\ClassLoader::registerAutoloader();
+}
 
 
 // Configure clear cache post processing for extended domain model

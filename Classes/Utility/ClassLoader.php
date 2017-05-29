@@ -15,7 +15,6 @@ namespace Evoweb\Extender\Utility;
  */
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
-use TYPO3\CMS\Core\Core;
 
 /**
  * Class ClassLoader
@@ -54,8 +53,12 @@ class ClassLoader implements \TYPO3\CMS\Core\SingletonInterface
              *
              * @var \TYPO3\CMS\Core\Cache\CacheManager $cacheManager
              */
-            $cacheManager = GeneralUtility::makeInstance('TYPO3\\CMS\\Core\\Cache\\CacheManager');
-            $this->cacheInstance = $cacheManager->getCache('extender');
+            $cacheManager = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Cache\CacheManager::class);
+            if ($cacheManager->hasCache('extender')) {
+                $this->cacheInstance = $cacheManager->getCache('extender');
+            } else {
+                $this->cacheInstance = false;
+            }
         }
 
         return $this->cacheInstance;
@@ -72,31 +75,31 @@ class ClassLoader implements \TYPO3\CMS\Core\SingletonInterface
     public function loadClass($className)
     {
         $className = ltrim($className, '\\');
-
         $extensionKey = $this->getExtensionKey($className);
-        $classNameParts = GeneralUtility::trimExplode('\\', $className);
-        $entityKey = array_pop($classNameParts);
 
-        if (!$this->isValidClassName($className, $extensionKey, $entityKey)) {
+        if (!$this->isValidClassName($className, $extensionKey)) {
             return false;
         }
 
         $cacheEntryIdentifier = GeneralUtility::underscoredToLowerCamelCase($extensionKey) . '_' .
-            str_replace('/', '', 'Domain/Model/' . $entityKey);
+            str_replace('\\', '_', $className);
 
         $classCache = $this->initializeCache();
-        if (!$classCache->has($cacheEntryIdentifier)) {
-            /**
-             * Class cache manager
-             *
-             * @var \Evoweb\Extender\Utility\ClassCacheManager $classCacheManager
-             */
-            $classCacheManager = GeneralUtility::makeInstance('Evoweb\\Extender\\Utility\\ClassCacheManager');
-            $classCacheManager->reBuild();
+        if ($classCache) {
+            if (!$classCache->has($cacheEntryIdentifier)) {
+                /**
+                 * Class cache manager
+                 *
+                 * @var \Evoweb\Extender\Utility\ClassCacheManager $classCacheManager
+                 */
+                $classCacheManager = GeneralUtility::makeInstance(\Evoweb\Extender\Utility\ClassCacheManager::class);
+                $classCacheManager->reBuild();
+            }
+            $classCache->requireOnce($cacheEntryIdentifier);
+            return true;
         }
-        $classCache->requireOnce($cacheEntryIdentifier);
 
-        return true;
+        return false;
     }
 
     /**
@@ -129,13 +132,12 @@ class ClassLoader implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @param string $className Class name
      * @param string $extensionKey Extension key
-     * @param string $entityKey Entity key
      *
      * @return bool
      */
-    protected function isValidClassName($className, $extensionKey, $entityKey)
+    protected function isValidClassName($className, $extensionKey)
     {
-        $oldClassnamePart = substr(strtolower($className), 0, 3);
+        $oldClassnamePart = substr(strtolower($className), 0, 5);
 
         $extensionConfiguration = array();
         if (isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$extensionKey])) {
@@ -151,7 +153,7 @@ class ClassLoader implements \TYPO3\CMS\Core\SingletonInterface
             && (
                 isset($extensionConfiguration['extender'])
                 && is_array($extensionConfiguration['extender'])
-                && isset($extensionConfiguration['extender'][$entityKey])
+                && isset($extensionConfiguration['extender'][$className])
             );
     }
 }
