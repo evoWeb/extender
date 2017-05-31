@@ -31,6 +31,15 @@ class ClassLoader implements \TYPO3\CMS\Core\SingletonInterface
     protected $cacheInstance;
 
     /**
+     * Known classnames that cause problems and can not be extended
+     *
+     * @var array
+     */
+    protected $excludedClassNames = [
+        'Symfony\Polyfill\Mbstring\Mbstring'
+    ];
+
+    /**
      * Register instance of this class as spl autoloader
      *
      * @return void
@@ -54,11 +63,9 @@ class ClassLoader implements \TYPO3\CMS\Core\SingletonInterface
              * @var \TYPO3\CMS\Core\Cache\CacheManager $cacheManager
              */
             $cacheManager = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Cache\CacheManager::class);
-            if ($cacheManager->hasCache('extender')) {
-                $this->cacheInstance = $cacheManager->getCache('extender');
-            } else {
-                $this->cacheInstance = false;
-            }
+            // Set configuration in case some cache settings are not loaded by now.
+            $cacheManager->setCacheConfigurations($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']);
+            $this->cacheInstance = $cacheManager->getCache('extender');
         }
 
         return $this->cacheInstance;
@@ -75,6 +82,11 @@ class ClassLoader implements \TYPO3\CMS\Core\SingletonInterface
     public function loadClass($className)
     {
         $className = ltrim($className, '\\');
+
+        if ($this->isExcludedClassName($className)) {
+            return false;
+        }
+
         $extensionKey = $this->getExtensionKey($className);
 
         if (!$this->isValidClassName($className, $extensionKey)) {
@@ -100,6 +112,22 @@ class ClassLoader implements \TYPO3\CMS\Core\SingletonInterface
         }
 
         return false;
+    }
+
+    /**
+     * @param string $className
+     *
+     * @return bool
+     */
+    protected function isExcludedClassName($className)
+    {
+        $result = false;
+
+        if (in_array($className, $this->excludedClassNames)) {
+            $result = true;
+        }
+
+        return $result;
     }
 
     /**
