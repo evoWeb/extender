@@ -3,6 +3,7 @@ defined('TYPO3_MODE') or die();
 
 
 // Register extender cache
+// needs to stay above registerAutoloader to always have settings before using the cache
 $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['extender'] = [
     'frontend' => \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend::class,
     'backend' => \TYPO3\CMS\Core\Cache\Backend\FileBackend::class,
