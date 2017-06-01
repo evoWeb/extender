@@ -60,7 +60,6 @@ class ClassLoader implements \TYPO3\CMS\Core\SingletonInterface
         spl_autoload_register(array(new self($cache), 'loadClass'), true, true);
     }
 
-
     /**
      * ClassLoader constructor.
      *
