@@ -116,7 +116,7 @@ class ClassCacheManager
      * @return string path of the saved file
      * @throws \InvalidArgumentException
      */
-    public function parseSingleFile($filePath, $removeClassDefinition = true)
+    protected function parseSingleFile($filePath, $removeClassDefinition = true)
     {
         if (!is_file($filePath)) {
             throw new \InvalidArgumentException(sprintf('File "%s" could not be found', $filePath));
