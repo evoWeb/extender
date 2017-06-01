@@ -14,7 +14,6 @@ namespace Evoweb\Extender\Utility;
  * The TYPO3 project - inspiring people to share!
  */
 
-use TYPO3\CMS\Core\Core\Bootstrap;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -30,7 +29,7 @@ class ClassCacheManager
      *
      * @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend
      */
-    protected $cacheInstance;
+    protected $classCache;
 
     /**
      * @var \Composer\Autoload\ClassLoader
@@ -39,13 +38,15 @@ class ClassCacheManager
 
     /**
      * Constructor
+     *
+     * @param \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $classCache
      */
-    public function __construct()
+    public function __construct($classCache)
     {
-        /** @var \Evoweb\Extender\Utility\ClassLoader $classLoader */
-        $classLoader = GeneralUtility::makeInstance(\Evoweb\Extender\Utility\ClassLoader::class);
-        $this->cacheInstance = $classLoader->initializeCache();
-        $this->composerClassLoader = Bootstrap::getInstance()->getEarlyInstance(\Composer\Autoload\ClassLoader::class);
+        $this->classCache = $classCache;
+        $this->composerClassLoader = \TYPO3\CMS\Core\Core\Bootstrap::getInstance()->getEarlyInstance(
+            \Composer\Autoload\ClassLoader::class
+        );
     }
 
     /**
@@ -99,7 +100,7 @@ class ClassCacheManager
                     // Add the new file to the class cache
                     $cacheEntryIdentifier = GeneralUtility::underscoredToLowerCamelCase($extensionKey) . '_' .
                         str_replace('\\', '_', $entity);
-                    $this->cacheInstance->set($cacheEntryIdentifier, $code);
+                    $this->classCache->set($cacheEntryIdentifier, $code);
                 }
             }
         }

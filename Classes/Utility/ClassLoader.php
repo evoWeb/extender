@@ -24,11 +24,11 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class ClassLoader implements \TYPO3\CMS\Core\SingletonInterface
 {
     /**
-     * Cache instance
+     * Class cache instance
      *
      * @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend
      */
-    protected $cacheInstance;
+    protected $classCache;
 
     /**
      * Known classnames that cause problems and can not be extended
@@ -46,29 +46,37 @@ class ClassLoader implements \TYPO3\CMS\Core\SingletonInterface
      */
     public static function registerAutoloader()
     {
-        spl_autoload_register(array(new self(), 'loadClass'), true, true);
+        /**
+         * Cache manager
+         *
+         * @var \TYPO3\CMS\Core\Cache\CacheManager $cacheManager
+         */
+        $cacheManager = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Cache\CacheManager::class);
+        // Set configuration in case some cache settings are not loaded by now.
+        $cacheManager->setCacheConfigurations($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']);
+        /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cache */
+        $cache = $cacheManager->getCache('extender');
+
+        spl_autoload_register(array(new self($cache), 'loadClass'), true, true);
+    }
+
+
+    /**
+     * ClassLoader constructor.
+     *
+     * @param \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $classCache
+     */
+    public function __construct($classCache)
+    {
+        $this->classCache = $classCache;
     }
 
     /**
-     * Initialize cache
-     *
      * @return \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend
      */
-    public function initializeCache()
+    public function getClassCache()
     {
-        if (is_null($this->cacheInstance)) {
-            /**
-             * Cache manager
-             *
-             * @var \TYPO3\CMS\Core\Cache\CacheManager $cacheManager
-             */
-            $cacheManager = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Cache\CacheManager::class);
-            // Set configuration in case some cache settings are not loaded by now.
-            $cacheManager->setCacheConfigurations($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']);
-            $this->cacheInstance = $cacheManager->getCache('extender');
-        }
-
-        return $this->cacheInstance;
+        return $this->classCache;
     }
 
     /**
@@ -96,18 +104,20 @@ class ClassLoader implements \TYPO3\CMS\Core\SingletonInterface
         $cacheEntryIdentifier = GeneralUtility::underscoredToLowerCamelCase($extensionKey) . '_' .
             str_replace('\\', '_', $className);
 
-        $classCache = $this->initializeCache();
-        if ($classCache) {
-            if (!$classCache->has($cacheEntryIdentifier)) {
+        if ($this->classCache) {
+            if (!$this->classCache->has($cacheEntryIdentifier)) {
                 /**
                  * Class cache manager
                  *
                  * @var \Evoweb\Extender\Utility\ClassCacheManager $classCacheManager
                  */
-                $classCacheManager = GeneralUtility::makeInstance(\Evoweb\Extender\Utility\ClassCacheManager::class);
+                $classCacheManager = GeneralUtility::makeInstance(
+                    \Evoweb\Extender\Utility\ClassCacheManager::class,
+                    $this->classCache
+                );
                 $classCacheManager->reBuild();
             }
-            $classCache->requireOnce($cacheEntryIdentifier);
+            $this->classCache->requireOnce($cacheEntryIdentifier);
             return true;
         }
 
