@@ -1,0 +1,10 @@
+{
+	"name": "evoweb/base-extension",
+	"type": "typo3-cms-extension",
+
+	"autoload": {
+		"psr-4": {
+			"Fixture\\BaseExtension\\": "Classes/"
+		}
+	}
+}

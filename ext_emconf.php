@@ -20,4 +20,9 @@ $EM_CONF['extender'] = [
         'conflicts' => [],
         'suggests' => [],
     ],
+    "autoload-dev" => [
+        "psr-4" => [
+            "Evoweb\\Extender\\Tests\\" => "Tests/",
+        ],
+    ],
 ];

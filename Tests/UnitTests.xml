@@ -1,0 +1,21 @@
+<phpunit
+	backupGlobals="true"
+	backupStaticAttributes="false"
+	bootstrap="../../../../typo3_src/vendor/typo3/testing-framework/Resources/Core/Build/UnitTestsBootstrap.php"
+	colors="true"
+	convertErrorsToExceptions="true"
+	convertWarningsToExceptions="true"
+	forceCoversAnnotation="false"
+	processIsolation="false"
+	stopOnError="false"
+	stopOnFailure="false"
+	stopOnIncomplete="false"
+	stopOnSkipped="false"
+	verbose="false"
+>
+	<testsuites>
+		<testsuite name="Extender tests">
+			<directory>./Unit/</directory>
+		</testsuite>
+	</testsuites>
+</phpunit>
