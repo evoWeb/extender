@@ -85,7 +85,7 @@ class ClassCacheManager
                     // Get the files from all other extensions that are extending this domain model
                     if (is_array($entityConfiguration)) {
                         foreach ($entityConfiguration as $extendingExtension => $extendingFilepath) {
-                            $path = GeneralUtility::getFileAbsFileName($extendingFilepath, false);
+                            $path = GeneralUtility::getFileAbsFileName($extendingFilepath);
                             if (!is_file($path) && !is_numeric($extendingExtension)) {
                                 $path = ExtensionManagementUtility::extPath($extendingExtension) .
                                     'Classes/Extending/' . $extendingFilepath . '.php';
