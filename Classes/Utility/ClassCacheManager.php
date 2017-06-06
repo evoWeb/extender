@@ -44,9 +44,8 @@ class ClassCacheManager
     public function __construct($classCache)
     {
         $this->classCache = $classCache;
-        $this->composerClassLoader = \TYPO3\CMS\Core\Core\Bootstrap::getInstance()->getEarlyInstance(
-            \Composer\Autoload\ClassLoader::class
-        );
+        $this->composerClassLoader = \TYPO3\CMS\Core\Core\Bootstrap::getInstance()
+            ->getEarlyInstance(\Composer\Autoload\ClassLoader::class);
     }
 
     /**
@@ -77,7 +76,7 @@ class ClassCacheManager
                     $path = $this->composerClassLoader->findFile($entity);
                     if (!is_file($path)) {
                         throw new \Evoweb\Extender\Exception\FileNotFoundException(
-                            'given file "' . $path . '" does not exist'
+                            'Base file "' . $path . '" does not exist'
                         );
                     }
                     $code = $this->parseSingleFile($path, false);
@@ -89,6 +88,11 @@ class ClassCacheManager
                             if (!is_file($path) && !is_numeric($extendingExtension)) {
                                 $path = ExtensionManagementUtility::extPath($extendingExtension) .
                                     'Classes/Extending/' . $extendingFilepath . '.php';
+                            }
+                            if (!is_file($path)) {
+                                throw new \Evoweb\Extender\Exception\FileNotFoundException(
+                                    'Extending file "' . $path . '" does not exist'
+                                );
                             }
                             $code .= $this->parseSingleFile($path);
                         }
@@ -119,9 +123,6 @@ class ClassCacheManager
      */
     protected function parseSingleFile($filePath, $removeClassDefinition = true)
     {
-        if (!is_file($filePath)) {
-            throw new \InvalidArgumentException(sprintf('File "%s" could not be found', $filePath));
-        }
         $code = GeneralUtility::getUrl($filePath);
 
         return $this->changeCode($code, $filePath, $removeClassDefinition);
