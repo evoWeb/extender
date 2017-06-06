@@ -19,12 +19,12 @@ env:
   - TYPO3_VERSION="^8.7"
     PHPUNIT_VERSION="~5.7.0"
     UNIT_TEST_FOLDER="Tests/Unit/"
-    UNITTEST_SUITE="vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml"
+    UNITTEST_SUITE=".Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml"
 
   - TYPO3_VERSION="dev-master as 8.7.0"
     PHPUNIT_VERSION="~5.7.0"
     UNIT_TEST_FOLDER="Tests/Unit/"
-    UNITTEST_SUITE="vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml"
+    UNITTEST_SUITE=".Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml"
 
 matrix:
   fast_finish: true
@@ -61,12 +61,12 @@ script:
   - >
     echo;
     echo "Running php lint";
-    find . -name \*.php ! -path "./.Build/*" ! -path "./vendor/*" | parallel --gnu php -d display_errors=stderr -l {} > /dev/null \;
+    find . -name \*.php ! -path "./.Build/*" | parallel --gnu php -d display_errors=stderr -l {} > /dev/null \;
 
   - >
     echo;
     echo "Running unit tests in folder '$UNITTEST_FOLDER' with suite '$UNITTEST_SUITE'";
-    vendor/bin/phpunit --colors -c $UNITTEST_SUITE $UNITTEST_FOLDER
+    .Build/vendor/bin/phpunit --colors -c $UNITTEST_SUITE $UNITTEST_FOLDER
 
 after_script:
   - >
@@ -79,6 +79,6 @@ after_script:
 
         TAG_MESSAGE=`git tag -n10 -l $TRAVIS_TAG | sed 's/^[0-9.]*[ ]*//g'`
         echo "Uploading release ${TRAVIS_TAG} to TER"
-        vendor/bin/upload . "$TYPO3_ORG_USERNAME" "$TYPO3_ORG_PASSWORD" "$TAG_MESSAGE"
+        .Build/bin/upload . "$TYPO3_ORG_USERNAME" "$TYPO3_ORG_PASSWORD" "$TAG_MESSAGE"
       fi;
     fi;
