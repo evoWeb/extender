@@ -53,10 +53,6 @@ before_install:
 before_script:
   - composer require typo3/cms="$TYPO3_VERSION"
   - composer require --dev phpunit/phpunit="$PHPUNIT_VERSION"
-  - composer require --dev namelesscoder/typo3-repository-client:^2.0.0
-  - ls -la vendor
-  - ls -la vendor/bin
-  - ls -la vendor/namelesscoder
   - if [ "$PHPUNIT_VERSION" = "~5.7.0" ]; then composer require --dev typo3/testing-framework="~1.0.0"; fi;
   - git checkout composer.json
   - export TYPO3_PATH_WEB=$PWD/.Build/Web
@@ -78,6 +74,7 @@ after_script:
       echo -e "Preparing upload of release ${TRAVIS_TAG} to TER\n"
       curl -sSL https://raw.githubusercontent.com/alrra/travis-after-all/1.4.4/lib/travis-after-all.js | node
       if [ $? -eq 0 ]; then
+        composer require --dev namelesscoder/typo3-repository-client:^2.0.0
         git reset --hard HEAD && git clean -fx
 
         TAG_MESSAGE=`git tag -n10 -l $TRAVIS_TAG | sed 's/^[0-9.]*[ ]*//g'`
