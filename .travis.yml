@@ -11,9 +11,9 @@ php:
   - 7.1
 
 env:
-  - TYPO3_VERSION=^7.6.0
-  - TYPO3_VERSION=^8.7.0
-  - TYPO3_VERSION="dev-master as 8.7.0"
+  - TYPO3_VERSION="^7.6" UNITTEST_SUITE="UnitTests7.xml" UNITTEST_FOLDER=Unit7
+  - TYPO3_VERSION="^8.7" UNITTEST_SUITE="UnitTests.xml" UNIT_TEST_FOLDER=Unit
+  - TYPO3_VERSION="dev-master as 8.7.0" UNITTEST_SUITE="UnitTests.xml" UNIT_TEST_FOLDER=Unit
 
 matrix:
   fast_finish: true
@@ -49,6 +49,11 @@ script:
     echo;
     echo "Running php lint";
     find . -name \*.php ! -path "./.Build/*" ! -path "./vendor/*" | parallel --gnu php -d display_errors=stderr -l {} > /dev/null \;
+
+  - >
+    echo;
+    echo "Running unit tests";
+    .Build/bin/phpunit --colors -c Tests/$UNITTEST_SUITE Tests/$UNIT_TEST_FOLDER/
 
 after_script:
   - >
