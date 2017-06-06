@@ -14,7 +14,7 @@ env:
   - TYPO3_VERSION="^7.6"
     PHPUNIT_VERSION="~4.8.0"
     UNITTEST_FOLDER=Unit7
-    UNITTEST_SUITE=".Build/Web/typo3_src/typo3/sysext/core/Build/UnitTests.xml"
+    UNITTEST_SUITE=".Build/Web/typo3/sysext/core/Build/UnitTests.xml"
   - TYPO3_VERSION="^8.7"
     PHPUNIT_VERSION="~5.7.0"
     UNIT_TEST_FOLDER=Unit
