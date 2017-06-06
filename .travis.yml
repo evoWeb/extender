@@ -53,7 +53,7 @@ script:
   - >
     echo;
     echo "Running unit tests";
-    .Build/bin/phpunit --colors -c Tests/$UNITTEST_SUITE Tests/$UNIT_TEST_FOLDER/
+    vendor/bin/phpunit --colors -c Tests/$UNITTEST_SUITE Tests/$UNIT_TEST_FOLDER/
 
 after_script:
   - >
