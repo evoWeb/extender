@@ -126,7 +126,6 @@ class ClassLoaderTest extends AbstractTestBase
             ->disableOriginalConstructor()
             ->disableOriginalClone()
             ->disableArgumentCloning()
-            //->disallowMockingUnknownTypes()
             ->getMock();
 
         $cacheMock->expects($this->any())->method('has')->will($this->returnValue(true));
