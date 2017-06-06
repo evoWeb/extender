@@ -65,8 +65,8 @@ script:
 
   - >
     echo;
-    echo "Running unit tests";
-    vendor/bin/phpunit --colors -c $UNITTEST_SUITE $UNIT_TEST_FOLDER
+    echo "Running unit tests in folder $UNITTEST_FOLDER with suite $UNITTEST_SUITE";
+    vendor/bin/phpunit --colors -c $UNITTEST_SUITE $UNITTEST_FOLDER
 
 after_script:
   - >
