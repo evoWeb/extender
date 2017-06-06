@@ -49,6 +49,8 @@ script:
   - >
     echo;
     echo "Running php lint";
+    realpath .;
+    ls -la;
     find typo3conf/ext/extender/ -name \*.php ! -path "./.Build/*" | parallel --gnu php -d display_errors=stderr -l {} > /dev/null \;
 
 after_script:
