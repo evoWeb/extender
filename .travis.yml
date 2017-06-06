@@ -11,8 +11,8 @@ php:
   - 7.1
 
 env:
-  - TYPO3_VERSION="^7.6" UNITTEST_SUITE="UnitTests7.xml" UNITTEST_FOLDER=Unit7
-  - TYPO3_VERSION="^8.7" UNITTEST_SUITE="UnitTests.xml" UNIT_TEST_FOLDER=Unit
+  - TYPO3_VERSION="^7.6" PHPUNIT_VERSION="~4.8.0" UNITTEST_SUITE="UnitTests7.xml" UNITTEST_FOLDER=Unit7
+  - TYPO3_VERSION="^8.7" PHPUNIT_VERSION="~5.7.0" UNITTEST_SUITE="UnitTests.xml" UNIT_TEST_FOLDER=Unit
   - TYPO3_VERSION="dev-master as 8.7.0" UNITTEST_SUITE="UnitTests.xml" UNIT_TEST_FOLDER=Unit
 
 matrix:
@@ -40,7 +40,8 @@ before_install:
   - composer --version
 
 before_script:
-  - composer require --dev typo3/cms="$TYPO3_VERSION"
+  - composer require typo3/cms="$TYPO3_VERSION"
+  - composer require --dev phpunit/phpunit="$PHPUNIT_VERSION"
   - git checkout composer.json
   - export TYPO3_PATH_WEB=$PWD/.Build/Web
 
