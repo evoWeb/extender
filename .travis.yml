@@ -55,7 +55,7 @@ script:
     echo "Running unit tests";
     ls -l vendor;
     ls -l .Build;
-    ls -l .Build/web;
+    ls -l .Build/Web;
     vendor/bin/phpunit --colors -c Tests/$UNITTEST_SUITE Tests/$UNIT_TEST_FOLDER/
 
 after_script:
