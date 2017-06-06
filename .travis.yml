@@ -11,12 +11,18 @@ php:
   - 7.1
 
 env:
-  - TYPO3_VERSION="^7.6" PHPUNIT_VERSION="~4.8.0" UNITTEST_SUITE="Tests/UnitTests7.xml" UNITTEST_FOLDER=Unit7
-  - TYPO3_VERSION="^8.7" PHPUNIT_VERSION="~5.7.0" UNITTEST_SUITE="vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml" UNIT_TEST_FOLDER=Unit
+  - TYPO3_VERSION="^7.6"
+    PHPUNIT_VERSION="~4.8.0"
+    UNITTEST_FOLDER=Unit7
+    UNITTEST_SUITE=".Build/Web/typo3_src/typo3/sysext/core/Build/UnitTests.xml"
+  - TYPO3_VERSION="^8.7"
+    PHPUNIT_VERSION="~5.7.0"
+    UNIT_TEST_FOLDER=Unit
+    UNITTEST_SUITE="vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml"
   - TYPO3_VERSION="dev-master as 8.7.0"
     PHPUNIT_VERSION="~5.7.0"
-    UNITTEST_SUITE="vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml"
     UNIT_TEST_FOLDER=Unit
+    UNITTEST_SUITE="vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml"
 
 matrix:
   fast_finish: true
@@ -44,8 +50,8 @@ before_install:
 
 before_script:
   - composer require typo3/cms="$TYPO3_VERSION"
-  - composer require --dev phpunit/phpunit="$PHPUNIT_VERSION"
-  - composer require --dev typo3/testing-framework="~1.0.0"
+  - composer require --dev -q phpunit/phpunit="$PHPUNIT_VERSION"
+  - composer require --dev -q typo3/testing-framework="~1.0.0"
   - git checkout composer.json
   - export TYPO3_PATH_WEB=$PWD/.Build/Web
 
