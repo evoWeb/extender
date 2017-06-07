@@ -41,8 +41,21 @@ class ClassCacheManager
      *
      * @param \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $classCache
      */
-    public function __construct($classCache)
+    public function __construct($classCache = null)
     {
+        if (is_null($classCache)) {
+            /**
+             * Cache manager
+             *
+             * @var \TYPO3\CMS\Core\Cache\CacheManager $cacheManager
+             */
+            $cacheManager = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Cache\CacheManager::class);
+            // Set configuration in case some cache settings are not loaded by now.
+            $cacheManager->setCacheConfigurations($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']);
+            /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cache */
+            $classCache = $cacheManager->getCache('extender');
+        }
+
         $this->classCache = $classCache;
         $this->composerClassLoader = \TYPO3\CMS\Core\Core\Bootstrap::getInstance()
             ->getEarlyInstance(\Composer\Autoload\ClassLoader::class);
