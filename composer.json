@@ -17,9 +17,6 @@
 	"require": {
 		"typo3/cms-core": "*"
 	},
-	"require-dev": {
-		"namelesscoder/typo3-repository-client": "^1.2.0"
-	},
 
 	"autoload": {
 		"psr-4": {
