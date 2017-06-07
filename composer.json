@@ -6,7 +6,7 @@
 	"license": ["GPL-2.0+"],
 
 	"support" : {
-		"issues" : "https://forge.typo3.org/projects/extension-extender/issues"
+		"issues" : "https://github.com/evoWeb/extender/issues"
 	},
 	"keywords": [
 		"TYPO3 CMS",
