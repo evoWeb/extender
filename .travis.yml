@@ -18,12 +18,12 @@ env:
 
   - TYPO3_VERSION="^8.7"
     PHPUNIT_VERSION="~5.7.0"
-    UNIT_TEST_FOLDER="Tests/Unit/"
+    UNITTEST_FOLDER="Tests/Unit/"
     UNITTEST_SUITE=".Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml"
 
   - TYPO3_VERSION="dev-master as 8.7.0"
     PHPUNIT_VERSION="~5.7.0"
-    UNIT_TEST_FOLDER="Tests/Unit/"
+    UNITTEST_FOLDER="Tests/Unit/"
     UNITTEST_SUITE=".Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml"
 
 matrix:
@@ -31,7 +31,7 @@ matrix:
   allow_failures:
     - env: TYPO3_VERSION="dev-master as 8.7.0"
            PHPUNIT_VERSION="~5.7.0"
-           UNIT_TEST_FOLDER="Tests/Unit/"
+           UNITTEST_FOLDER="Tests/Unit/"
            UNITTEST_SUITE=".Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml"
 
 sudo: false
