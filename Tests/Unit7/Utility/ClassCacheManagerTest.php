@@ -135,7 +135,7 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
         $expected = '/***********************************************************************' . chr(10)
             . ' * this is partial from:' . chr(10) . ' *  --' . chr(10)
-            . '***********************************************************************/' . chr(10) . '    ';
+            . '***********************************************************************/' . chr(10);
 
         /** @noinspection PhpUndefinedMethodInspection */
         $this->assertEquals($expected, $subject->_call('getPartialInfo', '--'));
@@ -199,7 +199,8 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
  * this is partial from:
  *  ' . str_replace(PATH_site, '', $basePath) . '
 ***********************************************************************/
-    namespace Fixture\BaseExtension\Domain\Model;
+
+namespace Fixture\BaseExtension\Domain\Model;
 
 class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
