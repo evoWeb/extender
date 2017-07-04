@@ -25,7 +25,7 @@ that wants to extend a domain model.
 
 * EXTKEY1 - extension key of the extension in which the domain model should be extended
 * EXTKEY2 - extension key of the extension in which the extending domain model resides
-* CLASSNAME - classname of the domain model to be extended
+* CLASSNAME - classname of the domain model to be extended (without full namespace!!)
 
 Because extbase is very strict in the coding guideline thats basicly it. As long as
 the domain model are found in the corresponding pathes and the classname equals the
