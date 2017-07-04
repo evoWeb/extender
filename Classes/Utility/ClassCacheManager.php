@@ -142,7 +142,7 @@ class ClassCacheManager
     }
 
     /**
-     * Strip php file parts that should not be used in the concatination
+     * Strip php file parts that should not be used in the concatenation
      *
      * @param string $code
      * @param string $filePath
@@ -157,32 +157,36 @@ class ClassCacheManager
         if (empty($code)) {
             throw new \InvalidArgumentException(sprintf('File "%s" could not be fetched or is empty', $filePath));
         }
-        $code = trim($code);
-        $code = str_replace(array('<?php', '?>'), '', $code);
-        $code = trim($code);
-
-        // Remove everything before 'class ', including namespaces,
-        // comments and require-statements.
         if ($removeClassDefinition) {
-            $pos = strpos($code, 'class ');
-            $pos2 = strpos($code, '{', $pos);
+            $classParser = GeneralUtility::makeInstance(ClassParser::class);
+            $classParser->parse($code);
+            $classParserInformation = $classParser->getFirstClass();
+            $codeInLines = explode(LF, str_replace(CR, '', $code));
 
-            $code = substr($code, $pos2 + 1);
+            if (isset($classParserInformation['eol'])) {
+                $innerPart = array_slice($codeInLines, $classParserInformation['start'],
+                    ($classParserInformation['eol'] - $classParserInformation['start'] - 1));
+            } else {
+                $innerPart = array_slice($codeInLines, $classParserInformation['start']);
+            }
+
+            if (trim($innerPart[0]) === '{') {
+                unset($innerPart[0]);
+            }
+            $content = implode(LF, $innerPart);
+        } else {
+            $content = str_replace('<?php', '', $code);
         }
 
-        $code = trim($code);
+        $closingBracket = strrpos($content, '}');
+        $content = substr($content, 0, $closingBracket);
 
         // Add some information for each partial
         if ($renderPartialInfo) {
-            $code = $this->getPartialInfo($filePath) . $code;
+            $content = $this->getPartialInfo($filePath) . $content;
         }
 
-        // Remove last }
-        $pos = strrpos($code, '}');
-        $code = substr($code, 0, $pos);
-        $code = trim($code);
-
-        return $code . LF . LF;
+        return $content . LF;
     }
 
     /**
@@ -196,8 +200,7 @@ class ClassCacheManager
     {
         return '/' . str_repeat('*', 71) . '
  * this is partial from:
- *  ' . str_replace(PATH_site, '', $filePath) . LF . str_repeat('*', 71) . '/
-    ';
+ *  ' . str_replace(PATH_site, '', $filePath) . LF . str_repeat('*', 71) . '/' . LF;
     }
 
     /**
