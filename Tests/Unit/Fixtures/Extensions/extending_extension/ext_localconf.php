@@ -4,3 +4,9 @@ $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['base_extension']['extender'][\Fixture\Ba
     [
         'extending_extension' => 'Model/BlobExtend',
     ];
+
+
+$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['base_extension']['extender'][\Fixture\BaseExtension\Domain\Model\BlobWithStorage::class] =
+    [
+        'extending_extension' => 'Model/BlobWithStorageExtend',
+    ];

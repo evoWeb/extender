@@ -37,6 +37,11 @@ class ClassCacheManager
     protected $composerClassLoader;
 
     /**
+     * @var array
+     */
+    protected $constructorLines = array();
+
+    /**
      * Constructor
      *
      * @param \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $classCache
@@ -111,6 +116,10 @@ class ClassCacheManager
                         }
                     }
 
+                    if (!empty($this->constructorLines)) {
+                        $code .= '    public function __construct()' . LF . '    {' . LF. implode(LF, $this->constructorLines) . LF . '    }' . LF;
+                    }
+
                     // Close the class definition
                     $code = $this->closeClassDefinition($code);
 
@@ -169,6 +178,19 @@ class ClassCacheManager
 
             $code = substr($code, $pos2 + 1);
         }
+
+        $contructorPosition = strpos($code, '   public function __construct');
+        if ($contructorPosition !== false) {
+            $contructorCodePositionStart = strpos($code, '{', $contructorPosition) + 1;
+            $contructorCodePositionEnd = strpos($code, '    }', $contructorCodePositionStart) - 1;
+            $contructorCode = substr($code, $contructorCodePositionStart, $contructorCodePositionEnd - $contructorCodePositionStart);
+            $this->constructorLines[] = trim($contructorCode, "\n\r");
+
+            $contructorCodeComplete = substr($code, $contructorPosition - 1, $contructorCodePositionEnd + 7 - ($contructorPosition - 1));
+
+            $code = str_replace($contructorCodeComplete, '', $code);
+        }
+
 
         $code = trim($code);
 
