@@ -37,6 +37,11 @@ class ClassCacheManager
     protected $composerClassLoader;
 
     /**
+     * @var array
+     */
+    protected $constructorLines = [];
+
+    /**
      * Constructor
      *
      * @param \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $classCache
@@ -111,6 +116,10 @@ class ClassCacheManager
                         }
                     }
 
+                    if (count($this->constructorLines)) {
+                        $code .= '    public function __construct()' . LF . '    {' . LF . implode(LF, $this->constructorLines) . LF . '    }' . LF;
+                    }
+
                     // Close the class definition
                     $code = $this->closeClassDefinition($code);
 
@@ -157,27 +166,47 @@ class ClassCacheManager
         if (empty($code)) {
             throw new \InvalidArgumentException(sprintf('File "%s" could not be fetched or is empty', $filePath));
         }
-        if ($removeClassDefinition) {
-            $classParser = GeneralUtility::makeInstance(ClassParser::class);
-            $classParser->parse($code);
-            $classParserInformation = $classParser->getFirstClass();
-            $codeInLines = explode(LF, str_replace(CR, '', $code));
 
+        $classParser = GeneralUtility::makeInstance(ClassParser::class);
+        $classParser->parse($code);
+        $classParserInformation = $classParser->getFirstClass();
+
+        $code = str_replace('<?php', '', $code);
+        $codeInLines = explode(LF, str_replace(CR, '', $code));
+        $offsetForInnerPart = 0;
+
+        if ($removeClassDefinition) {
+            $offsetForInnerPart = $classParserInformation['start'];
             if (isset($classParserInformation['eol'])) {
                 $innerPart = array_slice($codeInLines, $classParserInformation['start'],
                     ($classParserInformation['eol'] - $classParserInformation['start'] - 1));
             } else {
                 $innerPart = array_slice($codeInLines, $classParserInformation['start']);
             }
-
-            if (trim($innerPart[0]) === '{') {
-                unset($innerPart[0]);
-            }
-            $content = implode(LF, $innerPart);
         } else {
-            $content = str_replace('<?php', '', $code);
+            $innerPart = $codeInLines;
         }
 
+        if (trim($innerPart[0]) === '{') {
+            unset($innerPart[0]);
+        }
+
+        // unset the constructor and save it's lines
+        if (isset($classParserInformation['functions']['__construct'])) {
+            $constructorInfo = $classParserInformation['functions']['__construct'];
+            for ($i = $constructorInfo['start'] - $offsetForInnerPart; $i < $constructorInfo['end'] - $offsetForInnerPart; $i++) {
+                if (trim($innerPart[$i]) === '{') {
+                    unset($innerPart[$i]);
+                    continue;
+                }
+                $this->constructorLines[] = $innerPart[$i];
+                unset($innerPart[$i]);
+            }
+            unset($innerPart[$constructorInfo['start'] - $offsetForInnerPart - 1]);
+            unset($innerPart[$constructorInfo['end'] - $offsetForInnerPart]);
+        }
+
+        $content = implode(LF, $innerPart);
         $closingBracket = strrpos($content, '}');
         $content = substr($content, 0, $closingBracket);
 
