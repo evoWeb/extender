@@ -2,6 +2,7 @@
 namespace Evoweb\Extender\Tests\Unit7\Utility;
 
 use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
 
 class ClassCacheManagerTest extends AbstractTestBase
 {
@@ -79,14 +80,16 @@ class ClassCacheManagerTest extends AbstractTestBase
             ['extender', $cacheBackend]
         );
 
-        /** @var \Evoweb\Extender\Utility\ClassCacheManager $subject */
+        /** @var \Evoweb\Extender\Utility\ClassCacheManager|AccessibleObjectInterface $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassCacheManager::class))
             ->setMethods(['parseSingleFile', '_get'])
             ->setConstructorArgs([$cacheMock])
             ->enableProxyingToOriginalMethods()
             ->getMock();
 
-        $filePath = realpath(__DIR__ . '/../../Unit/Fixtures/Extensions/base_extension/Classes/Domain/Model/BlobWithStorage.php');
+        $filePath = realpath(
+            __DIR__ . '/../../Unit/Fixtures/Extensions/base_extension/Classes/Domain/Model/BlobWithStorage.php'
+        );
 
         $expected = '/***********************************************************************
  * this is partial from:
@@ -146,7 +149,7 @@ class ClassCacheManagerTest extends AbstractTestBase
             '        $this->storage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();'
         ];
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /** @noinspection PhpMethodParametersCountMismatchInspection */
         $actual = $subject->_call('parseSingleFile', $filePath);
 
         $this->assertEquals($expected, $actual);
@@ -166,14 +169,16 @@ class ClassCacheManagerTest extends AbstractTestBase
             ['extender', $cacheBackend]
         );
 
-        /** @var \Evoweb\Extender\Utility\ClassCacheManager $subject */
+        /** @var \Evoweb\Extender\Utility\ClassCacheManager|AccessibleObjectInterface $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassCacheManager::class))
             ->setMethods(['parseSingleFile', '_get'])
             ->setConstructorArgs([$cacheMock])
             ->enableProxyingToOriginalMethods()
             ->getMock();
 
-        $filePath = realpath(__DIR__ . '/../../Unit/Fixtures/Extensions/base_extension/Classes/Domain/Model/BlobWithStorageNotPsr2.php');
+        $filePath = realpath(
+            __DIR__ . '/../../Unit/Fixtures/Extensions/base_extension/Classes/Domain/Model/BlobWithStorageNotPsr2.php'
+        );
 
         $expected = '/***********************************************************************
  * this is partial from:
@@ -230,7 +235,7 @@ class ClassCacheManagerTest extends AbstractTestBase
             '        $this->storage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();'
         ];
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /** @noinspection PhpMethodParametersCountMismatchInspection */
         $actual = $subject->_call('parseSingleFile', $filePath);
 
         $this->assertEquals($expected, $actual);
@@ -467,7 +472,9 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
         $fixtureFolder = __DIR__ . '/../../Unit/Fixtures/Extensions/';
         $basePath = realpath($fixtureFolder . 'base_extension/Classes/Domain/Model/BlobWithStorage.php');
-        $extendPath = realpath($fixtureFolder . 'extending_extension/Classes/Extending/Model/BlobWithStorageExtend.php');
+        $extendPath = realpath(
+            $fixtureFolder . 'extending_extension/Classes/Extending/Model/BlobWithStorageExtend.php'
+        );
 
         $expected = '<?php
 /***********************************************************************
