@@ -1,6 +1,7 @@
 TYPO3 Extending extbase domain models [![Build Status](https://travis-ci.org/evoWeb/extender.svg?branch=master)](https://travis-ci.org/evoWeb/extender)
 =====================================
 
+See full documentation at https://docs.typo3.org/typo3cms/extensions/extender/Index.html
 
 ## Installation
 
