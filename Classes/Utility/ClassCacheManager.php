@@ -117,7 +117,7 @@ class ClassCacheManager
                     }
 
                     if (count($this->constructorLines)) {
-                        $code .= '    public function __construct()' . LF . '    {' . LF . implode(LF, $this->constructorLines) . LF . '    }' . LF;
+                        $code .= implode(LF, $this->constructorLines) . LF . '    }' . LF;
                         // reset constructor lines
                         $this->constructorLines = [];
                     }
@@ -196,15 +196,20 @@ class ClassCacheManager
         // unset the constructor and save it's lines
         if (isset($classParserInformation['functions']['__construct'])) {
             $constructorInfo = $classParserInformation['functions']['__construct'];
-            for ($i = $constructorInfo['start'] - $offsetForInnerPart; $i < $constructorInfo['end'] - $offsetForInnerPart; $i++) {
-                if (trim($innerPart[$i]) === '{') {
+            if ($removeClassDefinition) {
+                $start = $constructorInfo['start'] - $offsetForInnerPart;
+                unset($innerPart[$start - 1]);
+            } else {
+                $start = $constructorInfo['start'] - $offsetForInnerPart - 1;
+            }
+            for ($i = $start; $i < $constructorInfo['end'] - $offsetForInnerPart; $i++) {
+                if (trim($innerPart[$i]) === '{' && $removeClassDefinition) {
                     unset($innerPart[$i]);
                     continue;
                 }
                 $this->constructorLines[] = $innerPart[$i];
                 unset($innerPart[$i]);
             }
-            unset($innerPart[$constructorInfo['start'] - $offsetForInnerPart - 1]);
             unset($innerPart[$constructorInfo['end'] - $offsetForInnerPart]);
         }
 

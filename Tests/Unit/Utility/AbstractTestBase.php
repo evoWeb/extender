@@ -37,6 +37,10 @@ class AbstractTestBase extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
         $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['base_extension']['extender'][$classNameWithStorage] = [
             'extending_extension' => 'Model/BlobWithStorageExtend',
         ];
+        $classNameWithStorageAndConstructorArgument = \Fixture\BaseExtension\Domain\Model\BlobWithStorageAndConstructorArgument::class;
+        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['base_extension']['extender'][$classNameWithStorageAndConstructorArgument] = [
+            'extending_extension' => 'Model/BlobWithStorageExtend',
+        ];
     }
 
     /**
@@ -62,6 +66,10 @@ class AbstractTestBase extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
 
         $className = \Fixture\BaseExtension\Domain\Model\BlobWithStorage::class;
         $filePath = realpath($fixtureFolder . 'base_extension/Classes/Domain/Model/BlobWithStorage.php');
+        $composerClassLoader->addClassMap([$className => $filePath]);
+
+        $className = \Fixture\BaseExtension\Domain\Model\BlobWithStorageAndConstructorArgument::class;
+        $filePath = realpath($fixtureFolder . 'base_extension/Classes/Domain/Model/BlobWithStorageAndConstructorArgument.php');
         $composerClassLoader->addClassMap([$className => $filePath]);
 
         $className = \Fixture\ExtendingExtension\Extending\Model\BlobWithStorageExtend::class;
