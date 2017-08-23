@@ -118,6 +118,8 @@ class ClassCacheManager
 
                     if (count($this->constructorLines)) {
                         $code .= '    public function __construct()' . LF . '    {' . LF . implode(LF, $this->constructorLines) . LF . '    }' . LF;
+                        // reset constructor lines
+                        $this->constructorLines = [];
                     }
 
                     // Close the class definition
