@@ -146,6 +146,8 @@ class ClassCacheManagerTest extends AbstractTestBase
 
 ';
         $expectedConstructorLines = [
+            '    public function __construct()',
+            '    {',
             '        $this->storage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();'
         ];
 
@@ -232,6 +234,7 @@ class ClassCacheManagerTest extends AbstractTestBase
 ';
 
         $expectedConstructorLines = [
+            '    public function __construct() {',
             '        $this->storage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();'
         ];
 
@@ -591,6 +594,138 @@ class BlobWithStorage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     public function __construct()
     {
         $this->storage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->otherStorage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+    }
+
+}
+#';
+
+        $actual = $cacheMock->get($cacheEntryIdentifier);
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    /**
+     * @test
+     */
+    public function reBuildNonStorageWithStorage()
+    {
+        $this->prepareFixtureClassMap();
+        $this->activateFixtureExtensions();
+
+        $className = \Fixture\BaseExtension\Domain\Model\AnotherBlob::class;
+        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['base_extension']['extender'][$className] = [
+            'extending_extension' => 'Model/BlobWithStorageExtend',
+        ];
+
+        $cacheBackend = new \TYPO3\CMS\Core\Cache\Backend\FileBackend('production');
+        /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cacheMock */
+        $cacheMock = new \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend('extender', $cacheBackend);
+
+        $subject = new \Evoweb\Extender\Utility\ClassCacheManager($cacheMock);
+        $subject->reBuild();
+
+        $cacheEntryIdentifier = GeneralUtility::underscoredToLowerCamelCase('base_extension') . '_' .
+            str_replace('\\', '_', $className);
+
+        $fixtureFolder = __DIR__ . '/../../Unit/Fixtures/Extensions/';
+        $basePath = realpath($fixtureFolder . 'base_extension/Classes/Domain/Model/AnotherBlob.php');
+        $extendPath = realpath(
+            $fixtureFolder . 'extending_extension/Classes/Extending/Model/BlobWithStorageExtend.php'
+        );
+
+        $expected = '<?php
+/***********************************************************************
+ * this is partial from:
+ *  ' . str_replace(PATH_site, '', $basePath) . '
+***********************************************************************/
+
+namespace Fixture\BaseExtension\Domain\Model;
+
+class AnotherBlob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+{
+    /**
+     * @var string
+     */
+    protected $property = \'\';
+
+    /**
+     * Getter for property
+     *
+     * @return string
+     */
+    public function getProperty()
+    {
+        return $this->property;
+    }
+
+    /**
+     * Setter for property
+     *
+     * @param string $property
+     *
+     * @return void
+     */
+    public function setProperty($property)
+    {
+        $this->property = $property;
+    }
+
+/***********************************************************************
+ * this is partial from:
+ *  ' . str_replace(PATH_site, '', $extendPath) . '
+***********************************************************************/
+    /**
+     * @var int
+     */
+    protected $otherProperty = 0;
+
+    /**
+     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+     */
+    protected $otherStorage = \'\';
+
+
+    /**
+     * Getter for otherProperty
+     *
+     * @return int
+     */
+    public function getOtherProperty()
+    {
+        return $this->otherProperty;
+    }
+
+    /**
+     * Setter for otherProperty
+     *
+     * @param int $otherProperty
+     *
+     * @return void
+     */
+    public function setOtherProperty($otherProperty)
+    {
+        $this->otherProperty = $otherProperty;
+    }
+
+    /**
+     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+     */
+    public function getOtherStorage()
+    {
+        return $this->otherStorage;
+    }
+
+    /**
+     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $otherStorage
+     */
+    public function setOtherStorage($otherStorage)
+    {
+        $this->otherStorage = $otherStorage;
+    }
+
+    public function __construct()
+    {
         $this->otherStorage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
     }
 

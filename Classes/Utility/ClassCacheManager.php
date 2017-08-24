@@ -196,14 +196,14 @@ class ClassCacheManager
         // unset the constructor and save it's lines
         if (isset($classParserInformation['functions']['__construct'])) {
             $constructorInfo = $classParserInformation['functions']['__construct'];
-            if ($removeClassDefinition) {
+            if (count($this->constructorLines) > 0) {
                 $start = $constructorInfo['start'] - $offsetForInnerPart;
                 unset($innerPart[$start - 1]);
             } else {
                 $start = $constructorInfo['start'] - $offsetForInnerPart - 1;
             }
             for ($i = $start; $i < $constructorInfo['end'] - $offsetForInnerPart; $i++) {
-                if (trim($innerPart[$i]) === '{' && $removeClassDefinition) {
+                if (trim($innerPart[$i]) === '{' && count($this->constructorLines) > 1) {
                     unset($innerPart[$i]);
                     continue;
                 }
