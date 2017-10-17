@@ -79,7 +79,8 @@ class ClassCacheManager
     {
         if (empty($parameters)
             || (
-                !empty($parameters['cacheCmd'])
+                \TYPO3\CMS\Core\Core\Bootstrap::usesComposerClassLoading()
+                && !empty($parameters['cacheCmd'])
                 && GeneralUtility::inList('all,system', $parameters['cacheCmd'])
                 && isset($GLOBALS['BE_USER'])
             )
