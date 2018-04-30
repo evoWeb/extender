@@ -68,7 +68,7 @@ jobs:
       env:
         - TYPO3_VERSION="^8.7"
           TESTING_FRAMEWORK="~1.2.2"
-          PHPUNIT_VERSION="~5.7.0"
+          PHPUNIT_VERSION="^6.2"
           UNITTEST_FOLDER="Tests/Unit/"
           UNITTEST_SUITE=".Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml"
     - stage: test
@@ -76,7 +76,7 @@ jobs:
       env:
         - TYPO3_VERSION="^8.7"
           TESTING_FRAMEWORK="~1.2.2"
-          PHPUNIT_VERSION="~5.7.0"
+          PHPUNIT_VERSION="^6.2"
           UNITTEST_FOLDER="Tests/Unit/"
           UNITTEST_SUITE=".Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml"
     - stage: test
@@ -84,7 +84,7 @@ jobs:
       env:
         - TYPO3_VERSION="^8.7"
           TESTING_FRAMEWORK="~1.2.2"
-          PHPUNIT_VERSION="~5.7.0"
+          PHPUNIT_VERSION="^6.2"
           UNITTEST_FOLDER="Tests/Unit/"
           UNITTEST_SUITE=".Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml"
     - stage: test
@@ -92,7 +92,7 @@ jobs:
       env:
         - TYPO3_VERSION="^9.2.0"
           TESTING_FRAMEWORK="^3.2"
-          PHPUNIT_VERSION="~5.7.0"
+          PHPUNIT_VERSION="^6.2"
           UNITTEST_FOLDER="Tests/Unit/"
           UNITTEST_SUITE=".Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml"
     - stage: test
