@@ -1,8 +1,8 @@
 <?php
 namespace Evoweb\Extender\Tests\Unit\Utility;
 
-use TYPO3\CMS\Core\Core\Bootstrap;
 use TYPO3\CMS\Core\Package\Package;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class AbstractTestBase extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
 {
@@ -26,64 +26,89 @@ class AbstractTestBase extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     public function setUp()
     {
-        // normaly this is set in ext_localconf
+        $this->configureModelExtending();
+        $this->prepareFixtureClassMap();
+        $this->activateFixtureExtensions();
+    }
+
+    /**
+     * Add cache and extending configuration
+     */
+    protected function configureModelExtending()
+    {
+        // normally this is set in ext_localconf
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['extender'] = $this->cacheConfiguration;
 
         $className = \Fixture\BaseExtension\Domain\Model\Blob::class;
         $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['base_extension']['extender'][$className] = [
             'extending_extension' => 'Model/BlobExtend',
         ];
-        $classNameWithStorage = \Fixture\BaseExtension\Domain\Model\BlobWithStorage::class;
-        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['base_extension']['extender'][$classNameWithStorage] = [
+        $className = \Fixture\BaseExtension\Domain\Model\AnotherBlob::class;
+        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['base_extension']['extender'][$className] = [
+            'extending_extension' => 'Model/BlobWithStorageExtend',
+        ];
+        $className = \Fixture\BaseExtension\Domain\Model\BlobWithStorage::class;
+        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['base_extension']['extender'][$className] = [
+            'extending_extension' => 'Model/BlobWithStorageExtend',
+        ];
+        $className = \Fixture\BaseExtension\Domain\Model\BlobWithStorageAndConstructorArgument::class;
+        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['base_extension']['extender'][$className] = [
             'extending_extension' => 'Model/BlobWithStorageExtend',
         ];
     }
 
     /**
      * Add classmap for fixture files
-     *
-     * @return void
      */
     protected function prepareFixtureClassMap()
     {
-        /** @var \Composer\Autoload\ClassLoader $composerClassLoader */
-        $composerClassLoader = \TYPO3\CMS\Core\Core\Bootstrap::getInstance()
-            ->getEarlyInstance(\Composer\Autoload\ClassLoader::class);
+        $classLoaderFilePath = TYPO3_PATH_PACKAGES . 'autoload.php';
+        /* @noinspection PhpIncludeInspection */
+        $composerClassLoader = require $classLoaderFilePath;
+        \TYPO3\CMS\Core\Core\Bootstrap::getInstance()
+            ->setEarlyInstance(get_class($composerClassLoader), $composerClassLoader);
 
-        $fixtureFolder = __DIR__ . '/../Fixtures/Extensions/';
+        $baseFolder = __DIR__ . '/../Fixtures/Extensions/base_extension/Classes/Domain/';
+        $extendingFolder = __DIR__ . '/../Fixtures/Extensions/extending_extension/Classes/Extending/';
 
         $className = \Fixture\BaseExtension\Domain\Model\Blob::class;
-        $filePath = realpath($fixtureFolder . 'base_extension/Classes/Domain/Model/Blob.php');
+        $filePath = realpath($baseFolder . 'Model/Blob.php');
         $composerClassLoader->addClassMap([$className => $filePath]);
 
-        $className = \Fixture\ExtendingExtension\Extending\Model\BlobExtend::class;
-        $filePath = realpath($fixtureFolder . 'extending_extension/Classes/Extending/Model/BlobExtend.php');
+        $className = \Fixture\BaseExtension\Domain\Model\AnotherBlob::class;
+        $filePath = realpath($baseFolder . 'Model/AnotherBlob.php');
         $composerClassLoader->addClassMap([$className => $filePath]);
 
         $className = \Fixture\BaseExtension\Domain\Model\BlobWithStorage::class;
-        $filePath = realpath($fixtureFolder . 'base_extension/Classes/Domain/Model/BlobWithStorage.php');
+        $filePath = realpath($baseFolder . 'Model/BlobWithStorage.php');
+        $composerClassLoader->addClassMap([$className => $filePath]);
+
+        $className = \Fixture\BaseExtension\Domain\Model\BlobWithStorageAndConstructorArgument::class;
+        $filePath = realpath($baseFolder . 'Model/BlobWithStorageAndConstructorArgument.php');
+        $composerClassLoader->addClassMap([$className => $filePath]);
+
+        $className = \Fixture\ExtendingExtension\Extending\Model\BlobExtend::class;
+        $filePath = realpath($extendingFolder . 'Model/BlobExtend.php');
         $composerClassLoader->addClassMap([$className => $filePath]);
 
         $className = \Fixture\ExtendingExtension\Extending\Model\BlobWithStorageExtend::class;
-        $filePath = realpath($fixtureFolder . 'extending_extension/Classes/Extending/Model/BlobWithStorageExtend.php');
+        $filePath = realpath($extendingFolder . 'Model/BlobWithStorageExtend.php');
         $composerClassLoader->addClassMap([$className => $filePath]);
     }
 
     /**
-     * Add fixture extenions to activated packages
-     *
-     * @return void
+     * Add fixture extensions to activated packages
      */
     protected function activateFixtureExtensions()
     {
-        /** @var \TYPO3\CMS\Core\Package\PackageManager $packageManager */
-        $packageManager = Bootstrap::getInstance()->getEarlyInstance(\TYPO3\CMS\Core\Package\PackageManager::class);
+        $utility = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Utility\ExtensionManagementUtility::class);
+        $reflection = new \ReflectionProperty($utility, 'packageManager');
+        $reflection->setAccessible(true);
+        /** @var \TYPO3\CMS\Core\Package\UnitTestPackageManager $packageManager */
+        $packageManager = $reflection->getValue('packageManager');
 
         $fixtureFolder = __DIR__ . '/../Fixtures/Extensions/';
-
-        $reflection = new \ReflectionProperty(get_class($packageManager), 'activePackages');
-        $reflection->setAccessible(true);
-        $packages = $reflection->getValue($packageManager);
+        $packages = [];
         $packages['base_extension'] = new Package(
             $packageManager,
             'base_extension',
@@ -94,6 +119,9 @@ class AbstractTestBase extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
             'extending_extension',
             realpath($fixtureFolder . 'extending_extension/') . '/'
         );
+
+        $reflection = new \ReflectionProperty(get_class($packageManager), 'activePackages');
+        $reflection->setAccessible(true);
         $reflection->setValue($packageManager, $packages);
 
         $reflection = new \ReflectionProperty(get_class($packageManager), 'packages');

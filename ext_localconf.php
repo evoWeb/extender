@@ -1,5 +1,5 @@
 <?php
-defined('TYPO3_MODE') or die();
+defined('TYPO3_MODE') || die();
 
 call_user_func(function () {
     // Register extender cache
@@ -16,13 +16,11 @@ call_user_func(function () {
         ],
     ];
 
-
     if (class_exists(\Evoweb\Extender\Utility\ClassLoader::class)) {
         \Evoweb\Extender\Utility\ClassLoader::registerAutoloader();
     }
 
-
     // Configure clear cache post processing for extended domain model
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['clearCachePostProc'][] =
-        Evoweb\Extender\Utility\ClassCacheManager::class . '->reBuild';
+        \Evoweb\Extender\Utility\ClassCacheManager::class . '->reBuild';
 });

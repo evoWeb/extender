@@ -1,8 +1,8 @@
 <?php
 namespace Evoweb\Extender\Utility;
 
-/*
- * This file is part of the TYPO3 CMS project.
+/**
+ * This file is developed by evoweb.
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
@@ -10,17 +10,12 @@ namespace Evoweb\Extender\Utility;
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
- *
- * The TYPO3 project - inspiring people to share!
  */
 
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
- * Class \Evoweb\Extender\Utility\ClassCacheManager
- *
- * @author Sebastian Fischer <typo3@evoweb.de>
+ * Class cache manager
  */
 class ClassCacheManager
 {
@@ -73,7 +68,6 @@ class ClassCacheManager
      *
      * @throws \Evoweb\Extender\Exception\FileNotFoundException
      * @throws \TYPO3\CMS\Core\Cache\Exception\InvalidDataException
-     * @return void
      */
     public function reBuild(array $parameters = array())
     {
@@ -101,11 +95,12 @@ class ClassCacheManager
 
                     // Get the files from all other extensions that are extending this domain model
                     if (is_array($entityConfiguration)) {
-                        foreach ($entityConfiguration as $extendingExtension => $extendingFilepath) {
-                            $path = GeneralUtility::getFileAbsFileName($extendingFilepath);
+                        foreach ($entityConfiguration as $extendingExtension => $extendingFilePath) {
+                            $path = GeneralUtility::getFileAbsFileName($extendingFilePath);
                             if (!is_file($path) && !is_numeric($extendingExtension)) {
-                                $path = ExtensionManagementUtility::extPath($extendingExtension) .
-                                    'Classes/Extending/' . $extendingFilepath . '.php';
+                                $path = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath(
+                                    $extendingExtension
+                                ) . 'Classes/Extending/' . $extendingFilePath . '.php';
                             }
                             if (!is_file($path)) {
                                 throw new \Evoweb\Extender\Exception\FileNotFoundException(
@@ -117,7 +112,9 @@ class ClassCacheManager
                     }
 
                     if (count($this->constructorLines)) {
-                        $code .= '    public function __construct()' . LF . '    {' . LF . implode(LF, $this->constructorLines) . LF . '    }' . LF;
+                        $code .= implode(LF, $this->constructorLines) . LF . '    }' . LF;
+                        // reset constructor lines
+                        $this->constructorLines = [];
                     }
 
                     // Close the class definition
@@ -178,8 +175,11 @@ class ClassCacheManager
         if ($removeClassDefinition) {
             $offsetForInnerPart = $classParserInformation['start'];
             if (isset($classParserInformation['eol'])) {
-                $innerPart = array_slice($codeInLines, $classParserInformation['start'],
-                    ($classParserInformation['eol'] - $classParserInformation['start'] - 1));
+                $innerPart = array_slice(
+                    $codeInLines,
+                    $classParserInformation['start'],
+                    ($classParserInformation['eol'] - $classParserInformation['start'] - 1)
+                );
             } else {
                 $innerPart = array_slice($codeInLines, $classParserInformation['start']);
             }
@@ -194,15 +194,20 @@ class ClassCacheManager
         // unset the constructor and save it's lines
         if (isset($classParserInformation['functions']['__construct'])) {
             $constructorInfo = $classParserInformation['functions']['__construct'];
-            for ($i = $constructorInfo['start'] - $offsetForInnerPart; $i < $constructorInfo['end'] - $offsetForInnerPart; $i++) {
-                if (trim($innerPart[$i]) === '{') {
+            if (count($this->constructorLines) > 0) {
+                $start = $constructorInfo['start'] - $offsetForInnerPart;
+                unset($innerPart[$start - 1]);
+            } else {
+                $start = $constructorInfo['start'] - $offsetForInnerPart - 1;
+            }
+            for ($i = $start; $i < $constructorInfo['end'] - $offsetForInnerPart; $i++) {
+                if (trim($innerPart[$i]) === '{' && count($this->constructorLines) > 1) {
                     unset($innerPart[$i]);
                     continue;
                 }
                 $this->constructorLines[] = $innerPart[$i];
                 unset($innerPart[$i]);
             }
-            unset($innerPart[$constructorInfo['start'] - $offsetForInnerPart - 1]);
             unset($innerPart[$constructorInfo['end'] - $offsetForInnerPart]);
         }
 
@@ -227,9 +232,13 @@ class ClassCacheManager
      */
     protected function getPartialInfo($filePath)
     {
-        return '/' . str_repeat('*', 71) . '
- * this is partial from:
- *  ' . str_replace(PATH_site, '', $filePath) . LF . str_repeat('*', 71) . '/' . LF;
+        $comment = [];
+        $comment[] = '/' . str_repeat('*', 71);
+        $comment[] = ' * this is partial from:';
+        $comment[] = ' *  ' . str_replace(PATH_site, '', $filePath);
+        $comment[] = str_repeat('*', 71) . '/' . LF;
+
+        return implode(LF, $comment);
     }
 
     /**
