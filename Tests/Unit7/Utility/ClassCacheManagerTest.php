@@ -761,7 +761,9 @@ class AnotherBlob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
             str_replace('\\', '_', $className);
 
         $fixtureFolder = __DIR__ . '/../../Unit/Fixtures/Extensions/';
-        $basePath = realpath($fixtureFolder . 'base_extension/Classes/Domain/Model/BlobWithStorageAndConstructorArgument.php');
+        $basePath = realpath(
+            $fixtureFolder . 'base_extension/Classes/Domain/Model/BlobWithStorageAndConstructorArgument.php'
+        );
         $extendPath = realpath(
             $fixtureFolder . 'extending_extension/Classes/Extending/Model/BlobWithStorageExtend.php'
         );

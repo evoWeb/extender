@@ -28,7 +28,7 @@ install:
 
 script:
   - >
-    echo "Running unit tests in folder '$UNITTEST_FOLDER' with suite '$UNITTEST_SUITE'";
+    echo "Running $TYPO3_VERSION unit tests in folder '$UNITTEST_FOLDER' with suite '$UNITTEST_SUITE'";
     .Build/bin/phpunit --colors -c $UNITTEST_SUITE $UNITTEST_FOLDER
 
 jobs:

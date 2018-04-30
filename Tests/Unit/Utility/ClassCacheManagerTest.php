@@ -326,9 +326,6 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function reBuild()
     {
-        $this->prepareFixtureClassMap();
-        $this->activateFixtureExtensions();
-
         $className = \Fixture\BaseExtension\Domain\Model\Blob::class;
 
         $cacheBackend = new \TYPO3\CMS\Core\Cache\Backend\FileBackend('production');
@@ -428,9 +425,6 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function reBuildWithStorage()
     {
-        $this->prepareFixtureClassMap();
-        $this->activateFixtureExtensions();
-
         $className = \Fixture\BaseExtension\Domain\Model\BlobWithStorage::class;
 
         $cacheBackend = new \TYPO3\CMS\Core\Cache\Backend\FileBackend('production');
@@ -576,15 +570,11 @@ class BlobWithStorage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $this->assertEquals($expected, $actual);
     }
 
-
     /**
      * @test
      */
     public function reBuildNonStorageWithStorage()
     {
-        $this->prepareFixtureClassMap();
-        $this->activateFixtureExtensions();
-
         $className = \Fixture\BaseExtension\Domain\Model\AnotherBlob::class;
 
         $cacheBackend = new \TYPO3\CMS\Core\Cache\Backend\FileBackend('production');
@@ -711,9 +701,6 @@ class AnotherBlob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function reBuildWithStorageAndConstructorArgument()
     {
-        $this->prepareFixtureClassMap();
-        $this->activateFixtureExtensions();
-
         $className = \Fixture\BaseExtension\Domain\Model\BlobWithStorageAndConstructorArgument::class;
 
         $cacheBackend = new \TYPO3\CMS\Core\Cache\Backend\FileBackend('production');
@@ -727,7 +714,8 @@ class AnotherBlob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
             str_replace('\\', '_', $className);
 
         $basePath = realpath(
-            __DIR__ . '/../Fixtures/Extensions/base_extension/Classes/Domain/Model/BlobWithStorageAndConstructorArgument.php'
+            __DIR__ .
+            '/../Fixtures/Extensions/base_extension/Classes/Domain/Model/BlobWithStorageAndConstructorArgument.php'
         );
         $extendPath = realpath(
             __DIR__ . '/../Fixtures/Extensions/extending_extension/Classes/Extending/Model/BlobWithStorageExtend.php'
