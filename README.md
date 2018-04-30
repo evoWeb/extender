@@ -15,7 +15,7 @@ composer require evoweb/extender
 ### via TYPO3 Extension Repository
 
 Download and install the extension with the extension manger module or directly from the
-[TER](https://typo3.org/extensions/repository/view/extender).
+[TER](https://extensions.typo3.org/extension/extender/).
 
 
 ## Unit testing

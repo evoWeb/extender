@@ -11,18 +11,18 @@ $EM_CONF['extender'] = [
     'state' => 'stable',
     'clearcacheonload' => 1,
     'priority' => 'bottom',
-    'version' => '6.4.6',
+    'version' => '6.4.7',
     'constraints' => [
         'depends' => [
             'php' => '5.5.0-0.0.0',
-            'typo3' => '6.2.10-8.7.99',
+            'typo3' => '6.2.10-9.2.99',
         ],
         'conflicts' => [],
         'suggests' => [],
     ],
-    "autoload-dev" => [
-        "psr-4" => [
-            "Evoweb\\Extender\\Tests\\" => "Tests/",
+    'autoload-dev' => [
+        'psr-4' => [
+            'Evoweb\\Extender\\Tests\\' => 'Tests/',
         ],
     ],
 ];

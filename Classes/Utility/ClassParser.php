@@ -1,6 +1,16 @@
 <?php
-
 namespace Evoweb\Extender\Utility;
+
+/**
+ * This file is developed by evoweb.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ */
 
 /**
  * This file is friendly lent from the "news" Extension for TYPO3 CMS.
@@ -17,16 +27,27 @@ class ClassParser
     const STATE_CLASS_HEAD = 100001;
     const STATE_FUNCTION_HEAD = 100002;
 
+    /**
+     * @return array
+     */
     public function getClasses()
     {
         return $this->classes;
     }
 
+    /**
+     * @return array
+     */
     public function getFirstClass()
     {
         return array_shift($this->classes);
     }
 
+    /**
+     * @param string $interface
+     *
+     * @return array
+     */
     public function getClassesImplementing($interface)
     {
         $implementers = [];
@@ -38,6 +59,11 @@ class ClassParser
         return $implementers;
     }
 
+    /**
+     * @param string $class
+     *
+     * @return array
+     */
     public function getClassesExtending($class)
     {
         $extenders = [];
@@ -49,13 +75,15 @@ class ClassParser
         return $extenders;
     }
 
+    /**
+     * @param string $content
+     */
     public function parse($content)
     {
         $tokens = token_get_all($content);
         $classes = [];
-        $clsc = 0;
+        $classCount = 0;
 
-        $si = null;
         $depth = 0;
         $mod = [];
         $doc = null;
@@ -95,7 +123,6 @@ class ClassParser
                         switch ($state) {
                             case T_CLASS:
                                 $state = self::STATE_CLASS_HEAD;
-                                $si = $token[1];
                                 $classes[] = [
                                     'name' => $token[1],
                                     'modifiers' => $mod,
@@ -105,11 +132,11 @@ class ClassParser
                                 break;
                             case T_FUNCTION:
                                 $state = self::STATE_FUNCTION_HEAD;
-                                $clsc = count($classes);
-                                if ($depth > 0 && $clsc) {
+                                $classCount = count($classes);
+                                if ($depth > 0 && $classCount) {
                                     $inFunction = true;
                                     $functionName = $token[1];
-                                    $classes[$clsc - 1]['functions'][$token[1]] = [
+                                    $classes[$classCount - 1]['functions'][$token[1]] = [
                                         'modifiers' => $mod,
                                         'doc' => $doc,
                                         'start' => $token[2]
@@ -118,8 +145,10 @@ class ClassParser
                                 break;
                             case T_IMPLEMENTS:
                             case T_EXTENDS:
-                                $clsc = count($classes);
-                                $classes[$clsc - 1][$state == T_IMPLEMENTS ? 'implements' : 'extends'][] = $token[1];
+                                $classCount = count($classes);
+                                $classes[$classCount - 1][
+                                    $state == T_IMPLEMENTS ? 'implements' : 'extends'
+                                ][] = $token[1];
                                 break;
                         }
                         break;
@@ -132,7 +161,7 @@ class ClassParser
                         break;
                     case '}':
                         if ($inFunction) {
-                            $classes[$clsc - 1]['functions'][$functionName]['end'] = $lastLine;
+                            $classes[$classCount - 1]['functions'][$functionName]['end'] = $lastLine;
                             $inFunction = false;
                         }
                         $depth--;
