@@ -236,7 +236,7 @@ class ClassCacheManager
         $comment[] = '/' . str_repeat('*', 71);
         $comment[] = ' * this is partial from:';
         $comment[] = ' *  ' . str_replace(PATH_site, '', $filePath);
-        $comment[] = str_repeat('*', 71) . '/';
+        $comment[] = str_repeat('*', 71) . '/' . LF;
 
         return implode(LF, $comment);
     }

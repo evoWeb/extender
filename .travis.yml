@@ -28,12 +28,6 @@ install:
 
 script:
   - >
-    echo;
-    echo "Running php lint";
-    find . -name \*.php ! -path "./.Build/*" | php -d display_errors=stderr -l {} > /dev/null \;
-
-  - >
-    echo;
     echo "Running unit tests in folder '$UNITTEST_FOLDER' with suite '$UNITTEST_SUITE'";
     .Build/bin/phpunit --colors -c $UNITTEST_SUITE $UNITTEST_FOLDER
 
