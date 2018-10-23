@@ -4,7 +4,6 @@
 	"description": "Extending extbase domain models like a pro with extender",
 	"homepage": "http://www.evoweb.de",
 	"license": ["GPL-2.0+"],
-
 	"support" : {
 		"issues" : "https://github.com/evoWeb/extender/issues"
 	},
@@ -13,11 +12,9 @@
 		"extbase",
 		"extending"
 	],
-
 	"require": {
-		"typo3/cms-core": "*"
+		"typo3/cms-core": ">=6.2.10 || ^7 || ^8 || ^9"
 	},
-
 	"autoload": {
 		"psr-4": {
 			"Evoweb\\Extender\\": "Classes/"
@@ -28,7 +25,6 @@
 			"Evoweb\\Extender\\Tests\\": "Tests/"
 		}
 	},
-
 	"config": {
 		"vendor-dir": ".Build/vendor",
 		"bin-dir": ".Build/bin"
