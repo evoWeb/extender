@@ -7,6 +7,11 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 class AbstractTestBase extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
 {
     /**
+     * @var bool
+     */
+    protected $resetSingletonInstances = true;
+
+    /**
      * @var array
      */
     protected $cacheConfiguration = [
