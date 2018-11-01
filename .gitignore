@@ -1,1 +1,5 @@
 .idea/
+
+.Build/bin/
+.Build/Web/
+.Build/vendor/

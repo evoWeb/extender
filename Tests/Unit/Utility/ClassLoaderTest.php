@@ -10,6 +10,8 @@ class ClassLoaderTest extends AbstractTestBase
      */
     public function registerAutoloader()
     {
+        $this->resetSingletonInstances = true;
+
         /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cacheMock */
         $cacheMock = $this->createMock(\TYPO3\CMS\Core\Cache\Frontend\PhpFrontend::class);
 

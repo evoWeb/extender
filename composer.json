@@ -15,7 +15,7 @@
 	],
 
 	"require": {
-		"typo3/cms-core": "*"
+		"typo3/cms-core": "^6.2.10 || ^7.6.0 || ^8.7.0 || ^9.5.0"
 	},
 
 	"autoload": {
