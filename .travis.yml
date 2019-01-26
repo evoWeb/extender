@@ -36,7 +36,7 @@ jobs:
   fast_finish: true
   allow_failures:
     - env:
-        - TYPO3_VERSION="dev-master as 10.0.0" TESTING_FRAMEWORK="~4.10.0" PHPUNIT_VERSION="" UNITTEST_FOLDER="Tests/Unit/" UNITTEST_SUITE=".Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml"
+        - TYPO3_VERSION="dev-master as 10.0.0" TESTING_FRAMEWORK="~4.10.0" PHPUNIT_VERSION="" UNITTEST_FOLDER="Tests/Unit/" UNITTEST_SUITE=".Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml"
 
   include:
     - &lint
@@ -65,23 +65,23 @@ jobs:
     - stage: test
       php: 7.0
       env:
-        - TYPO3_VERSION="^8.7" TESTING_FRAMEWORK="~1.3.0" PHPUNIT_VERSION="" UNITTEST_FOLDER="Tests/Unit/" UNITTEST_SUITE=".Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml"
+        - TYPO3_VERSION="^8.7" TESTING_FRAMEWORK="~1.3.0" PHPUNIT_VERSION="" UNITTEST_FOLDER="Tests/Unit/" UNITTEST_SUITE=".Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml"
     - stage: test
       php: 7.1
       env:
-        - TYPO3_VERSION="^8.7" TESTING_FRAMEWORK="~1.3.0" PHPUNIT_VERSION="" UNITTEST_FOLDER="Tests/Unit/" UNITTEST_SUITE=".Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml"
+        - TYPO3_VERSION="^8.7" TESTING_FRAMEWORK="~1.3.0" PHPUNIT_VERSION="" UNITTEST_FOLDER="Tests/Unit/" UNITTEST_SUITE=".Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml"
     - stage: test
       php: 7.2
       env:
-        - TYPO3_VERSION="^8.7" TESTING_FRAMEWORK="~1.3.0" PHPUNIT_VERSION="" UNITTEST_FOLDER="Tests/Unit/" UNITTEST_SUITE=".Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml"
+        - TYPO3_VERSION="^8.7" TESTING_FRAMEWORK="~1.3.0" PHPUNIT_VERSION="" UNITTEST_FOLDER="Tests/Unit/" UNITTEST_SUITE=".Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml"
     - stage: test
       php: 7.2
       env:
-        - TYPO3_VERSION="^9.5.0" TESTING_FRAMEWORK="~4.10.0" PHPUNIT_VERSION="" UNITTEST_FOLDER="Tests/Unit/" UNITTEST_SUITE=".Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml"
+        - TYPO3_VERSION="^9.5.0" TESTING_FRAMEWORK="~4.10.0" PHPUNIT_VERSION="" UNITTEST_FOLDER="Tests/Unit/" UNITTEST_SUITE=".Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml"
     - stage: test
       php: 7.2
       env:
-        - TYPO3_VERSION="dev-master as 10.0.0" TESTING_FRAMEWORK="~4.10.0" PHPUNIT_VERSION="" UNITTEST_FOLDER="Tests/Unit/" UNITTEST_SUITE=".Build/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml"
+        - TYPO3_VERSION="dev-master as 10.0.0" TESTING_FRAMEWORK="~4.10.0" PHPUNIT_VERSION="" UNITTEST_FOLDER="Tests/Unit/" UNITTEST_SUITE=".Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml"
 
     - stage: publish in ter
       if: tag IS present
