@@ -85,7 +85,7 @@ jobs:
 
     - stage: publish in ter
       if: tag IS present
-      php: 7.0
+      php: 7.2
       before_install: skip
       install: skip
       before_script: skip
