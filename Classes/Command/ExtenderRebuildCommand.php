@@ -14,7 +14,6 @@ namespace Evoweb\Extender\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use TYPO3\CMS\Core\Core\Bootstrap;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -24,7 +23,6 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class ExtenderRebuildCommand extends Command
 {
-
     /**
      * Configure the command by defining the name, options and arguments
      */
@@ -42,6 +40,7 @@ class ExtenderRebuildCommand extends Command
     public function execute(InputInterface $input, OutputInterface $output)
     {
         // Make sure the _cli_ user is loaded
+        /** @noinspection PhpDeprecationInspection */
         Bootstrap::getInstance()->initializeBackendAuthentication();
 
         $classCacheManager = GeneralUtility::makeInstance(
