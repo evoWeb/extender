@@ -42,3 +42,11 @@ filename nothing else need to be configured.
 
 The second extension key is not required but advised to prevent colliding multiple
 extends of one domain model.
+
+::
+
+	$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['store_finder']['extender'][
+		\Evoweb\StoreFinder\Domain\Model\Location::class
+	]['sitepackage'] = \Cp\CpDesign\Domain\Model\Location::class;
+
+In this example the store_finder is the extension and \Evoweb\StoreFinder\Domain\Model\Location the model to extend. Concluding that sitepackage is the extension and \Cp\CpDesign\Domain\Model\Location the model extending it.

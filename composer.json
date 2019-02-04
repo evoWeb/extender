@@ -3,19 +3,24 @@
 	"type": "typo3-cms-extension",
 	"description": "Extending extbase domain models like a pro with extender",
 	"homepage": "http://www.evoweb.de",
-	"license": ["GPL-2.0+"],
+
+	"license": [
+		"GPL-2.0-or-later"
+	],
 
 	"support" : {
 		"issues" : "https://github.com/evoWeb/extender/issues"
 	},
+
 	"keywords": [
 		"TYPO3 CMS",
 		"extbase",
-		"extending"
+		"extending",
+		"domain models"
 	],
 
 	"require": {
-		"typo3/cms-core": "*"
+		"typo3/cms-core": "^6.2 || ^7.6 || ^8.7 || ^9.5"
 	},
 
 	"autoload": {
@@ -30,7 +35,7 @@
 	},
 
 	"config": {
-		"vendor-dir": ".Build/vendor",
+		"vendor-dir": ".Build/Web/vendor",
 		"bin-dir": ".Build/bin"
 	},
 	"extra": {

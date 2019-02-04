@@ -11,6 +11,8 @@ class ClassCacheManagerTest extends AbstractTestBase
      */
     public function parseSingleFile()
     {
+        $this->resetSingletonInstances = true;
+
         /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cacheMock */
         $cacheMock = $this->createMock(\TYPO3\CMS\Core\Cache\Frontend\PhpFrontend::class);
 
