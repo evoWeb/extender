@@ -1,47 +1,48 @@
-.. ==================================================
-.. FOR YOUR INFORMATION
-.. --------------------------------------------------
-.. -*- coding: utf-8 -*- with BOM.
-
 .. include:: Includes.txt
-.. include:: Images.txt
-
 
 .. _start:
 
-============================================
-Extender: Extbase domain models on steroides
-============================================
+=============================================
+Extender: Extbase class extending on steroids
+=============================================
 
-:Extension Key:
-	extender
+:Extension key:
+    extender
+
+:Version:
+    |release|
 
 :Language:
-	en
+    en
+
+:Description:
+    Frontend rendering for TYPO3 CMS.
 
 :Keywords:
-	forDevelopers
+    forDevelopers
 
 :Copyright:
-	2014
+    2014-2019
 
 :Author:
-	Sebastian Fischer
-
-:Email:
-	typo3@evoweb.de
+    evoWeb
 
 :License:
-	Open Content License_
+    Open Content License available from http://www.opencontent.org/opl.shtml
 
 :Rendered:
-	|today|
-
-|img-1| |img-logo| Extender: Extbase domain models on steroides
+    |today|
 
 The content of this document is related to TYPO3,
+a GNU/GPL CMS/Framework available from http://typo3.org
 
-a GNU/GPL CMS/Framework available from www.typo3.org_
+.. only:: html
+
+   .. tip::
+
+      :ref: `Sitemap`
+
+**Table of Contents**
 
 .. toctree::
    :maxdepth: 5
@@ -49,7 +50,6 @@ a GNU/GPL CMS/Framework available from www.typo3.org_
    :glob:
 
    Introduction/Index
+   Installation/Index
    Configuration/Index
-
-.. _License: http://www.opencontent.org/opl.shtml
-.. _www.typo3.org: http://www.typo3.org/
+   Breaking/Index

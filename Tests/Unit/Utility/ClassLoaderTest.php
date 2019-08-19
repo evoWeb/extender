@@ -44,7 +44,7 @@ class ClassLoaderTest extends AbstractTestBase
 
         /** @var \Evoweb\Extender\Utility\ClassLoader $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassLoader::class))
-            ->setMethods(['isExcludedClassName'])
+            ->onlyMethods(['isExcludedClassName'])
             ->setConstructorArgs([$cacheMock])
             ->enableProxyingToOriginalMethods()
             ->getMock();
@@ -63,7 +63,7 @@ class ClassLoaderTest extends AbstractTestBase
 
         /** @var \Evoweb\Extender\Utility\ClassLoader $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassLoader::class))
-            ->setMethods(['getExtensionKey'])
+            ->onlyMethods(['getExtensionKey'])
             ->setConstructorArgs([$cacheMock])
             ->enableProxyingToOriginalMethods()
             ->getMock();
@@ -85,7 +85,7 @@ class ClassLoaderTest extends AbstractTestBase
 
         /** @var \Evoweb\Extender\Utility\ClassLoader $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassLoader::class))
-            ->setMethods(['isValidClassName'])
+            ->onlyMethods(['isValidClassName'])
             ->setConstructorArgs([$cacheMock])
             ->enableProxyingToOriginalMethods()
             ->getMock();
@@ -103,7 +103,7 @@ class ClassLoaderTest extends AbstractTestBase
      */
     public function loadClass()
     {
-        /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend|\PHPUnit_Framework_MockObject_MockObject $cacheMock */
+        /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend|\\PHPUnit\Framework\MockObject\MockObject $cacheMock */
         $cacheMock = $this->getMockBuilder(\TYPO3\CMS\Core\Cache\Frontend\PhpFrontend::class)
             ->disableOriginalConstructor()
             ->disableOriginalClone()

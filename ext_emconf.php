@@ -7,22 +7,17 @@ $EM_CONF['extender'] = [
     'category' => 'misc',
     'author' => 'Sebastian Fischer',
     'author_email' => 'typo3@evoweb.de',
-    'author_company' => 'evoweb',
+    'author_company' => 'evoWeb',
     'state' => 'stable',
-    'clearcacheonload' => 1,
+    'clearCacheOnLoad' => 1,
     'priority' => 'bottom',
-    'version' => '6.6.0',
+    'version' => '7.0.0',
     'constraints' => [
         'depends' => [
-            'php' => '5.5.0-0.0.0',
-            'typo3' => '6.2.10-9.5.99',
+            'php' => '7.2.0-0.0.0',
+            'typo3' => '10.0.0-10.99.99',
         ],
         'conflicts' => [],
         'suggests' => [],
-    ],
-    'autoload-dev' => [
-        'psr-4' => [
-            'Evoweb\\Extender\\Tests\\' => 'Tests/',
-        ],
     ],
 ];

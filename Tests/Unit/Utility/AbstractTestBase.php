@@ -1,6 +1,7 @@
 <?php
 namespace Evoweb\Extender\Tests\Unit\Utility;
 
+use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Package\Package;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -24,7 +25,7 @@ class AbstractTestBase extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
     /**
      * Setup some basic values needed in tests
      */
-    public function setUp()
+    public function setUp(): void
     {
         $this->configureModelExtending();
         $this->prepareFixtureClassMap();
@@ -40,19 +41,19 @@ class AbstractTestBase extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['extender'] = $this->cacheConfiguration;
 
         $className = \Fixture\BaseExtension\Domain\Model\Blob::class;
-        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['base_extension']['extender'][$className] = [
+        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['base_extension']['extender'][$className] = [
             'extending_extension' => 'Model/BlobExtend',
         ];
         $className = \Fixture\BaseExtension\Domain\Model\AnotherBlob::class;
-        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['base_extension']['extender'][$className] = [
+        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['base_extension']['extender'][$className] = [
             'extending_extension' => 'Model/BlobWithStorageExtend',
         ];
         $className = \Fixture\BaseExtension\Domain\Model\BlobWithStorage::class;
-        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['base_extension']['extender'][$className] = [
+        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['base_extension']['extender'][$className] = [
             'extending_extension' => 'Model/BlobWithStorageExtend',
         ];
         $className = \Fixture\BaseExtension\Domain\Model\BlobWithStorageAndConstructorArgument::class;
-        $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['base_extension']['extender'][$className] = [
+        $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['base_extension']['extender'][$className] = [
             'extending_extension' => 'Model/BlobWithStorageExtend',
         ];
     }
@@ -62,7 +63,7 @@ class AbstractTestBase extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     protected function prepareFixtureClassMap()
     {
-        $classLoaderFilePath = TYPO3_PATH_PACKAGES . 'autoload.php';
+        $classLoaderFilePath = Environment::getProjectPath() . '/vendor/autoload.php';
         /* @noinspection PhpIncludeInspection */
         $composerClassLoader = require $classLoaderFilePath;
         \TYPO3\CMS\Core\Core\Bootstrap::getInstance()
