@@ -43,24 +43,10 @@ class ClassCacheManager
      */
     public function __construct($classCache = null)
     {
-        if (is_null($classCache)) {
-            /**
-             * Cache manager
-             *
-             * @var \TYPO3\CMS\Core\Cache\CacheManager $cacheManager
-             */
-            $cacheManager = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Cache\CacheManager::class);
-            // Set configuration in case some cache settings are not loaded by now.
-            $cacheManager->setCacheConfigurations($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']);
-            /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cache */
-            $classCache = $cacheManager->getCache('extender');
-        }
-
         $this->classCache = $classCache;
 
         try {
-            $this->composerClassLoader = \TYPO3\CMS\Core\Core\Bootstrap::getInstance()
-                ->getEarlyInstance(\Composer\Autoload\ClassLoader::class);
+            $this->composerClassLoader = GeneralUtility::getContainer()->get(\Composer\Autoload\ClassLoader::class);
         } catch (\Exception $exception) {
             if (PHP_SAPI === 'cli') {
                 $autoloaderFolders = [
@@ -99,7 +85,7 @@ class ClassCacheManager
                 && isset($GLOBALS['BE_USER'])
             )
         ) {
-            foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTCONF'] as $extensionKey => $extensionConfiguration) {
+            foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS'] as $extensionKey => $extensionConfiguration) {
                 if (!isset($extensionConfiguration['extender']) || !is_array($extensionConfiguration['extender'])) {
                     continue;
                 }
@@ -144,10 +130,30 @@ class ClassCacheManager
                     // Add the new file to the class cache
                     $cacheEntryIdentifier = GeneralUtility::underscoredToLowerCamelCase($extensionKey) . '_' .
                         str_replace('\\', '_', $entity);
-                    $this->classCache->set($cacheEntryIdentifier, $code);
+                    $this->getClassCache()->set($cacheEntryIdentifier, $code);
                 }
             }
         }
+    }
+
+    /**
+     * @return \TYPO3\CMS\Core\Cache\Frontend\FrontendInterface|\TYPO3\CMS\Core\Cache\Frontend\PhpFrontend|null
+     */
+    protected function getClassCache(): \TYPO3\CMS\Core\Cache\Frontend\FrontendInterface
+    {
+        if (is_null($this->classCache)) {
+            /**
+             * Cache manager
+             *
+             * @var \TYPO3\CMS\Core\Cache\CacheManager $cacheManager
+             */
+            $cacheManager = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Cache\CacheManager::class);
+            // Set configuration in case some cache settings are not loaded by now.
+            $cacheManager->setCacheConfigurations($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']);
+            /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cache */
+            $this->classCache = $cacheManager->getCache('extender');
+        }
+        return $this->classCache;
     }
 
     /**
@@ -256,7 +262,7 @@ class ClassCacheManager
         $comment = [];
         $comment[] = '/' . str_repeat('*', 71);
         $comment[] = ' * this is partial from:';
-        $comment[] = ' *  ' . str_replace(PATH_site, '', $filePath);
+        $comment[] = ' *  ' . str_replace(\TYPO3\CMS\Core\Core\Environment::getPublicPath() . '/', '', $filePath);
         $comment[] = str_repeat('*', 71) . '/' . LF;
 
         return implode(LF, $comment);

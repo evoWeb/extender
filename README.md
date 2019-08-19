@@ -20,12 +20,7 @@ Download and install the extension with the extension manger module or directly 
 
 ## Unit testing
 
-### Setup in TYPO3 7.6
-![Unittesting in TYPO3 7][unit7]
-
 ### Setup in TYPO3 8.7
 ![Unittesting in TYPO3 8][unit8]
 
-
-[unit7]: Documentation/Images/unittesting_typo3_7.png
 [unit8]: Documentation/Images/unittesting_typo3_8.png

@@ -43,10 +43,5 @@ runUnitTests () {
 
 cd ../;
 
-runUnitTests "/usr/bin/php5.6" "^7.6.0" "" "~4.8.0" "Tests/Unit7/" ".Build/Web/typo3/sysext/core/Build/UnitTests.xml" "mysqli";
-runUnitTests "/usr/bin/php7.2" "^7.6.0" "" "~4.8.0" "Tests/Unit7/" ".Build/Web/typo3/sysext/core/Build/UnitTests.xml" "mysqli";
-runUnitTests "/usr/bin/php7.0" "^8.7.0" "~1.3.0" "" "Tests/Unit/" ".Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml" "mysqli";
-runUnitTests "/usr/bin/php7.1" "^8.7.0" "~1.3.0" "" "Tests/Unit/" ".Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml" "mysqli";
-runUnitTests "/usr/bin/php7.2" "^8.7.0" "~1.3.0" "" "Tests/Unit/" ".Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml" "mysqli";
-runUnitTests "/usr/bin/php7.2" "^9.5.0" "~4.10.0" "" "Tests/Unit/" ".Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml" "pdo_sqlite";
-runUnitTests "/usr/bin/php7.2" "dev-master as 10.0.0" "~4.10.0" "" "Tests/Unit/" ".Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml" "pdo_sqlite";
+runUnitTests "/usr/bin/php7.2" "^10.0.0" "~5.0.11" "" "Tests/Unit/" ".Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml" "pdo_sqlite";
+runUnitTests "/usr/bin/php7.2" "dev-master as 10.0.0" "~5.0.11" "" "Tests/Unit/" ".Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml" "pdo_sqlite";

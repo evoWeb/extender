@@ -1,6 +1,7 @@
 <?php
 namespace Evoweb\Extender\Tests\Unit\Utility;
 
+use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
 
@@ -18,7 +19,7 @@ class ClassCacheManagerTest extends AbstractTestBase
 
         /** @var \Evoweb\Extender\Utility\ClassCacheManager $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassCacheManager::class))
-            ->setMethods(['parseSingleFile'])
+            ->onlyMethods(['parseSingleFile'])
             ->setConstructorArgs([$cacheMock])
             ->enableProxyingToOriginalMethods()
             ->getMock();
@@ -27,7 +28,7 @@ class ClassCacheManagerTest extends AbstractTestBase
 
         $expected = '/***********************************************************************
  * this is partial from:
- *  ' . str_replace(PATH_site, '', $filePath) . '
+ *  ' . str_replace(Environment::getPublicPath() . '/', '', $filePath) . '
 ***********************************************************************/
     /**
      * @var string
@@ -74,7 +75,7 @@ class ClassCacheManagerTest extends AbstractTestBase
 
         /** @var \Evoweb\Extender\Utility\ClassCacheManager|AccessibleObjectInterface $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassCacheManager::class))
-            ->setMethods(['parseSingleFile', '_get'])
+            ->onlyMethods(['parseSingleFile', '_get'])
             ->setConstructorArgs([$cacheMock])
             ->enableProxyingToOriginalMethods()
             ->getMock();
@@ -85,7 +86,7 @@ class ClassCacheManagerTest extends AbstractTestBase
 
         $expected = '/***********************************************************************
  * this is partial from:
- *  ' . str_replace(PATH_site, '', $filePath) . '
+ *  ' . str_replace(Environment::getPublicPath() . '/', '', $filePath) . '
 ***********************************************************************/
     /**
      * @var string
@@ -165,7 +166,7 @@ class ClassCacheManagerTest extends AbstractTestBase
 
         /** @var \Evoweb\Extender\Utility\ClassCacheManager|AccessibleObjectInterface $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassCacheManager::class))
-            ->setMethods(['parseSingleFile', '_get'])
+            ->onlyMethods(['parseSingleFile', '_get'])
             ->setConstructorArgs([$cacheMock])
             ->enableProxyingToOriginalMethods()
             ->getMock();
@@ -176,7 +177,7 @@ class ClassCacheManagerTest extends AbstractTestBase
 
         $expected = '/***********************************************************************
  * this is partial from:
- *  ' . str_replace(PATH_site, '', $filePath) . '
+ *  ' . str_replace(Environment::getPublicPath() . '/', '', $filePath) . '
 ***********************************************************************/
     /**
      * @var string
@@ -247,7 +248,7 @@ class ClassCacheManagerTest extends AbstractTestBase
 
         /** @var \Evoweb\Extender\Utility\ClassCacheManager $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassCacheManager::class))
-            ->setMethods(['changeCode'])
+            ->onlyMethods(['changeCode'])
             ->setConstructorArgs([$cacheMock])
             ->enableProxyingToOriginalMethods()
             ->getMock();
@@ -289,7 +290,7 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
         /** @var \Evoweb\Extender\Utility\ClassCacheManager $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassCacheManager::class))
-            ->setMethods(['getPartialInfo'])
+            ->onlyMethods(['getPartialInfo'])
             ->setConstructorArgs([$cacheMock])
             ->enableProxyingToOriginalMethods()
             ->getMock();
@@ -312,7 +313,7 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
         /** @var \Evoweb\Extender\Utility\ClassCacheManager $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassCacheManager::class))
-            ->setMethods(['closeClassDefinition'])
+            ->onlyMethods(['closeClassDefinition'])
             ->setConstructorArgs([$cacheMock])
             ->enableProxyingToOriginalMethods()
             ->getMock();
@@ -348,7 +349,7 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $expected = '<?php
 /***********************************************************************
  * this is partial from:
- *  ' . str_replace(PATH_site, '', $basePath) . '
+ *  ' . str_replace(Environment::getPublicPath() . '/', '', $basePath) . '
 ***********************************************************************/
 
 namespace Fixture\BaseExtension\Domain\Model;
@@ -384,7 +385,7 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
 /***********************************************************************
  * this is partial from:
- *  ' . str_replace(PATH_site, '', $extendPath) . '
+ *  ' . str_replace(Environment::getPublicPath() . '/', '', $extendPath) . '
 ***********************************************************************/
     /**
      * @var int
@@ -449,7 +450,7 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $expected = '<?php
 /***********************************************************************
  * this is partial from:
- *  ' . str_replace(PATH_site, '', $basePath) . '
+ *  ' . str_replace(Environment::getPublicPath() . '/', '', $basePath) . '
 ***********************************************************************/
 
 namespace Fixture\BaseExtension\Domain\Model;
@@ -507,7 +508,7 @@ class BlobWithStorage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
 /***********************************************************************
  * this is partial from:
- *  ' . str_replace(PATH_site, '', $extendPath) . '
+ *  ' . str_replace(Environment::getPublicPath() . '/', '', $extendPath) . '
 ***********************************************************************/
     /**
      * @var int
@@ -598,7 +599,7 @@ class BlobWithStorage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $expected = '<?php
 /***********************************************************************
  * this is partial from:
- *  ' . str_replace(PATH_site, '', $basePath) . '
+ *  ' . str_replace(Environment::getPublicPath() . '/', '', $basePath) . '
 ***********************************************************************/
 
 namespace Fixture\BaseExtension\Domain\Model;
@@ -634,7 +635,7 @@ class AnotherBlob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
 /***********************************************************************
  * this is partial from:
- *  ' . str_replace(PATH_site, '', $extendPath) . '
+ *  ' . str_replace(Environment::getPublicPath() . '/', '', $extendPath) . '
 ***********************************************************************/
     /**
      * @var int
@@ -726,7 +727,7 @@ class AnotherBlob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $expected = '<?php
 /***********************************************************************
  * this is partial from:
- *  ' . str_replace(PATH_site, '', $basePath) . '
+ *  ' . str_replace(Environment::getPublicPath() . '/', '', $basePath) . '
 ***********************************************************************/
 
 namespace Fixture\BaseExtension\Domain\Model;
@@ -784,7 +785,7 @@ class BlobWithStorageAndConstructorArgument extends \TYPO3\CMS\Extbase\DomainObj
 
 /***********************************************************************
  * this is partial from:
- *  ' . str_replace(PATH_site, '', $extendPath) . '
+ *  ' . str_replace(Environment::getPublicPath() . '/', '', $extendPath) . '
 ***********************************************************************/
     /**
      * @var int

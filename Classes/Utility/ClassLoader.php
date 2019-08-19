@@ -42,35 +42,36 @@ class ClassLoader implements \TYPO3\CMS\Core\SingletonInterface
      */
     public static function registerAutoloader()
     {
-        /**
-         * Cache manager
-         *
-         * @var \TYPO3\CMS\Core\Cache\CacheManager $cacheManager
-         */
-        $cacheManager = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Cache\CacheManager::class);
-        // Set configuration in case some cache settings are not loaded by now.
-        $cacheManager->setCacheConfigurations($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']);
-        /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cache */
-        $cache = $cacheManager->getCache('extender');
-
-        spl_autoload_register(array(new self($cache), 'loadClass'), true, true);
+        spl_autoload_register([new self(), 'loadClass'], true, true);
     }
 
     /**
      * ClassLoader constructor.
      *
-     * @param \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $classCache
+     * @param \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend|null $classCache
      */
-    public function __construct($classCache)
+    public function __construct($classCache = null)
     {
         $this->classCache = $classCache;
     }
 
     /**
-     * @return \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend
+     * @return \TYPO3\CMS\Core\Cache\Frontend\FrontendInterface|\TYPO3\CMS\Core\Cache\Frontend\PhpFrontend|null
      */
-    public function getClassCache()
+    protected function getClassCache(): \TYPO3\CMS\Core\Cache\Frontend\FrontendInterface
     {
+        if (is_null($this->classCache)) {
+            /**
+             * Cache manager
+             *
+             * @var \TYPO3\CMS\Core\Cache\CacheManager $cacheManager
+             */
+            $cacheManager = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Cache\CacheManager::class);
+            // Set configuration in case some cache settings are not loaded by now.
+            $cacheManager->setCacheConfigurations($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']);
+            /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cache */
+            $this->classCache = $cacheManager->getCache('extender');
+        }
         return $this->classCache;
     }
 
@@ -99,8 +100,8 @@ class ClassLoader implements \TYPO3\CMS\Core\SingletonInterface
         $cacheEntryIdentifier = GeneralUtility::underscoredToLowerCamelCase($extensionKey) . '_' .
             str_replace('\\', '_', $className);
 
-        if ($this->classCache) {
-            if (!$this->classCache->has($cacheEntryIdentifier)) {
+        if ($this->getClassCache()) {
+            if (!$this->getClassCache()->has($cacheEntryIdentifier)) {
                 /**
                  * Class cache manager
                  *
@@ -108,11 +109,11 @@ class ClassLoader implements \TYPO3\CMS\Core\SingletonInterface
                  */
                 $classCacheManager = GeneralUtility::makeInstance(
                     \Evoweb\Extender\Utility\ClassCacheManager::class,
-                    $this->classCache
+                    $this->getClassCache()
                 );
                 $classCacheManager->reBuild();
             }
-            $this->classCache->requireOnce($cacheEntryIdentifier);
+            $this->getClassCache()->requireOnce($cacheEntryIdentifier);
             return true;
         }
 
@@ -173,8 +174,8 @@ class ClassLoader implements \TYPO3\CMS\Core\SingletonInterface
         $oldClassnamePart = substr(strtolower($className), 0, 5);
 
         $extensionConfiguration = array();
-        if (isset($GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$extensionKey])) {
-            $extensionConfiguration = (array) $GLOBALS['TYPO3_CONF_VARS']['EXTCONF'][$extensionKey];
+        if (isset($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS'][$extensionKey])) {
+            $extensionConfiguration = (array) $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS'][$extensionKey];
         }
 
         return (bool) preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9\\\\_\x7f-\xff]*$/', $className)
