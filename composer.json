@@ -33,7 +33,7 @@
 	},
 
 	"config": {
-		"vendor-dir": ".Build/Web/vendor",
+		"vendor-dir": "vendor",
 		"bin-dir": ".Build/bin"
 	},
 	"extra": {
