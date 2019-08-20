@@ -1,7 +1,6 @@
 <?php
 namespace Evoweb\Extender\Tests\Unit\Utility;
 
-use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Package\Package;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
@@ -63,11 +62,7 @@ class AbstractTestBase extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     protected function prepareFixtureClassMap()
     {
-        $classLoaderFilePath = Environment::getProjectPath() . '/vendor/autoload.php';
-        /* @noinspection PhpIncludeInspection */
-        $composerClassLoader = require $classLoaderFilePath;
-        \TYPO3\CMS\Core\Core\Bootstrap::getInstance()
-            ->setEarlyInstance(get_class($composerClassLoader), $composerClassLoader);
+        $composerClassLoader = GeneralUtility::getContainer()->get(\Composer\Autoload\ClassLoader::class);
 
         $baseFolder = __DIR__ . '/../Fixtures/Extensions/base_extension/Classes/Domain/';
         $extendingFolder = __DIR__ . '/../Fixtures/Extensions/extending_extension/Classes/Extending/';
