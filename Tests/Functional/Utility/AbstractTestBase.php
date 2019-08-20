@@ -1,10 +1,10 @@
 <?php
-namespace Evoweb\Extender\Tests\Unit\Utility;
+namespace Evoweb\Extender\Tests\Functional\Utility;
 
 use TYPO3\CMS\Core\Package\Package;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-class AbstractTestBase extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
+class AbstractTestBase extends \TYPO3\TestingFramework\Core\Functional\FunctionalTestCase
 {
     /**
      * @var array
@@ -26,6 +26,7 @@ class AbstractTestBase extends \TYPO3\TestingFramework\Core\Unit\UnitTestCase
      */
     public function setUp(): void
     {
+        parent::setUp();
         $this->configureModelExtending();
         $this->prepareFixtureClassMap();
         $this->activateFixtureExtensions();

@@ -1,5 +1,5 @@
 <?php
-namespace Evoweb\Extender\Tests\Unit\Utility;
+namespace Evoweb\Extender\Tests\Functional\Utility;
 
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -12,8 +12,6 @@ class ClassCacheManagerTest extends AbstractTestBase
      */
     public function parseSingleFile()
     {
-        $this->resetSingletonInstances = true;
-
         /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cacheMock */
         $cacheMock = $this->createMock(\TYPO3\CMS\Core\Cache\Frontend\PhpFrontend::class);
 

@@ -1,5 +1,5 @@
 <?php
-namespace Evoweb\Extender\Tests\Unit\Utility;
+namespace Evoweb\Extender\Tests\Functional\Utility;
 
 use Evoweb\Extender\Utility\ClassLoader;
 
@@ -10,18 +10,16 @@ class ClassLoaderTest extends AbstractTestBase
      */
     public function registerAutoloader()
     {
-        $this->resetSingletonInstances = true;
-
         /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cacheMock */
         $cacheMock = $this->createMock(\TYPO3\CMS\Core\Cache\Frontend\PhpFrontend::class);
 
         $subject = new \Evoweb\Extender\Utility\ClassLoader($cacheMock);
         $subject::registerAutoloader();
 
-        $autoloaders = spl_autoload_functions();
+        $autoLoaders = spl_autoload_functions();
 
         $condition = true;
-        foreach ($autoloaders as $autoloader) {
+        foreach ($autoLoaders as $autoloader) {
             $classLoader = $autoloader[0];
             if ((is_string($classLoader) && $classLoader == ClassLoader::class)
                 || (is_object($classLoader) && get_class($classLoader) == ClassLoader::class)

@@ -37,7 +37,7 @@ jobs:
   fast_finish: true
   allow_failures:
     - env:
-        - TYPO3_VERSION="dev-master as 10.0.0" TESTING_FRAMEWORK="~4.10.0" UNITTEST_FOLDER="Tests/Unit/" UNITTEST_SUITE="vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml"
+        - TYPO3_VERSION="dev-master as 10.0.0" TESTING_FRAMEWORK="~4.10.0" UNITTEST_FOLDER="Tests/Unit/" UNITTEST_SUITE="vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml"
 
   include:
     - &lint
@@ -56,15 +56,15 @@ jobs:
     - stage: test
       php: 7.3
       env:
-        - TYPO3_VERSION="^10.0.0" TESTING_FRAMEWORK="~5.0.11" UNITTEST_FOLDER="Tests/Unit/" UNITTEST_SUITE="vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml"
+        - TYPO3_VERSION="^10.0.0" TESTING_FRAMEWORK="~5.0.11" UNITTEST_FOLDER="Tests/Unit/" UNITTEST_SUITE="vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml"
     - stage: test
       php: 7.2
       env:
-        - TYPO3_VERSION="^10.0.0" TESTING_FRAMEWORK="~5.0.11" UNITTEST_FOLDER="Tests/Unit/" UNITTEST_SUITE="vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml"
+        - TYPO3_VERSION="^10.0.0" TESTING_FRAMEWORK="~5.0.11" UNITTEST_FOLDER="Tests/Unit/" UNITTEST_SUITE="vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml"
     - stage: test
       php: 7.2
       env:
-        - TYPO3_VERSION="dev-master as 10.0.0" TESTING_FRAMEWORK="~5.0.11" UNITTEST_FOLDER="Tests/Unit/" UNITTEST_SUITE="vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml"
+        - TYPO3_VERSION="dev-master as 10.0.0" TESTING_FRAMEWORK="~5.0.11" UNITTEST_FOLDER="Tests/Unit/" UNITTEST_SUITE="vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml"
 
     - stage: publish in ter
       if: tag IS present
