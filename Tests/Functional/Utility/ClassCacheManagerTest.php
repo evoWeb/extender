@@ -170,7 +170,7 @@ class ClassCacheManagerTest extends AbstractTestBase
             ->getMock();
 
         $filePath = realpath(
-            __DIR__ . '/../../Unit/Fixtures/Extensions/base_extension/Classes/Domain/Model/BlobWithStorageNotPsr2.php'
+            __DIR__ . '/../Fixtures/Extensions/base_extension/Classes/Domain/Model/BlobWithStorageNotPsr2.php'
         );
 
         $expected = '/***********************************************************************
