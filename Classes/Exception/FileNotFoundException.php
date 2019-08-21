@@ -1,8 +1,9 @@
 <?php
+declare(strict_types = 1);
 namespace Evoweb\Extender\Exception;
 
-/**
- * This file is developed by evoweb.
+/*
+ * This file is part of the "extender" Extension for TYPO3 CMS.
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2

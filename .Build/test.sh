@@ -13,7 +13,7 @@ runUnitTests () {
     ${PHP} ${COMPOSER} --version
 
     export TYPO3_PATH_WEB=${PWD}/.Build/Web;
-    ${PHP} ${COMPOSER} require typo3/cms-core="${TYPO3_VERSION}";
+    ${PHP} ${COMPOSER} require -n -q --dev typo3/cms-core="${TYPO3_VERSION}";
     if [ ! -z "${TESTING_FRAMEWORK}" ]; then ${PHP} ${COMPOSER} require -n -q --dev typo3/testing-framework="${TESTING_FRAMEWORK}"; fi;
     git checkout composer.json;
 

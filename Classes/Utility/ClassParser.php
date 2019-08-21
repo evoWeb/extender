@@ -1,8 +1,9 @@
 <?php
+declare(strict_types = 1);
 namespace Evoweb\Extender\Utility;
 
-/**
- * This file is developed by evoweb.
+/*
+ * This file is part of the "extender" Extension for TYPO3 CMS.
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
@@ -20,35 +21,42 @@ namespace Evoweb\Extender\Utility;
  */
 class ClassParser
 {
-    private $classes = [];
-    private $extends = [];
-    private $implements = [];
-
+    /**
+     * @var int
+     */
     const STATE_CLASS_HEAD = 100001;
+
+    /**
+     * @var int
+     */
     const STATE_FUNCTION_HEAD = 100002;
 
     /**
-     * @return array
+     * @var array
      */
-    public function getClasses()
+    private $classes = [];
+
+    /**
+     * @var array
+     */
+    private $extends = [];
+
+    /**
+     * @var array
+     */
+    private $implements = [];
+
+    public function getClasses(): array
     {
         return $this->classes;
     }
 
-    /**
-     * @return array
-     */
-    public function getFirstClass()
+    public function getFirstClass(): array
     {
         return array_shift($this->classes);
     }
 
-    /**
-     * @param string $interface
-     *
-     * @return array
-     */
-    public function getClassesImplementing($interface)
+    public function getClassesImplementing(string $interface): array
     {
         $implementers = [];
         if (isset($this->implements[$interface])) {
@@ -59,26 +67,18 @@ class ClassParser
         return $implementers;
     }
 
-    /**
-     * @param string $class
-     *
-     * @return array
-     */
-    public function getClassesExtending($class)
+    public function getClassesExtending(string $className): array
     {
         $extenders = [];
-        if (isset($this->extends[$class])) {
-            foreach ($this->extends[$class] as $name) {
+        if (isset($this->extends[$className])) {
+            foreach ($this->extends[$className] as $name) {
                 $extenders[$name] = $this->classes[$name];
             }
         }
         return $extenders;
     }
 
-    /**
-     * @param string $content
-     */
-    public function parse($content)
+    public function parse(string $content)
     {
         $tokens = token_get_all($content);
         $classes = [];

@@ -1,8 +1,9 @@
 <?php
+declare(strict_types = 1);
 namespace Evoweb\Extender\Utility;
 
-/**
- * This file is developed by evoweb.
+/*
+ * This file is part of the "extender" Extension for TYPO3 CMS.
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
@@ -147,10 +148,9 @@ class ClassCacheManager
      * @return string path of the saved file
      * @throws \InvalidArgumentException
      */
-    protected function parseSingleFile($filePath, $removeClassDefinition = true)
+    protected function parseSingleFile(string $filePath, bool $removeClassDefinition = true): string
     {
         $code = GeneralUtility::getUrl($filePath);
-
         return $this->changeCode($code, $filePath, $removeClassDefinition);
     }
 
@@ -159,14 +159,18 @@ class ClassCacheManager
      *
      * @param string $code
      * @param string $filePath
-     * @param boolean $removeClassDefinition
-     * @param boolean $renderPartialInfo
+     * @param bool $removeClassDefinition
+     * @param bool $renderPartialInfo
      *
      * @return string
      * @throws \InvalidArgumentException
      */
-    protected function changeCode($code, $filePath, $removeClassDefinition = true, $renderPartialInfo = true)
-    {
+    protected function changeCode(
+        string $code,
+        string $filePath,
+        bool $removeClassDefinition = true,
+        bool $renderPartialInfo = true
+    ): string {
         if (empty($code)) {
             throw new \InvalidArgumentException(sprintf('File "%s" could not be fetched or is empty', $filePath));
         }
@@ -237,7 +241,7 @@ class ClassCacheManager
      *
      * @return string
      */
-    protected function getPartialInfo($filePath)
+    protected function getPartialInfo(string $filePath): string
     {
         $comment = [];
         $comment[] = '/' . str_repeat('*', 71);
@@ -255,7 +259,7 @@ class ClassCacheManager
      *
      * @return string
      */
-    protected function closeClassDefinition($code)
+    protected function closeClassDefinition(string $code): string
     {
         return $code . LF . '}';
     }

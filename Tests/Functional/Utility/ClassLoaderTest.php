@@ -54,14 +54,14 @@ class ClassLoaderTest extends AbstractTestBase
     /**
      * @test
      */
-    public function getExtensionKey()
+    public function getExtensionKeyFromNamespace()
     {
         /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cacheMock */
         $cacheMock = $this->createMock(\TYPO3\CMS\Core\Cache\Frontend\PhpFrontend::class);
 
         /** @var \Evoweb\Extender\Utility\ClassLoader $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassLoader::class))
-            ->onlyMethods(['getExtensionKey'])
+            ->onlyMethods(['getExtensionKeyFromNamespace'])
             ->setConstructorArgs([$cacheMock])
             ->enableProxyingToOriginalMethods()
             ->getMock();
@@ -69,7 +69,7 @@ class ClassLoaderTest extends AbstractTestBase
         /** @noinspection PhpUndefinedMethodInspection */
         $this->assertEquals(
             'base_extension',
-            $subject->_call('getExtensionKey', 'Fixture\BaseExtension\Domain\Model\Blob')
+            $subject->_call('getExtensionKeyFromNamespace', 'Fixture\BaseExtension\Domain\Model\Blob')
         );
     }
 
@@ -90,7 +90,7 @@ class ClassLoaderTest extends AbstractTestBase
 
         $className = \Fixture\BaseExtension\Domain\Model\Blob::class;
         /** @noinspection PhpUndefinedMethodInspection */
-        $extension = $subject->_call('getExtensionKey', $className);
+        $extension = $subject->_call('getExtensionKeyFromNamespace', $className);
 
         /** @noinspection PhpUndefinedMethodInspection */
         $this->assertTrue($subject->_call('isValidClassName', $className, $extension));
