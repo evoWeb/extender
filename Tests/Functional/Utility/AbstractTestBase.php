@@ -9,6 +9,13 @@ class AbstractTestBase extends \TYPO3\TestingFramework\Core\Functional\Functiona
     /**
      * @var array
      */
+    protected $testExtensionsToLoad = [
+        'typo3conf/ext/extender',
+    ];
+
+    /**
+     * @var array
+     */
     protected $cacheConfiguration = [
         'frontend' => \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend::class,
         'backend' => \TYPO3\CMS\Core\Cache\Backend\FileBackend::class,
