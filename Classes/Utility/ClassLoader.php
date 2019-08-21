@@ -108,8 +108,7 @@ class ClassLoader implements \TYPO3\CMS\Core\SingletonInterface
                  * @var \Evoweb\Extender\Utility\ClassCacheManager $classCacheManager
                  */
                 $classCacheManager = GeneralUtility::makeInstance(
-                    \Evoweb\Extender\Utility\ClassCacheManager::class,
-                    $this->getClassCache()
+                    \Evoweb\Extender\Utility\ClassCacheManager::class
                 );
                 $classCacheManager->reBuild();
             }

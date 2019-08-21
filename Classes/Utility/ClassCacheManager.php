@@ -12,6 +12,8 @@ namespace Evoweb\Extender\Utility;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Composer\Autoload\ClassLoader;
+use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -27,9 +29,14 @@ class ClassCacheManager
     protected $classCache;
 
     /**
-     * @var \Composer\Autoload\ClassLoader
+     * @var ClassLoader
      */
     protected $composerClassLoader;
+
+    /**
+     * @var CacheManager
+     */
+    protected $cacheManager;
 
     /**
      * @var array
@@ -39,33 +46,15 @@ class ClassCacheManager
     /**
      * Constructor
      *
-     * @param \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $classCache
+     * @param ClassLoader $composerClassLoader
+     * @param CacheManager $cacheManager
      */
-    public function __construct($classCache = null)
-    {
-        $this->classCache = $classCache;
-
-        try {
-            $this->composerClassLoader = GeneralUtility::getContainer()->get(\Composer\Autoload\ClassLoader::class);
-        } catch (\Exception $exception) {
-            if (PHP_SAPI === 'cli') {
-                $autoloaderFolders = [
-                    trim(shell_exec('pwd')) . '/vendor/',
-                    __DIR__ . '/../vendor/'
-                ];
-                foreach ($autoloaderFolders as $autoloaderFolder) {
-                    if (file_exists($autoloaderFolder . 'autoload.php')) {
-                        $classLoaderFilePath = $autoloaderFolder . 'autoload.php';
-                        /* @noinspection PhpIncludeInspection */
-                        $this->composerClassLoader = require $classLoaderFilePath;
-                    }
-                }
-            }
-
-            if (empty($this->composerClassLoader)) {
-                throw $exception;
-            }
-        }
+    public function __construct(
+        ClassLoader $composerClassLoader,
+        CacheManager $cacheManager
+    ) {
+        $this->composerClassLoader = $composerClassLoader;
+        $this->cacheManager = $cacheManager;
     }
 
     /**
@@ -142,16 +131,7 @@ class ClassCacheManager
     protected function getClassCache(): \TYPO3\CMS\Core\Cache\Frontend\FrontendInterface
     {
         if (is_null($this->classCache)) {
-            /**
-             * Cache manager
-             *
-             * @var \TYPO3\CMS\Core\Cache\CacheManager $cacheManager
-             */
-            $cacheManager = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Cache\CacheManager::class);
-            // Set configuration in case some cache settings are not loaded by now.
-            $cacheManager->setCacheConfigurations($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']);
-            /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cache */
-            $this->classCache = $cacheManager->getCache('extender');
+            $this->classCache = $this->cacheManager->getCache('extender');
         }
         return $this->classCache;
     }
