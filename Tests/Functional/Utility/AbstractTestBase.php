@@ -44,7 +44,7 @@ class AbstractTestBase extends \TYPO3\TestingFramework\Core\Functional\Functiona
      */
     protected function configureModelExtending()
     {
-        // normally this is set in ext_localconf
+        // normally this would be set in ext_localconf
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['extender'] = $this->cacheConfiguration;
 
         $className = \Fixture\BaseExtension\Domain\Model\Blob::class;
