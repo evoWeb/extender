@@ -2,6 +2,7 @@
 namespace Evoweb\Extender\Tests\Functional\Utility;
 
 use Evoweb\Extender\Utility\ClassLoader;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class ClassLoaderTest extends AbstractTestBase
 {
@@ -12,8 +13,9 @@ class ClassLoaderTest extends AbstractTestBase
     {
         /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cacheMock */
         $cacheMock = $this->createMock(\TYPO3\CMS\Core\Cache\Frontend\PhpFrontend::class);
+        $classCacheManager = new \Evoweb\Extender\Utility\ClassCacheManager($cacheMock, GeneralUtility::getContainer()->get(\Composer\Autoload\ClassLoader::class));
 
-        $subject = new \Evoweb\Extender\Utility\ClassLoader($cacheMock);
+        $subject = new \Evoweb\Extender\Utility\ClassLoader($cacheMock, $classCacheManager);
         $subject::registerAutoloader();
 
         $autoLoaders = spl_autoload_functions();
@@ -39,11 +41,12 @@ class ClassLoaderTest extends AbstractTestBase
     {
         /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cacheMock */
         $cacheMock = $this->createMock(\TYPO3\CMS\Core\Cache\Frontend\PhpFrontend::class);
+        $classCacheManager = new \Evoweb\Extender\Utility\ClassCacheManager($cacheMock, GeneralUtility::getContainer()->get(\Composer\Autoload\ClassLoader::class));
 
         /** @var \Evoweb\Extender\Utility\ClassLoader $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassLoader::class))
             ->onlyMethods(['isExcludedClassName'])
-            ->setConstructorArgs([$cacheMock])
+            ->setConstructorArgs([$cacheMock, $classCacheManager])
             ->enableProxyingToOriginalMethods()
             ->getMock();
 
@@ -58,11 +61,12 @@ class ClassLoaderTest extends AbstractTestBase
     {
         /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cacheMock */
         $cacheMock = $this->createMock(\TYPO3\CMS\Core\Cache\Frontend\PhpFrontend::class);
+        $classCacheManager = new \Evoweb\Extender\Utility\ClassCacheManager($cacheMock, GeneralUtility::getContainer()->get(\Composer\Autoload\ClassLoader::class));
 
         /** @var \Evoweb\Extender\Utility\ClassLoader $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassLoader::class))
             ->onlyMethods(['getExtensionKeyFromNamespace'])
-            ->setConstructorArgs([$cacheMock])
+            ->setConstructorArgs([$cacheMock, $classCacheManager])
             ->enableProxyingToOriginalMethods()
             ->getMock();
 
@@ -80,11 +84,12 @@ class ClassLoaderTest extends AbstractTestBase
     {
         /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cacheMock */
         $cacheMock = $this->createMock(\TYPO3\CMS\Core\Cache\Frontend\PhpFrontend::class);
+        $classCacheManager = new \Evoweb\Extender\Utility\ClassCacheManager($cacheMock, GeneralUtility::getContainer()->get(\Composer\Autoload\ClassLoader::class));
 
         /** @var \Evoweb\Extender\Utility\ClassLoader $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassLoader::class))
             ->onlyMethods(['isValidClassName'])
-            ->setConstructorArgs([$cacheMock])
+            ->setConstructorArgs([$cacheMock, $classCacheManager])
             ->enableProxyingToOriginalMethods()
             ->getMock();
 
@@ -112,7 +117,9 @@ class ClassLoaderTest extends AbstractTestBase
         $cacheMock->expects($this->any())->method('has')->will($this->returnValue(true));
         $cacheMock->expects($this->any())->method('requireOnce')->will($this->returnValue(true));
 
-        $subject = new \Evoweb\Extender\Utility\ClassLoader($cacheMock);
+        $classCacheManager = new \Evoweb\Extender\Utility\ClassCacheManager($cacheMock, GeneralUtility::getContainer()->get(\Composer\Autoload\ClassLoader::class));
+
+        $subject = new \Evoweb\Extender\Utility\ClassLoader($cacheMock, $classCacheManager);
 
         $className = \Fixture\BaseExtension\Domain\Model\Blob::class;
         $condition = $subject->loadClass($className);
