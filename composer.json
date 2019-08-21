@@ -18,7 +18,7 @@
 	],
 
 	"require": {
-		"typo3/cms-core": "^10.0"
+		"typo3/cms-core": "dev-master as 10.0.0"
 	},
 
 	"autoload": {
@@ -33,7 +33,7 @@
 	},
 
 	"config": {
-		"vendor-dir": "vendor",
+		"vendor-dir": ".Build/vendor",
 		"bin-dir": ".Build/bin"
 	},
 	"extra": {
@@ -42,5 +42,8 @@
 			"cms-package-dir": "{$vendor-dir}/typo3/cms",
 			"web-dir": ".Build/Web"
 		}
+	},
+	"require-dev": {
+		"typo3/testing-framework": "~5.0.11"
 	}
 }
