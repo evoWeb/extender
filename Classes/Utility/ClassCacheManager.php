@@ -45,10 +45,8 @@ class ClassCacheManager
      * @param PhpFrontend $classCache
      * @param ClassLoader $composerClassLoader
      */
-    public function __construct(
-        PhpFrontend $classCache,
-        ClassLoader $composerClassLoader
-    ) {
+    public function __construct(PhpFrontend $classCache, ClassLoader $composerClassLoader)
+    {
         $this->classCache = $classCache;
         $this->composerClassLoader = $composerClassLoader;
     }

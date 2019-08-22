@@ -13,7 +13,10 @@ class ClassLoaderTest extends AbstractTestBase
     {
         /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cacheMock */
         $cacheMock = $this->createMock(\TYPO3\CMS\Core\Cache\Frontend\PhpFrontend::class);
-        $classCacheManager = new \Evoweb\Extender\Utility\ClassCacheManager($cacheMock, GeneralUtility::getContainer()->get(\Composer\Autoload\ClassLoader::class));
+        $classCacheManager = new \Evoweb\Extender\Utility\ClassCacheManager(
+            $cacheMock,
+            GeneralUtility::getContainer()->get(\Composer\Autoload\ClassLoader::class)
+        );
 
         $subject = new \Evoweb\Extender\Utility\ClassLoader($cacheMock, $classCacheManager);
         $subject::registerAutoloader();
@@ -41,7 +44,10 @@ class ClassLoaderTest extends AbstractTestBase
     {
         /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cacheMock */
         $cacheMock = $this->createMock(\TYPO3\CMS\Core\Cache\Frontend\PhpFrontend::class);
-        $classCacheManager = new \Evoweb\Extender\Utility\ClassCacheManager($cacheMock, GeneralUtility::getContainer()->get(\Composer\Autoload\ClassLoader::class));
+        $classCacheManager = new \Evoweb\Extender\Utility\ClassCacheManager(
+            $cacheMock,
+            GeneralUtility::getContainer()->get(\Composer\Autoload\ClassLoader::class)
+        );
 
         /** @var \Evoweb\Extender\Utility\ClassLoader $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassLoader::class))
@@ -61,7 +67,10 @@ class ClassLoaderTest extends AbstractTestBase
     {
         /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cacheMock */
         $cacheMock = $this->createMock(\TYPO3\CMS\Core\Cache\Frontend\PhpFrontend::class);
-        $classCacheManager = new \Evoweb\Extender\Utility\ClassCacheManager($cacheMock, GeneralUtility::getContainer()->get(\Composer\Autoload\ClassLoader::class));
+        $classCacheManager = new \Evoweb\Extender\Utility\ClassCacheManager(
+            $cacheMock,
+            GeneralUtility::getContainer()->get(\Composer\Autoload\ClassLoader::class)
+        );
 
         /** @var \Evoweb\Extender\Utility\ClassLoader $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassLoader::class))
@@ -84,7 +93,10 @@ class ClassLoaderTest extends AbstractTestBase
     {
         /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cacheMock */
         $cacheMock = $this->createMock(\TYPO3\CMS\Core\Cache\Frontend\PhpFrontend::class);
-        $classCacheManager = new \Evoweb\Extender\Utility\ClassCacheManager($cacheMock, GeneralUtility::getContainer()->get(\Composer\Autoload\ClassLoader::class));
+        $classCacheManager = new \Evoweb\Extender\Utility\ClassCacheManager(
+            $cacheMock,
+            GeneralUtility::getContainer()->get(\Composer\Autoload\ClassLoader::class)
+        );
 
         /** @var \Evoweb\Extender\Utility\ClassLoader $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassLoader::class))
@@ -106,7 +118,7 @@ class ClassLoaderTest extends AbstractTestBase
      */
     public function loadClass()
     {
-        /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend|\\PHPUnit\Framework\MockObject\MockObject $cacheMock */
+        /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend|\PHPUnit\Framework\MockObject\MockObject $cacheMock */
         $cacheMock = $this->getMockBuilder(\TYPO3\CMS\Core\Cache\Frontend\PhpFrontend::class)
             ->disableOriginalConstructor()
             ->disableOriginalClone()
@@ -117,7 +129,10 @@ class ClassLoaderTest extends AbstractTestBase
         $cacheMock->expects($this->any())->method('has')->will($this->returnValue(true));
         $cacheMock->expects($this->any())->method('requireOnce')->will($this->returnValue(true));
 
-        $classCacheManager = new \Evoweb\Extender\Utility\ClassCacheManager($cacheMock, GeneralUtility::getContainer()->get(\Composer\Autoload\ClassLoader::class));
+        $classCacheManager = new \Evoweb\Extender\Utility\ClassCacheManager(
+            $cacheMock,
+            GeneralUtility::getContainer()->get(\Composer\Autoload\ClassLoader::class)
+        );
 
         $subject = new \Evoweb\Extender\Utility\ClassLoader($cacheMock, $classCacheManager);
 

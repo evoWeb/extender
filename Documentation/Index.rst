@@ -53,3 +53,4 @@ a GNU/GPL CMS/Framework available from http://typo3.org
    Installation/Index
    Configuration/Index
    Breaking/Index
+   Testing/Index

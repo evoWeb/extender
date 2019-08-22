@@ -1,5 +1,5 @@
 <?php
-namespace Fixture\ExtendingExtension\Extending\Model;
+namespace Fixture\ExtendingExtension\Domain\Model;
 
 class BlobWithStorageExtend extends \Fixture\BaseExtension\Domain\Model\BlobWithStorage
 {
@@ -32,8 +32,6 @@ class BlobWithStorageExtend extends \Fixture\BaseExtension\Domain\Model\BlobWith
      * Setter for otherProperty
      *
      * @param int $otherProperty
-     *
-     * @return void
      */
     public function setOtherProperty($otherProperty)
     {

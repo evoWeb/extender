@@ -1,5 +1,5 @@
 <?php
-namespace Fixture\ExtendingExtension\Extending\Model;
+namespace Fixture\ExtendingExtension\Domain\Model;
 
 class BlobExtend extends \Fixture\BaseExtension\Domain\Model\Blob
 {
@@ -22,8 +22,6 @@ class BlobExtend extends \Fixture\BaseExtension\Domain\Model\Blob
      * Setter for otherProperty
      *
      * @param int $otherProperty
-     *
-     * @return void
      */
     public function setOtherProperty($otherProperty)
     {

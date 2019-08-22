@@ -2,7 +2,6 @@
 namespace Evoweb\Extender\Tests\Functional\Utility;
 
 use Composer\Autoload\ClassLoader;
-use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
@@ -51,8 +50,6 @@ class ClassCacheManagerTest extends AbstractTestBase
      * Setter for property
      *
      * @param string $property
-     *
-     * @return void
      */
     public function setProperty($property)
     {
@@ -117,8 +114,6 @@ class ClassCacheManagerTest extends AbstractTestBase
      * Setter for property
      *
      * @param string $property
-     *
-     * @return void
      */
     public function setProperty($property)
     {
@@ -201,7 +196,8 @@ class ClassCacheManagerTest extends AbstractTestBase
      *
      * @return string
      */
-    public function getProperty() {
+    public function getProperty()
+    {
         return $this->property;
     }
 
@@ -209,31 +205,33 @@ class ClassCacheManagerTest extends AbstractTestBase
      * Setter for property
      *
      * @param string $property
-     *
-     * @return void
      */
-    public function setProperty($property) {
+    public function setProperty($property)
+    {
         $this->property = $property;
     }
 
     /**
      * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
      */
-    public function getStorage() {
+    public function getStorage()
+    {
         return $this->storage;
     }
 
     /**
      * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $storage
      */
-    public function setStorage($storage) {
+    public function setStorage($storage)
+    {
         $this->storage = $storage;
     }
 
 ';
 
         $expectedConstructorLines = [
-            '    public function __construct() {',
+            '    public function __construct()',
+            '    {',
             '        $this->storage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();'
         ];
 
@@ -357,7 +355,7 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
         $basePath = realpath(__DIR__ . '/../Fixtures/Extensions/base_extension/Classes/Domain/Model/Blob.php');
         $extendPath = realpath(
-            __DIR__ . '/../Fixtures/Extensions/extending_extension/Classes/Extending/Model/BlobExtend.php'
+            __DIR__ . '/../Fixtures/Extensions/extending_extension/Classes/Domain/Model/BlobExtend.php'
         );
 
         $expected = '<?php
@@ -389,8 +387,6 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * Setter for property
      *
      * @param string $property
-     *
-     * @return void
      */
     public function setProperty($property)
     {
@@ -420,8 +416,6 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * Setter for otherProperty
      *
      * @param int $otherProperty
-     *
-     * @return void
      */
     public function setOtherProperty($otherProperty)
     {
@@ -460,7 +454,7 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
             __DIR__ . '/../Fixtures/Extensions/base_extension/Classes/Domain/Model/BlobWithStorage.php'
         );
         $extendPath = realpath(
-            __DIR__ . '/../Fixtures/Extensions/extending_extension/Classes/Extending/Model/BlobWithStorageExtend.php'
+            __DIR__ . '/../Fixtures/Extensions/extending_extension/Classes/Domain/Model/BlobWithStorageExtend.php'
         );
 
         $expected = '<?php
@@ -498,8 +492,6 @@ class BlobWithStorage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * Setter for property
      *
      * @param string $property
-     *
-     * @return void
      */
     public function setProperty($property)
     {
@@ -551,8 +543,6 @@ class BlobWithStorage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * Setter for otherProperty
      *
      * @param int $otherProperty
-     *
-     * @return void
      */
     public function setOtherProperty($otherProperty)
     {
@@ -611,7 +601,7 @@ class BlobWithStorage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $fixtureFolder = __DIR__ . '/../Fixtures/Extensions/';
         $basePath = realpath($fixtureFolder . 'base_extension/Classes/Domain/Model/AnotherBlob.php');
         $extendPath = realpath(
-            $fixtureFolder . 'extending_extension/Classes/Extending/Model/BlobWithStorageExtend.php'
+            $fixtureFolder . 'extending_extension/Classes/Domain/Model/BlobWithStorageExtend.php'
         );
 
         $expected = '<?php
@@ -643,8 +633,6 @@ class AnotherBlob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * Setter for property
      *
      * @param string $property
-     *
-     * @return void
      */
     public function setProperty($property)
     {
@@ -680,8 +668,6 @@ class AnotherBlob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * Setter for otherProperty
      *
      * @param int $otherProperty
-     *
-     * @return void
      */
     public function setOtherProperty($otherProperty)
     {
@@ -741,7 +727,7 @@ class AnotherBlob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
             '/../Fixtures/Extensions/base_extension/Classes/Domain/Model/BlobWithStorageAndConstructorArgument.php'
         );
         $extendPath = realpath(
-            __DIR__ . '/../Fixtures/Extensions/extending_extension/Classes/Extending/Model/BlobWithStorageExtend.php'
+            __DIR__ . '/../Fixtures/Extensions/extending_extension/Classes/Domain/Model/BlobWithStorageExtend.php'
         );
 
         $expected = '<?php
@@ -779,8 +765,6 @@ class BlobWithStorageAndConstructorArgument extends \TYPO3\CMS\Extbase\DomainObj
      * Setter for property
      *
      * @param string $property
-     *
-     * @return void
      */
     public function setProperty($property)
     {
@@ -832,8 +816,6 @@ class BlobWithStorageAndConstructorArgument extends \TYPO3\CMS\Extbase\DomainObj
      * Setter for otherProperty
      *
      * @param int $otherProperty
-     *
-     * @return void
      */
     public function setOtherProperty($otherProperty)
     {

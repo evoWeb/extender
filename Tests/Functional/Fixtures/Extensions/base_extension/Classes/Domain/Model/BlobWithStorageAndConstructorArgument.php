@@ -33,8 +33,6 @@ class BlobWithStorageAndConstructorArgument extends \TYPO3\CMS\Extbase\DomainObj
      * Setter for property
      *
      * @param string $property
-     *
-     * @return void
      */
     public function setProperty($property)
     {

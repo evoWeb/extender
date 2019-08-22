@@ -84,7 +84,6 @@ class ClassLoader implements \TYPO3\CMS\Core\SingletonInterface
             $cacheEntryIdentifier = GeneralUtility::underscoredToLowerCamelCase($extensionKey)
                 . '_' . str_replace('\\', '_', $className);
 
-
             if (!$this->classCache->has($cacheEntryIdentifier)) {
                 $this->classCacheManager->reBuild();
             }
