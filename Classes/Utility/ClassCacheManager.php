@@ -14,7 +14,7 @@ namespace Evoweb\Extender\Utility;
  */
 
 use Composer\Autoload\ClassLoader;
-use TYPO3\CMS\Core\Cache\CacheManager;
+use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -25,7 +25,7 @@ class ClassCacheManager
     /**
      * Cache instance
      *
-     * @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend
+     * @var PhpFrontend
      */
     protected $classCache;
 
@@ -35,11 +35,6 @@ class ClassCacheManager
     protected $composerClassLoader;
 
     /**
-     * @var CacheManager
-     */
-    protected $cacheManager;
-
-    /**
      * @var array
      */
     protected $constructorLines = [];
@@ -47,15 +42,15 @@ class ClassCacheManager
     /**
      * Constructor
      *
+     * @param PhpFrontend $classCache
      * @param ClassLoader $composerClassLoader
-     * @param CacheManager $cacheManager
      */
     public function __construct(
-        ClassLoader $composerClassLoader,
-        CacheManager $cacheManager
+        PhpFrontend $classCache,
+        ClassLoader $composerClassLoader
     ) {
+        $this->classCache = $classCache;
         $this->composerClassLoader = $composerClassLoader;
-        $this->cacheManager = $cacheManager;
     }
 
     /**
@@ -120,21 +115,10 @@ class ClassCacheManager
                     // Add the new file to the class cache
                     $cacheEntryIdentifier = GeneralUtility::underscoredToLowerCamelCase($extensionKey) . '_' .
                         str_replace('\\', '_', $entity);
-                    $this->getClassCache()->set($cacheEntryIdentifier, $code);
+                    $this->classCache->set($cacheEntryIdentifier, $code);
                 }
             }
         }
-    }
-
-    /**
-     * @return \TYPO3\CMS\Core\Cache\Frontend\FrontendInterface|\TYPO3\CMS\Core\Cache\Frontend\PhpFrontend|null
-     */
-    protected function getClassCache(): \TYPO3\CMS\Core\Cache\Frontend\FrontendInterface
-    {
-        if (is_null($this->classCache)) {
-            $this->classCache = $this->cacheManager->getCache('extender');
-        }
-        return $this->classCache;
     }
 
     /**
