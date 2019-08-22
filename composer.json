@@ -18,7 +18,7 @@
 	],
 
 	"require": {
-		"typo3/cms-core": "dev-master as 10.0.0"
+		"typo3/cms-core": "^10.0.0"
 	},
 
 	"autoload": {
