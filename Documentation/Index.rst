@@ -16,7 +16,7 @@ Extender: Extbase class extending on steroids
     en
 
 :Description:
-    Frontend rendering for TYPO3 CMS.
+    Makes extending classes fully transparent
 
 :Keywords:
     forDevelopers

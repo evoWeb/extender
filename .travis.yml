@@ -85,7 +85,6 @@ jobs:
             # Set version number from tag
             sed -i "s/version' => '.*'/version' => '${TRAVIS_TAG}'/" ext_emconf.php
 
-            ls -la;
             # Upload
             TAG_MESSAGE=`git tag -n10 -l $TRAVIS_TAG | sed 's/^[0-9.]*[ ]*//g'`
             echo "Uploading release ${TRAVIS_TAG} to TER"
