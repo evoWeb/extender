@@ -1,8 +1,9 @@
 <?php
+declare(strict_types = 1);
 namespace Evoweb\Extender\Utility;
 
-/**
- * This file is developed by evoweb.
+/*
+ * This file is part of the "extender" Extension for TYPO3 CMS.
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
@@ -12,6 +13,8 @@ namespace Evoweb\Extender\Utility;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Composer\Autoload\ClassLoader;
+use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -22,12 +25,12 @@ class ClassCacheManager
     /**
      * Cache instance
      *
-     * @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend
+     * @var PhpFrontend
      */
     protected $classCache;
 
     /**
-     * @var \Composer\Autoload\ClassLoader
+     * @var ClassLoader
      */
     protected $composerClassLoader;
 
@@ -39,33 +42,13 @@ class ClassCacheManager
     /**
      * Constructor
      *
-     * @param \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $classCache
+     * @param PhpFrontend $classCache
+     * @param ClassLoader $composerClassLoader
      */
-    public function __construct($classCache = null)
+    public function __construct(PhpFrontend $classCache, ClassLoader $composerClassLoader)
     {
         $this->classCache = $classCache;
-
-        try {
-            $this->composerClassLoader = GeneralUtility::getContainer()->get(\Composer\Autoload\ClassLoader::class);
-        } catch (\Exception $exception) {
-            if (PHP_SAPI === 'cli') {
-                $autoloaderFolders = [
-                    trim(shell_exec('pwd')) . '/vendor/',
-                    __DIR__ . '/../vendor/'
-                ];
-                foreach ($autoloaderFolders as $autoloaderFolder) {
-                    if (file_exists($autoloaderFolder . 'autoload.php')) {
-                        $classLoaderFilePath = $autoloaderFolder . 'autoload.php';
-                        /* @noinspection PhpIncludeInspection */
-                        $this->composerClassLoader = require $classLoaderFilePath;
-                    }
-                }
-            }
-
-            if (empty($this->composerClassLoader)) {
-                throw $exception;
-            }
-        }
+        $this->composerClassLoader = $composerClassLoader;
     }
 
     /**
@@ -130,30 +113,10 @@ class ClassCacheManager
                     // Add the new file to the class cache
                     $cacheEntryIdentifier = GeneralUtility::underscoredToLowerCamelCase($extensionKey) . '_' .
                         str_replace('\\', '_', $entity);
-                    $this->getClassCache()->set($cacheEntryIdentifier, $code);
+                    $this->classCache->set($cacheEntryIdentifier, $code);
                 }
             }
         }
-    }
-
-    /**
-     * @return \TYPO3\CMS\Core\Cache\Frontend\FrontendInterface|\TYPO3\CMS\Core\Cache\Frontend\PhpFrontend|null
-     */
-    protected function getClassCache(): \TYPO3\CMS\Core\Cache\Frontend\FrontendInterface
-    {
-        if (is_null($this->classCache)) {
-            /**
-             * Cache manager
-             *
-             * @var \TYPO3\CMS\Core\Cache\CacheManager $cacheManager
-             */
-            $cacheManager = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Cache\CacheManager::class);
-            // Set configuration in case some cache settings are not loaded by now.
-            $cacheManager->setCacheConfigurations($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']);
-            /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cache */
-            $this->classCache = $cacheManager->getCache('extender');
-        }
-        return $this->classCache;
     }
 
     /**
@@ -167,10 +130,9 @@ class ClassCacheManager
      * @return string path of the saved file
      * @throws \InvalidArgumentException
      */
-    protected function parseSingleFile($filePath, $removeClassDefinition = true)
+    protected function parseSingleFile(string $filePath, bool $removeClassDefinition = true): string
     {
         $code = GeneralUtility::getUrl($filePath);
-
         return $this->changeCode($code, $filePath, $removeClassDefinition);
     }
 
@@ -179,14 +141,18 @@ class ClassCacheManager
      *
      * @param string $code
      * @param string $filePath
-     * @param boolean $removeClassDefinition
-     * @param boolean $renderPartialInfo
+     * @param bool $removeClassDefinition
+     * @param bool $renderPartialInfo
      *
      * @return string
      * @throws \InvalidArgumentException
      */
-    protected function changeCode($code, $filePath, $removeClassDefinition = true, $renderPartialInfo = true)
-    {
+    protected function changeCode(
+        string $code,
+        string $filePath,
+        bool $removeClassDefinition = true,
+        bool $renderPartialInfo = true
+    ): string {
         if (empty($code)) {
             throw new \InvalidArgumentException(sprintf('File "%s" could not be fetched or is empty', $filePath));
         }
@@ -257,7 +223,7 @@ class ClassCacheManager
      *
      * @return string
      */
-    protected function getPartialInfo($filePath)
+    protected function getPartialInfo(string $filePath): string
     {
         $comment = [];
         $comment[] = '/' . str_repeat('*', 71);
@@ -275,7 +241,7 @@ class ClassCacheManager
      *
      * @return string
      */
-    protected function closeClassDefinition($code)
+    protected function closeClassDefinition(string $code): string
     {
         return $code . LF . '}';
     }

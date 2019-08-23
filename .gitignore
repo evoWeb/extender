@@ -2,5 +2,6 @@
 .Build/bin/**
 .Build/vendor/**
 .Build/Web/**
+vendor
 composer.*
 !composer.json

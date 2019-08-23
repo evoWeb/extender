@@ -18,7 +18,10 @@
 	],
 
 	"require": {
-		"typo3/cms-core": "^10.0"
+		"typo3/cms-core": "^10.0.0"
+	},
+	"require-dev": {
+		"typo3/testing-framework": "~5.0.11"
 	},
 
 	"autoload": {
@@ -33,7 +36,7 @@
 	},
 
 	"config": {
-		"vendor-dir": ".Build/Web/vendor",
+		"vendor-dir": ".Build/vendor",
 		"bin-dir": ".Build/bin"
 	},
 	"extra": {
@@ -42,5 +45,9 @@
 			"cms-package-dir": "{$vendor-dir}/typo3/cms",
 			"web-dir": ".Build/Web"
 		}
+	},
+
+	"scripts": {
+		"post-autoload-dump": "mkdir -p .Build/Web/typo3conf/ext/ && ln -snf ../../../.. .Build/Web/typo3conf/ext/extender"
 	}
 }

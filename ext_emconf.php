@@ -15,7 +15,7 @@ $EM_CONF['extender'] = [
     'constraints' => [
         'depends' => [
             'php' => '7.2.0-0.0.0',
-            'typo3' => '10.0.0-10.99.99',
+            'typo3' => '10.0.0-10.1.99',
         ],
         'conflicts' => [],
         'suggests' => [],

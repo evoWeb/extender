@@ -28,14 +28,15 @@ before_script:
 
 script:
   - >
-    echo "Running $TYPO3_VERSION unit tests in folder '$UNITTEST_FOLDER' with suite '$UNITTEST_SUITE'";
-    .Build/bin/phpunit --colors -c $UNITTEST_SUITE $UNITTEST_FOLDER
+    echo "Running $TYPO3_VERSION functional tests";
+    export typo3DatabaseDriver="pdo_sqlite";
+    php .Build/bin/phpunit --colors -c .Build/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml Tests/Functional/;
 
 jobs:
   fast_finish: true
   allow_failures:
     - env:
-        - TYPO3_VERSION="dev-master as 10.0.0" TESTING_FRAMEWORK="~4.10.0" UNITTEST_FOLDER="Tests/Unit/" UNITTEST_SUITE=".Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml"
+        - TYPO3_VERSION="dev-master as 10.0.0" TESTING_FRAMEWORK="~5.0.11"
 
   include:
     - &lint
@@ -54,15 +55,15 @@ jobs:
     - stage: test
       php: 7.3
       env:
-        - TYPO3_VERSION="^10.0.0" TESTING_FRAMEWORK="~5.0.11" UNITTEST_FOLDER="Tests/Unit/" UNITTEST_SUITE=".Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml"
+        - TYPO3_VERSION="^10.0.0" TESTING_FRAMEWORK="~5.0.11"
     - stage: test
       php: 7.2
       env:
-        - TYPO3_VERSION="^10.0.0" TESTING_FRAMEWORK="~5.0.11" UNITTEST_FOLDER="Tests/Unit/" UNITTEST_SUITE=".Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml"
+        - TYPO3_VERSION="^10.0.0" TESTING_FRAMEWORK="~5.0.11"
     - stage: test
       php: 7.2
       env:
-        - TYPO3_VERSION="dev-master as 10.0.0" TESTING_FRAMEWORK="~5.0.11" UNITTEST_FOLDER="Tests/Unit/" UNITTEST_SUITE=".Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/UnitTests.xml"
+        - TYPO3_VERSION="dev-master as 10.0.0" TESTING_FRAMEWORK="~5.0.11"
 
     - stage: publish in ter
       if: tag IS present

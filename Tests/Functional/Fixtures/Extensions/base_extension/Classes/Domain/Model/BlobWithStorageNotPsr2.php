@@ -1,7 +1,7 @@
 <?php
 namespace Fixture\BaseExtension\Domain\Model;
 
-class BlobWithStorageAndConstructorArgument extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+class BlobWithStorageNotPsr2 extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
     /**
      * @var string
@@ -13,9 +13,8 @@ class BlobWithStorageAndConstructorArgument extends \TYPO3\CMS\Extbase\DomainObj
      */
     protected $storage = '';
 
-    public function __construct($property = '')
+    public function __construct()
     {
-        $this->property = $property;
         $this->storage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
     }
 
@@ -33,8 +32,6 @@ class BlobWithStorageAndConstructorArgument extends \TYPO3\CMS\Extbase\DomainObj
      * Setter for property
      *
      * @param string $property
-     *
-     * @return void
      */
     public function setProperty($property)
     {

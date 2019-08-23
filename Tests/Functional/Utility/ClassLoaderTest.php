@@ -1,7 +1,8 @@
 <?php
-namespace Evoweb\Extender\Tests\Unit\Utility;
+namespace Evoweb\Extender\Tests\Functional\Utility;
 
 use Evoweb\Extender\Utility\ClassLoader;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class ClassLoaderTest extends AbstractTestBase
 {
@@ -10,18 +11,20 @@ class ClassLoaderTest extends AbstractTestBase
      */
     public function registerAutoloader()
     {
-        $this->resetSingletonInstances = true;
-
         /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cacheMock */
         $cacheMock = $this->createMock(\TYPO3\CMS\Core\Cache\Frontend\PhpFrontend::class);
+        $classCacheManager = new \Evoweb\Extender\Utility\ClassCacheManager(
+            $cacheMock,
+            GeneralUtility::getContainer()->get(\Composer\Autoload\ClassLoader::class)
+        );
 
-        $subject = new \Evoweb\Extender\Utility\ClassLoader($cacheMock);
+        $subject = new \Evoweb\Extender\Utility\ClassLoader($cacheMock, $classCacheManager);
         $subject::registerAutoloader();
 
-        $autoloaders = spl_autoload_functions();
+        $autoLoaders = spl_autoload_functions();
 
         $condition = true;
-        foreach ($autoloaders as $autoloader) {
+        foreach ($autoLoaders as $autoloader) {
             $classLoader = $autoloader[0];
             if ((is_string($classLoader) && $classLoader == ClassLoader::class)
                 || (is_object($classLoader) && get_class($classLoader) == ClassLoader::class)
@@ -41,11 +44,15 @@ class ClassLoaderTest extends AbstractTestBase
     {
         /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cacheMock */
         $cacheMock = $this->createMock(\TYPO3\CMS\Core\Cache\Frontend\PhpFrontend::class);
+        $classCacheManager = new \Evoweb\Extender\Utility\ClassCacheManager(
+            $cacheMock,
+            GeneralUtility::getContainer()->get(\Composer\Autoload\ClassLoader::class)
+        );
 
         /** @var \Evoweb\Extender\Utility\ClassLoader $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassLoader::class))
             ->onlyMethods(['isExcludedClassName'])
-            ->setConstructorArgs([$cacheMock])
+            ->setConstructorArgs([$cacheMock, $classCacheManager])
             ->enableProxyingToOriginalMethods()
             ->getMock();
 
@@ -56,22 +63,26 @@ class ClassLoaderTest extends AbstractTestBase
     /**
      * @test
      */
-    public function getExtensionKey()
+    public function getExtensionKeyFromNamespace()
     {
         /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cacheMock */
         $cacheMock = $this->createMock(\TYPO3\CMS\Core\Cache\Frontend\PhpFrontend::class);
+        $classCacheManager = new \Evoweb\Extender\Utility\ClassCacheManager(
+            $cacheMock,
+            GeneralUtility::getContainer()->get(\Composer\Autoload\ClassLoader::class)
+        );
 
         /** @var \Evoweb\Extender\Utility\ClassLoader $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassLoader::class))
-            ->onlyMethods(['getExtensionKey'])
-            ->setConstructorArgs([$cacheMock])
+            ->onlyMethods(['getExtensionKeyFromNamespace'])
+            ->setConstructorArgs([$cacheMock, $classCacheManager])
             ->enableProxyingToOriginalMethods()
             ->getMock();
 
         /** @noinspection PhpUndefinedMethodInspection */
         $this->assertEquals(
             'base_extension',
-            $subject->_call('getExtensionKey', 'Fixture\BaseExtension\Domain\Model\Blob')
+            $subject->_call('getExtensionKeyFromNamespace', 'Fixture\BaseExtension\Domain\Model\Blob')
         );
     }
 
@@ -82,17 +93,21 @@ class ClassLoaderTest extends AbstractTestBase
     {
         /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cacheMock */
         $cacheMock = $this->createMock(\TYPO3\CMS\Core\Cache\Frontend\PhpFrontend::class);
+        $classCacheManager = new \Evoweb\Extender\Utility\ClassCacheManager(
+            $cacheMock,
+            GeneralUtility::getContainer()->get(\Composer\Autoload\ClassLoader::class)
+        );
 
         /** @var \Evoweb\Extender\Utility\ClassLoader $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassLoader::class))
             ->onlyMethods(['isValidClassName'])
-            ->setConstructorArgs([$cacheMock])
+            ->setConstructorArgs([$cacheMock, $classCacheManager])
             ->enableProxyingToOriginalMethods()
             ->getMock();
 
         $className = \Fixture\BaseExtension\Domain\Model\Blob::class;
         /** @noinspection PhpUndefinedMethodInspection */
-        $extension = $subject->_call('getExtensionKey', $className);
+        $extension = $subject->_call('getExtensionKeyFromNamespace', $className);
 
         /** @noinspection PhpUndefinedMethodInspection */
         $this->assertTrue($subject->_call('isValidClassName', $className, $extension));
@@ -103,7 +118,7 @@ class ClassLoaderTest extends AbstractTestBase
      */
     public function loadClass()
     {
-        /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend|\\PHPUnit\Framework\MockObject\MockObject $cacheMock */
+        /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend|\PHPUnit\Framework\MockObject\MockObject $cacheMock */
         $cacheMock = $this->getMockBuilder(\TYPO3\CMS\Core\Cache\Frontend\PhpFrontend::class)
             ->disableOriginalConstructor()
             ->disableOriginalClone()
@@ -114,7 +129,12 @@ class ClassLoaderTest extends AbstractTestBase
         $cacheMock->expects($this->any())->method('has')->will($this->returnValue(true));
         $cacheMock->expects($this->any())->method('requireOnce')->will($this->returnValue(true));
 
-        $subject = new \Evoweb\Extender\Utility\ClassLoader($cacheMock);
+        $classCacheManager = new \Evoweb\Extender\Utility\ClassCacheManager(
+            $cacheMock,
+            GeneralUtility::getContainer()->get(\Composer\Autoload\ClassLoader::class)
+        );
+
+        $subject = new \Evoweb\Extender\Utility\ClassLoader($cacheMock, $classCacheManager);
 
         $className = \Fixture\BaseExtension\Domain\Model\Blob::class;
         $condition = $subject->loadClass($className);

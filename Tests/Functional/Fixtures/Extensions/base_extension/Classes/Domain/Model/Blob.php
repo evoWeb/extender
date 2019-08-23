@@ -1,7 +1,7 @@
 <?php
 namespace Fixture\BaseExtension\Domain\Model;
 
-class AnotherBlob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
     /**
      * @var string
@@ -22,8 +22,6 @@ class AnotherBlob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      * Setter for property
      *
      * @param string $property
-     *
-     * @return void
      */
     public function setProperty($property)
     {

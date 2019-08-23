@@ -1,4 +1,5 @@
 <?php
+declare(strict_types = 1);
 namespace Evoweb\Extender\Utility;
 
 /**
@@ -12,6 +13,7 @@ namespace Evoweb\Extender\Utility;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -24,9 +26,16 @@ class ClassLoader implements \TYPO3\CMS\Core\SingletonInterface
     /**
      * Class cache instance
      *
-     * @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend
+     * @var PhpFrontend
      */
     protected $classCache;
+
+    /**
+     * Class cache manager
+     *
+     * @var ClassCacheManager
+     */
+    protected $classCacheManager;
 
     /**
      * Known classnames that cause problems and can not be extended
@@ -42,37 +51,19 @@ class ClassLoader implements \TYPO3\CMS\Core\SingletonInterface
      */
     public static function registerAutoloader()
     {
-        spl_autoload_register([new self(), 'loadClass'], true, true);
+        spl_autoload_register([GeneralUtility::makeInstance(self::class), 'loadClass'], true, true);
     }
 
     /**
      * ClassLoader constructor.
      *
-     * @param \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend|null $classCache
+     * @param PhpFrontend $classCache
+     * @param ClassCacheManager $classCacheManager
      */
-    public function __construct($classCache = null)
+    public function __construct(PhpFrontend $classCache, ClassCacheManager $classCacheManager)
     {
         $this->classCache = $classCache;
-    }
-
-    /**
-     * @return \TYPO3\CMS\Core\Cache\Frontend\FrontendInterface|\TYPO3\CMS\Core\Cache\Frontend\PhpFrontend|null
-     */
-    protected function getClassCache(): \TYPO3\CMS\Core\Cache\Frontend\FrontendInterface
-    {
-        if (is_null($this->classCache)) {
-            /**
-             * Cache manager
-             *
-             * @var \TYPO3\CMS\Core\Cache\CacheManager $cacheManager
-             */
-            $cacheManager = GeneralUtility::makeInstance(\TYPO3\CMS\Core\Cache\CacheManager::class);
-            // Set configuration in case some cache settings are not loaded by now.
-            $cacheManager->setCacheConfigurations($GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']);
-            /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cache */
-            $this->classCache = $cacheManager->getCache('extender');
-        }
-        return $this->classCache;
+        $this->classCacheManager = $classCacheManager;
     }
 
     /**
@@ -83,49 +74,27 @@ class ClassLoader implements \TYPO3\CMS\Core\SingletonInterface
      *
      * @return bool
      */
-    public function loadClass($className)
+    public function loadClass(string $className): bool
     {
         $className = ltrim($className, '\\');
+        $extensionKey = $this->getExtensionKeyFromNamespace($className);
 
-        if ($this->isExcludedClassName($className)) {
-            return false;
-        }
+        $return = false;
+        if (!$this->isExcludedClassName($className) && $this->isValidClassName($className, $extensionKey)) {
+            $cacheEntryIdentifier = GeneralUtility::underscoredToLowerCamelCase($extensionKey)
+                . '_' . str_replace('\\', '_', $className);
 
-        $extensionKey = $this->getExtensionKey($className);
-
-        if (!$this->isValidClassName($className, $extensionKey)) {
-            return false;
-        }
-
-        $cacheEntryIdentifier = GeneralUtility::underscoredToLowerCamelCase($extensionKey) . '_' .
-            str_replace('\\', '_', $className);
-
-        if ($this->getClassCache()) {
-            if (!$this->getClassCache()->has($cacheEntryIdentifier)) {
-                /**
-                 * Class cache manager
-                 *
-                 * @var \Evoweb\Extender\Utility\ClassCacheManager $classCacheManager
-                 */
-                $classCacheManager = GeneralUtility::makeInstance(
-                    \Evoweb\Extender\Utility\ClassCacheManager::class,
-                    $this->getClassCache()
-                );
-                $classCacheManager->reBuild();
+            if (!$this->classCache->has($cacheEntryIdentifier)) {
+                $this->classCacheManager->reBuild();
             }
-            $this->getClassCache()->requireOnce($cacheEntryIdentifier);
-            return true;
+            $this->classCache->requireOnce($cacheEntryIdentifier);
+            $return = true;
         }
 
-        return false;
+        return $return;
     }
 
-    /**
-     * @param string $className
-     *
-     * @return bool
-     */
-    protected function isExcludedClassName($className)
+    protected function isExcludedClassName(string $className): bool
     {
         $result = false;
 
@@ -136,16 +105,9 @@ class ClassLoader implements \TYPO3\CMS\Core\SingletonInterface
         return $result;
     }
 
-    /**
-     * Get extension key from namespaced classname
-     *
-     * @param string $className Class name
-     *
-     * @return string
-     */
-    protected function getExtensionKey($className)
+    protected function getExtensionKeyFromNamespace(string $className): string
     {
-        $extensionKey = null;
+        $extensionKey = '';
 
         if (strpos($className, '\\') !== false) {
             $namespaceParts = GeneralUtility::trimExplode(
@@ -161,15 +123,7 @@ class ClassLoader implements \TYPO3\CMS\Core\SingletonInterface
         return $extensionKey;
     }
 
-    /**
-     * Find out if a class name is valid
-     *
-     * @param string $className Class name
-     * @param string $extensionKey Extension key
-     *
-     * @return bool
-     */
-    protected function isValidClassName($className, $extensionKey)
+    protected function isValidClassName(string $className, string $extensionKey): bool
     {
         $oldClassnamePart = substr(strtolower($className), 0, 5);
 
