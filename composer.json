@@ -20,6 +20,9 @@
 	"require": {
 		"typo3/cms-core": "^10.0.0"
 	},
+	"require-dev": {
+		"typo3/testing-framework": "~5.0.11"
+	},
 
 	"autoload": {
 		"psr-4": {
@@ -43,9 +46,7 @@
 			"web-dir": ".Build/Web"
 		}
 	},
-	"require-dev": {
-		"typo3/testing-framework": "~5.0.11"
-	},
+
 	"scripts": {
 		"post-autoload-dump": "mkdir -p .Build/Web/typo3conf/ext/ && ln -snf ../../../.. .Build/Web/typo3conf/ext/extender"
 	}
