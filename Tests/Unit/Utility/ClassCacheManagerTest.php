@@ -155,6 +155,8 @@ class ClassCacheManagerTest extends AbstractTestBase
      */
     public function parseSingleFileWithStorageNotPsr2()
     {
+        $this->resetSingletonInstances = true;
+
         $cacheBackend = new \TYPO3\CMS\Core\Cache\Backend\FileBackend('production');
         /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cacheMock */
         $cacheMock = $this->getAccessibleMock(
@@ -328,6 +330,8 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function reBuild()
     {
+        $this->resetSingletonInstances = true;
+
         $className = \Fixture\BaseExtension\Domain\Model\Blob::class;
 
         $cacheBackend = new \TYPO3\CMS\Core\Cache\Backend\FileBackend('production');
@@ -427,6 +431,8 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function reBuildWithStorage()
     {
+        $this->resetSingletonInstances = true;
+
         $className = \Fixture\BaseExtension\Domain\Model\BlobWithStorage::class;
 
         $cacheBackend = new \TYPO3\CMS\Core\Cache\Backend\FileBackend('production');
@@ -577,6 +583,8 @@ class BlobWithStorage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function reBuildNonStorageWithStorage()
     {
+        $this->resetSingletonInstances = true;
+
         $className = \Fixture\BaseExtension\Domain\Model\AnotherBlob::class;
 
         $cacheBackend = new \TYPO3\CMS\Core\Cache\Backend\FileBackend('production');
@@ -703,6 +711,8 @@ class AnotherBlob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function reBuildWithStorageAndConstructorArgument()
     {
+        $this->resetSingletonInstances = true;
+
         $className = \Fixture\BaseExtension\Domain\Model\BlobWithStorageAndConstructorArgument::class;
 
         $cacheBackend = new \TYPO3\CMS\Core\Cache\Backend\FileBackend('production');

@@ -55,10 +55,6 @@ jobs:
       php: 7.0
 
     - stage: test
-      php: 5.5
-      env:
-        - TYPO3_VERSION="^7.6" TESTING_FRAMEWORK="" PHPUNIT_VERSION="~4.8.0" UNITTEST_FOLDER="Tests/Unit7/" UNITTEST_SUITE=".Build/Web/typo3/sysext/core/Build/UnitTests.xml"
-    - stage: test
       php: 7.2
       env:
         - TYPO3_VERSION="^7.6" TESTING_FRAMEWORK="" PHPUNIT_VERSION="~4.8.0" UNITTEST_FOLDER="Tests/Unit7/" UNITTEST_SUITE=".Build/Web/typo3/sysext/core/Build/UnitTests.xml"
