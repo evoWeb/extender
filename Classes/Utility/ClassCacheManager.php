@@ -57,8 +57,28 @@ class ClassCacheManager
         }
 
         $this->classCache = $classCache;
-        $this->composerClassLoader = \TYPO3\CMS\Core\Core\Bootstrap::getInstance()
-            ->getEarlyInstance(\Composer\Autoload\ClassLoader::class);
+
+        try {
+            $this->composerClassLoader = \TYPO3\CMS\Core\Core\Bootstrap::getInstance()
+                ->getEarlyInstance(\Composer\Autoload\ClassLoader::class);
+        } catch (\Exception $exception) {
+            if (PHP_SAPI === 'cli') {
+                $autoloaderFolders = [
+                    trim(shell_exec('pwd')) . '/vendor/',
+                    __DIR__ . '/../vendor/'
+                ];
+                foreach ($autoloaderFolders as $autoloaderFolder) {
+                    if (file_exists($autoloaderFolder . 'autoload.php')) {
+                        $classLoaderFilePath = $autoloaderFolder . 'autoload.php';
+                        /* @noinspection PhpIncludeInspection */
+                        $this->composerClassLoader = require $classLoaderFilePath;
+                    }
+                }
+            }
+            if (empty($this->composerClassLoader)) {
+                throw $exception;
+            }
+        }
     }
 
     /**
