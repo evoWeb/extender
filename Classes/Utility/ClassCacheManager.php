@@ -65,13 +65,14 @@ class ClassCacheManager
             if (PHP_SAPI === 'cli') {
                 $autoloaderFolders = [
                     trim(shell_exec('pwd')) . '/vendor/',
-                    __DIR__ . '/../vendor/'
+                    PATH_site . '/../vendor/'
                 ];
                 foreach ($autoloaderFolders as $autoloaderFolder) {
                     if (file_exists($autoloaderFolder . 'autoload.php')) {
                         $classLoaderFilePath = $autoloaderFolder . 'autoload.php';
                         /* @noinspection PhpIncludeInspection */
                         $this->composerClassLoader = require $classLoaderFilePath;
+                        break;
                     }
                 }
             }
