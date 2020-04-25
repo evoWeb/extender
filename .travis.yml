@@ -63,7 +63,7 @@ jobs:
       env: TYPO3_VERSION=^10.4 TESTING_FRAMEWORK="^6.2.3"
     - stage: test
       php: 7.2
-      env: TYPO3_VERSION=^10.4 TESTING_FRAMEWORK="^6.2.3" PREFER_LOWEST="--prefer-lowest"
+      env: TYPO3_VERSION=^10.4 TESTING_FRAMEWORK="^5.0.15" PREFER_LOWEST="--prefer-lowest"
     - stage: test
       php: 7.2
       env: TYPO3_VERSION="dev-master as 10.4.0" TESTING_FRAMEWORK="^6.2.3"
