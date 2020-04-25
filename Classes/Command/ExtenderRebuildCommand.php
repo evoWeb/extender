@@ -1,5 +1,7 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
+
 namespace Evoweb\Extender\Command;
 
 /*
@@ -13,16 +15,27 @@ namespace Evoweb\Extender\Command;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+use Evoweb\Extender\Utility\ClassCacheManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
  * CLI command for the 'extender' extension - rebuild
  */
 class ExtenderRebuildCommand extends Command
 {
+    /**
+     * @var ClassCacheManager
+     */
+    protected $classCacheManager;
+
+    public function __construct(ClassCacheManager $classCacheManager = null)
+    {
+        $this->classCacheManager = $classCacheManager;
+        parent::__construct(null);
+    }
+
     /**
      * Configure the command by defining the name, options and arguments
      */
@@ -39,9 +52,6 @@ class ExtenderRebuildCommand extends Command
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $classCacheManager = GeneralUtility::makeInstance(
-            \Evoweb\Extender\Utility\ClassCacheManager::class
-        );
-        $classCacheManager->reBuild();
+        $this->classCacheManager->reBuild();
     }
 }

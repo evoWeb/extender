@@ -4,6 +4,9 @@ services:
     autoconfigure: false
     public: false
 
+  Evoweb\Extender\:
+    resource: '../Classes/*'
+
   extender.cache:
     class: TYPO3\CMS\Core\Cache\Frontend\PhpFrontend
     # We can not use CacheManager, as it can not be
@@ -12,6 +15,11 @@ services:
     # therefore we use the static Bootstrap::createCache factory instead.
     factory: ['TYPO3\CMS\Core\Core\Bootstrap', 'createCache']
     arguments: ['extender']
+
+  Evoweb\Extender\Command\ExtenderRebuildCommand:
+    arguments: ['@Evoweb\Extender\Utility\ClassCacheManager']
+    tags:
+      - { name: 'console.command', command: 'extender:rebuild', schedulable: false }
 
   Evoweb\Extender\Utility\ClassCacheManager:
     arguments: ['@extender.cache', '@Composer\Autoload\ClassLoader']
