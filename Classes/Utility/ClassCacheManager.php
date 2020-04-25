@@ -1,5 +1,7 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
+
 namespace Evoweb\Extender\Utility;
 
 /*
@@ -61,7 +63,8 @@ class ClassCacheManager
      */
     public function reBuild(array $parameters = array())
     {
-        if (empty($parameters)
+        if (
+            empty($parameters)
             || (
                 !empty($parameters['cacheCmd'])
                 && GeneralUtility::inList('all,system', $parameters['cacheCmd'])

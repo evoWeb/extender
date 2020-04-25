@@ -1,5 +1,7 @@
 <?php
-declare(strict_types = 1);
+
+declare(strict_types=1);
+
 namespace Evoweb\Extender\Utility;
 
 /*
@@ -24,12 +26,12 @@ class ClassParser
     /**
      * @var int
      */
-    const STATE_CLASS_HEAD = 100001;
+    public const STATE_CLASS_HEAD = 100001;
 
     /**
      * @var int
      */
-    const STATE_FUNCTION_HEAD = 100002;
+    public const STATE_FUNCTION_HEAD = 100002;
 
     /**
      * @var array
@@ -91,7 +93,7 @@ class ClassParser
         $inFunction = false;
         $functionName = '';
         $lastLine = 0;
-        foreach ($tokens as $idx => &$token) {
+        foreach ($tokens as $idx => $token) {
             if (is_array($token)) {
                 switch ($token[0]) {
                     case T_DOC_COMMENT:

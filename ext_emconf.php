@@ -11,11 +11,11 @@ $EM_CONF['extender'] = [
     'state' => 'stable',
     'clearCacheOnLoad' => 1,
     'priority' => 'bottom',
-    'version' => '7.0.0',
+    'version' => '7.0.1',
     'constraints' => [
         'depends' => [
             'php' => '7.2.0-0.0.0',
-            'typo3' => '10.0.0-10.1.99',
+            'typo3' => '10.0.0-10.4.99',
         ],
         'conflicts' => [],
         'suggests' => [],

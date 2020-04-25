@@ -20,7 +20,7 @@ class ClassCacheManagerTest extends AbstractTestBase
 
         /** @var \Evoweb\Extender\Utility\ClassCacheManager $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassCacheManager::class))
-            ->onlyMethods(['parseSingleFile'])
+            ->setMethods(['parseSingleFile'])
             ->setConstructorArgs([$cacheMock, $composerClassLoader])
             ->enableProxyingToOriginalMethods()
             ->getMock();
@@ -76,7 +76,7 @@ class ClassCacheManagerTest extends AbstractTestBase
 
         /** @var \Evoweb\Extender\Utility\ClassCacheManager|AccessibleObjectInterface $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassCacheManager::class))
-            ->onlyMethods(['parseSingleFile', '_get'])
+            ->setMethods(['parseSingleFile', '_get'])
             ->setConstructorArgs([$cacheMock, $composerClassLoader])
             ->enableProxyingToOriginalMethods()
             ->getMock();
@@ -167,7 +167,7 @@ class ClassCacheManagerTest extends AbstractTestBase
 
         /** @var \Evoweb\Extender\Utility\ClassCacheManager|AccessibleObjectInterface $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassCacheManager::class))
-            ->onlyMethods(['parseSingleFile', '_get'])
+            ->setMethods(['parseSingleFile', '_get'])
             ->setConstructorArgs([$cacheMock, $composerClassLoader])
             ->enableProxyingToOriginalMethods()
             ->getMock();
@@ -254,7 +254,7 @@ class ClassCacheManagerTest extends AbstractTestBase
 
         /** @var \Evoweb\Extender\Utility\ClassCacheManager $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassCacheManager::class))
-            ->onlyMethods(['changeCode'])
+            ->setMethods(['changeCode'])
             ->setConstructorArgs([$cacheMock, $composerClassLoader])
             ->enableProxyingToOriginalMethods()
             ->getMock();
@@ -298,7 +298,7 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
         /** @var \Evoweb\Extender\Utility\ClassCacheManager $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassCacheManager::class))
-            ->onlyMethods(['getPartialInfo'])
+            ->setMethods(['getPartialInfo'])
             ->setConstructorArgs([$cacheMock, $composerClassLoader])
             ->enableProxyingToOriginalMethods()
             ->getMock();
@@ -323,7 +323,7 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
         /** @var \Evoweb\Extender\Utility\ClassCacheManager $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassCacheManager::class))
-            ->onlyMethods(['closeClassDefinition'])
+            ->setMethods(['closeClassDefinition'])
             ->setConstructorArgs([$cacheMock, $composerClassLoader])
             ->enableProxyingToOriginalMethods()
             ->getMock();

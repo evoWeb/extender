@@ -51,7 +51,7 @@ class ClassLoaderTest extends AbstractTestBase
 
         /** @var \Evoweb\Extender\Utility\ClassLoader $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassLoader::class))
-            ->onlyMethods(['isExcludedClassName'])
+            ->setMethods(['isExcludedClassName'])
             ->setConstructorArgs([$cacheMock, $classCacheManager])
             ->enableProxyingToOriginalMethods()
             ->getMock();
@@ -74,7 +74,7 @@ class ClassLoaderTest extends AbstractTestBase
 
         /** @var \Evoweb\Extender\Utility\ClassLoader $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassLoader::class))
-            ->onlyMethods(['getExtensionKeyFromNamespace'])
+            ->setMethods(['getExtensionKeyFromNamespace'])
             ->setConstructorArgs([$cacheMock, $classCacheManager])
             ->enableProxyingToOriginalMethods()
             ->getMock();
@@ -100,7 +100,7 @@ class ClassLoaderTest extends AbstractTestBase
 
         /** @var \Evoweb\Extender\Utility\ClassLoader $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassLoader::class))
-            ->onlyMethods(['isValidClassName'])
+            ->setMethods(['isValidClassName'])
             ->setConstructorArgs([$cacheMock, $classCacheManager])
             ->enableProxyingToOriginalMethods()
             ->getMock();
