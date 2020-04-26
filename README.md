@@ -17,5 +17,5 @@ The recommended way to install TYPO3 Console is by using [Composer](https://getc
 
 ### via TYPO3 Extension Repository
 
-Download and install the extension with the extension manager module or directly from the
+Download and install the extension with the extension manager module or directly download from the
 [TER](https://extensions.typo3.org/extension/extender/).
