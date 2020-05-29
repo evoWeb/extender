@@ -102,7 +102,7 @@ jobs:
 
   publish:
     needs: [ lint, functional ]
-      if: startsWith(github.ref, 'refs/tags/')
+    if: startsWith(github.ref, 'refs/tags/')
 
     runs-on: ubuntu-18.04
 
