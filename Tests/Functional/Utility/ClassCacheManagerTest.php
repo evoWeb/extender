@@ -25,7 +25,7 @@ class ClassCacheManagerTest extends AbstractTestBase
             ->enableProxyingToOriginalMethods()
             ->getMock();
 
-        $filePath = realpath(__DIR__ . '/../Fixtures/Extensions/base_extension/Classes/Domain/Model/Blob.php');
+        $filePath = 'typo3conf/ext/base_extension/Classes/Domain/Model/Blob.php';
 
         $expected = '/***********************************************************************
  * this is partial from:
@@ -353,7 +353,7 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $cacheEntryIdentifier = GeneralUtility::underscoredToLowerCamelCase('base_extension') . '_' .
             str_replace('\\', '_', $className);
 
-        $basePath = realpath(__DIR__ . '/../Fixtures/Extensions/base_extension/Classes/Domain/Model/Blob.php');
+        $basePath = 'typo3conf/ext/base_extension/Classes/Domain/Model/Blob.php';
         $extendPath = realpath(
             __DIR__ . '/../Fixtures/Extensions/extending_extension/Classes/Domain/Model/BlobExtend.php'
         );
