@@ -94,6 +94,11 @@ jobs:
           if [[ ! -z "${TESTING_FRAMEWORK}" ]]; then composer require --dev typo3/testing-framework="${TESTING_FRAMEWORK}"; fi;
           git checkout composer.json;
 
+      - name: Activate extensions
+        run: |
+          .Build/Web/vendor/bin/typo3 extension:activate base_extension
+          .Build/Web/vendor/bin/typo3 extension:activate extending_extension
+
       - name: Script
         run: |
           echo "Running ${TYPO3_VERSION} functional tests with $(which php)";

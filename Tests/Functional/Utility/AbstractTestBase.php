@@ -130,15 +130,5 @@ class AbstractTestBase extends \TYPO3\TestingFramework\Core\Functional\Functiona
         $reflection = new \ReflectionProperty(get_class($packageManager), 'packages');
         $reflection->setAccessible(true);
         $reflection->setValue($packageManager, $packages);
-
-        $reflection = new \ReflectionProperty(get_class($packageManager), 'runtimeActivatedPackages');
-        $reflection->setAccessible(true);
-        $reflection->setValue(
-            $packageManager,
-            [
-                'base_extension' => 1,
-                'extending_extension' => 1
-            ]
-        );
     }
 }
