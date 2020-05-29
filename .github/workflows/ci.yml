@@ -1,0 +1,117 @@
+name: build
+
+on:
+  push:
+    branches: [ develop, master ]
+    tags: [ '*' ]
+  pull_request:
+    branches: [ develop ]
+
+jobs:
+  lint:
+    name: Lint PHP
+
+    runs-on: ubuntu-18.04
+
+    strategy:
+      matrix:
+        env:
+          - { php: 7.4 }
+          - { php: 7.3 }
+          - { php: 7.2 }
+
+    env: ${{ matrix.env }}
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Set up PHP ${php}
+        run: |
+          sudo update-alternatives --set php /usr/bin/php${php}
+          php -v
+
+      - name: Disable xdebug
+        run: if php -i | grep -v xdebug | grep -q xdebug; then phpenv config-rm xdebug.ini; fi
+
+      - name: Running php lint with ${php}
+        run: |
+          errors=$(find . -name \*.php ! -path "./.Build/*" -exec php -d display_errors=stderr -l "{}" 2>&1 >/dev/null \;) && echo "${errors}" && test -z "${errors}"
+
+  functional:
+    name: Run functional tests
+
+    needs: lint
+
+    runs-on: ubuntu-18.04
+
+    continue-on-error: ${{ matrix.TYPO3_VERSION == 'dev-master as 10.4.2' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        env:
+          - { php: 7.4, TYPO3_VERSION: ^10.4, TESTING_FRAMEWORK: ^6.2.3 }
+          - { php: 7.3, TYPO3_VERSION: ^10.4, TESTING_FRAMEWORK: ^6.2.3 }
+          - { php: 7.2, TYPO3_VERSION: ^10.4, TESTING_FRAMEWORK: ^6.2.3 }
+          - { php: 7.2, TYPO3_VERSION: ^10.4, TESTING_FRAMEWORK: ^5.0.15, PREFER_LOWEST: "--prefer-lowest" }
+          - { php: 7.2, TYPO3_VERSION: "dev-master as 10.4.0", TESTING_FRAMEWORK: ^6.2.3 }
+
+    env: ${{ matrix.env }}
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: Setup PHP 7.4
+        run: sudo update-alternatives --set php /usr/bin/php7.4
+
+      - name: Disable xdebug
+        run: if php -i | grep -v xdebug | grep -q xdebug; then phpenv config-rm xdebug.ini; fi
+
+      - name: Install
+        run: |
+          export TYPO3_PATH_WEB=$PWD/.Build/Web;
+          composer require typo3/cms-core="${TYPO3_VERSION}" ${PREFER_LOWEST};
+          if [[ ! -z "${TESTING_FRAMEWORK}" ]]; then composer require --dev typo3/testing-framework="${TESTING_FRAMEWORK}"; fi;
+          git checkout composer.json;
+
+      - name: Script
+        run: |
+          echo "Running ${TYPO3_VERSION} functional tests with $(which php)";
+          export typo3DatabaseDriver="pdo_sqlite";
+          php .Build/Web/vendor/bin/phpunit --colors -c .Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml Tests/Functional/;
+
+  publish:
+    needs: [ lint, functional ]
+
+    runs-on: ubuntu-18.04
+
+    steps:
+      - uses: actions/checkout@v1
+
+      - name: publish in ter
+        run: |
+          TAG="$(echo $GITHUB_REF | cut -d / -f 3)"
+          if [[ "${TAG}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] && [ -n "${USERNAME}" ] && [ -n "${PASSWORD}" ]; then
+            echo -e "Preparing upload of release ${TAG} to TER\n";
+
+            # Install requirements
+            composer global require helhum/ter-client
+
+            # Cleanup before we upload
+            git reset --hard HEAD && git clean -fx
+
+            # Remove folder that shouldn't to get uploaded
+            rm -rf .Build
+            rm -rf .github
+
+            # Set version number from TAG
+            sed -i "s/version' => '.*'/version' => '${TAG}'/" ext_emconf.php
+
+            # Upload
+            TAG_MESSAGE=`git TAG -n10 -l ${TAG} | sed 's/^[0-9.]*[ ]*//g'`
+            echo "Uploading release ${TAG} to TER"
+            $HOME/.composer/vendor/bin/ter-client upload ${EXTENSION} . -u "${USERNAME}" -p "${PASSWORD}" -m "${TAG_MESSAGE}"
+          fi;
+        env:
+          EXTENSION: extender
+          USERNAME: ${{ secrets.typo3Username }}
+          PASSWORD: ${{ secrets.typo3Password }}
