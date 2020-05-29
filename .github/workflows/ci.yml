@@ -27,7 +27,7 @@ jobs:
 
       - name: Set up PHP ${php}
         run: |
-          sudo update-alternatives --set php /usr/bin/php${php}
+          sudo update-alternatives --set php /usr/bin/php${php};
           php -v
 
       - name: Disable xdebug
@@ -60,11 +60,32 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
-      - name: Setup PHP 7.4
-        run: sudo update-alternatives --set php /usr/bin/php7.4
+      - name: Setup PHP ${php}
+        run: |
+          sudo update-alternatives --set php /usr/bin/php${php};
+          php -v;
 
       - name: Disable xdebug
         run: if php -i | grep -v xdebug | grep -q xdebug; then phpenv config-rm xdebug.ini; fi
+
+      - name: Update Composer
+        run: |
+          sudo composer self-update;
+          composer --version;
+
+      # Directory permissions for .composer are wrong, so we remove the complete directory
+      # https://github.com/actions/virtual-environments/issues/824
+      - name: Delete .composer directory
+        run: sudo rm -rf ~/.composer
+
+      - name: Validate composer.json and composer.lock
+        run: composer validate
+
+      - name: Cache dependencies
+        uses: actions/cache@v1
+        with:
+          path: ~/.composer/cache
+          key: dependencies-composer-${{ hashFiles('composer.json') }}
 
       - name: Install
         run: |
@@ -81,6 +102,7 @@ jobs:
 
   publish:
     needs: [ lint, functional ]
+      if: startsWith(github.ref, 'refs/tags/')
 
     runs-on: ubuntu-18.04
 
@@ -89,7 +111,7 @@ jobs:
 
       - name: publish in ter
         run: |
-          TAG="$(echo $GITHUB_REF | cut -d / -f 3)"
+          TAG="$(echo ${GITHUB_REF} | cut -d / -f 3)"
           if [[ "${TAG}" =~ ^[0-9]+\.[0-9]+\.[0-9]+$ ]] && [ -n "${USERNAME}" ] && [ -n "${PASSWORD}" ]; then
             echo -e "Preparing upload of release ${TAG} to TER\n";
 
