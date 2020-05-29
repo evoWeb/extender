@@ -96,8 +96,12 @@ jobs:
 
       - name: Activate extensions
         run: |
-          .Build/Web/vendor/bin/typo3 extension:activate base_extension
-          .Build/Web/vendor/bin/typo3 extension:activate extending_extension
+          composer require typo3/cms-extensionmanager="${TYPO3_VERSION}";
+          cp -R .Build/Web/typo3conf/ext/extender/Tests/Functional/Fixtures/Extensions/base_extension .Build/Web/typo3conf/ext/
+          cp -R .Build/Web/typo3conf/ext/extender/Tests/Functional/Fixtures/Extensions/extending_extension .Build/Web/typo3conf/ext/
+          ls -la .Build/Web/typo3conf/ext/
+          #.Build/Web/vendor/bin/typo3 extension:activate base_extension
+          #.Build/Web/vendor/bin/typo3 extension:activate extending_extension
 
       - name: Script
         run: |
