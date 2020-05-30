@@ -355,7 +355,7 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
             str_replace('\\', '_', $className);
 
         $basePath = 'typo3conf/ext/base_extension/Classes/Domain/Model/Blob.php';
-        $extendPath = 'typo3conf/ext/base_extension/Classes/Domain/Model/BlobExtend.php';
+        $extendPath = 'typo3conf/ext/extending_extension/Classes/Domain/Model/BlobExtend.php';
 
         $expected = '<?php
 /***********************************************************************
