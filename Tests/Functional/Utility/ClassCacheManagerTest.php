@@ -1,4 +1,5 @@
 <?php
+
 namespace Evoweb\Extender\Tests\Functional\Utility;
 
 use Composer\Autoload\ClassLoader;
@@ -354,9 +355,7 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
             str_replace('\\', '_', $className);
 
         $basePath = 'typo3conf/ext/base_extension/Classes/Domain/Model/Blob.php';
-        $extendPath = realpath(
-            __DIR__ . '/../Fixtures/Extensions/extending_extension/Classes/Domain/Model/BlobExtend.php'
-        );
+        $extendPath = 'typo3conf/ext/base_extension/Classes/Domain/Model/BlobExtend.php';
 
         $expected = '<?php
 /***********************************************************************
