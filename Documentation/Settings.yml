@@ -7,5 +7,5 @@ conf.py:
   copyright: 2014
   project: extender
   version: 6.6
-  release: 6.6.3
+  release: 6.6.4
 ...
