@@ -67,6 +67,8 @@ class ClassCacheManager
                     trim(shell_exec('pwd')) . '/vendor/',
                     __DIR__ . '/../../../../vendor/',
                     PATH_site . '../vendor/',
+                    // fix for non composer installations
+                    PATH_site . 'typo3_src/vendor/',
                 ];
                 foreach ($autoloaderFolders as $autoloaderFolder) {
                     $autoloaderFolder = realpath($autoloaderFolder);
