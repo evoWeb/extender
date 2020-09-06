@@ -9,40 +9,30 @@ on:
 
 jobs:
   lint:
-    name: Lint PHP
-
     runs-on: ubuntu-18.04
 
     strategy:
       matrix:
-        env:
-          - { php: 7.4 }
-          - { php: 7.3 }
-          - { php: 7.2 }
+        php-versions: ['7.2', '7.3', '7.4']
 
-    env: ${{ matrix.env }}
-
+    name: Lint PHP ${{ matrix.php-versions }}
     steps:
-      - uses: actions/checkout@v1
+      - name: Checkout
+        uses: actions/checkout@v2
 
-      - name: Set up PHP ${php}
-        run: |
-          sudo update-alternatives --set php /usr/bin/php${php};
-          php -v
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
 
-      - name: Disable xdebug
-        run: if php -i | grep -v xdebug | grep -q xdebug; then phpenv config-rm xdebug.ini; fi
-
-      - name: Running php lint with ${php}
+      - name: Running php lint with ${{ matrix.php-versions }}
         run: |
           errors=$(find . -name \*.php ! -path "./.Build/*" -exec php -d display_errors=stderr -l "{}" 2>&1 >/dev/null \;) && echo "${errors}" && test -z "${errors}"
 
   functional:
-    name: Run functional tests
-
     needs: lint
 
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
 
     continue-on-error: ${{ matrix.env.experimental == true }}
     strategy:
@@ -57,26 +47,17 @@ jobs:
 
     env: ${{ matrix.env }}
 
+    name: Run functional tests with PHP${{ matrix.env.php }} and testing framework ${{ matrix.env.TESTING_FRAMEWORK }}
     steps:
-      - uses: actions/checkout@v1
+      - name: Checkout
+        uses: actions/checkout@v2
 
-      - name: Setup PHP ${php}
-        run: |
-          sudo update-alternatives --set php /usr/bin/php${php};
-          php -v;
-
-      - name: Disable xdebug
-        run: if php -i | grep -v xdebug | grep -q xdebug; then phpenv config-rm xdebug.ini; fi
-
-      - name: Update Composer
-        run: |
-          sudo composer self-update;
-          composer --version;
-
-      # Directory permissions for .composer are wrong, so we remove the complete directory
-      # https://github.com/actions/virtual-environments/issues/824
-      - name: Delete .composer directory
-        run: sudo rm -rf ~/.composer
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.env.php }}
+          tools: composer
+          extensions: pdo, sqlite3
 
       - name: Validate composer.json and composer.lock
         run: composer validate
@@ -103,7 +84,7 @@ jobs:
           #.Build/Web/vendor/bin/typo3 extension:activate base_extension
           #.Build/Web/vendor/bin/typo3 extension:activate extending_extension
 
-      - name: Script
+      - name: Run functional tests
         run: |
           echo "Running ${TYPO3_VERSION} functional tests with $(which php)";
           export typo3DatabaseDriver="pdo_sqlite";
@@ -113,10 +94,26 @@ jobs:
     needs: [ lint, functional ]
     if: startsWith(github.ref, 'refs/tags/')
 
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
 
+    strategy:
+      matrix:
+        php-versions: ['7.4']
+
+    env:
+      EXTENSION: extender
+      USERNAME: ${{ secrets.typo3Username }}
+      PASSWORD: ${{ secrets.typo3Password }}
+
+    name: TYPO3 TER release
     steps:
-      - uses: actions/checkout@v1
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-versions }}
 
       - name: publish in ter
         run: |
@@ -138,11 +135,7 @@ jobs:
             sed -i "s/version' => '.*'/version' => '${TAG}'/" ext_emconf.php
 
             # Upload
-            TAG_MESSAGE=`git TAG -n10 -l ${TAG} | sed 's/^[0-9.]*[ ]*//g'`
+            TAG_MESSAGE=`git tag -n10 -l ${TAG} | sed 's/^[0-9.]*[ ]*//g'`
             echo "Uploading release ${TAG} to TER"
             $HOME/.composer/vendor/bin/ter-client upload ${EXTENSION} . -u "${USERNAME}" -p "${PASSWORD}" -m "${TAG_MESSAGE}"
           fi;
-        env:
-          EXTENSION: extender
-          USERNAME: ${{ secrets.typo3Username }}
-          PASSWORD: ${{ secrets.typo3Password }}
