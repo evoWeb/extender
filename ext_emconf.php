@@ -10,7 +10,6 @@ $EM_CONF['extender'] = [
     'author_company' => 'evoWeb',
     'state' => 'stable',
     'clearCacheOnLoad' => 1,
-    'priority' => 'bottom',
     'version' => '7.0.1',
     'constraints' => [
         'depends' => [
