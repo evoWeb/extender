@@ -89,6 +89,8 @@ jobs:
           echo "Running ${TYPO3_VERSION} functional tests with $(which php)";
           export typo3DatabaseDriver="pdo_sqlite";
           ls -la;
+          ls -la .Build;
+          ls -la .Build/Web;
           php .Build/Web/vendor/bin/phpunit --colors -c .Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml Tests/Functional/;
 
   publish:
