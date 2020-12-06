@@ -46,7 +46,7 @@ jobs:
 
     env: ${{ matrix.env }}
 
-    name: Run unit and functional tests with PHP${{ matrix.env.php }} and testing framework ${{ matrix.env.TESTING_FRAMEWORK }}
+    name: Run unit and/or functional tests on TYPO3 ${{ matrix.env.TYPO3_VERSION }} with PHP${{ matrix.env.php }} and testing framework ${{ matrix.env.TESTING_FRAMEWORK }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
