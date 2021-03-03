@@ -40,6 +40,7 @@
 	},
 	"extra": {
 		"typo3/cms": {
+			"extension-key": "extender",
 			"cms-package-dir": "{$vendor-dir}/typo3/cms",
 			"web-dir": ".Build/Web"
 		}
