@@ -21,7 +21,7 @@ class ClassCacheManagerTest extends AbstractTestBase
 
         /** @var \Evoweb\Extender\Utility\ClassCacheManager $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassCacheManager::class))
-            ->setMethods(['parseSingleFile'])
+            ->onlyMethods(['parseSingleFile'])
             ->setConstructorArgs([$cacheMock, $composerClassLoader])
             ->enableProxyingToOriginalMethods()
             ->getMock();
@@ -62,7 +62,7 @@ class ClassCacheManagerTest extends AbstractTestBase
         /** @noinspection PhpUndefinedMethodInspection */
         $actual = $subject->_call('parseSingleFile', $filePath);
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -77,7 +77,7 @@ class ClassCacheManagerTest extends AbstractTestBase
 
         /** @var \Evoweb\Extender\Utility\ClassCacheManager|AccessibleObjectInterface $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassCacheManager::class))
-            ->setMethods(['parseSingleFile', '_get'])
+            ->onlyMethods(['parseSingleFile', '_get'])
             ->setConstructorArgs([$cacheMock, $composerClassLoader])
             ->enableProxyingToOriginalMethods()
             ->getMock();
@@ -147,8 +147,8 @@ class ClassCacheManagerTest extends AbstractTestBase
         /** @noinspection PhpMethodParametersCountMismatchInspection */
         $actual = $subject->_call('parseSingleFile', $filePath);
 
-        $this->assertEquals($expected, $actual);
-        $this->assertEquals($expectedConstructorLines, $subject->_get('constructorLines'));
+        self::assertEquals($expected, $actual);
+        self::assertEquals($expectedConstructorLines, $subject->_get('constructorLines'));
     }
 
     /**
@@ -168,7 +168,7 @@ class ClassCacheManagerTest extends AbstractTestBase
 
         /** @var \Evoweb\Extender\Utility\ClassCacheManager|AccessibleObjectInterface $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassCacheManager::class))
-            ->setMethods(['parseSingleFile', '_get'])
+            ->onlyMethods(['parseSingleFile', '_get'])
             ->setConstructorArgs([$cacheMock, $composerClassLoader])
             ->enableProxyingToOriginalMethods()
             ->getMock();
@@ -239,8 +239,8 @@ class ClassCacheManagerTest extends AbstractTestBase
         /** @noinspection PhpMethodParametersCountMismatchInspection */
         $actual = $subject->_call('parseSingleFile', $filePath);
 
-        $this->assertEquals($expected, $actual);
-        $this->assertEquals($expectedConstructorLines, $subject->_get('constructorLines'));
+        self::assertEquals($expected, $actual);
+        self::assertEquals($expectedConstructorLines, $subject->_get('constructorLines'));
     }
 
     /**
@@ -255,7 +255,7 @@ class ClassCacheManagerTest extends AbstractTestBase
 
         /** @var \Evoweb\Extender\Utility\ClassCacheManager $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassCacheManager::class))
-            ->setMethods(['changeCode'])
+            ->onlyMethods(['changeCode'])
             ->setConstructorArgs([$cacheMock, $composerClassLoader])
             ->enableProxyingToOriginalMethods()
             ->getMock();
@@ -284,7 +284,7 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 }
 ', '--');
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -299,7 +299,7 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
         /** @var \Evoweb\Extender\Utility\ClassCacheManager $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassCacheManager::class))
-            ->setMethods(['getPartialInfo'])
+            ->onlyMethods(['getPartialInfo'])
             ->setConstructorArgs([$cacheMock, $composerClassLoader])
             ->enableProxyingToOriginalMethods()
             ->getMock();
@@ -309,7 +309,7 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
             . '***********************************************************************/' . chr(10);
 
         /** @noinspection PhpUndefinedMethodInspection */
-        $this->assertEquals($expected, $subject->_call('getPartialInfo', '--'));
+        self::assertEquals($expected, $subject->_call('getPartialInfo', '--'));
     }
 
     /**
@@ -324,7 +324,7 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
         /** @var \Evoweb\Extender\Utility\ClassCacheManager $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassCacheManager::class))
-            ->setMethods(['closeClassDefinition'])
+            ->onlyMethods(['closeClassDefinition'])
             ->setConstructorArgs([$cacheMock, $composerClassLoader])
             ->enableProxyingToOriginalMethods()
             ->getMock();
@@ -332,7 +332,7 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $expected = '--' . chr(10) . '}';
 
         /** @noinspection PhpUndefinedMethodInspection */
-        $this->assertEquals($expected, $subject->_call('closeClassDefinition', '--'));
+        self::assertEquals($expected, $subject->_call('closeClassDefinition', '--'));
     }
 
     /**
@@ -426,7 +426,7 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
         $actual = $cacheMock->get($cacheEntryIdentifier);
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -569,7 +569,7 @@ class BlobWithStorage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
         $actual = $cacheMock->get($cacheEntryIdentifier);
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -689,7 +689,7 @@ class AnotherBlob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
         $actual = $cacheMock->get($cacheEntryIdentifier);
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -833,6 +833,6 @@ class BlobWithStorageAndConstructorArgument extends \TYPO3\CMS\Extbase\DomainObj
 
         $actual = $cacheMock->get($cacheEntryIdentifier);
 
-        $this->assertEquals($expected, $actual);
+        self::assertEquals($expected, $actual);
     }
 }

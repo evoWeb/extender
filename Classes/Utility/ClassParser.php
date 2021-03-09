@@ -33,20 +33,11 @@ class ClassParser
      */
     public const STATE_FUNCTION_HEAD = 100002;
 
-    /**
-     * @var array
-     */
-    private $classes = [];
+    private array $classes = [];
 
-    /**
-     * @var array
-     */
-    private $extends = [];
+    private array $extends = [];
 
-    /**
-     * @var array
-     */
-    private $implements = [];
+    private array $implements = [];
 
     public function getClasses(): array
     {

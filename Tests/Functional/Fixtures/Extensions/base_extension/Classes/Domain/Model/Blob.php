@@ -1,29 +1,17 @@
 <?php
+
 namespace Fixture\BaseExtension\Domain\Model;
 
 class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
-    /**
-     * @var string
-     */
-    protected $property = '';
+    protected string $property = '';
 
-    /**
-     * Getter for property
-     *
-     * @return string
-     */
-    public function getProperty()
+    public function getProperty(): string
     {
         return $this->property;
     }
 
-    /**
-     * Setter for property
-     *
-     * @param string $property
-     */
-    public function setProperty($property)
+    public function setProperty(string $property)
     {
         $this->property = $property;
     }

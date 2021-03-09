@@ -2,8 +2,6 @@
 
 namespace Evoweb\Extender\Tests\Functional\Utility;
 
-use TYPO3\CMS\Core\Utility\GeneralUtility;
-
 class AbstractTestBase extends \TYPO3\TestingFramework\Core\Functional\FunctionalTestCase
 {
     /**
@@ -15,10 +13,7 @@ class AbstractTestBase extends \TYPO3\TestingFramework\Core\Functional\Functiona
         'typo3conf/ext/extending_extension',
     ];
 
-    /**
-     * @var array
-     */
-    protected $cacheConfiguration = [
+    protected array $cacheConfiguration = [
         'frontend' => \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend::class,
         'backend' => \TYPO3\CMS\Core\Cache\Backend\FileBackend::class,
         'groups' => [

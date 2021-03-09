@@ -24,10 +24,11 @@ class ClassLoaderTest extends AbstractTestBase
 
         $autoLoaders = spl_autoload_functions();
 
-        $condition = true;
+        $condition = false;
         foreach ($autoLoaders as $autoloader) {
             $classLoader = $autoloader[0];
-            if ((is_string($classLoader) && $classLoader == ClassLoader::class)
+            if (
+                (is_string($classLoader) && $classLoader == ClassLoader::class)
                 || (is_object($classLoader) && get_class($classLoader) == ClassLoader::class)
             ) {
                 $condition = true;
@@ -35,7 +36,7 @@ class ClassLoaderTest extends AbstractTestBase
             }
         }
 
-        $this->assertTrue($condition);
+        self::assertTrue($condition);
     }
 
     /**
@@ -52,13 +53,13 @@ class ClassLoaderTest extends AbstractTestBase
 
         /** @var \Evoweb\Extender\Utility\ClassLoader $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassLoader::class))
-            ->setMethods(['isExcludedClassName'])
+            ->onlyMethods(['isExcludedClassName'])
             ->setConstructorArgs([$cacheMock, $classCacheManager])
             ->enableProxyingToOriginalMethods()
             ->getMock();
 
         /** @noinspection PhpUndefinedMethodInspection */
-        $this->assertTrue($subject->_call('isExcludedClassName', 'Symfony\Polyfill\Mbstring\Mbstring'));
+        self::assertTrue($subject->_call('isExcludedClassName', 'Symfony\Polyfill\Mbstring\Mbstring'));
     }
 
     /**
@@ -75,13 +76,13 @@ class ClassLoaderTest extends AbstractTestBase
 
         /** @var \Evoweb\Extender\Utility\ClassLoader $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassLoader::class))
-            ->setMethods(['getExtensionKeyFromNamespace'])
+            ->onlyMethods(['getExtensionKeyFromNamespace'])
             ->setConstructorArgs([$cacheMock, $classCacheManager])
             ->enableProxyingToOriginalMethods()
             ->getMock();
 
         /** @noinspection PhpUndefinedMethodInspection */
-        $this->assertEquals(
+        self::assertEquals(
             'base_extension',
             $subject->_call('getExtensionKeyFromNamespace', 'Fixture\BaseExtension\Domain\Model\Blob')
         );
@@ -101,7 +102,7 @@ class ClassLoaderTest extends AbstractTestBase
 
         /** @var \Evoweb\Extender\Utility\ClassLoader $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassLoader::class))
-            ->setMethods(['isValidClassName'])
+            ->onlyMethods(['isValidClassName'])
             ->setConstructorArgs([$cacheMock, $classCacheManager])
             ->enableProxyingToOriginalMethods()
             ->getMock();
@@ -111,7 +112,7 @@ class ClassLoaderTest extends AbstractTestBase
         $extension = $subject->_call('getExtensionKeyFromNamespace', $className);
 
         /** @noinspection PhpUndefinedMethodInspection */
-        $this->assertTrue($subject->_call('isValidClassName', $className, $extension));
+        self::assertTrue($subject->_call('isValidClassName', $className, $extension));
     }
 
     /**
@@ -127,8 +128,8 @@ class ClassLoaderTest extends AbstractTestBase
             ->disallowMockingUnknownTypes()
             ->getMock();
 
-        $cacheMock->expects($this->any())->method('has')->will($this->returnValue(true));
-        $cacheMock->expects($this->any())->method('requireOnce')->will($this->returnValue(true));
+        $cacheMock->expects(self::any())->method('has')->willReturn(true);
+        $cacheMock->expects(self::any())->method('requireOnce')->willReturn(true);
 
         $classCacheManager = new \Evoweb\Extender\Utility\ClassCacheManager(
             $cacheMock,
@@ -140,7 +141,7 @@ class ClassLoaderTest extends AbstractTestBase
         $className = \Fixture\BaseExtension\Domain\Model\Blob::class;
         $condition = $subject->loadClass($className);
 
-        $this->assertTrue($condition);
+        self::assertTrue($condition);
     }
 
     /**
@@ -150,7 +151,7 @@ class ClassLoaderTest extends AbstractTestBase
     {
         $actual = new \Fixture\BaseExtension\Domain\Model\Blob();
 
-        $this->assertEquals(\Fixture\BaseExtension\Domain\Model\Blob::class, get_class($actual));
+        self::assertEquals(\Fixture\BaseExtension\Domain\Model\Blob::class, get_class($actual));
     }
 
     /**
@@ -161,6 +162,6 @@ class ClassLoaderTest extends AbstractTestBase
         $subject = new \Fixture\BaseExtension\Domain\Model\Blob();
         $condition = property_exists($subject, 'otherProperty');
 
-        $this->assertTrue($condition);
+        self::assertTrue($condition);
     }
 }

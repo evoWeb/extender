@@ -1,29 +1,17 @@
 <?php
+
 namespace Fixture\ExtendingExtension\Domain\Model;
 
 class BlobExtend extends \Fixture\BaseExtension\Domain\Model\Blob
 {
-    /**
-     * @var int
-     */
-    protected $otherProperty = 0;
+    protected int $otherProperty = 0;
 
-    /**
-     * Getter for otherProperty
-     *
-     * @return int
-     */
-    public function getOtherProperty()
+    public function getOtherProperty(): int
     {
         return $this->otherProperty;
     }
 
-    /**
-     * Setter for otherProperty
-     *
-     * @param int $otherProperty
-     */
-    public function setOtherProperty($otherProperty)
+    public function setOtherProperty(int $otherProperty)
     {
         $this->otherProperty = $otherProperty;
     }

@@ -24,29 +24,12 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
  */
 class ClassCacheManager
 {
-    /**
-     * Cache instance
-     *
-     * @var PhpFrontend
-     */
-    protected $classCache;
+    protected ?PhpFrontend $classCache;
 
-    /**
-     * @var ClassLoader
-     */
-    protected $composerClassLoader;
+    protected ?ClassLoader $composerClassLoader;
 
-    /**
-     * @var array
-     */
-    protected $constructorLines = [];
+    protected array $constructorLines = [];
 
-    /**
-     * Constructor
-     *
-     * @param PhpFrontend $classCache
-     * @param ClassLoader $composerClassLoader
-     */
     public function __construct(PhpFrontend $classCache, ClassLoader $composerClassLoader)
     {
         $this->classCache = $classCache;
@@ -61,7 +44,7 @@ class ClassCacheManager
      * @throws \Evoweb\Extender\Exception\FileNotFoundException
      * @throws \TYPO3\CMS\Core\Cache\Exception\InvalidDataException
      */
-    public function reBuild(array $parameters = array())
+    public function reBuild(array $parameters = [])
     {
         if (
             empty($parameters)
@@ -128,7 +111,7 @@ class ClassCacheManager
      * - Remove the class definition (if set)
      *
      * @param string $filePath path of the file
-     * @param boolean $removeClassDefinition If class definition should be removed
+     * @param bool $removeClassDefinition If class definition should be removed
      *
      * @return string path of the saved file
      * @throws \InvalidArgumentException
