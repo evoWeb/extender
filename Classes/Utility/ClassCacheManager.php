@@ -16,12 +16,12 @@ namespace Evoweb\Extender\Utility;
  */
 
 use Composer\Autoload\ClassLoader;
+use Evoweb\Extender\Exception\FileNotFoundException;
 use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
+use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-/**
- * Class cache manager
- */
 class ClassCacheManager
 {
     protected ?PhpFrontend $classCache;
@@ -63,7 +63,7 @@ class ClassCacheManager
                     // Get the file to extend, this needs to be loaded as first
                     $path = $this->composerClassLoader->findFile($entity);
                     if (!is_file($path)) {
-                        throw new \Evoweb\Extender\Exception\FileNotFoundException(
+                        throw new FileNotFoundException(
                             'Base file "' . $path . '" does not exist'
                         );
                     }
@@ -74,12 +74,12 @@ class ClassCacheManager
                         foreach ($entityConfiguration as $extendingExtension => $extendingFilePath) {
                             $path = GeneralUtility::getFileAbsFileName($extendingFilePath);
                             if (!is_file($path) && !is_numeric($extendingExtension)) {
-                                $path = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath(
+                                $path = ExtensionManagementUtility::extPath(
                                     $extendingExtension
                                 ) . 'Classes/Extending/' . $extendingFilePath . '.php';
                             }
                             if (!is_file($path)) {
-                                throw new \Evoweb\Extender\Exception\FileNotFoundException(
+                                throw new FileNotFoundException(
                                     'Extending file "' . $path . '" does not exist'
                                 );
                             }
@@ -143,6 +143,7 @@ class ClassCacheManager
             throw new \InvalidArgumentException(sprintf('File "%s" could not be fetched or is empty', $filePath));
         }
 
+        /** @var ClassParser $classParser */
         $classParser = GeneralUtility::makeInstance(ClassParser::class);
         $classParser->parse($code);
         $classParserInformation = $classParser->getFirstClass();
@@ -214,7 +215,7 @@ class ClassCacheManager
         $comment = [];
         $comment[] = '/' . str_repeat('*', 71);
         $comment[] = ' * this is partial from:';
-        $comment[] = ' *  ' . str_replace(\TYPO3\CMS\Core\Core\Environment::getPublicPath() . '/', '', $filePath);
+        $comment[] = ' *  ' . str_replace(Environment::getPublicPath() . '/', '', $filePath);
         $comment[] = str_repeat('*', 71) . '/' . LF;
 
         return implode(LF, $comment);
