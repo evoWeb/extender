@@ -21,9 +21,9 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class ClassLoader implements SingletonInterface
 {
-    protected ?PhpFrontend $classCache;
+    protected PhpFrontend $classCache;
 
-    protected ?ClassCacheManager $classCacheManager;
+    protected ClassCacheManager $classCacheManager;
 
     /**
      * Known classnames that cause problems and can not be extended

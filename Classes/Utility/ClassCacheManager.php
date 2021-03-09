@@ -24,9 +24,9 @@ use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class ClassCacheManager
 {
-    protected ?PhpFrontend $classCache;
+    protected PhpFrontend $classCache;
 
-    protected ?ClassLoader $composerClassLoader;
+    protected ClassLoader $composerClassLoader;
 
     protected array $constructorLines = [];
 
