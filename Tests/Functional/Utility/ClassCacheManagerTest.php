@@ -3,7 +3,6 @@
 namespace Evoweb\Extender\Tests\Functional\Utility;
 
 use Composer\Autoload\ClassLoader;
-use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
 
@@ -27,37 +26,7 @@ class ClassCacheManagerTest extends AbstractTestBase
             ->getMock();
 
         $filePath = 'typo3conf/ext/base_extension/Classes/Domain/Model/Blob.php';
-
-        $expected = '/***********************************************************************
- * this is partial from:
- *  ' . str_replace(Environment::getPublicPath() . '/', '', $filePath) . '
-***********************************************************************/
-    /**
-     * @var string
-     */
-    protected $property = \'\';
-
-    /**
-     * Getter for property
-     *
-     * @return string
-     */
-    public function getProperty()
-    {
-        return $this->property;
-    }
-
-    /**
-     * Setter for property
-     *
-     * @param string $property
-     */
-    public function setProperty($property)
-    {
-        $this->property = $property;
-    }
-
-';
+        $expected = $this->getExpected(__FUNCTION__, $filePath);
 
         /** @noinspection PhpUndefinedMethodInspection */
         $actual = $subject->_call('parseSingleFile', $filePath);
@@ -86,58 +55,8 @@ class ClassCacheManagerTest extends AbstractTestBase
             __DIR__ . '/../Fixtures/Extensions/base_extension/Classes/Domain/Model/BlobWithStorage.php'
         );
 
-        $expected = '/***********************************************************************
- * this is partial from:
- *  ' . str_replace(Environment::getPublicPath() . '/', '', $filePath) . '
-***********************************************************************/
-    /**
-     * @var string
-     */
-    protected $property = \'\';
+        $expected = $this->getExpected(__FUNCTION__, $filePath);
 
-    /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage
-     */
-    protected $storage = \'\';
-
-
-    /**
-     * Getter for property
-     *
-     * @return string
-     */
-    public function getProperty()
-    {
-        return $this->property;
-    }
-
-    /**
-     * Setter for property
-     *
-     * @param string $property
-     */
-    public function setProperty($property)
-    {
-        $this->property = $property;
-    }
-
-    /**
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
-     */
-    public function getStorage()
-    {
-        return $this->storage;
-    }
-
-    /**
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $storage
-     */
-    public function setStorage($storage)
-    {
-        $this->storage = $storage;
-    }
-
-';
         $expectedConstructorLines = [
             '    public function __construct()',
             '    {',
@@ -177,58 +96,7 @@ class ClassCacheManagerTest extends AbstractTestBase
             __DIR__ . '/../Fixtures/Extensions/base_extension/Classes/Domain/Model/BlobWithStorageNotPsr2.php'
         );
 
-        $expected = '/***********************************************************************
- * this is partial from:
- *  ' . str_replace(Environment::getPublicPath() . '/', '', $filePath) . '
-***********************************************************************/
-    /**
-     * @var string
-     */
-    protected $property = \'\';
-
-    /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage
-     */
-    protected $storage = \'\';
-
-
-    /**
-     * Getter for property
-     *
-     * @return string
-     */
-    public function getProperty()
-    {
-        return $this->property;
-    }
-
-    /**
-     * Setter for property
-     *
-     * @param string $property
-     */
-    public function setProperty($property)
-    {
-        $this->property = $property;
-    }
-
-    /**
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
-     */
-    public function getStorage()
-    {
-        return $this->storage;
-    }
-
-    /**
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $storage
-     */
-    public function setStorage($storage)
-    {
-        $this->storage = $storage;
-    }
-
-';
+        $expected = $this->getExpected(__FUNCTION__, $filePath);
 
         $expectedConstructorLines = [
             '    public function __construct()',
@@ -260,16 +128,7 @@ class ClassCacheManagerTest extends AbstractTestBase
             ->enableProxyingToOriginalMethods()
             ->getMock();
 
-        $expected = '/***********************************************************************
- * this is partial from:
- *  --
-***********************************************************************/
-    /**
-     * @var string
-     */
-    protected $test = \'\';
-
-';
+        $expected = $this->getExpected(__FUNCTION__, '--');
 
         /** @noinspection PhpUndefinedMethodInspection */
         $actual = $subject->_call('changeCode', '<?php
@@ -277,10 +136,7 @@ namespace Fixture\BaseExtension\Domain\Model;
 
 class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
-    /**
-     * @var string
-     */
-    protected $test = \'\';
+    protected string $test = \'\';
 }
 ', '--');
 
@@ -304,9 +160,7 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
             ->enableProxyingToOriginalMethods()
             ->getMock();
 
-        $expected = '/***********************************************************************' . chr(10)
-            . ' * this is partial from:' . chr(10) . ' *  --' . chr(10)
-            . '***********************************************************************/' . chr(10);
+        $expected = $this->getExpected(__FUNCTION__, '--');
 
         /** @noinspection PhpUndefinedMethodInspection */
         self::assertEquals($expected, $subject->_call('getPartialInfo', '--'));
@@ -356,73 +210,7 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $basePath = 'typo3conf/ext/base_extension/Classes/Domain/Model/Blob.php';
         $extendPath = 'typo3conf/ext/extending_extension/Classes/Domain/Model/BlobExtend.php';
 
-        $expected = '<?php
-/***********************************************************************
- * this is partial from:
- *  ' . str_replace(Environment::getPublicPath() . '/', '', $basePath) . '
-***********************************************************************/
-
-namespace Fixture\BaseExtension\Domain\Model;
-
-class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
-{
-    /**
-     * @var string
-     */
-    protected $property = \'\';
-
-    /**
-     * Getter for property
-     *
-     * @return string
-     */
-    public function getProperty()
-    {
-        return $this->property;
-    }
-
-    /**
-     * Setter for property
-     *
-     * @param string $property
-     */
-    public function setProperty($property)
-    {
-        $this->property = $property;
-    }
-
-/***********************************************************************
- * this is partial from:
- *  ' . str_replace(Environment::getPublicPath() . '/', '', $extendPath) . '
-***********************************************************************/
-    /**
-     * @var int
-     */
-    protected $otherProperty = 0;
-
-    /**
-     * Getter for otherProperty
-     *
-     * @return int
-     */
-    public function getOtherProperty()
-    {
-        return $this->otherProperty;
-    }
-
-    /**
-     * Setter for otherProperty
-     *
-     * @param int $otherProperty
-     */
-    public function setOtherProperty($otherProperty)
-    {
-        $this->otherProperty = $otherProperty;
-    }
-
-
-}
-#';
+        $expected = trim($this->getExpected(__FUNCTION__, $basePath, $extendPath));
 
         $actual = $cacheMock->get($cacheEntryIdentifier);
 
@@ -450,122 +238,7 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $basePath = 'typo3conf/ext/base_extension/Classes/Domain/Model/BlobWithStorage.php';
         $extendPath = 'typo3conf/ext/extending_extension/Classes/Domain/Model/BlobWithStorageExtend.php';
 
-        $expected = '<?php
-/***********************************************************************
- * this is partial from:
- *  ' . str_replace(Environment::getPublicPath() . '/', '', $basePath) . '
-***********************************************************************/
-
-namespace Fixture\BaseExtension\Domain\Model;
-
-class BlobWithStorage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
-{
-    /**
-     * @var string
-     */
-    protected $property = \'\';
-
-    /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage
-     */
-    protected $storage = \'\';
-
-
-    /**
-     * Getter for property
-     *
-     * @return string
-     */
-    public function getProperty()
-    {
-        return $this->property;
-    }
-
-    /**
-     * Setter for property
-     *
-     * @param string $property
-     */
-    public function setProperty($property)
-    {
-        $this->property = $property;
-    }
-
-    /**
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
-     */
-    public function getStorage()
-    {
-        return $this->storage;
-    }
-
-    /**
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $storage
-     */
-    public function setStorage($storage)
-    {
-        $this->storage = $storage;
-    }
-
-/***********************************************************************
- * this is partial from:
- *  ' . str_replace(Environment::getPublicPath() . '/', '', $extendPath) . '
-***********************************************************************/
-    /**
-     * @var int
-     */
-    protected $otherProperty = 0;
-
-    /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage
-     */
-    protected $otherStorage = \'\';
-
-
-    /**
-     * Getter for otherProperty
-     *
-     * @return int
-     */
-    public function getOtherProperty()
-    {
-        return $this->otherProperty;
-    }
-
-    /**
-     * Setter for otherProperty
-     *
-     * @param int $otherProperty
-     */
-    public function setOtherProperty($otherProperty)
-    {
-        $this->otherProperty = $otherProperty;
-    }
-
-    /**
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
-     */
-    public function getOtherStorage()
-    {
-        return $this->otherStorage;
-    }
-
-    /**
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $otherStorage
-     */
-    public function setOtherStorage($otherStorage)
-    {
-        $this->otherStorage = $otherStorage;
-    }
-
-    public function __construct()
-    {
-        $this->storage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
-        $this->otherStorage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
-    }
-
-}
-#';
+        $expected = trim($this->getExpected(__FUNCTION__, $basePath, $extendPath));
 
         $actual = $cacheMock->get($cacheEntryIdentifier);
 
@@ -593,99 +266,7 @@ class BlobWithStorage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $basePath = 'typo3conf/ext/base_extension/Classes/Domain/Model/AnotherBlob.php';
         $extendPath = 'typo3conf/ext/extending_extension/Classes/Domain/Model/BlobWithStorageExtend.php';
 
-        $expected = '<?php
-/***********************************************************************
- * this is partial from:
- *  ' . str_replace(Environment::getPublicPath() . '/', '', $basePath) . '
-***********************************************************************/
-
-namespace Fixture\BaseExtension\Domain\Model;
-
-class AnotherBlob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
-{
-    /**
-     * @var string
-     */
-    protected $property = \'\';
-
-    /**
-     * Getter for property
-     *
-     * @return string
-     */
-    public function getProperty()
-    {
-        return $this->property;
-    }
-
-    /**
-     * Setter for property
-     *
-     * @param string $property
-     */
-    public function setProperty($property)
-    {
-        $this->property = $property;
-    }
-
-/***********************************************************************
- * this is partial from:
- *  ' . str_replace(Environment::getPublicPath() . '/', '', $extendPath) . '
-***********************************************************************/
-    /**
-     * @var int
-     */
-    protected $otherProperty = 0;
-
-    /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage
-     */
-    protected $otherStorage = \'\';
-
-
-    /**
-     * Getter for otherProperty
-     *
-     * @return int
-     */
-    public function getOtherProperty()
-    {
-        return $this->otherProperty;
-    }
-
-    /**
-     * Setter for otherProperty
-     *
-     * @param int $otherProperty
-     */
-    public function setOtherProperty($otherProperty)
-    {
-        $this->otherProperty = $otherProperty;
-    }
-
-    /**
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
-     */
-    public function getOtherStorage()
-    {
-        return $this->otherStorage;
-    }
-
-    /**
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $otherStorage
-     */
-    public function setOtherStorage($otherStorage)
-    {
-        $this->otherStorage = $otherStorage;
-    }
-
-    public function __construct()
-    {
-        $this->otherStorage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
-    }
-
-}
-#';
+        $expected = trim($this->getExpected(__FUNCTION__, $basePath, $extendPath));
 
         $actual = $cacheMock->get($cacheEntryIdentifier);
 
@@ -713,123 +294,7 @@ class AnotherBlob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $basePath = 'typo3conf/ext/base_extension/Classes/Domain/Model/BlobWithStorageAndConstructorArgument.php';
         $extendPath = 'typo3conf/ext/extending_extension/Classes/Domain/Model/BlobWithStorageExtend.php';
 
-        $expected = '<?php
-/***********************************************************************
- * this is partial from:
- *  ' . str_replace(Environment::getPublicPath() . '/', '', $basePath) . '
-***********************************************************************/
-
-namespace Fixture\BaseExtension\Domain\Model;
-
-class BlobWithStorageAndConstructorArgument extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
-{
-    /**
-     * @var string
-     */
-    protected $property = \'\';
-
-    /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage
-     */
-    protected $storage = \'\';
-
-
-    /**
-     * Getter for property
-     *
-     * @return string
-     */
-    public function getProperty()
-    {
-        return $this->property;
-    }
-
-    /**
-     * Setter for property
-     *
-     * @param string $property
-     */
-    public function setProperty($property)
-    {
-        $this->property = $property;
-    }
-
-    /**
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
-     */
-    public function getStorage()
-    {
-        return $this->storage;
-    }
-
-    /**
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $storage
-     */
-    public function setStorage($storage)
-    {
-        $this->storage = $storage;
-    }
-
-/***********************************************************************
- * this is partial from:
- *  ' . str_replace(Environment::getPublicPath() . '/', '', $extendPath) . '
-***********************************************************************/
-    /**
-     * @var int
-     */
-    protected $otherProperty = 0;
-
-    /**
-     * @var \TYPO3\CMS\Extbase\Persistence\ObjectStorage
-     */
-    protected $otherStorage = \'\';
-
-
-    /**
-     * Getter for otherProperty
-     *
-     * @return int
-     */
-    public function getOtherProperty()
-    {
-        return $this->otherProperty;
-    }
-
-    /**
-     * Setter for otherProperty
-     *
-     * @param int $otherProperty
-     */
-    public function setOtherProperty($otherProperty)
-    {
-        $this->otherProperty = $otherProperty;
-    }
-
-    /**
-     * @return \TYPO3\CMS\Extbase\Persistence\ObjectStorage
-     */
-    public function getOtherStorage()
-    {
-        return $this->otherStorage;
-    }
-
-    /**
-     * @param \TYPO3\CMS\Extbase\Persistence\ObjectStorage $otherStorage
-     */
-    public function setOtherStorage($otherStorage)
-    {
-        $this->otherStorage = $otherStorage;
-    }
-
-    public function __construct($property = \'\')
-    {
-        $this->property = $property;
-        $this->storage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
-        $this->otherStorage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
-    }
-
-}
-#';
+        $expected = trim($this->getExpected(__FUNCTION__, $basePath, $extendPath));
 
         $actual = $cacheMock->get($cacheEntryIdentifier);
 

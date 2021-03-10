@@ -1,0 +1,74 @@
+<?php
+/***********************************************************************
+ * this is partial from:
+ *  ###BASE_PATH###
+ **********************************************************************/
+
+
+namespace Fixture\BaseExtension\Domain\Model;
+
+class BlobWithStorageAndConstructorArgument extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+{
+    protected string $property = '';
+
+    protected \TYPO3\CMS\Extbase\Persistence\ObjectStorage $storage;
+
+
+    public function getProperty(): string
+    {
+        return $this->property;
+    }
+
+    public function setProperty(string $property)
+    {
+        $this->property = $property;
+    }
+
+    public function getStorage(): \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+    {
+        return $this->storage;
+    }
+
+    public function setStorage(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $storage)
+    {
+        $this->storage = $storage;
+    }
+
+/***********************************************************************
+ * this is partial from:
+ *  ###EXTEND_PATH###
+ **********************************************************************/
+    protected int $otherProperty = 0;
+
+    protected \TYPO3\CMS\Extbase\Persistence\ObjectStorage $otherStorage;
+
+
+    public function getOtherProperty(): int
+    {
+        return $this->otherProperty;
+    }
+
+    public function setOtherProperty(int $otherProperty)
+    {
+        $this->otherProperty = $otherProperty;
+    }
+
+    public function getOtherStorage(): \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+    {
+        return $this->otherStorage;
+    }
+
+    public function setOtherStorage(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $otherStorage)
+    {
+        $this->otherStorage = $otherStorage;
+    }
+
+    public function __construct($property = '')
+    {
+        $this->property = $property;
+        $this->storage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->otherStorage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+    }
+
+}
+#

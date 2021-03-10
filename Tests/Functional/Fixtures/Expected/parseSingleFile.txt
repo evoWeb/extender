@@ -1,0 +1,16 @@
+/***********************************************************************
+ * this is partial from:
+ *  ###BASE_PATH###
+ **********************************************************************/
+    protected string $property = '';
+
+    public function getProperty(): string
+    {
+        return $this->property;
+    }
+
+    public function setProperty(string $property)
+    {
+        $this->property = $property;
+    }
+

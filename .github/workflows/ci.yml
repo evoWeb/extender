@@ -80,7 +80,7 @@ jobs:
 
       - name: Activate extensions
         run: |
-          composer require typo3/cms-extensionmanager="${TYPO3_VERSION}";
+          composer require --dev typo3/cms-extensionmanager="${TYPO3_VERSION}";
           cp -R .Build/Web/typo3conf/ext/extender/Tests/Functional/Fixtures/Extensions/base_extension .Build/Web/typo3conf/ext/
           cp -R .Build/Web/typo3conf/ext/extender/Tests/Functional/Fixtures/Extensions/extending_extension .Build/Web/typo3conf/ext/
 
