@@ -16,35 +16,21 @@ namespace Evoweb\Extender\Utility;
  */
 
 use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
+use TYPO3\CMS\Core\SingletonInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-/**
- * Class ClassLoader
- *
- * @author Sebastian Fischer <typo3@evoweb.de>
- */
-class ClassLoader implements \TYPO3\CMS\Core\SingletonInterface
+class ClassLoader implements SingletonInterface
 {
-    /**
-     * Class cache instance
-     *
-     * @var PhpFrontend
-     */
-    protected $classCache;
+    protected PhpFrontend $classCache;
 
-    /**
-     * Class cache manager
-     *
-     * @var ClassCacheManager
-     */
-    protected $classCacheManager;
+    protected ClassCacheManager $classCacheManager;
 
     /**
      * Known classnames that cause problems and can not be extended
      *
      * @var array
      */
-    protected $excludedClassNames = [
+    protected array $excludedClassNames = [
         'Symfony\Polyfill\Mbstring\Mbstring'
     ];
 
@@ -56,12 +42,6 @@ class ClassLoader implements \TYPO3\CMS\Core\SingletonInterface
         spl_autoload_register([GeneralUtility::makeInstance(self::class), 'loadClass'], true, true);
     }
 
-    /**
-     * ClassLoader constructor.
-     *
-     * @param PhpFrontend $classCache
-     * @param ClassCacheManager $classCacheManager
-     */
     public function __construct(PhpFrontend $classCache, ClassCacheManager $classCacheManager)
     {
         $this->classCache = $classCache;
@@ -129,12 +109,12 @@ class ClassLoader implements \TYPO3\CMS\Core\SingletonInterface
     {
         $oldClassnamePart = substr(strtolower($className), 0, 5);
 
-        $extensionConfiguration = array();
+        $extensionConfiguration = [];
         if (isset($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS'][$extensionKey])) {
-            $extensionConfiguration = (array) $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS'][$extensionKey];
+            $extensionConfiguration = (array)$GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS'][$extensionKey];
         }
 
-        return (bool) preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9\\\\_\x7f-\xff]*$/', $className)
+        return (bool)preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9\\\\_\x7f-\xff]*$/', $className)
             && (
                 strpos($oldClassnamePart, 'tx_') === false
                 && strpos($oldClassnamePart, 'ux_') === false

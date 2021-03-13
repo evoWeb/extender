@@ -1,9 +1,7 @@
-<?php
-
-namespace Fixture\BaseExtension\Domain\Model;
-
-class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
-{
+/***********************************************************************
+ * this is partial from:
+ *  ###BASE_PATH###
+ **********************************************************************/
     protected string $property = '';
 
     public function getProperty(): string
@@ -15,4 +13,4 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->property = $property;
     }
-}
+

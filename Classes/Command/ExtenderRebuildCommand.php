@@ -25,15 +25,12 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ExtenderRebuildCommand extends Command
 {
-    /**
-     * @var ClassCacheManager
-     */
-    protected $classCacheManager;
+    protected ClassCacheManager $classCacheManager;
 
-    public function __construct(ClassCacheManager $classCacheManager = null)
+    public function __construct(ClassCacheManager $classCacheManager)
     {
         $this->classCacheManager = $classCacheManager;
-        parent::__construct(null);
+        parent::__construct();
     }
 
     /**

@@ -1,17 +1,11 @@
-<?php
-
-namespace Fixture\BaseExtension\Domain\Model;
-
-class BlobWithStorage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
-{
+/***********************************************************************
+ * this is partial from:
+ *  ###BASE_PATH###
+ **********************************************************************/
     protected string $property = '';
 
     protected \TYPO3\CMS\Extbase\Persistence\ObjectStorage $storage;
 
-    public function __construct()
-    {
-        $this->storage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
-    }
 
     public function getProperty(): string
     {
@@ -32,4 +26,4 @@ class BlobWithStorage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
     {
         $this->storage = $storage;
     }
-}
+

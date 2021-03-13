@@ -16,37 +16,20 @@ namespace Evoweb\Extender\Utility;
  */
 
 use Composer\Autoload\ClassLoader;
+use Evoweb\Extender\Exception\FileNotFoundException;
 use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
+use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
-/**
- * Class cache manager
- */
 class ClassCacheManager
 {
-    /**
-     * Cache instance
-     *
-     * @var PhpFrontend
-     */
-    protected $classCache;
+    protected PhpFrontend $classCache;
 
-    /**
-     * @var ClassLoader
-     */
-    protected $composerClassLoader;
+    protected ClassLoader $composerClassLoader;
 
-    /**
-     * @var array
-     */
-    protected $constructorLines = [];
+    protected array $constructorLines = [];
 
-    /**
-     * Constructor
-     *
-     * @param PhpFrontend $classCache
-     * @param ClassLoader $composerClassLoader
-     */
     public function __construct(PhpFrontend $classCache, ClassLoader $composerClassLoader)
     {
         $this->classCache = $classCache;
@@ -61,7 +44,7 @@ class ClassCacheManager
      * @throws \Evoweb\Extender\Exception\FileNotFoundException
      * @throws \TYPO3\CMS\Core\Cache\Exception\InvalidDataException
      */
-    public function reBuild(array $parameters = array())
+    public function reBuild(array $parameters = [])
     {
         if (
             empty($parameters)
@@ -80,7 +63,7 @@ class ClassCacheManager
                     // Get the file to extend, this needs to be loaded as first
                     $path = $this->composerClassLoader->findFile($entity);
                     if (!is_file($path)) {
-                        throw new \Evoweb\Extender\Exception\FileNotFoundException(
+                        throw new FileNotFoundException(
                             'Base file "' . $path . '" does not exist'
                         );
                     }
@@ -91,12 +74,12 @@ class ClassCacheManager
                         foreach ($entityConfiguration as $extendingExtension => $extendingFilePath) {
                             $path = GeneralUtility::getFileAbsFileName($extendingFilePath);
                             if (!is_file($path) && !is_numeric($extendingExtension)) {
-                                $path = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath(
+                                $path = ExtensionManagementUtility::extPath(
                                     $extendingExtension
                                 ) . 'Classes/Extending/' . $extendingFilePath . '.php';
                             }
                             if (!is_file($path)) {
-                                throw new \Evoweb\Extender\Exception\FileNotFoundException(
+                                throw new FileNotFoundException(
                                     'Extending file "' . $path . '" does not exist'
                                 );
                             }
@@ -128,7 +111,7 @@ class ClassCacheManager
      * - Remove the class definition (if set)
      *
      * @param string $filePath path of the file
-     * @param boolean $removeClassDefinition If class definition should be removed
+     * @param bool $removeClassDefinition If class definition should be removed
      *
      * @return string path of the saved file
      * @throws \InvalidArgumentException
@@ -160,6 +143,7 @@ class ClassCacheManager
             throw new \InvalidArgumentException(sprintf('File "%s" could not be fetched or is empty', $filePath));
         }
 
+        /** @var ClassParser $classParser */
         $classParser = GeneralUtility::makeInstance(ClassParser::class);
         $classParser->parse($code);
         $classParserInformation = $classParser->getFirstClass();
@@ -231,8 +215,8 @@ class ClassCacheManager
         $comment = [];
         $comment[] = '/' . str_repeat('*', 71);
         $comment[] = ' * this is partial from:';
-        $comment[] = ' *  ' . str_replace(\TYPO3\CMS\Core\Core\Environment::getPublicPath() . '/', '', $filePath);
-        $comment[] = str_repeat('*', 71) . '/' . LF;
+        $comment[] = ' *  ' . str_replace(Environment::getPublicPath() . '/', '', $filePath);
+        $comment[] = ' ' . str_repeat('*', 70) . '/' . LF;
 
         return implode(LF, $comment);
     }
