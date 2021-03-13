@@ -3,7 +3,6 @@
 namespace Evoweb\Extender\Tests\Functional\Utility;
 
 use TYPO3\CMS\Core\Core\Environment;
-use function PHPUnit\Framework\assertEmpty;
 
 class AbstractTestBase extends \TYPO3\TestingFramework\Core\Functional\FunctionalTestCase
 {
@@ -39,7 +38,7 @@ class AbstractTestBase extends \TYPO3\TestingFramework\Core\Functional\Functiona
 
     public function getExpected(string $expectedFile, string $basePath, string $extendPath = ''): string
     {
-        $expected = file_get_contents(dirname(__FILE__) . '/../Fixtures/Expected/' . $expectedFile . '.txt');
+        $expected = file_get_contents(__DIR__ . '/../Fixtures/Expected/' . $expectedFile . '.txt');
         return str_replace(
             [
                 '###BASE_PATH###',
