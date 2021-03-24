@@ -1,4 +1,5 @@
 <?php
+
 namespace Evoweb\Extender\Tests\Functional\Utility;
 
 use Composer\Autoload\ClassLoader;
@@ -25,7 +26,7 @@ class ClassCacheManagerTest extends AbstractTestBase
             ->enableProxyingToOriginalMethods()
             ->getMock();
 
-        $filePath = realpath(__DIR__ . '/../Fixtures/Extensions/base_extension/Classes/Domain/Model/Blob.php');
+        $filePath = 'typo3conf/ext/base_extension/Classes/Domain/Model/Blob.php';
 
         $expected = '/***********************************************************************
  * this is partial from:
@@ -342,7 +343,6 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $className = \Fixture\BaseExtension\Domain\Model\Blob::class;
 
         $cacheBackend = new \TYPO3\CMS\Core\Cache\Backend\FileBackend('production');
-        /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cacheMock */
         $cacheMock = new \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend('extender', $cacheBackend);
 
         $composerClassLoader = GeneralUtility::getContainer()->get(ClassLoader::class);
@@ -353,10 +353,8 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $cacheEntryIdentifier = GeneralUtility::underscoredToLowerCamelCase('base_extension') . '_' .
             str_replace('\\', '_', $className);
 
-        $basePath = realpath(__DIR__ . '/../Fixtures/Extensions/base_extension/Classes/Domain/Model/Blob.php');
-        $extendPath = realpath(
-            __DIR__ . '/../Fixtures/Extensions/extending_extension/Classes/Domain/Model/BlobExtend.php'
-        );
+        $basePath = 'typo3conf/ext/base_extension/Classes/Domain/Model/Blob.php';
+        $extendPath = 'typo3conf/ext/extending_extension/Classes/Domain/Model/BlobExtend.php';
 
         $expected = '<?php
 /***********************************************************************
@@ -439,7 +437,6 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $className = \Fixture\BaseExtension\Domain\Model\BlobWithStorage::class;
 
         $cacheBackend = new \TYPO3\CMS\Core\Cache\Backend\FileBackend('production');
-        /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cacheMock */
         $cacheMock = new \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend('extender', $cacheBackend);
 
         $composerClassLoader = GeneralUtility::getContainer()->get(ClassLoader::class);
@@ -450,12 +447,8 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $cacheEntryIdentifier = GeneralUtility::underscoredToLowerCamelCase('base_extension') . '_' .
             str_replace('\\', '_', $className);
 
-        $basePath = realpath(
-            __DIR__ . '/../Fixtures/Extensions/base_extension/Classes/Domain/Model/BlobWithStorage.php'
-        );
-        $extendPath = realpath(
-            __DIR__ . '/../Fixtures/Extensions/extending_extension/Classes/Domain/Model/BlobWithStorageExtend.php'
-        );
+        $basePath = 'typo3conf/ext/base_extension/Classes/Domain/Model/BlobWithStorage.php';
+        $extendPath = 'typo3conf/ext/extending_extension/Classes/Domain/Model/BlobWithStorageExtend.php';
 
         $expected = '<?php
 /***********************************************************************
@@ -587,7 +580,6 @@ class BlobWithStorage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $className = \Fixture\BaseExtension\Domain\Model\AnotherBlob::class;
 
         $cacheBackend = new \TYPO3\CMS\Core\Cache\Backend\FileBackend('production');
-        /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cacheMock */
         $cacheMock = new \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend('extender', $cacheBackend);
 
         $composerClassLoader = GeneralUtility::getContainer()->get(ClassLoader::class);
@@ -598,11 +590,8 @@ class BlobWithStorage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $cacheEntryIdentifier = GeneralUtility::underscoredToLowerCamelCase('base_extension') . '_' .
             str_replace('\\', '_', $className);
 
-        $fixtureFolder = __DIR__ . '/../Fixtures/Extensions/';
-        $basePath = realpath($fixtureFolder . 'base_extension/Classes/Domain/Model/AnotherBlob.php');
-        $extendPath = realpath(
-            $fixtureFolder . 'extending_extension/Classes/Domain/Model/BlobWithStorageExtend.php'
-        );
+        $basePath = 'typo3conf/ext/base_extension/Classes/Domain/Model/AnotherBlob.php';
+        $extendPath = 'typo3conf/ext/extending_extension/Classes/Domain/Model/BlobWithStorageExtend.php';
 
         $expected = '<?php
 /***********************************************************************
@@ -711,7 +700,6 @@ class AnotherBlob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $className = \Fixture\BaseExtension\Domain\Model\BlobWithStorageAndConstructorArgument::class;
 
         $cacheBackend = new \TYPO3\CMS\Core\Cache\Backend\FileBackend('production');
-        /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cacheMock */
         $cacheMock = new \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend('extender', $cacheBackend);
 
         $composerClassLoader = GeneralUtility::getContainer()->get(ClassLoader::class);
@@ -722,13 +710,8 @@ class AnotherBlob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         $cacheEntryIdentifier = GeneralUtility::underscoredToLowerCamelCase('base_extension') . '_' .
             str_replace('\\', '_', $className);
 
-        $basePath = realpath(
-            __DIR__ .
-            '/../Fixtures/Extensions/base_extension/Classes/Domain/Model/BlobWithStorageAndConstructorArgument.php'
-        );
-        $extendPath = realpath(
-            __DIR__ . '/../Fixtures/Extensions/extending_extension/Classes/Domain/Model/BlobWithStorageExtend.php'
-        );
+        $basePath = 'typo3conf/ext/base_extension/Classes/Domain/Model/BlobWithStorageAndConstructorArgument.php';
+        $extendPath = 'typo3conf/ext/extending_extension/Classes/Domain/Model/BlobWithStorageExtend.php';
 
         $expected = '<?php
 /***********************************************************************

@@ -1,4 +1,5 @@
 <?php
+
 namespace Evoweb\Extender\Tests\Functional\Utility;
 
 use Evoweb\Extender\Utility\ClassLoader;
