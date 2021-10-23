@@ -16,7 +16,11 @@ namespace Evoweb\Extender\Utility;
  */
 
 use Composer\Autoload\ClassLoader;
+use TYPO3\CMS\Core\Cache\CacheManager;
+use TYPO3\CMS\Core\Cache\Exception\NoSuchCacheException;
 use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
+use TYPO3\CMS\Core\Core\Environment;
+use TYPO3\CMS\Core\Information\Typo3Version;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 /**
@@ -88,12 +92,15 @@ class ClassCacheManager
 
                     // Get the files from all other extensions that are extending this domain model
                     if (is_array($entityConfiguration)) {
-                        foreach ($entityConfiguration as $extendingExtension => $extendingFilePath) {
-                            $path = GeneralUtility::getFileAbsFileName($extendingFilePath);
+                        foreach ($entityConfiguration as $extendingExtension => $extendingEntity) {
+                            $path = $this->composerClassLoader->findFile($extendingEntity);
+                            if (!$path || !is_file($path)) {
+                                $path = GeneralUtility::getFileAbsFileName($extendingEntity);
+                            }
                             if (!is_file($path) && !is_numeric($extendingExtension)) {
                                 $path = \TYPO3\CMS\Core\Utility\ExtensionManagementUtility::extPath(
                                     $extendingExtension
-                                ) . 'Classes/Extending/' . $extendingFilePath . '.php';
+                                ) . 'Classes/Extending/' . $extendingEntity . '.php';
                             }
                             if (!is_file($path)) {
                                 throw new \Evoweb\Extender\Exception\FileNotFoundException(

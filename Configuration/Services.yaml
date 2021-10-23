@@ -22,9 +22,13 @@ services:
       - { name: 'console.command', command: 'extender:rebuild', schedulable: false }
 
   Evoweb\Extender\Utility\ClassCacheManager:
-    arguments: ['@extender.cache', '@Composer\Autoload\ClassLoader']
+    arguments:
+      $classCache: '@extender.cache'
+      $composerClassLoader: '@Composer\Autoload\ClassLoader'
     public: true
 
   Evoweb\Extender\Utility\ClassLoader:
-    arguments: ['@extender.cache', '@Evoweb\Extender\Utility\ClassCacheManager']
+    arguments:
+      $classCache: '@extender.cache'
+      $classCacheManager: '@Evoweb\Extender\Utility\ClassCacheManager'
     public: true
