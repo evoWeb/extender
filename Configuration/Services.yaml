@@ -9,11 +9,7 @@ services:
 
   extender.cache:
     class: TYPO3\CMS\Core\Cache\Frontend\PhpFrontend
-    # We can not use CacheManager, as it can not be
-    # injected/instantiated during ext_localconf.php loading
-    # factory: ['@TYPO3\CMS\Core\Cache\CacheManager', 'getCache']
-    # therefore we use the static Bootstrap::createCache factory instead.
-    factory: ['TYPO3\CMS\Core\Core\Bootstrap', 'createCache']
+    factory: ['Evoweb\Extender\Factory\CacheFactory', 'createCache']
     arguments: ['extender']
 
   Evoweb\Extender\Command\ExtenderRebuildCommand:
@@ -32,3 +28,11 @@ services:
       $classCache: '@extender.cache'
       $classCacheManager: '@Evoweb\Extender\Utility\ClassCacheManager'
     public: true
+
+  Evoweb\Extender\EventListener\RegisterAutoloader:
+    arguments: ['@Evoweb\Extender\Utility\ClassLoader']
+    tags:
+      - name: event.listener
+        identifier: 'extender_extlocalconf_registerautoloader'
+        method: 'onClassLoaderEvent'
+        event: Evoweb\Extender\Utility\Event\ClassLoaderEvent

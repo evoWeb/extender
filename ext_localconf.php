@@ -5,21 +5,16 @@ defined('TYPO3_MODE') || die();
 call_user_func(function () {
     // Register extender cache
     // needs to stay above registerAutoloader to always have settings before using the cache
-    $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['extender'] = [
-        'frontend' => \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend::class,
-        'backend' => \TYPO3\CMS\Core\Cache\Backend\FileBackend::class,
-        'groups' => [
-            'all',
-            'system',
-        ],
-        'options' => [
-            'defaultLifetime' => 0,
-        ],
-    ];
-
-    if (class_exists(\Evoweb\Extender\Utility\ClassLoader::class)) {
-        \Evoweb\Extender\Utility\ClassLoader::registerAutoloader();
+    if (!$GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['extender']) {
+        $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['extender'] =
+            \Evoweb\Extender\Factory\CacheFactory::$configuration;
     }
+
+    $event = new \Evoweb\Extender\Utility\Event\ClassLoaderEvent();
+    /** @var \TYPO3\CMS\Core\EventDispatcher\EventDispatcher $eventDispatcher */
+    $eventDispatcher = \TYPO3\CMS\Core\Utility\GeneralUtility::getContainer()
+        ->get(Psr\EventDispatcher\EventDispatcherInterface::class);
+    $eventDispatcher->dispatch($event);
 
     // Configure clear cache post processing for extended domain model
     $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['clearCachePostProc'][] =
