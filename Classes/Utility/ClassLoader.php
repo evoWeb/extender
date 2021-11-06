@@ -35,13 +35,11 @@ class ClassLoader implements SingletonInterface
     ];
 
     /**
-     * Register instance of this class as spl autoloader
+     * ClassLoader constructor.
+     *
+     * @param PhpFrontend $classCache
+     * @param ClassCacheManager $classCacheManager
      */
-    public static function registerAutoloader()
-    {
-        spl_autoload_register([GeneralUtility::makeInstance(self::class), 'loadClass'], true, true);
-    }
-
     public function __construct(PhpFrontend $classCache, ClassCacheManager $classCacheManager)
     {
         $this->classCache = $classCache;
@@ -114,7 +112,7 @@ class ClassLoader implements SingletonInterface
             $extensionConfiguration = (array)$GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS'][$extensionKey];
         }
 
-        return (bool)preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9\\\\_\x7f-\xff]*$/', $className)
+        return preg_match('/^[a-zA-Z_\x7f-\xff][a-zA-Z0-9\\\\_\x7f-\xff]*$/', $className)
             && (
                 strpos($oldClassnamePart, 'tx_') === false
                 && strpos($oldClassnamePart, 'ux_') === false
