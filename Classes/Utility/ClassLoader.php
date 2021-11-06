@@ -34,14 +34,6 @@ class ClassLoader implements SingletonInterface
         'Symfony\Polyfill\Mbstring\Mbstring'
     ];
 
-    /**
-     * Register instance of this class as spl autoloader
-     */
-    public static function registerAutoloader()
-    {
-        spl_autoload_register([GeneralUtility::makeInstance(self::class), 'loadClass'], true, true);
-    }
-
     public function __construct(PhpFrontend $classCache, ClassCacheManager $classCacheManager)
     {
         $this->classCache = $classCache;
