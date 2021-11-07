@@ -71,12 +71,15 @@ class ClassCacheManager
 
                     // Get the files from all other extensions that are extending this domain model
                     if (is_array($entityConfiguration)) {
-                        foreach ($entityConfiguration as $extendingExtension => $extendingFilePath) {
-                            $path = GeneralUtility::getFileAbsFileName($extendingFilePath);
+                        foreach ($entityConfiguration as $extendingExtension => $extendingEntity) {
+                            $path = $this->composerClassLoader->findFile($extendingEntity);
+                            if (!$path || !is_file($path)) {
+                                $path = GeneralUtility::getFileAbsFileName($extendingEntity);
+                            }
                             if (!is_file($path) && !is_numeric($extendingExtension)) {
                                 $path = ExtensionManagementUtility::extPath(
                                     $extendingExtension
-                                ) . 'Classes/Extending/' . $extendingFilePath . '.php';
+                                ) . 'Classes/Extending/' . $extendingEntity . '.php';
                             }
                             if (!is_file($path)) {
                                 throw new FileNotFoundException(

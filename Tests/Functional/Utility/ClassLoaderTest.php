@@ -20,7 +20,7 @@ class ClassLoaderTest extends AbstractTestBase
         );
 
         $subject = new \Evoweb\Extender\Utility\ClassLoader($cacheMock, $classCacheManager);
-        $subject::registerAutoloader();
+        spl_autoload_register([$subject, 'loadClass'], true, true);
 
         $autoLoaders = spl_autoload_functions();
 
