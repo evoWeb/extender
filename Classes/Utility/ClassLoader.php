@@ -53,10 +53,6 @@ class ClassLoader implements \TYPO3\CMS\Core\SingletonInterface
      */
     public static function registerAutoloader()
     {
-        trigger_error(
-            __CLASS__ . '::registerAutoloader will be removed in version 9.0. Dispatch ClassLoaderEvent instead.',
-            E_USER_DEPRECATED
-        );
         spl_autoload_register([GeneralUtility::makeInstance(self::class), 'loadClass'], true, true);
     }
 
