@@ -43,7 +43,7 @@ class RegisterAutoloaderEvent implements StoppableEventInterface
         spl_autoload_register([$container->get(ClassLoader::class), 'loadClass'], true, true);
     }
 
-    public function isPropagationStopped() : bool
+    public function isPropagationStopped(): bool
     {
         return true;
     }
