@@ -9,5 +9,10 @@
 		"psr-4": {
 			"Fixture\\BaseExtension\\": "Classes/"
 		}
+	},
+	"extra": {
+		"typo3/cms": {
+			"extension-key": "base_extension"
+		}
 	}
 }

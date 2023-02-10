@@ -1,18 +1,15 @@
 <?php
 
-namespace Evoweb\Extender\Tests\Functional\Utility;
+namespace Evoweb\Extender\Tests\Functional12\Utility;
 
 use TYPO3\CMS\Core\Core\Environment;
 
 class AbstractTestBase extends \TYPO3\TestingFramework\Core\Functional\FunctionalTestCase
 {
-    /**
-     * @var array
-     */
-    protected $testExtensionsToLoad = [
+    protected array $testExtensionsToLoad = [
         'typo3conf/ext/extender',
-        'typo3conf/ext/base_extension',
-        'typo3conf/ext/extending_extension',
+        'vendor/evoweb/base-extension',
+        'vendor/evoweb/extending-extension',
     ];
 
     protected array $cacheConfiguration = [

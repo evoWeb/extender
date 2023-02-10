@@ -1,6 +1,6 @@
 <?php
 
-namespace Evoweb\Extender\Tests\Functional\Utility;
+namespace Evoweb\Extender\Tests\Functional12\Utility;
 
 use Composer\Autoload\ClassLoader;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
@@ -66,7 +66,7 @@ class ClassCacheManagerTest extends AbstractTestBase
             '        $this->storage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();'
         ];
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /** @noinspection PhpMethodParametersCountMismatchInspection */
         $actual = $subject->_call('parseSingleFile', $filePath);
 
         self::assertEquals($expected, $actual);
@@ -107,7 +107,7 @@ class ClassCacheManagerTest extends AbstractTestBase
             '        $this->storage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();'
         ];
 
-        /** @noinspection PhpUndefinedMethodInspection */
+        /** @noinspection PhpMethodParametersCountMismatchInspection */
         $actual = $subject->_call('parseSingleFile', $filePath);
 
         self::assertEquals($expected, $actual);
