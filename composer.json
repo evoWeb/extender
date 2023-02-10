@@ -19,7 +19,7 @@
 	],
 
 	"require": {
-		"typo3/cms-core": "^11.0"
+		"typo3/cms-core": "^11.0 || ^12.0 || dev-main"
 	},
 
 	"autoload": {
