@@ -1,7 +1,6 @@
 .idea
-.Build/bin/**
-.Build/vendor/**
-.Build/Web/**
-vendor
-composer.*
-!composer.json
+.Build/**
+!.Build/docker-compose.yml
+!.Build/runTests.sh
+!.Build/test.sh
+composer.lock

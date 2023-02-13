@@ -33,11 +33,11 @@
 		}
 	},
 	"require-dev": {
-		"typo3/testing-framework": "^6.6.2 || dev-main",
+		"evoweb/base-extension": "*",
+		"evoweb/extending-extension": "*",
 		"sbuerk/typo3-cmscomposerinstallers-testingframework-bridge": "^0.0.1",
 		"typo3/cms-extensionmanager": "*",
-		"evoweb/base-extension": "*",
-		"evoweb/extending-extension": "*"
+		"typo3/testing-framework": "^6.6.2 || dev-main"
 	},
 	"autoload-dev": {
 		"psr-4": {
