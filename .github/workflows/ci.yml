@@ -15,7 +15,9 @@ jobs:
       matrix:
         php-versions: ['7.4', '8.1']
 
-    name: Lint PHP ${{ matrix.php-versions }}
+    env: ${{ matrix }}
+
+    name: Lint PHP ${{ php-versions }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -23,17 +25,16 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ matrix.php-versions }}
+          php-version: ${{ php-versions }}
 
-      - name: Running php lint with ${{ matrix.php-versions }}
+      - name: Running php lint with ${{ php-versions }}
         run: errors=$(find . -name \*.php ! -path "./.Build/*" -exec php -d display_errors=stderr -l "{}" 2>&1 >/dev/null \;) && echo "${errors}" && test -z "${errors}"
 
-  phpunit:
+  functional:
     needs: lint
 
     runs-on: ubuntu-22.04
 
-    continue-on-error: ${{ matrix.env.experimental == true }}
     strategy:
       fail-fast: false
       matrix:
@@ -44,6 +45,7 @@ jobs:
           - { PHP: 8.1, TYPO3_VERSION: "dev-main", TESTING_FRAMEWORK: "dev-main", TEST_PATH:  "Tests/Functional12" , experimental: true }
 
     env: ${{ matrix.env }}
+    continue-on-error: ${{ experimental == true }}
 
     name: Run unit and/or functional tests on TYPO3 ${{ matrix.env.TYPO3_VERSION }} with PHP${{ matrix.env.php }} and testing framework ${{ matrix.env.TESTING_FRAMEWORK }}
     steps:
@@ -96,7 +98,7 @@ jobs:
         run: git checkout composer.json;
 
   TERUpload:
-    needs: [ lint, phpunit ]
+    needs: [ lint, functional ]
     if: startsWith(github.ref, 'refs/tags/')
 
     runs-on: ubuntu-22.04

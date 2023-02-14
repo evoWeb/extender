@@ -15,8 +15,8 @@ class AbstractTestBase extends FunctionalTestCase
 {
     protected array $testExtensionsToLoad = [
         'typo3conf/ext/extender',
-        'vendor/evoweb/base-extension',
-        'vendor/evoweb/extending-extension',
+        'vendor/evoweb/base_extension',
+        'vendor/evoweb/extending_extension',
     ];
 
     protected array $cacheConfiguration = [

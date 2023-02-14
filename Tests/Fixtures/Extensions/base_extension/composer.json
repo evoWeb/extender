@@ -1,5 +1,5 @@
 {
-	"name": "evoweb/base-extension",
+	"name": "evoweb/base_extension",
 	"description": "Base fixture for extender testing",
 	"type": "typo3-cms-extension",
 	"license": "GPL-2.0-or-later",
