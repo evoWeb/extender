@@ -47,7 +47,7 @@ jobs:
     env: ${{ matrix.env }}
     continue-on-error: ${{ matrix.env.experimental == true }}
 
-    name: Run unit and/or functional tests on TYPO3 ${{ matrix.env.TYPO3_VERSION }} with PHP${{ matrix.env.php }} and testing framework ${{ matrix.env.TESTING_FRAMEWORK }}
+    name: Run unit and/or functional tests on TYPO3 ${TYPO3_VERSION} with PHP ${php} and testing framework ${TESTING_FRAMEWORK}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -69,23 +69,17 @@ jobs:
           key: dependencies-composer-${{ hashFiles('composer.json') }}
 
       - name: Ensure stability dev
-        if: ${{ matrix.env.TYPO3_VERSION == 'dev-main' }}
+        if: ${TYPO3_VERSION}
         run: |
           composer config minimum-stability dev
           composer config prefer-stable true
 
       - name: Install TYPO3 core
-        run: composer require typo3/cms-core="${{ matrix.env.TYPO3_VERSION }}" ${PREFER_LOWEST};
+        run: composer require typo3/cms-core="${TYPO3_VERSION}" ${PREFER_LOWEST};
 
       - name: Install testing framework ${TESTING_FRAMEWORK}
-        if: ${{ TESTING_FRAMEWORK }}
+        if: ${TESTING_FRAMEWORK}
         run: composer require --dev typo3/testing-framework="${TESTING_FRAMEWORK}";
-
-      - name: Activate extensions
-        run: |
-          composer require --dev typo3/cms-extensionmanager="${TYPO3_VERSION}";
-          cp -R .Build/Web/typo3conf/ext/extender/Tests/Functional/Fixtures/Extensions/base_extension .Build/Web/typo3conf/ext/
-          cp -R .Build/Web/typo3conf/ext/extender/Tests/Functional/Fixtures/Extensions/extending_extension .Build/Web/typo3conf/ext/
 
       - name: Run functional tests
         run: |
