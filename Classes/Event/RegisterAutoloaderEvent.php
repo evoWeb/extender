@@ -18,28 +18,11 @@ namespace Evoweb\Extender\Event;
 use Evoweb\Extender\Utility\ClassLoader;
 use Psr\Container\ContainerInterface;
 use Psr\EventDispatcher\StoppableEventInterface;
-use TYPO3\CMS\Core\Cache\Backend\AbstractBackend;
-use TYPO3\CMS\Core\Cache\Backend\FileBackend;
-use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
 
 class RegisterAutoloaderEvent implements StoppableEventInterface
 {
     public function __construct(ContainerInterface $container)
     {
-        // Register extender cache
-        // needs to stay above autoloader registration to always have settings before using the cache
-        $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['extender'] = [
-            'frontend' => PhpFrontend::class,
-            'backend' => FileBackend::class,
-            'groups' => [
-                'all',
-                'system',
-            ],
-            'options' => [
-                'defaultLifetime' => AbstractBackend::UNLIMITED_LIFETIME,
-            ],
-        ];
-
         spl_autoload_register([$container->get(ClassLoader::class), 'loadClass'], true, true);
     }
 

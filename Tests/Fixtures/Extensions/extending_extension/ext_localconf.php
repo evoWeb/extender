@@ -6,4 +6,4 @@ $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['base_extension']['extender'][
 
 $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['base_extension']['extender'][
     \Fixture\BaseExtension\Domain\Model\BlobWithStorage::class
-]['extending_extension'] = 'EXT:extending_extension/Classes/Domain/Model/BlobWithStorageExtend.php';
+]['extending_extension'] = \Fixture\ExtendingExtension\Domain\Model\BlobWithStorageExtend::class;

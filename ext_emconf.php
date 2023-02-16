@@ -10,10 +10,10 @@ $EM_CONF['extender'] = [
     'author_company' => 'evoWeb',
     'state' => 'stable',
     'clearCacheOnLoad' => 1,
-    'version' => '8.1.0',
+    'version' => '9.0.0',
     'constraints' => [
         'depends' => [
-            'typo3' => '11.0.0-11.9.99',
+            'typo3' => '11.0.0-12.2.99',
         ],
         'conflicts' => [],
         'suggests' => [],

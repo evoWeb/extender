@@ -38,7 +38,7 @@ class AbstractTestBase extends \TYPO3\TestingFramework\Core\Functional\Functiona
 
     public function getExpected(string $expectedFile, string $basePath, string $extendPath = ''): string
     {
-        $expected = file_get_contents(__DIR__ . '/../Fixtures/Expected/' . $expectedFile . '.txt');
+        $expected = file_get_contents(__DIR__ . '/../../Fixtures/Expected/' . $expectedFile . '.txt');
         return str_replace(
             [
                 '###BASE_PATH###',
@@ -55,7 +55,7 @@ class AbstractTestBase extends \TYPO3\TestingFramework\Core\Functional\Functiona
     /**
      * Add cache and extending configuration
      */
-    protected function configureModelExtending()
+    protected function configureModelExtending(): void
     {
         // normally this would be set in ext_localconf
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['extender'] = $this->cacheConfiguration;

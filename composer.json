@@ -2,49 +2,62 @@
 	"name": "evoweb/extender",
 	"type": "typo3-cms-extension",
 	"description": "Extending extbase domain models like a pro with extender",
-	"homepage": "http://www.evoweb.de",
-
+	"homepage": "https://www.evoweb.de",
 	"license": "GPL-2.0-or-later",
-
-	"support" : {
-		"docs": "https://docs.typo3.org/p/evoweb/extender/master/en-us/",
-		"issues" : "https://github.com/evoWeb/extender/issues"
-	},
-
 	"keywords": [
-		"TYPO3 CMS",
+		"TYPO3",
 		"extbase",
 		"extending",
 		"domain models"
 	],
-
-	"require": {
-		"typo3/cms-core": "^11.0"
+	"support" : {
+		"source" : "https://github.com/evoWeb/extender",
+		"issues" : "https://github.com/evoWeb/extender/issues",
+		"docs": "https://docs.typo3.org/p/evoweb/extender/main/en-us/"
 	},
-
+	"require": {
+		"typo3/cms-core": "^11.0 || ^12.2 || dev-main"
+	},
 	"autoload": {
 		"psr-4": {
 			"Evoweb\\Extender\\": "Classes/"
 		}
+	},
+	"config": {
+		"vendor-dir": ".Build/Web/vendor",
+		"sort-packages": true,
+		"allow-plugins": {
+			"typo3/cms-composer-installers": true,
+			"typo3/class-alias-loader": true,
+			"sbuerk/typo3-cmscomposerinstallers-testingframework-bridge": true
+		}
+	},
+	"require-dev": {
+		"evoweb/base_extension": "*",
+		"evoweb/extending_extension": "*",
+		"typo3/cms-extensionmanager": "*",
+		"typo3/testing-framework": "^6.6.2 || dev-main",
+		"sbuerk/typo3-cmscomposerinstallers-testingframework-bridge": "^0.0.1"
 	},
 	"autoload-dev": {
 		"psr-4": {
 			"Evoweb\\Extender\\Tests\\": "Tests/"
 		}
 	},
-
-	"config": {
-		"vendor-dir": ".Build/Web/vendor"
-	},
 	"extra": {
 		"typo3/cms": {
-			"extension-key": "extender",
-			"web-dir": ".Build/Web"
+			"web-dir": ".Build/Web",
+			"extension-key": "extender"
 		}
 	},
+	"repositories": [
+		 {
+			"type": "path",
+			"url": "./Tests/Fixtures/Extensions/*"
+		}
+	],
 
 	"scripts": {
-		"post-autoload-dump": "mkdir -p .Build/Web/typo3conf/ext/ && ln -snf ../../../.. .Build/Web/typo3conf/ext/extender",
 		"prepare-release": [
 			"rm -rf .Build",
 			"rm -rf .github",

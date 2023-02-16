@@ -5,7 +5,7 @@
 [![Monthly Downloads](https://poser.pugx.org/evoweb/extender/d/monthly)](https://packagist.org/packages/evoweb/extender)
 [![Total Downloads](https://poser.pugx.org/evoweb/extender/downloads)](https://packagist.org/packages/evoweb/extender)
 
-See full documentation at https://docs.typo3.org/typo3cms/extensions/extender/Index.html
+See full documentation at https://docs.typo3.org/p/evoweb/extender/main/en-us/
 
 ## Installation
 
