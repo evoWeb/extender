@@ -15,10 +15,9 @@ jobs:
       matrix:
         php-versions: ['7.4', '8.1']
 
-    env:
-      PHP_VERSIONS: ${{ matrix.php-versions }}
+    env: ${{ matrix }}
 
-    name: Lint PHP ${{ PHP_VERSIONS }}
+    name: Lint PHP ${php-versions}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -26,9 +25,9 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ PHP_VERSIONS }}
+          php-version: ${php-versions}
 
-      - name: Running php lint with ${{ PHP_VERSIONS }}
+      - name: Running php lint with ${php-versions}
         run: errors=$(find . -name \*.php ! -path "./.Build/*" -exec php -d display_errors=stderr -l "{}" 2>&1 >/dev/null \;) && echo "${errors}" && test -z "${errors}"
 
   functional:
@@ -45,7 +44,8 @@ jobs:
           - { PHP: 8.1, TYPO3_VERSION: ^12.0, TESTING_FRAMEWORK: "dev-main", TEST_PATH:  "Tests/Functional12", PREFER_LOWEST: "--prefer-lowest" }
           - { PHP: 8.1, TYPO3_VERSION: "dev-main", TESTING_FRAMEWORK: "dev-main", TEST_PATH:  "Tests/Functional12" , experimental: true }
 
-    continue-on-error: ${{ matrix.experimental == true }}
+    env: ${{ matrix.env }}
+    continue-on-error: ${{ matrix.env.experimental == true }}
 
     name: Run unit and/or functional tests on TYPO3 ${{ matrix.env.TYPO3_VERSION }} with PHP${{ matrix.env.php }} and testing framework ${{ matrix.env.TESTING_FRAMEWORK }}
     steps:
@@ -55,7 +55,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ PHP }}
+          php-version: ${PHP}
           tools: composer
           extensions: pdo, sqlite3
 
@@ -69,13 +69,13 @@ jobs:
           key: dependencies-composer-${{ hashFiles('composer.json') }}
 
       - name: Ensure stability dev
-        if: ${{ TYPO3_VERSION == 'dev-main' }}
+        if: ${{ matrix.env.TYPO3_VERSION == 'dev-main' }}
         run: |
           composer config minimum-stability dev
           composer config prefer-stable true
 
       - name: Install TYPO3 core
-        run: composer require typo3/cms-core="${TYPO3_VERSION}" ${PREFER_LOWEST};
+        run: composer require typo3/cms-core="${{ matrix.env.TYPO3_VERSION }}" ${PREFER_LOWEST};
 
       - name: Install testing framework ${TESTING_FRAMEWORK}
         if: ${{ TESTING_FRAMEWORK }}
