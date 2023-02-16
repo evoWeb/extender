@@ -63,7 +63,7 @@ jobs:
         run: composer validate
 
       - name: Cache dependencies
-        uses: actions/cache@v1
+        uses: actions/cache@v3
         with:
           path: ~/.composer/cache
           key: dependencies-composer-${{ hashFiles('composer.json') }}
@@ -103,7 +103,7 @@ jobs:
     name: TYPO3 TER release
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Publish to TER
         uses: tomasnorre/typo3-upload-ter@v2
