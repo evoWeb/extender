@@ -15,9 +15,10 @@ jobs:
       matrix:
         php-versions: ['7.4', '8.1']
 
-    env: ${{ matrix }}
+    env:
+      PHP_VERSIONS: ${{ matrix.php-versions }}
 
-    name: Lint PHP ${{ php-versions }}
+    name: Lint PHP ${{ PHP_VERSIONS }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -25,9 +26,9 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${{ php-versions }}
+          php-version: ${{ PHP_VERSIONS }}
 
-      - name: Running php lint with ${{ php-versions }}
+      - name: Running php lint with ${{ PHP_VERSIONS }}
         run: errors=$(find . -name \*.php ! -path "./.Build/*" -exec php -d display_errors=stderr -l "{}" 2>&1 >/dev/null \;) && echo "${errors}" && test -z "${errors}"
 
   functional:
@@ -44,8 +45,7 @@ jobs:
           - { PHP: 8.1, TYPO3_VERSION: ^12.0, TESTING_FRAMEWORK: "dev-main", TEST_PATH:  "Tests/Functional12", PREFER_LOWEST: "--prefer-lowest" }
           - { PHP: 8.1, TYPO3_VERSION: "dev-main", TESTING_FRAMEWORK: "dev-main", TEST_PATH:  "Tests/Functional12" , experimental: true }
 
-    env: ${{ matrix.env }}
-    continue-on-error: ${{ experimental == true }}
+    continue-on-error: ${{ matrix.experimental == true }}
 
     name: Run unit and/or functional tests on TYPO3 ${{ matrix.env.TYPO3_VERSION }} with PHP${{ matrix.env.php }} and testing framework ${{ matrix.env.TESTING_FRAMEWORK }}
     steps:
