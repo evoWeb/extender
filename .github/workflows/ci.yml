@@ -17,7 +17,7 @@ jobs:
 
     env: ${{ matrix }}
 
-    name: Lint PHP ${php-versions}
+    name: Lint PHP ${{ matrix.php-versions }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -25,9 +25,9 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${php-versions}
+          php-version: ${{ matrix.php-versions }}
 
-      - name: Running php lint with ${php-versions}
+      - name: Running php lint with ${{ matrix.php-versions }}
         run: errors=$(find . -name \*.php ! -path "./.Build/*" -exec php -d display_errors=stderr -l "{}" 2>&1 >/dev/null \;) && echo "${errors}" && test -z "${errors}"
 
   functional:
