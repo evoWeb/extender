@@ -78,7 +78,7 @@ jobs:
         run: composer require typo3/cms-core="${TYPO3_VERSION}" ${PREFER_LOWEST};
 
       - name: Install testing framework ${TESTING_FRAMEWORK}
-        if: ${TESTING_FRAMEWORK}
+        if: ${{ matrix.env.TESTING_FRAMEWORK }}
         run: composer require --dev typo3/testing-framework="${TESTING_FRAMEWORK}";
 
       - name: Run functional tests
