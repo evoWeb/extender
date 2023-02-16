@@ -55,7 +55,7 @@ jobs:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: ${PHP}
+          php-version: ${{ matrix.env.PHP }}
           tools: composer
           extensions: pdo, sqlite3
 
