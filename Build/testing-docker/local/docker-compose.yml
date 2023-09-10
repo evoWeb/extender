@@ -1,7 +1,4 @@
 version: '2.3'
-
-# ! COPIED from https://github.com/TYPO3/typo3/blob/main/Build/testing-docker/local/docker-compose.yml
-
 services:
   chrome:
     image: ${DOCKER_SELENIUM_IMAGE}
@@ -455,7 +452,7 @@ services:
     image: typo3/core-testing-nodejs16:latest
     user: "${HOST_UID}"
     volumes:
-      - ${CORE_ROOT}:${CORE_ROOT}
+    - ${CORE_ROOT}:${CORE_ROOT}
     environment:
       HOME: "${CORE_ROOT}/.cache"
     working_dir: ${CORE_ROOT}/Build
@@ -473,7 +470,7 @@ services:
     image: typo3/core-testing-nodejs16:latest
     user: "${HOST_UID}"
     volumes:
-      - ${CORE_ROOT}:${CORE_ROOT}
+    - ${CORE_ROOT}:${CORE_ROOT}
     environment:
       HOME: "${CORE_ROOT}/.cache"
     working_dir: ${CORE_ROOT}/Build
@@ -491,7 +488,7 @@ services:
     image: typo3/core-testing-${DOCKER_PHP_IMAGE}:latest
     user: "${HOST_UID}"
     volumes:
-      - ${CORE_ROOT}:${CORE_ROOT}
+    - ${CORE_ROOT}:${CORE_ROOT}
     working_dir: ${CORE_ROOT}
     command: >
       /bin/sh -c "
@@ -505,7 +502,7 @@ services:
     image: typo3/core-testing-${DOCKER_PHP_IMAGE}:latest
     user: "${HOST_UID}"
     volumes:
-      - ${CORE_ROOT}:${CORE_ROOT}
+    - ${CORE_ROOT}:${CORE_ROOT}
     working_dir: ${CORE_ROOT}
     command: >
       /bin/sh -c "
@@ -548,7 +545,7 @@ services:
     image: typo3/core-testing-${DOCKER_PHP_IMAGE}:latest
     user: "${HOST_UID}"
     volumes:
-      - ${CORE_ROOT}:${CORE_ROOT}
+    - ${CORE_ROOT}:${CORE_ROOT}
     working_dir: ${CORE_ROOT}
     command: >
       /bin/sh -c "
@@ -576,7 +573,7 @@ services:
     image: typo3/core-testing-${DOCKER_PHP_IMAGE}:latest
     user: "${HOST_UID}"
     volumes:
-      - ${CORE_ROOT}:${CORE_ROOT}
+    - ${CORE_ROOT}:${CORE_ROOT}
     working_dir: ${CORE_ROOT}
     command: >
       /bin/sh -c "
@@ -590,7 +587,7 @@ services:
     image: typo3/core-testing-${DOCKER_PHP_IMAGE}:latest
     user: "${HOST_UID}"
     volumes:
-      - ${CORE_ROOT}:${CORE_ROOT}
+    - ${CORE_ROOT}:${CORE_ROOT}
     working_dir: ${CORE_ROOT}
     command: >
       /bin/sh -c "
@@ -604,7 +601,7 @@ services:
     image: typo3/core-testing-${DOCKER_PHP_IMAGE}:latest
     user: "${HOST_UID}"
     volumes:
-      - ${CORE_ROOT}:${CORE_ROOT}
+    - ${CORE_ROOT}:${CORE_ROOT}
     working_dir: ${CORE_ROOT}
     command: >
       /bin/sh -c "
@@ -618,7 +615,7 @@ services:
     image: typo3/core-testing-${DOCKER_PHP_IMAGE}:latest
     user: "${HOST_UID}"
     volumes:
-      - ${CORE_ROOT}:${CORE_ROOT}
+    - ${CORE_ROOT}:${CORE_ROOT}
     working_dir: ${CORE_ROOT}
     command: >
       /bin/sh -c "
@@ -632,7 +629,7 @@ services:
     image: typo3/core-testing-${DOCKER_PHP_IMAGE}:latest
     user: "${HOST_UID}"
     volumes:
-      - ${CORE_ROOT}:${CORE_ROOT}
+    - ${CORE_ROOT}:${CORE_ROOT}
     working_dir: ${CORE_ROOT}
     command: >
       /bin/sh -c "
@@ -646,7 +643,7 @@ services:
     image: typo3/core-testing-${DOCKER_PHP_IMAGE}:latest
     user: "${HOST_UID}"
     volumes:
-      - ${CORE_ROOT}:${CORE_ROOT}
+    - ${CORE_ROOT}:${CORE_ROOT}
     working_dir: ${CORE_ROOT}
     command: >
       /bin/sh -c "
@@ -699,7 +696,7 @@ services:
     image: typo3/core-testing-${DOCKER_PHP_IMAGE}:latest
     user: "${HOST_UID}"
     volumes:
-      - ${CORE_ROOT}:${CORE_ROOT}
+    - ${CORE_ROOT}:${CORE_ROOT}
     working_dir: ${CORE_ROOT}
     command: >
       /bin/sh -c "
@@ -713,7 +710,7 @@ services:
     image: typo3/core-testing-${DOCKER_PHP_IMAGE}:latest
     user: "${HOST_UID}"
     volumes:
-      - ${CORE_ROOT}:${CORE_ROOT}
+    - ${CORE_ROOT}:${CORE_ROOT}
     working_dir: ${CORE_ROOT}
     command: >
       /bin/sh -c "
@@ -727,16 +724,16 @@ services:
     image: typo3/core-testing-${DOCKER_PHP_IMAGE}:latest
     user: "${HOST_UID}"
     volumes:
-      - ${CORE_ROOT}:${CORE_ROOT}
+    - ${CORE_ROOT}:${CORE_ROOT}
     working_dir: ${CORE_ROOT}
     environment:
-      COMPOSER_CACHE_DIR: ".Build/.cache/composer"
+      COMPOSER_CACHE_DIR: ".cache/composer"
     command: >
       /bin/sh -c "
         if [ ${SCRIPT_VERBOSE} -eq 1 ]; then
           set -x
         fi
-        composer install -q --no-progress --no-interaction;
+        composer install --no-progress --no-interaction;
       "
 
   composer_install_max:
@@ -746,7 +743,7 @@ services:
       - ${CORE_ROOT}:${CORE_ROOT}
     working_dir: ${CORE_ROOT}
     environment:
-      COMPOSER_CACHE_DIR: ".Build/.cache/composer"
+      COMPOSER_CACHE_DIR: ".cache/composer"
     command: >
       /bin/sh -c "
         if [ ${SCRIPT_VERBOSE} -eq 1 ]; then
@@ -764,7 +761,7 @@ services:
       - ${CORE_ROOT}:${CORE_ROOT}
     working_dir: ${CORE_ROOT}
     environment:
-      COMPOSER_CACHE_DIR: ".Build/.cache/composer"
+      COMPOSER_CACHE_DIR: ".cache/composer"
     command: >
       /bin/sh -c "
         if [ ${SCRIPT_VERBOSE} -eq 1 ]; then
@@ -779,10 +776,10 @@ services:
     image: typo3/core-testing-${DOCKER_PHP_IMAGE}:latest
     user: "${HOST_UID}"
     volumes:
-      - ${CORE_ROOT}:${CORE_ROOT}
+    - ${CORE_ROOT}:${CORE_ROOT}
     working_dir: ${CORE_ROOT}
     environment:
-      COMPOSER_CACHE_DIR: ".Build/.cache/composer"
+      COMPOSER_CACHE_DIR: .cache/composer
     command: >
       /bin/sh -c "
         if [ ${SCRIPT_VERBOSE} -eq 1 ]; then
@@ -794,30 +791,12 @@ services:
         composer update --no-progress --no-interaction;
       "
 
-  composer_require_package:
-    image: typo3/core-testing-${DOCKER_PHP_IMAGE}:latest
-    user: "${HOST_UID}"
-    volumes:
-      - ${CORE_ROOT}:${CORE_ROOT}
-    working_dir: ${CORE_ROOT}
-    environment:
-      COMPOSER_CACHE_DIR: ".Build/.cache/composer"
-    command: >
-      /bin/sh -c "
-        if [ ${SCRIPT_VERBOSE} -eq 1 ]; then
-          set -x
-        fi
-        composer require -n -q ${COMPOSER_PARAMETER} ${PACKAGE};
-      "
-
   composer_validate:
     image: typo3/core-testing-${DOCKER_PHP_IMAGE}:latest
     user: "${HOST_UID}"
     volumes:
-      - ${CORE_ROOT}:${CORE_ROOT}
+    - ${CORE_ROOT}:${CORE_ROOT}
     working_dir: ${CORE_ROOT}
-    environment:
-      COMPOSER_CACHE_DIR: ".Build/.cache/composer"
     command: >
       /bin/sh -c "
         if [ ${SCRIPT_VERBOSE} -eq 1 ]; then
@@ -836,6 +815,17 @@ services:
       /bin/sh -c "
         rm -rf Build/phpunit/FunctionalTests-Job-*.xml
         php -dxdebug.mode=off Build/Scripts/splitFunctionalTests.php -v ${CHUNKS}
+      "
+  functional_split10:
+    image: typo3/core-testing-${DOCKER_PHP_IMAGE}:latest
+    user: "${HOST_UID}"
+    volumes:
+      - ${CORE_ROOT}:${CORE_ROOT}
+    working_dir: ${CORE_ROOT}
+    command: >
+      /bin/sh -c "
+        rm -rf Build/phpunit/FunctionalTests-Job-*.xml
+        php -dxdebug.mode=off Build/Scripts/splitFunctionalTests10.php -v ${CHUNKS}
       "
 
   prepare_functional_mariadb:
@@ -1112,7 +1102,7 @@ services:
     image: typo3/core-testing-${DOCKER_PHP_IMAGE}:latest
     user: "${HOST_UID}"
     tmpfs:
-      - ${CORE_ROOT}/.Build/Web/typo3temp/var/tests/functional-sqlite-dbs/:rw,noexec,nosuid,uid=${HOST_UID}
+      - ${CORE_ROOT}/typo3temp/var/tests/functional-sqlite-dbs/:rw,noexec,nosuid,uid=${HOST_UID}
     volumes:
       - ${CORE_ROOT}:${CORE_ROOT}
     environment:
@@ -1130,9 +1120,46 @@ services:
         php -v | grep '^PHP'
         if [ ${CHUNKS} -gt 0 ]; then
           echo \"Running chunk ${THISCHUNK}\"
-          COMMAND=\".Build/Web/vendor/phpunit/phpunit/phpunit -c Build/phpunit/FunctionalTests-Job-${THISCHUNK}.xml ${EXTRA_TEST_OPTIONS} --exclude-group not-sqlite ${TEST_FILE}\"
+          COMMAND=\"vendor/phpunit/phpunit/phpunit -c Build/phpunit/FunctionalTests-Job-${THISCHUNK}.xml ${EXTRA_TEST_OPTIONS} --exclude-group not-sqlite ${TEST_FILE}\"
         else
-          COMMAND=\".Build/Web/vendor/phpunit/phpunit/phpunit --colors -c .Build/Web/vendor/typo3/testing-framework/Resources/Core/Build/FunctionalTests.xml ${EXTRA_TEST_OPTIONS} --exclude-group not-sqlite ${TEST_FILE}\"
+          COMMAND=\"vendor/phpunit/phpunit/phpunit -c Build/phpunit/FunctionalTests.xml ${EXTRA_TEST_OPTIONS} --exclude-group not-sqlite ${TEST_FILE}\"
+        fi
+        if [ ${PHP_XDEBUG_ON} -eq 0 ]; then
+          XDEBUG_MODE=\"off\" $${COMMAND};
+        else
+          XDEBUG_MODE=\"debug,develop\" \
+          XDEBUG_TRIGGER=\"foo\" \
+          XDEBUG_CONFIG=\"client_port=${PHP_XDEBUG_PORT} client_host=host.docker.internal\" \
+          $${COMMAND};
+        fi
+      "
+  functional_sqlite10:
+    image: typo3/core-testing-${DOCKER_PHP_IMAGE}:latest
+    user: "${HOST_UID}"
+    tmpfs:
+      - ${CORE_ROOT}/typo3temp/var/tests/functional-sqlite-dbs/:rw,noexec,nosuid,uid=${HOST_UID}
+    volumes:
+      - ${CORE_ROOT}:${CORE_ROOT}
+    environment:
+      COMPOSER_CACHE_DIR: ".cache/composer"
+      typo3DatabaseDriver: pdo_sqlite
+      typo3TestingRedisHost: redis4
+      typo3TestingMemcachedHost: memcached1-5
+    working_dir: ${CORE_ROOT}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    command: >
+      /bin/sh -c "
+        if [ ${SCRIPT_VERBOSE} -eq 1 ]; then
+          set -x
+        fi
+        php -v | grep '^PHP'
+        composer req --dev --no-progress --no-interaction phpunit/phpunit:^10 -w
+        if [ ${CHUNKS} -gt 0 ]; then
+          echo \"Running chunk ${THISCHUNK}\"
+          COMMAND=\"vendor/phpunit/phpunit/phpunit -c Build/phpunit/FunctionalTests-Job-${THISCHUNK}.xml ${EXTRA_TEST_OPTIONS} --exclude-group not-sqlite ${TEST_FILE}\"
+        else
+          COMMAND=\"vendor/phpunit/phpunit/phpunit -c Build/phpunit/FunctionalTests-10.xml ${EXTRA_TEST_OPTIONS} --exclude-group not-sqlite ${TEST_FILE}\"
         fi
         if [ ${PHP_XDEBUG_ON} -eq 0 ]; then
           XDEBUG_MODE=\"off\" $${COMMAND};
@@ -1147,7 +1174,7 @@ services:
     image: typo3/core-testing-${DOCKER_PHP_IMAGE}:latest
     user: "${HOST_UID}"
     tmpfs:
-      - ${CORE_ROOT}/.Build/Web/typo3temp/var/tests/functional-sqlite-dbs/:rw,noexec,nosuid,uid=${HOST_UID}
+      - ${CORE_ROOT}/typo3temp/var/tests/functional-sqlite-dbs/:rw,noexec,nosuid,uid=${HOST_UID}
     volumes:
       - ${CORE_ROOT}:${CORE_ROOT}
     environment:
@@ -1174,11 +1201,44 @@ services:
         fi
       "
 
+  functional_deprecated_sqlite10:
+    image: typo3/core-testing-${DOCKER_PHP_IMAGE}:latest
+    user: "${HOST_UID}"
+    tmpfs:
+      - ${CORE_ROOT}/typo3temp/var/tests/functional-sqlite-dbs/:rw,noexec,nosuid,uid=${HOST_UID}
+    volumes:
+      - ${CORE_ROOT}:${CORE_ROOT}
+    environment:
+      COMPOSER_CACHE_DIR: ".cache/composer"
+      typo3DatabaseDriver: pdo_sqlite
+      typo3TestingRedisHost: redis4
+      typo3TestingMemcachedHost: memcached1-5
+    working_dir: ${CORE_ROOT}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    command: >
+      /bin/sh -c "
+        if [ ${SCRIPT_VERBOSE} -eq 1 ]; then
+          set -x
+        fi
+        php -v | grep '^PHP'
+        composer req --dev --no-progress --no-interaction phpunit/phpunit:^10 -w
+        COMMAND=\"vendor/phpunit/phpunit/phpunit -c Build/phpunit/FunctionalTestsDeprecated-10.xml ${EXTRA_TEST_OPTIONS} --exclude-group not-sqlite ${TEST_FILE}\"
+        if [ ${PHP_XDEBUG_ON} -eq 0 ]; then
+          XDEBUG_MODE=\"off\" $${COMMAND};
+        else
+          XDEBUG_MODE=\"debug,develop\" \
+          XDEBUG_TRIGGER=\"foo\" \
+          XDEBUG_CONFIG=\"client_port=${PHP_XDEBUG_PORT} client_host=host.docker.internal\" \
+          $${COMMAND};
+        fi
+      "
+
   lint_php:
     image: typo3/core-testing-${DOCKER_PHP_IMAGE}:latest
     user: "${HOST_UID}"
     volumes:
-      - ${CORE_ROOT}:${CORE_ROOT}
+    - ${CORE_ROOT}:${CORE_ROOT}
     working_dir: ${CORE_ROOT}
     command: >
       /bin/sh -c "
@@ -1193,7 +1253,7 @@ services:
     image: typo3/core-testing-nodejs16:latest
     user: "${HOST_UID}"
     volumes:
-      - ${CORE_ROOT}:${CORE_ROOT}
+    - ${CORE_ROOT}:${CORE_ROOT}
     environment:
       HOME: "${CORE_ROOT}/.cache"
     working_dir: ${CORE_ROOT}/Build
@@ -1211,7 +1271,7 @@ services:
     image: typo3/core-testing-nodejs16:latest
     user: "${HOST_UID}"
     volumes:
-      - ${CORE_ROOT}:${CORE_ROOT}
+    - ${CORE_ROOT}:${CORE_ROOT}
     environment:
       HOME: "${CORE_ROOT}/.cache"
     working_dir: ${CORE_ROOT}/Build
@@ -1229,7 +1289,7 @@ services:
     image: typo3/core-testing-nodejs16:latest
     user: "${HOST_UID}"
     volumes:
-      - ${CORE_ROOT}:${CORE_ROOT}
+    - ${CORE_ROOT}:${CORE_ROOT}
     environment:
       HOME: "${CORE_ROOT}/.cache"
     working_dir: ${CORE_ROOT}/Build
@@ -1314,6 +1374,34 @@ services:
         fi
       "
 
+  unit10:
+    image: typo3/core-testing-${DOCKER_PHP_IMAGE}:latest
+    user: "${HOST_UID}"
+    volumes:
+      - ${CORE_ROOT}:${CORE_ROOT}
+    working_dir: ${CORE_ROOT}
+    environment:
+      COMPOSER_CACHE_DIR: ".cache/composer"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    command: >
+      /bin/sh -c "
+        if [ ${SCRIPT_VERBOSE} -eq 1 ]; then
+          set -x
+        fi
+        php -v | grep '^PHP'
+        composer req --dev --no-progress --no-interaction phpunit/phpunit:^10 -w
+        if [ ${PHP_XDEBUG_ON} -eq 0 ]; then
+          XDEBUG_MODE=\"off\" \
+          vendor/phpunit/phpunit/phpunit -c Build/phpunit/UnitTests-10.xml ${EXTRA_TEST_OPTIONS} ${TEST_FILE};
+        else
+          XDEBUG_MODE=\"debug,develop\" \
+          XDEBUG_TRIGGER=\"foo\" \
+          XDEBUG_CONFIG=\"client_port=${PHP_XDEBUG_PORT} client_host=host.docker.internal\" \
+          vendor/phpunit/phpunit/phpunit -c Build/phpunit/UnitTests-10.xml ${EXTRA_TEST_OPTIONS} ${TEST_FILE};
+        fi
+      "
+
   unitDeprecated:
     image: typo3/core-testing-${DOCKER_PHP_IMAGE}:latest
     user: "${HOST_UID}"
@@ -1336,6 +1424,34 @@ services:
           XDEBUG_TRIGGER=\"foo\" \
           XDEBUG_CONFIG=\"client_port=${PHP_XDEBUG_PORT} client_host=host.docker.internal\" \
           vendor/phpunit/phpunit/phpunit -c Build/phpunit/UnitTestsDeprecated.xml ${EXTRA_TEST_OPTIONS} ${TEST_FILE};
+        fi
+      "
+
+  unitDeprecated10:
+    image: typo3/core-testing-${DOCKER_PHP_IMAGE}:latest
+    user: "${HOST_UID}"
+    volumes:
+      - ${CORE_ROOT}:${CORE_ROOT}
+    working_dir: ${CORE_ROOT}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    environment:
+      COMPOSER_CACHE_DIR: ".cache/composer"
+    command: >
+      /bin/sh -c "
+        if [ ${SCRIPT_VERBOSE} -eq 1 ]; then
+          set -x
+        fi
+        php -v | grep '^PHP'
+        composer req --dev --no-progress --no-interaction phpunit/phpunit:^10 -w
+        if [ ${PHP_XDEBUG_ON} -eq 0 ]; then
+          XDEBUG_MODE=\"off\" \
+          vendor/phpunit/phpunit/phpunit -c Build/phpunit/UnitTestsDeprecated-10.xml ${EXTRA_TEST_OPTIONS} ${TEST_FILE};
+        else
+          XDEBUG_MODE=\"debug,develop\" \
+          XDEBUG_TRIGGER=\"foo\" \
+          XDEBUG_CONFIG=\"client_port=${PHP_XDEBUG_PORT} client_host=host.docker.internal\" \
+          vendor/phpunit/phpunit/phpunit -c Build/phpunit/UnitTestsDeprecated-10.xml ${EXTRA_TEST_OPTIONS} ${TEST_FILE};
         fi
       "
 

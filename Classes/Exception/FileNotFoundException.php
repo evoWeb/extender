@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace Evoweb\Extender\Exception;
-
 /*
  * This file is part of the "extender" Extension for TYPO3 CMS.
  *
@@ -15,9 +13,8 @@ namespace Evoweb\Extender\Exception;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-/**
- * A file not found exception
- */
+namespace Evoweb\Extender\Exception;
+
 class FileNotFoundException extends \RuntimeException
 {
 }

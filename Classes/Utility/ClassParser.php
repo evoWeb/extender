@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace Evoweb\Extender\Utility;
-
 /*
  * This file is part of the "extender" Extension for TYPO3 CMS.
  *
@@ -14,6 +12,8 @@ namespace Evoweb\Extender\Utility;
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
  */
+
+namespace Evoweb\Extender\Utility;
 
 /**
  * This file is friendly lent from the "news" Extension for TYPO3 CMS.
@@ -71,7 +71,7 @@ class ClassParser
         return $extenders;
     }
 
-    public function parse(string $content)
+    public function parse(string $content): void
     {
         $tokens = token_get_all($content);
         $classes = [];
@@ -84,22 +84,25 @@ class ClassParser
         $inFunction = false;
         $functionName = '';
         $lastLine = 0;
-        foreach ($tokens as $idx => $token) {
+        foreach ($tokens as $token) {
             if (is_array($token)) {
                 switch ($token[0]) {
                     case T_DOC_COMMENT:
                         $doc = $token[1];
                         break;
+
                     case T_PUBLIC:
                     case T_PRIVATE:
                     case T_ABSTRACT:
                     case T_PROTECTED:
                         $mod[] = $token[1];
                         break;
+
                     case T_CLASS:
                     case T_FUNCTION:
                         $state = $token[0];
                         break;
+
                     case T_EXTENDS:
                     case T_IMPLEMENTS:
                         switch ($state) {
@@ -109,9 +112,11 @@ class ClassParser
                                 break;
                         }
                         break;
+
                     case T_CLOSE_TAG:
                         $classes[$depth]['eol'] = $token[2];
                         break;
+
                     case T_STRING:
                         switch ($state) {
                             case T_CLASS:
@@ -152,6 +157,7 @@ class ClassParser
                     case '{':
                         $depth++;
                         break;
+
                     case '}':
                         if ($inFunction) {
                             $classes[$classCount - 1]['functions'][$functionName]['end'] = $lastLine;

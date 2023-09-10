@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace Evoweb\Extender\Utility;
-
 /*
  * This file is part of the "extender" Extension for TYPO3 CMS.
  *
@@ -15,18 +13,20 @@ namespace Evoweb\Extender\Utility;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+namespace Evoweb\Extender\Cache;
+
 use TYPO3\CMS\Core\Core\Bootstrap;
 use TYPO3\CMS\Core\Cache\Backend\AbstractBackend;
 use TYPO3\CMS\Core\Cache\Backend\FileBackend;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
 
-class ClassCacheFactory
+class CacheManager
 {
-    public function createCache(): FrontendInterface
+    public function createCache(string $identifier): FrontendInterface
     {
         self::configureCache();
-        return Bootstrap::createCache('extender');
+        return Bootstrap::createCache($identifier);
     }
 
     public static function configureCache(): void

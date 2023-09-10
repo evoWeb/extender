@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace Evoweb\Extender\Command;
-
 /*
  * This file is part of the "extender" Extension for TYPO3 CMS.
  *
@@ -15,43 +13,38 @@ namespace Evoweb\Extender\Command;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Evoweb\Extender\Utility\ClassCacheManager;
+namespace Evoweb\Extender\Command;
+
+use Evoweb\Extender\Cache\CacheManager;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
- * CLI command for the 'extender' extension - rebuild
+ * CLI command for the 'extender' extension - clear cache
  */
-class ExtenderRebuildCommand extends Command
+class ClearCommand extends Command
 {
-    protected ClassCacheManager $classCacheManager;
+    protected CacheManager $cacheManager;
 
-    public function __construct(ClassCacheManager $classCacheManager)
+    public function __construct(CacheManager $cacheManager)
     {
-        $this->classCacheManager = $classCacheManager;
+        $this->cacheManager = $cacheManager;
         parent::__construct();
     }
 
     /**
-     * Configure the command by defining the name, options and arguments
-     */
-    public function configure()
-    {
-        $this->setDescription('Rebuilds the extender class cache');
-    }
-
-    /**
-     * Execute rebuild
-     *
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     *
      * @return int
      */
     public function execute(InputInterface $input, OutputInterface $output)
     {
-        $this->classCacheManager->reBuild();
-        return 0;
+        $result = self::SUCCESS;
+        try {
+            $this->cacheManager->createCache('extender')->flush();
+        } catch (\Exception $e) {
+            $output->writeln($e->getMessage());
+            $result = self::FAILURE;
+        }
+        return $result;
     }
 }

@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace Evoweb\Extender\Utility;
-
 /*
  * This file is part of the "extender" Extension for TYPO3 CMS.
  *
@@ -15,8 +13,12 @@ namespace Evoweb\Extender\Utility;
  * LICENSE.txt file that was distributed with this source code.
  */
 
+namespace Evoweb\Extender\Utility;
+
 use Composer\Autoload\ClassLoader;
+use Evoweb\Extender\Configuration\Register;
 use Evoweb\Extender\Exception\FileNotFoundException;
+use TYPO3\CMS\Core\Cache\Exception\InvalidDataException;
 use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
 use TYPO3\CMS\Core\Core\Environment;
 use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
@@ -28,84 +30,49 @@ class ClassCacheManager
 
     protected ClassLoader $composerClassLoader;
 
+    protected Register $register;
+
     protected array $constructorLines = [];
 
-    public function __construct(PhpFrontend $classCache, ClassLoader $composerClassLoader)
-    {
+    public function __construct(
+        PhpFrontend $classCache,
+        ClassLoader $composerClassLoader,
+        Register $register
+    ) {
         $this->classCache = $classCache;
         $this->composerClassLoader = $composerClassLoader;
+        $this->register = $register;
     }
 
-    /**
-     * Rebuild the class cache
-     *
-     * @param array $parameters
-     *
-     * @throws \Evoweb\Extender\Exception\FileNotFoundException
-     * @throws \TYPO3\CMS\Core\Cache\Exception\InvalidDataException
-     */
-    public function reBuild(array $parameters = [])
+    public function build(string $cacheEntryIdentifier, string $className): void
     {
-        if (
-            empty($parameters)
-            || (
-                !empty($parameters['cacheCmd'])
-                && GeneralUtility::inList('all,system', $parameters['cacheCmd'])
-                && isset($GLOBALS['BE_USER'])
-            )
-        ) {
-            foreach ($GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS'] as $extensionKey => $extensionConfiguration) {
-                if (!isset($extensionConfiguration['extender']) || !is_array($extensionConfiguration['extender'])) {
-                    continue;
-                }
-
-                foreach ($extensionConfiguration['extender'] as $entity => $entityConfiguration) {
-                    // Get the file to extend, this needs to be loaded as first
-                    $path = $this->composerClassLoader->findFile($entity);
-                    if (!is_file($path)) {
-                        throw new FileNotFoundException(
-                            'Base file "' . $path . '" does not exist'
-                        );
-                    }
-                    $code = $this->parseSingleFile($path, false);
-
-                    // Get the files from all other extensions that are extending this domain model
-                    if (is_array($entityConfiguration)) {
-                        foreach ($entityConfiguration as $extendingExtension => $extendingEntity) {
-                            $path = $this->composerClassLoader->findFile($extendingEntity);
-                            if (!$path || !is_file($path)) {
-                                $path = GeneralUtility::getFileAbsFileName($extendingEntity);
-                            }
-                            if (!is_file($path) && !is_numeric($extendingExtension)) {
-                                $path = ExtensionManagementUtility::extPath(
-                                    $extendingExtension
-                                ) . 'Classes/Extending/' . $extendingEntity . '.php';
-                            }
-                            if (!is_file($path)) {
-                                throw new FileNotFoundException(
-                                    'Extending file "' . $path . '" does not exist'
-                                );
-                            }
-                            $code .= $this->parseSingleFile($path);
-                        }
-                    }
-
-                    if (count($this->constructorLines)) {
-                        $code .= implode(LF, $this->constructorLines) . LF . '    }' . LF;
-                        // reset constructor lines
-                        $this->constructorLines = [];
-                    }
-
-                    // Close the class definition
-                    $code = $this->closeClassDefinition($code);
-
-                    // Add the new file to the class cache
-                    $cacheEntryIdentifier = GeneralUtility::underscoredToLowerCamelCase($extensionKey) . '_' .
-                        str_replace('\\', '_', $entity);
-                    $this->classCache->set($cacheEntryIdentifier, $code);
-                }
-            }
+        // Get the file to extend, this needs to be loaded as first
+        $path = $this->composerClassLoader->findFile($className);
+        if (!is_file($path)) {
+            throw new FileNotFoundException('Base file "' . $path . '" does not exist');
         }
+        $code = $this->parseSingleFile($path, false);
+
+        // Get the files from all other extensions that are extending this domain model
+        foreach ($this->register->getExtendingClasses($className) as $extendingEntity) {
+            $path = $this->composerClassLoader->findFile($extendingEntity);
+            if (!is_file($path)) {
+                throw new FileNotFoundException('Extending file "' . $path . '" does not exist');
+            }
+            $code .= $this->parseSingleFile($path);
+        }
+
+        if (count($this->constructorLines)) {
+            $code .= implode(LF, $this->constructorLines) . LF . '    }' . LF;
+            // reset constructor lines
+            $this->constructorLines = [];
+        }
+
+        // Close the class definition
+        $code = $this->closeClassDefinition($code);
+
+        // Add the new file to the class cache
+        $this->classCache->set($cacheEntryIdentifier, $code);
     }
 
     /**
@@ -174,7 +141,7 @@ class ClassCacheManager
             unset($innerPart[0]);
         }
 
-        // unset the constructor and save it's lines
+        // unset the constructor and save its lines
         if (isset($classParserInformation['functions']['__construct'])) {
             $constructorInfo = $classParserInformation['functions']['__construct'];
             if (count($this->constructorLines) > 0) {

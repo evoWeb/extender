@@ -3,7 +3,9 @@
 	"type": "typo3-cms-extension",
 	"description": "Extending extbase domain models like a pro with extender",
 	"homepage": "https://www.evoweb.de",
-	"license": "GPL-2.0-or-later",
+	"license": [
+		"GPL-2.0-or-later"
+	],
 	"keywords": [
 		"TYPO3",
 		"extbase",
@@ -15,55 +17,60 @@
 		"issues" : "https://github.com/evoWeb/extender/issues",
 		"docs": "https://docs.typo3.org/p/evoweb/extender/main/en-us/"
 	},
+	"config": {
+		"bin-dir": "bin",
+		"sort-packages": true,
+		"allow-plugins": {
+			"typo3/class-alias-loader": true,
+			"typo3/cms-composer-installers": true,
+			"sbuerk/typo3-cmscomposerinstallers-testingframework-bridge": true
+		}
+	},
 	"require": {
 		"typo3/cms-core": "^11.0 || ^12.2 || dev-main"
+	},
+	"require-dev": {
+		"evoweb/base_extension": "*",
+		"evoweb/extending_extension": "*",
+		"typo3/cms-extensionmanager": "^11.0 || ^12.2 || dev-main",
+		"sbuerk/typo3-cmscomposerinstallers-testingframework-bridge": "dev-main",
+		"typo3/testing-framework": "^6.6.2 || ^8.0.2 || dev-main"
+	},
+	"extra": {
+		"typo3/cms": {
+			"extension-key": "extender"
+		}
+	},
+	"scripts": {
+		"prepare-release": [
+			"rm -rf .github",
+			"rm -rf Build",
+			"rm -rf Tests",
+			"rm .gitattributes",
+			"rm .gitignore",
+			"sed -i \"s/version' => '.*'/version' => '$(echo ${GITHUB_REF} | cut -d / -f 3)'/\" ext_emconf.php\n"
+		],
+		"post-install-cmd": [
+			"ln -sf ../vendor/typo3/testing-framework/Resources/Core/Build/ Build/phpunit;"
+		],
+		"post-update-cmd": [
+			"@post-install-cmd"
+		]
 	},
 	"autoload": {
 		"psr-4": {
 			"Evoweb\\Extender\\": "Classes/"
 		}
 	},
-	"config": {
-		"vendor-dir": ".Build/Web/vendor",
-		"sort-packages": true,
-		"allow-plugins": {
-			"typo3/cms-composer-installers": true,
-			"typo3/class-alias-loader": true,
-			"sbuerk/typo3-cmscomposerinstallers-testingframework-bridge": true
-		}
-	},
-	"require-dev": {
-		"evoweb/base_extension": "*",
-		"evoweb/extending_extension": "*",
-		"typo3/cms-extensionmanager": "*",
-		"typo3/testing-framework": "^6.6.2 || dev-main",
-		"sbuerk/typo3-cmscomposerinstallers-testingframework-bridge": "^0.0.1"
-	},
 	"autoload-dev": {
 		"psr-4": {
 			"Evoweb\\Extender\\Tests\\": "Tests/"
 		}
 	},
-	"extra": {
-		"typo3/cms": {
-			"web-dir": ".Build/Web",
-			"extension-key": "extender"
-		}
-	},
-	"repositories": [
-		 {
+	"repositories": {
+		"files": {
 			"type": "path",
 			"url": "./Tests/Fixtures/Extensions/*"
 		}
-	],
-
-	"scripts": {
-		"prepare-release": [
-			"rm -rf .Build",
-			"rm -rf .github",
-			"rm -rf Tests",
-			"rm .gitignore",
-			"sed -i \"s/version' => '.*'/version' => '$(echo ${GITHUB_REF} | cut -d / -f 3)'/\" ext_emconf.php\n"
-		]
 	}
 }
