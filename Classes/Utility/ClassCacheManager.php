@@ -17,16 +17,15 @@ namespace Evoweb\Extender\Utility;
 
 use Composer\Autoload\ClassLoader;
 use Evoweb\Extender\Configuration\Register;
-use Evoweb\Extender\Exception\FileNotFoundException;
-use TYPO3\CMS\Core\Cache\Exception\InvalidDataException;
-use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
+use Evoweb\Extender\Exception\BaseFileNotFoundException;
+use Evoweb\Extender\Exception\ExtendingFileNotFoundException;
+use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\Core\Environment;
-use TYPO3\CMS\Core\Utility\ExtensionManagementUtility;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class ClassCacheManager
 {
-    protected PhpFrontend $classCache;
+    protected FrontendInterface $classCache;
 
     protected ClassLoader $composerClassLoader;
 
@@ -35,7 +34,7 @@ class ClassCacheManager
     protected array $constructorLines = [];
 
     public function __construct(
-        PhpFrontend $classCache,
+        FrontendInterface $classCache,
         ClassLoader $composerClassLoader,
         Register $register
     ) {
@@ -44,12 +43,18 @@ class ClassCacheManager
         $this->register = $register;
     }
 
+    /**
+     * Build cache for base and extending files
+     *
+     * @throws BaseFileNotFoundException
+     * @throws ExtendingFileNotFoundException
+     */
     public function build(string $cacheEntryIdentifier, string $className): void
     {
         // Get the file to extend, this needs to be loaded as first
         $path = $this->composerClassLoader->findFile($className);
         if (!is_file($path)) {
-            throw new FileNotFoundException('Base file "' . $path . '" does not exist');
+            throw new BaseFileNotFoundException('Base file "' . $path . '" does not exist');
         }
         $code = $this->parseSingleFile($path, false);
 
@@ -57,7 +62,7 @@ class ClassCacheManager
         foreach ($this->register->getExtendingClasses($className) as $extendingEntity) {
             $path = $this->composerClassLoader->findFile($extendingEntity);
             if (!is_file($path)) {
-                throw new FileNotFoundException('Extending file "' . $path . '" does not exist');
+                throw new ExtendingFileNotFoundException('Extending file "' . $path . '" does not exist');
             }
             $code .= $this->parseSingleFile($path);
         }
@@ -72,7 +77,9 @@ class ClassCacheManager
         $code = $this->closeClassDefinition($code);
 
         // Add the new file to the class cache
-        $this->classCache->set($cacheEntryIdentifier, $code);
+        try {
+            $this->classCache->set($cacheEntryIdentifier, $code);
+        } catch (\Exception $e) {}
     }
 
     /**
@@ -80,10 +87,6 @@ class ClassCacheManager
      * - Remove the php tags
      * - Remove the class definition (if set)
      *
-     * @param string $filePath path of the file
-     * @param bool $removeClassDefinition If class definition should be removed
-     *
-     * @return string path of the saved file
      * @throws \InvalidArgumentException
      */
     protected function parseSingleFile(string $filePath, bool $removeClassDefinition = true): string
@@ -95,12 +98,6 @@ class ClassCacheManager
     /**
      * Strip php file parts that should not be used in the concatenation
      *
-     * @param string $code
-     * @param string $filePath
-     * @param bool $removeClassDefinition
-     * @param bool $renderPartialInfo
-     *
-     * @return string
      * @throws \InvalidArgumentException
      */
     protected function changeCode(
@@ -175,10 +172,6 @@ class ClassCacheManager
 
     /**
      * Add partial information about file from which code gets added
-     *
-     * @param string $filePath
-     *
-     * @return string
      */
     protected function getPartialInfo(string $filePath): string
     {
@@ -193,13 +186,9 @@ class ClassCacheManager
 
     /**
      * Add curly brace at the end of the class
-     *
-     * @param string $code
-     *
-     * @return string
      */
     protected function closeClassDefinition(string $code): string
     {
-        return $code . LF . '}';
+        return $code . chr(10) . '}';
     }
 }

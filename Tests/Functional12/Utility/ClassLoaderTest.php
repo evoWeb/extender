@@ -2,29 +2,30 @@
 
 namespace Evoweb\Extender\Tests\Functional12\Utility;
 
-use Composer\Autoload\ClassLoader as ComposerClassLoader;
+use Evoweb\Extender\Cache\CacheManager;
+use Evoweb\Extender\Configuration\Register;
 use Evoweb\Extender\Utility\ClassCacheManager;
 use Evoweb\Extender\Utility\ClassLoader;
 use Fixture\BaseExtension\Domain\Model\Blob;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
+use TYPO3\CMS\Core\Cache\Backend\FileBackend;
 use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
 
 class ClassLoaderTest extends AbstractTestBase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function registerAutoloader()
     {
+        /** @var Register $register */
+        $register = $this->createMock(Register::class);
         /** @var PhpFrontend $cacheMock */
         $cacheMock = $this->createMock(PhpFrontend::class);
-        $classCacheManager = new ClassCacheManager(
-            $cacheMock,
-            GeneralUtility::getContainer()->get(ComposerClassLoader::class)
-        );
+        /** @var ClassCacheManager $classCacheManager */
+        $classCacheManager = $this->createMock(ClassCacheManager::class);
 
-        $subject = new ClassLoader($cacheMock, $classCacheManager);
+        $subject = new ClassLoader($cacheMock, $classCacheManager, $register);
         spl_autoload_register([$subject, 'loadClass'], true, true);
 
         $autoLoaders = spl_autoload_functions();
@@ -44,128 +45,107 @@ class ClassLoaderTest extends AbstractTestBase
         self::assertTrue($condition);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function isExcludedClassName()
     {
+        /** @var Register $register */
+        $register = $this->createMock(Register::class);
         /** @var PhpFrontend $cacheMock */
         $cacheMock = $this->createMock(PhpFrontend::class);
-        $classCacheManager = new ClassCacheManager(
-            $cacheMock,
-            GeneralUtility::getContainer()->get(ComposerClassLoader::class)
-        );
+        /** @var ClassCacheManager $classCacheManager */
+        $classCacheManager = $this->createMock(ClassCacheManager::class);
 
-        /** @var ClassLoader $subject */
+        /** @var ClassLoader|AccessibleObjectInterface $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(ClassLoader::class))
             ->onlyMethods(['isExcludedClassName'])
-            ->setConstructorArgs([$cacheMock, $classCacheManager])
+            ->setConstructorArgs([$cacheMock, $classCacheManager, $register])
             ->enableProxyingToOriginalMethods()
             ->getMock();
 
-        /** @noinspection PhpUndefinedMethodInspection */
-        self::assertTrue($subject->_call('isExcludedClassName', 'Symfony\Polyfill\Mbstring\Mbstring'));
+        $condition = $subject->_call('isExcludedClassName', 'Symfony\Polyfill\Mbstring\Mbstring');
+
+        self::assertTrue($condition);
     }
 
-    /**
-     * @test
-     */
-    public function getExtensionKeyFromNamespace()
-    {
-        /** @var PhpFrontend $cacheMock */
-        $cacheMock = $this->createMock(PhpFrontend::class);
-        $classCacheManager = new ClassCacheManager(
-            $cacheMock,
-            GeneralUtility::getContainer()->get(ComposerClassLoader::class)
-        );
-
-        /** @var ClassLoader $subject */
-        $subject = $this->getMockBuilder($this->buildAccessibleProxy(ClassLoader::class))
-            ->onlyMethods(['getExtensionKeyFromNamespace'])
-            ->setConstructorArgs([$cacheMock, $classCacheManager])
-            ->enableProxyingToOriginalMethods()
-            ->getMock();
-
-        /** @noinspection PhpUndefinedMethodInspection */
-        self::assertEquals(
-            'base_extension',
-            $subject->_call('getExtensionKeyFromNamespace', 'Fixture\BaseExtension\Domain\Model\Blob')
-        );
-    }
-
-    /**
-     * @test
-     */
+    #[Test]
     public function isValidClassName()
     {
+        $register = new Register();
+        $register->setExtendedClasses(['test' => []]);
         /** @var PhpFrontend $cacheMock */
         $cacheMock = $this->createMock(PhpFrontend::class);
-        $classCacheManager = new ClassCacheManager(
-            $cacheMock,
-            GeneralUtility::getContainer()->get(ComposerClassLoader::class)
-        );
+        /** @var ClassCacheManager $classCacheManager */
+        $classCacheManager = $this->createMock(ClassCacheManager::class);
 
-        /** @var ClassLoader $subject */
+        /** @var ClassLoader|AccessibleObjectInterface $subject */
         $subject = $this->getMockBuilder($this->buildAccessibleProxy(ClassLoader::class))
             ->onlyMethods(['isValidClassName'])
-            ->setConstructorArgs([$cacheMock, $classCacheManager])
+            ->setConstructorArgs([$cacheMock, $classCacheManager, $register])
             ->enableProxyingToOriginalMethods()
             ->getMock();
 
-        $className = Blob::class;
-        /** @noinspection PhpUndefinedMethodInspection */
-        $extension = $subject->_call('getExtensionKeyFromNamespace', $className);
+        $condition = $subject->_call('isValidClassName', 'test');
 
-        /** @noinspection PhpUndefinedMethodInspection */
-        self::assertTrue($subject->_call('isValidClassName', $className, $extension));
+        self::assertTrue($condition);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function loadClass()
     {
+        $register = new Register();
+        $register->setExtendedClasses(['test' => []]);
+        /** @var ClassCacheManager $classCacheManager */
+        $classCacheManager = $this->createMock(ClassCacheManager::class);
+        $cacheBackend = new FileBackend('production');
         /** @var PhpFrontend|MockObject $cacheMock */
         $cacheMock = $this->getMockBuilder(PhpFrontend::class)
-            ->disableOriginalConstructor()
+            ->setConstructorArgs(['extender', $cacheBackend])
             ->disableOriginalClone()
-            ->disableArgumentCloning()
-            ->disallowMockingUnknownTypes()
             ->getMock();
 
         $cacheMock->expects(self::any())->method('has')->willReturn(true);
         $cacheMock->expects(self::any())->method('requireOnce')->willReturn(true);
 
-        $classCacheManager = new ClassCacheManager(
-            $cacheMock,
-            GeneralUtility::getContainer()->get(ComposerClassLoader::class)
-        );
+        $subject = new ClassLoader($cacheMock, $classCacheManager, $register);
 
-        $subject = new ClassLoader($cacheMock, $classCacheManager);
-
-        $className = Blob::class;
-        $condition = $subject->loadClass($className);
+        $condition = $subject->loadClass('test');
 
         self::assertTrue($condition);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function extendedClassIsOfBaseType()
     {
-        $actual = new Blob();
+        $composerClassLoader = $this->getComposerClassLoader();
+        $register = $this->getRegister();
+        $cacheManager = new CacheManager();
+        $cacheMock = $cacheManager->createCache('extender');
+        $classCacheManager = new ClassCacheManager($cacheMock, $composerClassLoader, $register);
 
-        self::assertEquals(Blob::class, get_class($actual));
+        $expected = 'Fixture\BaseExtension\Domain\Model\Blob';
+        $subject = new ClassLoader($cacheMock, $classCacheManager, $register);
+        $subject->loadClass($expected);
+
+        $actual = get_class(new Blob());
+
+        self::assertEquals($expected, $actual);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function extendedClassHasOtherProperty()
     {
-        $subject = new Blob();
-        $condition = property_exists($subject, 'otherProperty');
+        $composerClassLoader = $this->getComposerClassLoader();
+        $register = $this->getRegister();
+        $cacheManager = new CacheManager();
+        $cacheMock = $cacheManager->createCache('extender');
+        $classCacheManager = new ClassCacheManager($cacheMock, $composerClassLoader, $register);
+
+        $className = 'Fixture\BaseExtension\Domain\Model\Blob';
+        $subject = new ClassLoader($cacheMock, $classCacheManager, $register);
+        $subject->loadClass($className);
+
+        $blob = new Blob();
+        $condition = property_exists($blob, 'otherProperty');
 
         self::assertTrue($condition);
     }

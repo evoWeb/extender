@@ -34,7 +34,9 @@ checkResources () {
     echo "#################################################################" >&2
     echo "" >&2
 
+    ./runTests.sh -s clean
     ./additionalTests.sh -s clean
+    git checkout ../../composer.json
 }
 
 #################################################
@@ -119,13 +121,25 @@ cleanup () {
     git checkout ../../composer.json
 }
 
-checkResources
+DEBUG_TESTS=true
+if [[ $DEBUG_TESTS != true ]]; then
+    checkResources
 
-runFunctionalTests "7.4" "^11.0" "^6.16.9" "Tests/Functional" || exit 1
-runFunctionalTests "7.4" "^11.0" "^6.6.2" "Tests/Functional" "--prefer-lowest" || exit 1
-runFunctionalTests "8.1" "^12.0" "^8.0.5" "Tests/Functional12" || exit 1
-runFunctionalTests "8.1" "^12.0" "^8.0.5" "Tests/Functional12" "--prefer-lowest" || exit 1
-runFunctionalTests "8.2" "^12.0" "^8.0.5" "Tests/Functional12" || exit 1
-runFunctionalTests "8.2" "^12.0" "^8.0.5" "Tests/Functional12" "--prefer-lowest" || exit 1
+    runFunctionalTests "7.4" "^11.5" "^6.16.9" "Tests/Functional" || exit 1
+    runFunctionalTests "7.4" "^11.5" "^6.6.2" "Tests/Functional" "--prefer-lowest" || exit 1
+    runFunctionalTests "8.2" "^11.5" "^6.16.9" "Tests/Functional" || exit 1
+    runFunctionalTests "8.2" "^11.5" "^6.6.2" "Tests/Functional" "--prefer-lowest" || exit 1
 
-cleanup
+    runFunctionalTests "8.1" "^12.4" "^8.0.5" "Tests/Functional12" || exit 1
+    runFunctionalTests "8.1" "^12.4" "^8.0.5" "Tests/Functional12" "--prefer-lowest" || exit 1
+    runFunctionalTests "8.2" "^12.4" "^8.0.5" "Tests/Functional12" || exit 1
+    runFunctionalTests "8.2" "^12.4" "^8.0.5" "Tests/Functional12" "--prefer-lowest" || exit 1
+
+    cleanup
+else
+    # cleanup
+    # runFunctionalTests "7.4" "^11.5" "^6.16.9" "Tests/Functional" || exit 1
+    # runFunctionalTests "8.2" "^12.4" "^8.0.5" "Tests/Functional12" || exit 1
+    # ./runTests.sh -x -p 7.4 -d sqlite -s functional Tests/Functional
+    ./runTests.sh -x -p 8.2 -d sqlite -s functional Tests/Functional12
+fi

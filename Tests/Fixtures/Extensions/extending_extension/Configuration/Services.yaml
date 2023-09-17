@@ -17,4 +17,10 @@ services:
     tags:
       -
         name: 'extender.extends'
+        class: Fixture\BaseExtension\Domain\Model\AnotherBlob
+      -
+        name: 'extender.extends'
         class: Fixture\BaseExtension\Domain\Model\BlobWithStorage
+      -
+        name: 'extender.extends'
+        class: Fixture\BaseExtension\Domain\Model\BlobWithStorageAndConstructorArgument

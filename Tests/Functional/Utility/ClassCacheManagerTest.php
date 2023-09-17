@@ -2,8 +2,14 @@
 
 namespace Evoweb\Extender\Tests\Functional\Utility;
 
-use Composer\Autoload\ClassLoader;
-use TYPO3\CMS\Core\Utility\GeneralUtility;
+use Evoweb\Extender\Configuration\Register;
+use Evoweb\Extender\Utility\ClassCacheManager;
+use Fixture\BaseExtension\Domain\Model\AnotherBlob;
+use Fixture\BaseExtension\Domain\Model\Blob;
+use Fixture\BaseExtension\Domain\Model\BlobWithStorage;
+use Fixture\BaseExtension\Domain\Model\BlobWithStorageAndConstructorArgument;
+use TYPO3\CMS\Core\Cache\Backend\FileBackend;
+use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
 use TYPO3\TestingFramework\Core\AccessibleObjectInterface;
 
 class ClassCacheManagerTest extends AbstractTestBase
@@ -13,25 +19,22 @@ class ClassCacheManagerTest extends AbstractTestBase
      */
     public function parseSingleFile()
     {
-        /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cacheMock */
-        $cacheMock = $this->createMock(\TYPO3\CMS\Core\Cache\Frontend\PhpFrontend::class);
+        $composerClassLoader = $this->getComposerClassLoader();
+        $register = $this->getRegister();
+        /** @var PhpFrontend $cacheMock */
+        $cacheMock = $this->createMock(PhpFrontend::class);
 
-        $composerClassLoader = GeneralUtility::getContainer()->get(ClassLoader::class);
-
-        /** @var \Evoweb\Extender\Utility\ClassCacheManager $subject */
-        $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassCacheManager::class))
+        /** @var ClassCacheManager|AccessibleObjectInterface $subject */
+        $subject = $this->getMockBuilder($this->buildAccessibleProxy(ClassCacheManager::class))
             ->onlyMethods(['parseSingleFile'])
-            ->setConstructorArgs([$cacheMock, $composerClassLoader])
+            ->setConstructorArgs([$cacheMock, $composerClassLoader, $register])
             ->enableProxyingToOriginalMethods()
             ->getMock();
 
-        $filePath = realpath(
-            __DIR__ . '/../../Fixtures/Extensions/base_extension/Classes/Domain/Model/Blob.php'
-        );
+        $filePath = realpath(__DIR__ . '/../../Fixtures/Extensions/base_extension/Classes/Domain/Model/Blob.php');
 
         $expected = $this->getExpected(__FUNCTION__, $filePath);
 
-        /** @noinspection PhpUndefinedMethodInspection */
         $actual = $subject->_call('parseSingleFile', $filePath);
 
         self::assertEquals($expected, $actual);
@@ -42,15 +45,15 @@ class ClassCacheManagerTest extends AbstractTestBase
      */
     public function parseSingleFileWithStorage()
     {
-        /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cacheMock */
-        $cacheMock = $this->createMock(\TYPO3\CMS\Core\Cache\Frontend\PhpFrontend::class);
+        $composerClassLoader = $this->getComposerClassLoader();
+        $register = $this->getRegister();
+        /** @var PhpFrontend $cacheMock */
+        $cacheMock = $this->createMock(PhpFrontend::class);
 
-        $composerClassLoader = GeneralUtility::getContainer()->get(ClassLoader::class);
-
-        /** @var \Evoweb\Extender\Utility\ClassCacheManager|AccessibleObjectInterface $subject */
-        $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassCacheManager::class))
+        /** @var ClassCacheManager|AccessibleObjectInterface $subject */
+        $subject = $this->getMockBuilder($this->buildAccessibleProxy(ClassCacheManager::class))
             ->onlyMethods(['parseSingleFile', '_get'])
-            ->setConstructorArgs([$cacheMock, $composerClassLoader])
+            ->setConstructorArgs([$cacheMock, $composerClassLoader, $register])
             ->enableProxyingToOriginalMethods()
             ->getMock();
 
@@ -59,18 +62,17 @@ class ClassCacheManagerTest extends AbstractTestBase
         );
 
         $expected = $this->getExpected(__FUNCTION__, $filePath);
-
         $expectedConstructorLines = [
             '    public function __construct()',
             '    {',
             '        $this->storage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();'
         ];
 
-        /** @noinspection PhpUndefinedMethodInspection */
         $actual = $subject->_call('parseSingleFile', $filePath);
+        $actualConstructorLines = $subject->_get('constructorLines');
 
         self::assertEquals($expected, $actual);
-        self::assertEquals($expectedConstructorLines, $subject->_get('constructorLines'));
+        self::assertEquals($expectedConstructorLines, $actualConstructorLines);
     }
 
     /**
@@ -78,20 +80,19 @@ class ClassCacheManagerTest extends AbstractTestBase
      */
     public function parseSingleFileWithStorageNotPsr2()
     {
-        $cacheBackend = new \TYPO3\CMS\Core\Cache\Backend\FileBackend('production');
-        /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cacheMock */
+        $composerClassLoader = $this->getComposerClassLoader();
+        $register = $this->getRegister();
+        /** @var PhpFrontend $cacheMock */
         $cacheMock = $this->getAccessibleMock(
-            \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend::class,
+            PhpFrontend::class,
             [],
-            ['extender', $cacheBackend]
+            ['extender', new FileBackend('production')]
         );
 
-        $composerClassLoader = GeneralUtility::getContainer()->get(ClassLoader::class);
-
-        /** @var \Evoweb\Extender\Utility\ClassCacheManager|AccessibleObjectInterface $subject */
-        $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassCacheManager::class))
+        /** @var ClassCacheManager|AccessibleObjectInterface $subject */
+        $subject = $this->getMockBuilder($this->buildAccessibleProxy(ClassCacheManager::class))
             ->onlyMethods(['parseSingleFile', '_get'])
-            ->setConstructorArgs([$cacheMock, $composerClassLoader])
+            ->setConstructorArgs([$cacheMock, $composerClassLoader, $register])
             ->enableProxyingToOriginalMethods()
             ->getMock();
 
@@ -100,18 +101,17 @@ class ClassCacheManagerTest extends AbstractTestBase
         );
 
         $expected = $this->getExpected(__FUNCTION__, $filePath);
-
         $expectedConstructorLines = [
             '    public function __construct()',
             '    {',
             '        $this->storage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();'
         ];
 
-        /** @noinspection PhpUndefinedMethodInspection */
         $actual = $subject->_call('parseSingleFile', $filePath);
+        $actualConstructorLines = $subject->_get('constructorLines');
 
         self::assertEquals($expected, $actual);
-        self::assertEquals($expectedConstructorLines, $subject->_get('constructorLines'));
+        self::assertEquals($expectedConstructorLines, $actualConstructorLines);
     }
 
     /**
@@ -119,21 +119,20 @@ class ClassCacheManagerTest extends AbstractTestBase
      */
     public function changeCode()
     {
-        /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cacheMock */
-        $cacheMock = $this->createMock(\TYPO3\CMS\Core\Cache\Frontend\PhpFrontend::class);
+        $composerClassLoader = $this->getComposerClassLoader();
+        $register = $this->getRegister();
+        /** @var PhpFrontend $cacheMock */
+        $cacheMock = $this->createMock(PhpFrontend::class);
 
-        $composerClassLoader = GeneralUtility::getContainer()->get(ClassLoader::class);
-
-        /** @var \Evoweb\Extender\Utility\ClassCacheManager $subject */
-        $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassCacheManager::class))
+        /** @var ClassCacheManager|AccessibleObjectInterface $subject */
+        $subject = $this->getMockBuilder($this->buildAccessibleProxy(ClassCacheManager::class))
             ->onlyMethods(['changeCode'])
-            ->setConstructorArgs([$cacheMock, $composerClassLoader])
+            ->setConstructorArgs([$cacheMock, $composerClassLoader, $register])
             ->enableProxyingToOriginalMethods()
             ->getMock();
 
         $expected = $this->getExpected(__FUNCTION__, '--');
 
-        /** @noinspection PhpUndefinedMethodInspection */
         $actual = $subject->_call('changeCode', '<?php
 namespace Fixture\BaseExtension\Domain\Model;
 
@@ -151,22 +150,23 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function getPartialInfo()
     {
-        /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cacheMock */
-        $cacheMock = $this->createMock(\TYPO3\CMS\Core\Cache\Frontend\PhpFrontend::class);
+        $composerClassLoader = $this->getComposerClassLoader();
+        $register = $this->getRegister();
+        /** @var PhpFrontend $cacheMock */
+        $cacheMock = $this->createMock(PhpFrontend::class);
 
-        $composerClassLoader = GeneralUtility::getContainer()->get(ClassLoader::class);
-
-        /** @var \Evoweb\Extender\Utility\ClassCacheManager $subject */
-        $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassCacheManager::class))
+        /** @var ClassCacheManager|AccessibleObjectInterface $subject */
+        $subject = $this->getMockBuilder($this->buildAccessibleProxy(ClassCacheManager::class))
             ->onlyMethods(['getPartialInfo'])
-            ->setConstructorArgs([$cacheMock, $composerClassLoader])
+            ->setConstructorArgs([$cacheMock, $composerClassLoader, $register])
             ->enableProxyingToOriginalMethods()
             ->getMock();
 
         $expected = $this->getExpected(__FUNCTION__, '--');
 
-        /** @noinspection PhpUndefinedMethodInspection */
-        self::assertEquals($expected, $subject->_call('getPartialInfo', '--'));
+        $actual = $subject->_call('getPartialInfo', '--');
+
+        self::assertEquals($expected, $actual);
     }
 
     /**
@@ -174,41 +174,40 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function closeClassDefinition()
     {
-        /** @var \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend $cacheMock */
-        $cacheMock = $this->createMock(\TYPO3\CMS\Core\Cache\Frontend\PhpFrontend::class);
+        $composerClassLoader = $this->getComposerClassLoader();
+        $register = $this->getRegister();
+        /** @var PhpFrontend $cacheMock */
+        $cacheMock = $this->createMock(PhpFrontend::class);
 
-        $composerClassLoader = GeneralUtility::getContainer()->get(ClassLoader::class);
-
-        /** @var \Evoweb\Extender\Utility\ClassCacheManager $subject */
-        $subject = $this->getMockBuilder($this->buildAccessibleProxy(\Evoweb\Extender\Utility\ClassCacheManager::class))
+        /** @var ClassCacheManager|AccessibleObjectInterface $subject */
+        $subject = $this->getMockBuilder($this->buildAccessibleProxy(ClassCacheManager::class))
             ->onlyMethods(['closeClassDefinition'])
-            ->setConstructorArgs([$cacheMock, $composerClassLoader])
+            ->setConstructorArgs([$cacheMock, $composerClassLoader, $register])
             ->enableProxyingToOriginalMethods()
             ->getMock();
 
         $expected = '--' . chr(10) . '}';
 
-        /** @noinspection PhpUndefinedMethodInspection */
-        self::assertEquals($expected, $subject->_call('closeClassDefinition', '--'));
+        $actual = $subject->_call('closeClassDefinition', '--');
+
+        self::assertEquals($expected, $actual);
     }
 
     /**
      * @test
      */
-    public function reBuild()
+    public function build()
     {
-        $className = \Fixture\BaseExtension\Domain\Model\Blob::class;
+        $composerClassLoader = $this->getComposerClassLoader();
+        $register = $this->getRegister();
+        $cacheBackend = new FileBackend('production');
+        $cacheMock = new PhpFrontend('extender', $cacheBackend);
 
-        $cacheBackend = new \TYPO3\CMS\Core\Cache\Backend\FileBackend('production');
-        $cacheMock = new \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend('extender', $cacheBackend);
+        $className = Blob::class;
+        $cacheEntryIdentifier = str_replace('\\', '_', $className);
 
-        $composerClassLoader = GeneralUtility::getContainer()->get(ClassLoader::class);
-
-        $subject = new \Evoweb\Extender\Utility\ClassCacheManager($cacheMock, $composerClassLoader);
-        $subject->reBuild();
-
-        $cacheEntryIdentifier = GeneralUtility::underscoredToLowerCamelCase('base_extension') . '_' .
-            str_replace('\\', '_', $className);
+        $subject = new ClassCacheManager($cacheMock, $composerClassLoader, $register);
+        $subject->build($cacheEntryIdentifier, $className);
 
         $basePath = 'typo3conf/ext/base_extension/Classes/Domain/Model/Blob.php';
         $extendPath = 'typo3conf/ext/extending_extension/Classes/Domain/Model/BlobExtend.php';
@@ -225,18 +224,16 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function reBuildWithStorage()
     {
-        $className = \Fixture\BaseExtension\Domain\Model\BlobWithStorage::class;
+        $composerClassLoader = $this->getComposerClassLoader();
+        $register = $this->getRegister();
+        $cacheBackend = new FileBackend('production');
+        $cacheMock = new PhpFrontend('extender', $cacheBackend);
 
-        $cacheBackend = new \TYPO3\CMS\Core\Cache\Backend\FileBackend('production');
-        $cacheMock = new \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend('extender', $cacheBackend);
+        $className = BlobWithStorage::class;
+        $cacheEntryIdentifier = str_replace('\\', '_', $className);
 
-        $composerClassLoader = GeneralUtility::getContainer()->get(ClassLoader::class);
-
-        $subject = new \Evoweb\Extender\Utility\ClassCacheManager($cacheMock, $composerClassLoader);
-        $subject->reBuild();
-
-        $cacheEntryIdentifier = GeneralUtility::underscoredToLowerCamelCase('base_extension') . '_' .
-            str_replace('\\', '_', $className);
+        $subject = new ClassCacheManager($cacheMock, $composerClassLoader, $register);
+        $subject->build($cacheEntryIdentifier, $className);
 
         $basePath = 'typo3conf/ext/base_extension/Classes/Domain/Model/BlobWithStorage.php';
         $extendPath = 'typo3conf/ext/extending_extension/Classes/Domain/Model/BlobWithStorageExtend.php';
@@ -253,18 +250,16 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function reBuildNonStorageWithStorage()
     {
-        $className = \Fixture\BaseExtension\Domain\Model\AnotherBlob::class;
+        $composerClassLoader = $this->getComposerClassLoader();
+        $register = $this->getRegister();
+        $cacheBackend = new FileBackend('production');
+        $cacheMock = new PhpFrontend('extender', $cacheBackend);
 
-        $cacheBackend = new \TYPO3\CMS\Core\Cache\Backend\FileBackend('production');
-        $cacheMock = new \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend('extender', $cacheBackend);
+        $className = AnotherBlob::class;
+        $cacheEntryIdentifier = str_replace('\\', '_', $className);
 
-        $composerClassLoader = GeneralUtility::getContainer()->get(ClassLoader::class);
-
-        $subject = new \Evoweb\Extender\Utility\ClassCacheManager($cacheMock, $composerClassLoader);
-        $subject->reBuild();
-
-        $cacheEntryIdentifier = GeneralUtility::underscoredToLowerCamelCase('base_extension') . '_' .
-            str_replace('\\', '_', $className);
+        $subject = new ClassCacheManager($cacheMock, $composerClassLoader, $register);
+        $subject->build($cacheEntryIdentifier, $className);
 
         $basePath = 'typo3conf/ext/base_extension/Classes/Domain/Model/AnotherBlob.php';
         $extendPath = 'typo3conf/ext/extending_extension/Classes/Domain/Model/BlobWithStorageExtend.php';
@@ -281,18 +276,16 @@ class Blob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
      */
     public function reBuildWithStorageAndConstructorArgument()
     {
-        $className = \Fixture\BaseExtension\Domain\Model\BlobWithStorageAndConstructorArgument::class;
+        $composerClassLoader = $this->getComposerClassLoader();
+        $register = $this->getRegister();
+        $cacheBackend = new FileBackend('production');
+        $cacheMock = new PhpFrontend('extender', $cacheBackend);
 
-        $cacheBackend = new \TYPO3\CMS\Core\Cache\Backend\FileBackend('production');
-        $cacheMock = new \TYPO3\CMS\Core\Cache\Frontend\PhpFrontend('extender', $cacheBackend);
+        $className = BlobWithStorageAndConstructorArgument::class;
+        $cacheEntryIdentifier = str_replace('\\', '_', $className);
 
-        $composerClassLoader = GeneralUtility::getContainer()->get(ClassLoader::class);
-
-        $subject = new \Evoweb\Extender\Utility\ClassCacheManager($cacheMock, $composerClassLoader);
-        $subject->reBuild();
-
-        $cacheEntryIdentifier = GeneralUtility::underscoredToLowerCamelCase('base_extension') . '_' .
-            str_replace('\\', '_', $className);
+        $subject = new ClassCacheManager($cacheMock, $composerClassLoader, $register);
+        $subject->build($cacheEntryIdentifier, $className);
 
         $basePath = 'typo3conf/ext/base_extension/Classes/Domain/Model/BlobWithStorageAndConstructorArgument.php';
         $extendPath = 'typo3conf/ext/extending_extension/Classes/Domain/Model/BlobWithStorageExtend.php';

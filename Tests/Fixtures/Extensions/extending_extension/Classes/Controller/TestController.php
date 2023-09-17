@@ -17,6 +17,8 @@ namespace Fixture\ExtendingExtension\Controller;
 
 use Fixture\BaseExtension\Domain\Model\Blob;
 use Fixture\BaseExtension\Domain\Model\BlobWithStorage;
+use Fixture\ExtendingExtension\Domain\Model\BlobExtend;
+use Fixture\ExtendingExtension\Domain\Model\BlobWithStorageExtend;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;
@@ -25,8 +27,16 @@ class TestController extends ActionController
 {
     public function showAction(): ResponseInterface
     {
-        $extend1 = get_class(GeneralUtility::makeInstance(Blob::class));
-        $extend2 = get_class(GeneralUtility::makeInstance(BlobWithStorage::class));
+        /** @var BlobExtend $blob */
+        $blob = GeneralUtility::makeInstance(Blob::class);
+        $blob->setOtherProperty(1);
+        $extend1 = get_class($blob) . ' ' . $blob->getOtherProperty();
+
+        /** @var BlobWithStorageExtend $blobWithStorage */
+        $blobWithStorage = GeneralUtility::makeInstance(BlobWithStorage::class);
+        $blobWithStorage->setOtherProperty(1);
+        $extend2 = get_class($blobWithStorage) . ' ' . $blobWithStorage->getOtherProperty();
+
         return $this->htmlResponse($extend1 . ' ' . $extend2);
     }
 }

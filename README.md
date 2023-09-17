@@ -5,6 +5,10 @@
 [![Monthly Downloads](https://poser.pugx.org/evoweb/extender/d/monthly)](https://packagist.org/packages/evoweb/extender)
 [![Total Downloads](https://poser.pugx.org/evoweb/extender/downloads)](https://packagist.org/packages/evoweb/extender)
 
+# !IMPORTANT WIP
+Currently, the extending process gets refactored. Please don't use it in
+productive projects.
+
 ## Installation
 
 ### via Composer

@@ -16,12 +16,12 @@ declare(strict_types=1);
 namespace Evoweb\Extender\Utility;
 
 use Evoweb\Extender\Configuration\Register;
-use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
+use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\SingletonInterface;
 
 class ClassLoader implements SingletonInterface
 {
-    protected PhpFrontend $classCache;
+    protected FrontendInterface $classCache;
 
     protected ClassCacheManager $classCacheManager;
 
@@ -35,7 +35,7 @@ class ClassLoader implements SingletonInterface
     ];
 
     public function __construct(
-        PhpFrontend $classCache,
+        FrontendInterface $classCache,
         ClassCacheManager $classCacheManager,
         Register $register
     ) {
