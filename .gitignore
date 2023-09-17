@@ -3,4 +3,4 @@
 !.Build/docker-compose.yml
 !.Build/runTests.sh
 !.Build/test.sh
-composer.lock
+composer.lock 
