@@ -15,7 +15,7 @@ declare(strict_types=1);
 
 namespace Evoweb\Extender\Event;
 
-use Evoweb\Extender\Utility\ClassLoader;
+use Evoweb\Extender\Loader\ClassLoader;
 use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\EventDispatcher\StoppableEventInterface;

@@ -27,7 +27,8 @@
 		}
 	},
 	"require": {
-		"typo3/cms-core": "^11.0 || ^12.2 || dev-main"
+		"typo3/cms-core": "^11.0 || ^12.2 || dev-main",
+		"nikic/php-parser": "^4.13.2 || ^4.15.4"
 	},
 	"require-dev": {
 		"evoweb/base_extension": "*",

@@ -13,8 +13,9 @@ declare(strict_types=1);
  * LICENSE.txt file that was distributed with this source code.
  */
 
-namespace Evoweb\Extender\Utility;
+namespace Evoweb\Extender\Loader;
 
+use Evoweb\Extender\Cache\ClassCacheManager;
 use Evoweb\Extender\Configuration\Register;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\SingletonInterface;
@@ -26,13 +27,6 @@ class ClassLoader implements SingletonInterface
     protected ClassCacheManager $classCacheManager;
 
     protected Register $register;
-
-    /**
-     * Known classnames that cause problems and can not be extended
-     */
-    protected array $excludedClassNames = [
-        'Symfony\Polyfill\Mbstring\Mbstring'
-    ];
 
     public function __construct(
         FrontendInterface $classCache,
@@ -53,7 +47,7 @@ class ClassLoader implements SingletonInterface
         $className = ltrim($className, '\\');
 
         $return = false;
-        if (!$this->isExcludedClassName($className) && $this->isValidClassName($className)) {
+        if ($this->isValidClassName($className)) {
             $cacheEntryIdentifier = str_replace('\\', '_', $className);
 
             if (!$this->classCache->has($cacheEntryIdentifier)) {
@@ -65,11 +59,6 @@ class ClassLoader implements SingletonInterface
         }
 
         return $return;
-    }
-
-    protected function isExcludedClassName(string $className): bool
-    {
-        return in_array($className, $this->excludedClassNames);
     }
 
     protected function isValidClassName(string $className): bool

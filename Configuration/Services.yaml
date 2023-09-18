@@ -15,6 +15,15 @@ services:
     factory: ['@Evoweb\Extender\Cache\CacheManager', 'createCache']
     arguments: ['extender']
 
+  Evoweb\Extender\Cache\ClassCacheManager:
+    arguments:
+      $classCache: '@cache.extender'
+      $composerClassLoader: '@Composer\Autoload\ClassLoader'
+      $classParser: '@Evoweb\Extender\Parser\ClassParser'
+      $classComposer: '@Evoweb\Extender\Composer\ClassComposer'
+      $register: '@Evoweb\Extender\Configuration\Register'
+    public: true
+
   Evoweb\Extender\Command\ClearCommand:
     tags:
       -
@@ -23,22 +32,26 @@ services:
         description: 'CLI command for the "extender" extension - clear cache'
         schedulable: false
 
-  Evoweb\Extender\Utility\ClassCacheManager:
-    arguments:
-      $classCache: '@cache.extender'
-      $composerClassLoader: '@Composer\Autoload\ClassLoader'
-      $register: '@Evoweb\Extender\Configuration\Register'
-    public: true
-
-  Evoweb\Extender\Utility\ClassLoader:
-    arguments:
-      $classCache: '@cache.extender'
-      $classCacheManager: '@Evoweb\Extender\Utility\ClassCacheManager'
-      $register: '@Evoweb\Extender\Configuration\Register'
+  Evoweb\Extender\Composer\ClassComposer:
     public: true
 
   Evoweb\Extender\Configuration\Register:
     public: true
 
   Evoweb\Extender\Hooks\DataHandlerClearCachePostProcHook:
+    public: true
+
+  Evoweb\Extender\Loader\ClassLoader:
+    arguments:
+      $classCache: '@cache.extender'
+      $classCacheManager: '@Evoweb\Extender\Cache\ClassCacheManager'
+      $register: '@Evoweb\Extender\Configuration\Register'
+    public: true
+
+  Evoweb\Extender\Parser\ClassParser:
+    arguments:
+      $parserFactory: '@PhpParser\ParserFactory'
+    public: true
+
+  PhpParser\ParserFactory:
     public: true
