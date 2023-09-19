@@ -52,17 +52,19 @@ class ClassCacheManager
     public function build(string $cacheEntryIdentifier, string $className): void
     {
         // Get the file to extend, this needs to be loaded as first
-        $path = $this->composerClassLoader->findFile($className);
-        if (!is_file($path)) {
-            throw new BaseFileNotFoundException('Base file "' . $path . '" does not exist');
+        $path = $this->composerClassLoader->findFile($entity);
+        if ($path === false || !is_file($path)) {
+            throw new FileNotFoundException(
+                'Base file "' . $path . '" does not exist for ' . $entity
+            );
         }
         $code = $this->parseSingleFile($path, false);
 
         // Get the files from all other extensions that are extending this domain model
         foreach ($this->register->getExtendingClasses($className) as $extendingEntity) {
             $path = $this->composerClassLoader->findFile($extendingEntity);
-            if (!is_file($path)) {
-                throw new ExtendingFileNotFoundException('Extending file "' . $path . '" does not exist');
+            if ($path === false || !is_file($path)) {
+                throw new ExtendingFileNotFoundException('Extending file "' . $path . '" does not exist for ' . $extendingEntity);
             }
             $code .= $this->parseSingleFile($path);
         }
