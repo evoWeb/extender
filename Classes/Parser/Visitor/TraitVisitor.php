@@ -17,21 +17,13 @@ namespace Evoweb\Extender\Parser\Visitor;
 
 use PhpParser\Node;
 use PhpParser\Node\Stmt\TraitUse;
-use PhpParser\NodeVisitorAbstract;
 
-class TraitVisitor extends NodeVisitorAbstract implements VisitorInterface
+class TraitVisitor extends AbstractVisitor
 {
-    protected array $traits = [];
-
     public function enterNode(Node $node): void
     {
         if ($node instanceof TraitUse) {
-            $this->traits[] = $node;
+            $this->fileSegment->addTrait($node);
         }
-    }
-
-    public function getResult(): array
-    {
-        return $this->traits;
     }
 }

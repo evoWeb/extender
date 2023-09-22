@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace Evoweb\Extender\Composer\Generator;
 
+use Evoweb\Extender\Parser\FileSegments;
 use PhpParser\Node\Param;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
@@ -46,19 +47,23 @@ class ConstructorGenerator implements GeneratorInterface
     {
         $params = [];
         $stmts = [];
+
+        /** @var FileSegments $fileSegment */
         foreach ($fileSegments as $fileSegment) {
-            if (!$fileSegment['constructor']) {
+            $constructor = $fileSegment->getConstructor();
+            if (!$constructor) {
                 continue;
             }
             /** @var Param $param */
-            foreach ($fileSegment['constructor']->params as $param) {
+            foreach ($constructor->params as $param) {
                 if (isset($params[$param->var->name])) {
                     continue;
                 }
                 $params[$param->var->name] = $param;
             }
-            $stmts = [...$stmts, ...$fileSegment['constructor']->stmts];
+            $stmts = [...$stmts, ...$constructor->stmts];
         }
+
         return [$params, $stmts];
     }
 
@@ -66,8 +71,9 @@ class ConstructorGenerator implements GeneratorInterface
     {
         $result = false;
 
+        /** @var FileSegments $fileSegment */
         foreach ($fileSegments as $fileSegment) {
-            if ($fileSegment['constructor']) {
+            if ($fileSegment->getConstructor()) {
                 $result = true;
                 break;
             }
@@ -76,9 +82,16 @@ class ConstructorGenerator implements GeneratorInterface
         return $result;
     }
 
-    protected function getNamespace(array $statements): Namespace_
+    protected function getNamespace(array $statements): ?Namespace_
     {
-        return $statements[0];
+        $namespace = null;
+        foreach ($statements as $statement) {
+            if ($statement instanceof Namespace_) {
+                $namespace = $statement;
+                break;
+            }
+        }
+        return $namespace;
     }
 
     protected function getClass(Namespace_ $namespace): ?Class_

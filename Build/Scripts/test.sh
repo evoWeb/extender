@@ -137,9 +137,11 @@ if [[ $DEBUG_TESTS != true ]]; then
 
     cleanup
 else
-    # cleanup
+    cleanup
     # runFunctionalTests "7.4" "^11.5" "^6.16.9" "Tests/Functional" || exit 1
     # runFunctionalTests "8.2" "^12.4" "^8.0.5" "Tests/Functional12" || exit 1
-    # ./runTests.sh -x -p 7.4 -d sqlite -s functional Tests/Functional
-    ./runTests.sh -x -p 8.2 -d sqlite -s functional Tests/Functional12
+    # ./runTests.sh -x -p 8.1 -d sqlite -s functional -e "--group selected" Tests/Functional
+    # ./runTests.sh -x -p 7.4 -d sqlite -s functional -e "" Tests/Functional
+    # ./runTests.sh -x -p 8.2 -d sqlite -s functional -e "--group selected" Tests/Functional12
+    # ./runTests.sh -x -p 8.2 -d sqlite -s functional Tests/Functional12
 fi

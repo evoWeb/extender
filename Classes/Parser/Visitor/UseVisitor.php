@@ -17,21 +17,13 @@ namespace Evoweb\Extender\Parser\Visitor;
 
 use PhpParser\Node;
 use PhpParser\Node\Stmt\UseUse;
-use PhpParser\NodeVisitorAbstract;
 
-class UseVisitor extends NodeVisitorAbstract implements VisitorInterface
+class UseVisitor extends AbstractVisitor
 {
-    protected array $uses = [];
-
     public function enterNode(Node $node): void
     {
         if ($node instanceof UseUse) {
-            $this->uses[] = $node;
+            $this->fileSegment->addUseUse($node);
         }
-    }
-
-    public function getResult(): array
-    {
-        return $this->uses;
     }
 }

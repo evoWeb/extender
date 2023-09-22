@@ -20,28 +20,23 @@ use Evoweb\Extender\Event\RegisterAutoloaderEvent;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\Definition;
-use Symfony\Component\DependencyInjection\Reference;
 
 class RegisterExtenderPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
-        $this->addRegisterAutoloadEvent($container);
-        $this->compileExtendingClasses($container);
+        $this->addRegisterAutoloadEventToEventDispatcher($container);
+        $this->addExtendedClassesToRegisterDefinition($container);
     }
 
-    protected function addRegisterAutoloadEvent(ContainerBuilder $container): void
+    protected function addRegisterAutoloadEventToEventDispatcher(ContainerBuilder $container): void
     {
-        $registerAutoloaderEvent = new Definition(RegisterAutoloaderEvent::class);
-        $registerAutoloaderEvent->setArguments([new Reference('service_container')]);
-        $registerAutoloaderEvent->setShared(false);
-
+        $registerAutoloaderEvent = $container->findDefinition(RegisterAutoloaderEvent::class);
         $eventDispatcher = $container->findDefinition(EventDispatcherInterface::class);
         $eventDispatcher->addMethodCall('dispatch', [$registerAutoloaderEvent]);
     }
 
-    protected function compileExtendingClasses(ContainerBuilder $container): void
+    protected function addExtendedClassesToRegisterDefinition(ContainerBuilder $container): void
     {
         $extendedClasses = [];
         foreach ($container->findTaggedServiceIds('extender.extends', true) as $extendingClass => $tags) {
@@ -59,6 +54,6 @@ class RegisterExtenderPass implements CompilerPassInterface
         }
 
         $registerDefinition = $container->getDefinition(Register::class);
-        $registerDefinition->addMethodCall('setExtendedClasses', [$extendedClasses]);
+        $registerDefinition->setArguments([$extendedClasses]);
     }
 }

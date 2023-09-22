@@ -21,6 +21,7 @@ use Evoweb\Extender\Configuration\Register;
 use Evoweb\Extender\Exception\BaseFileNotFoundException;
 use Evoweb\Extender\Exception\ExtendingFileNotFoundException;
 use Evoweb\Extender\Parser\ClassParser;
+use Evoweb\Extender\Parser\FileSegments;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 
 class ClassCacheManager
@@ -34,8 +35,6 @@ class ClassCacheManager
     protected ClassComposer $classComposer;
 
     protected Register $register;
-
-    protected array $constructorLines = [];
 
     public function __construct(
         FrontendInterface $classCache,
@@ -52,7 +51,7 @@ class ClassCacheManager
     }
 
     /**
-     * Build cache for base and extending files
+     * Build merged file and cache for base and extending files
      *
      * @throws BaseFileNotFoundException
      * @throws ExtendingFileNotFoundException
@@ -64,62 +63,52 @@ class ClassCacheManager
             ...$this->getExtendingClassesFileSegments($className)
         ];
 
-        $code = $this->mergeFileSegments($fileSegments);
+        $code = $this->getMergedFileCode($fileSegments);
         $this->addFileToCache($cacheEntryIdentifier, $code);
     }
 
-    protected function getBaseClassFileSegments(string $baseClassName): array
+    protected function getBaseClassFileSegments(string $className): FileSegments
     {
-        $filePath = $this->composerClassLoader->findFile($baseClassName);
-        if ($filePath === false) {
-            throw new BaseFileNotFoundException(
-                'Composer did not find the file path for base class "' . $baseClassName
-            );
-        }
-        if (!is_file($filePath)) {
-            throw new BaseFileNotFoundException(
-                'File "' . $filePath . '" for base class "' . $baseClassName . '" does not exist'
-            );
-        }
-        return $this->getFileSegments(realpath($filePath), true);
+        return $this->getFileSegments($className, true, BaseFileNotFoundException::class);
     }
 
     protected function getExtendingClassesFileSegments(string $baseClassName): array
     {
         $filesSegments = [];
 
-        foreach ($this->register->getExtendingClasses($baseClassName) as $extendingClassName) {
-            $filePath = $this->composerClassLoader->findFile($extendingClassName);
-            if ($filePath === false) {
-                throw new ExtendingFileNotFoundException(
-                    'Composer did not find the file path for extending class "' . $extendingClassName
-                );
-            }
-            if (!is_file($filePath)) {
-                throw new ExtendingFileNotFoundException(
-                    'File "' . $filePath . '" for extending class "' . $extendingClassName . '" does not exist'
-                );
-            }
-            $filesSegments[] = $this->getFileSegments(realpath($filePath), false);
+        foreach ($this->register->getExtendingClasses($baseClassName) as $className) {
+            $filesSegments[] = $this->getFileSegments($className, false, ExtendingFileNotFoundException::class);
         }
 
         return $filesSegments;
     }
 
-    protected function getFileSegments(string $filePath, bool $baseClass): array
+    protected function getFileSegments(string $className, bool $baseClass, string $exceptionClass): FileSegments
     {
-        $code = file_get_contents($filePath);
+        $type = $baseClass ? 'base' : 'extend';
+        $filePath = $this->composerClassLoader->findFile($className);
 
-        $fileSegments = $this->classParser->getFileSegments($code);
-        $fileSegments['filePath'] = $filePath;
-        $fileSegments['baseClass'] = $baseClass;
+        if ($filePath === false || $filePath === '') {
+            throw new $exceptionClass(
+                'Composer did not find the file path for ' . $type . ' class "' . $className . '"'
+            );
+        }
+
+        if (!is_file($filePath)) {
+            throw new $exceptionClass(
+                'File "' . $filePath . '" for ' . $type . ' class "' . $className . '" does not exist'
+            );
+        }
+
+        $fileSegments = $this->classParser->getFileSegments($filePath);
+        $fileSegments->setBaseClass($baseClass);
 
         return $fileSegments;
     }
 
-    protected function mergeFileSegments(array $fileSegments): string
+    protected function getMergedFileCode(array $fileSegments): string
     {
-        return $this->classComposer->mergeFileSegments($fileSegments);
+        return $this->classComposer->composeMergedFileCode($fileSegments);
     }
 
     protected function addFileToCache(string $cacheEntryIdentifier, string $code): void

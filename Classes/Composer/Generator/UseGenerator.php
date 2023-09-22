@@ -15,9 +15,9 @@ declare(strict_types=1);
 
 namespace Evoweb\Extender\Composer\Generator;
 
+use Evoweb\Extender\Parser\FileSegments;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Use_;
-use PhpParser\Node\Stmt\UseUse;
 
 class UseGenerator implements GeneratorInterface
 {
@@ -33,17 +33,24 @@ class UseGenerator implements GeneratorInterface
         return $statements;
     }
 
-    protected function getNamespace(array $statements): Namespace_
+    protected function getNamespace(array $statements): ?Namespace_
     {
-        return $statements[0];
+        $namespace = null;
+        foreach ($statements as $statement) {
+            if ($statement instanceof Namespace_) {
+                $namespace = $statement;
+                break;
+            }
+        }
+        return $namespace;
     }
 
     protected function getUniqueUses(array $fileSegments): array
     {
         $uses = [];
+        /** @var FileSegments $fileSegment */
         foreach ($fileSegments as $fileSegment) {
-            /** @var UseUse $use */
-            foreach ($fileSegment['uses'] as $use) {
+            foreach ($fileSegment->getUses() as $use) {
                 $name = $use->name . $use->getAlias();
                 if (isset($uses[$name])) {
                     continue;

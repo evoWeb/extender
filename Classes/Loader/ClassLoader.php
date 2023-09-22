@@ -18,10 +18,14 @@ namespace Evoweb\Extender\Loader;
 use Evoweb\Extender\Cache\ClassCacheManager;
 use Evoweb\Extender\Configuration\Register;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
+use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
 use TYPO3\CMS\Core\SingletonInterface;
 
 class ClassLoader implements SingletonInterface
 {
+    /**
+     * @var FrontendInterface|PhpFrontend
+     */
     protected FrontendInterface $classCache;
 
     protected ClassCacheManager $classCacheManager;
@@ -63,6 +67,6 @@ class ClassLoader implements SingletonInterface
 
     protected function isValidClassName(string $className): bool
     {
-        return $this->register->hasClassName($className);
+        return $this->register->hasBaseClassName($className);
     }
 }

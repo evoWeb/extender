@@ -17,21 +17,15 @@ namespace Evoweb\Extender\Parser\Visitor;
 
 use PhpParser\Node;
 use PhpParser\Node\Stmt\PropertyProperty;
-use PhpParser\NodeVisitorAbstract;
 
-class PropertyVisitor extends NodeVisitorAbstract implements VisitorInterface
+class PropertyVisitor extends AbstractVisitor
 {
     protected array $properties = [];
 
     public function enterNode(Node $node): void
     {
         if ($node instanceof PropertyProperty) {
-            $this->properties[] = $node;
+            $this->fileSegment->addProperty($node);
         }
-    }
-
-    public function getResult(): array
-    {
-        return $this->properties;
     }
 }

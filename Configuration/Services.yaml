@@ -12,7 +12,7 @@ services:
     # We can not use CacheManager, as it can not be
     # injected/instantiated prior (or during) ext_localconf.php
     # loading therefore we use an own factory instead.
-    factory: ['@Evoweb\Extender\Cache\CacheManager', 'createCache']
+    factory: ['@Evoweb\Extender\Cache\CacheFactory', 'createCache']
     arguments: ['extender']
 
   Evoweb\Extender\Cache\ClassCacheManager:
@@ -28,7 +28,7 @@ services:
     tags:
       -
         name: 'console.command'
-        command: 'extender:rebuild'
+        command: 'extender:clearClassCache'
         description: 'CLI command for the "extender" extension - clear cache'
         schedulable: false
 
@@ -37,6 +37,11 @@ services:
 
   Evoweb\Extender\Configuration\Register:
     public: true
+
+  Evoweb\Extender\Event\RegisterAutoloaderEvent:
+    arguments:
+      $container: '@service_container'
+    shared: false
 
   Evoweb\Extender\Hooks\DataHandlerClearCachePostProcHook:
     public: true

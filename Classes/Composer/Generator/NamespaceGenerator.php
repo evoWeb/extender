@@ -22,10 +22,10 @@ class NamespaceGenerator implements GeneratorInterface
     public function generate(array $statements, array $fileSegments): array
     {
         foreach ($fileSegments as $fileSegment) {
-            if (!$fileSegment['baseClass']) {
+            if (!$fileSegment->isBaseClass()) {
                 continue;
             }
-            $statements[] = new Namespace_($fileSegment['namespace']);
+            $statements[] = new Namespace_($fileSegment->getNamespace());
         }
 
         return $statements;

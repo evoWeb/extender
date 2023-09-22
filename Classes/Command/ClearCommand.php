@@ -15,7 +15,7 @@ declare(strict_types=1);
 
 namespace Evoweb\Extender\Command;
 
-use Evoweb\Extender\Cache\CacheManager;
+use Evoweb\Extender\Cache\CacheFactory;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -25,22 +25,19 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ClearCommand extends Command
 {
-    protected CacheManager $cacheManager;
+    protected CacheFactory $cacheFactory;
 
-    public function __construct(CacheManager $cacheManager)
+    public function __construct(CacheFactory $cacheFactory)
     {
-        $this->cacheManager = $cacheManager;
+        $this->cacheFactory = $cacheFactory;
         parent::__construct();
     }
 
-    /**
-     * @return int
-     */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $result = self::SUCCESS;
         try {
-            $this->cacheManager->createCache('extender')->flush();
+            $this->cacheFactory->createCache('extender')->flush();
         } catch (\Exception $e) {
             $output->writeln($e->getMessage());
             $result = self::FAILURE;

@@ -16,23 +16,14 @@ declare(strict_types=1);
 namespace Evoweb\Extender\Parser\Visitor;
 
 use PhpParser\Node;
-use PhpParser\Node\Name;
 use PhpParser\Node\Stmt\Namespace_;
-use PhpParser\NodeVisitorAbstract;
 
-class NamespaceVisitor extends NodeVisitorAbstract implements VisitorInterface
+class NamespaceVisitor extends AbstractVisitor
 {
-    protected ?Name $namespace = null;
-
     public function enterNode(Node $node): void
     {
         if ($node instanceof Namespace_) {
-            $this->namespace = $node->name;
+            $this->fileSegment->setNamespace($node->name);
         }
-    }
-
-    public function getResult(): ?Name
-    {
-        return $this->namespace;
     }
 }

@@ -15,8 +15,6 @@ declare(strict_types=1);
 
 namespace Evoweb\Extender\Parser;
 
-use Evoweb\Extender\Parser\Visitor\VisitorInterface;
-use PhpParser\Error;
 use PhpParser\NodeTraverser;
 use PhpParser\ParserFactory;
 
@@ -24,41 +22,45 @@ class ClassParser
 {
     protected ParserFactory $parserFactory;
 
+    protected array $visitors = [
+        Visitor\NamespaceVisitor::class,
+        Visitor\UseVisitor::class,
+        Visitor\ClassVisitor::class,
+        Visitor\TraitVisitor::class,
+        Visitor\PropertyVisitor::class,
+        Visitor\ConstructorVisitor::class,
+        Visitor\ClassMethodVisitor::class,
+    ];
+
     public function __construct(ParserFactory $parserFactory)
     {
         $this->parserFactory = $parserFactory;
     }
 
-    public function getFileSegments(string $code): array
+    public function getFileSegments(string $filePath): FileSegments
     {
+        $fileSegments = new FileSegments();
+        $fileSegments->setFilePath($filePath);
+        $fileSegments->setCode(file_get_contents($filePath));
+
         try {
             $parser = $this->parserFactory->create(ParserFactory::ONLY_PHP7);
-            $statements = $parser->parse($code);
+            $fileSegments->setStatements($parser->parse($fileSegments->getCode()));
 
-            $fileSegments = [
-                'code' => $code,
-                'base' => $statements,
-                'namespace' => $this->getFileSegment($statements, new Visitor\NamespaceVisitor()),
-                'uses' => $this->getFileSegment($statements, new Visitor\UseVisitor()),
-                'class' => $this->getFileSegment($statements, new Visitor\ClassVisitor()),
-                'traits' => $this->getFileSegment($statements, new Visitor\TraitVisitor()),
-                'properties' => $this->getFileSegment($statements, new Visitor\PropertyVisitor()),
-                'constructor' => $this->getFileSegment($statements, new Visitor\ConstructorVisitor()),
-                'functions' => $this->getFileSegment($statements, new Visitor\ClassMethodVisitor()),
-            ];
-        } catch (Error $e) {
-            $fileSegments = [];
-        }
+            foreach ($this->visitors as $visitor) {
+                $this->traverseStatements($fileSegments, $visitor);
+            }
+        } catch (\Exception $e) {}
 
         return $fileSegments;
     }
 
-    protected function getFileSegment(array $statements, VisitorInterface $visitor): mixed
+    protected function traverseStatements(FileSegments $fileSegment, string $visitorClassName): void
     {
+        $visitor = new $visitorClassName($fileSegment);
+
         $traverser = new NodeTraverser();
         $traverser->addVisitor($visitor);
-        $traverser->traverse($statements);
-
-        return $visitor->getResult();
+        $traverser->traverse($fileSegment->getStatements());
     }
 }

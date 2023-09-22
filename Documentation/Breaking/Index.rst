@@ -6,6 +6,11 @@
 Breaking change
 ===============
 
+Change of command name
+----------------------
+
+The comand was renamed from "extender:rebuild" to "extender:clearClassCache"
+to better reflect what the command is doing.
 
 Change of extending configuration in 10.0.0
 -------------------------------------------

@@ -25,8 +25,36 @@ class RegisterAutoloaderEvent implements StoppableEventInterface
     public function __construct(ContainerInterface $container)
     {
         try {
-            spl_autoload_register([$container->get(ClassLoader::class), 'loadClass'], true, true);
+            $autoloader = [$container->get(ClassLoader::class), 'loadClass'];
+            if ($this->autoloaderAlreadyRegistered($autoloader)) {
+                $this->unregisterAutoloader($autoloader);
+            }
+            spl_autoload_register($autoloader, true, true);
         } catch (ContainerExceptionInterface $e) {}
+    }
+
+    protected function autoloaderAlreadyRegistered(array $autoloader): bool
+    {
+        $result = false;
+
+        $autoloaderClass = get_class($autoloader[0]);
+        $currentAutoLoaders = spl_autoload_functions();
+        foreach ($currentAutoLoaders as $currentAutoLoader) {
+            if (
+                is_array($currentAutoLoader)
+                && get_class($currentAutoLoader[0]) === $autoloaderClass
+            ) {
+                $result = true;
+                break;
+            }
+        }
+
+        return $result;
+    }
+
+    protected function unregisterAutoloader(array $autoloader): void
+    {
+        spl_autoload_unregister($autoloader);
     }
 
     public function isPropagationStopped(): bool

@@ -52,6 +52,7 @@ cleanBuildFiles() {
         ../../../Build/testing-docker/local/.env \
         ../../../public/ \
         ../../../typo3temp/ \
+        ../../../var/ \
         ../../../vendor/ \
         ../../../composer.lock ; \
         echo "done"

@@ -19,14 +19,14 @@ class Register
 {
     protected array $extendedClasses = [];
 
-    public function getExtendedClasses(): array
-    {
-        return $this->extendedClasses;
-    }
-
-    public function setExtendedClasses(array $extendedClasses): void
+    public function __construct(array $extendedClasses = [])
     {
         $this->extendedClasses = $extendedClasses;
+    }
+
+    public function hasBaseClassName(string $className): bool
+    {
+        return isset($this->extendedClasses[$className]);
     }
 
     public function getExtendingClasses(string $className): array
@@ -34,10 +34,5 @@ class Register
         return is_array($this->extendedClasses[$className] ?? false)
             ? $this->extendedClasses[$className]
             : [];
-    }
-
-    public function hasClassName(string $className): bool
-    {
-        return isset($this->extendedClasses[$className]);
     }
 }

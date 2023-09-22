@@ -17,21 +17,13 @@ namespace Evoweb\Extender\Parser\Visitor;
 
 use PhpParser\Node;
 use PhpParser\Node\Stmt\ClassMethod;
-use PhpParser\NodeVisitorAbstract;
 
-class ClassMethodVisitor extends NodeVisitorAbstract implements VisitorInterface
+class ClassMethodVisitor extends AbstractVisitor
 {
-    protected array $classMethods = [];
-
     public function enterNode(Node $node): void
     {
         if ($node instanceof ClassMethod && (string)$node->name !== '__construct') {
-            $this->classMethods[] = $node;
+            $this->fileSegment->addMethod($node);
         }
-    }
-
-    public function getResult(): array
-    {
-        return $this->classMethods;
     }
 }

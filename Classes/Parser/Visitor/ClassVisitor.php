@@ -17,22 +17,16 @@ namespace Evoweb\Extender\Parser\Visitor;
 
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
-use PhpParser\NodeVisitorAbstract;
 
-class ClassVisitor extends NodeVisitorAbstract implements VisitorInterface
+class ClassVisitor extends AbstractVisitor
 {
-    protected ?Class_ $class = null;
-
     public function enterNode(Node $node): void
     {
         if ($node instanceof Class_) {
-            $this->class = clone $node;
-            $this->class->stmts = [];
-        }
-    }
+            $class = clone $node;
+            $class->stmts = [];
 
-    public function getResult(): ?Class_
-    {
-        return $this->class;
+            $this->fileSegment->setClass($class);
+        }
     }
 }

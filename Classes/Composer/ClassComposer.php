@@ -15,22 +15,28 @@ declare(strict_types=1);
 
 namespace Evoweb\Extender\Composer;
 
-use Evoweb\Extender\Composer\Generator\GeneratorInterface;
 use PhpParser\PrettyPrinter\Standard as PrettyPrinter;
 
 class ClassComposer
 {
-    public function mergeFileSegments(array $fileSegments): string
+    protected array $generators = [
+        Generator\FileCommentGenerator::class,
+        Generator\NamespaceGenerator::class,
+        Generator\UseGenerator::class,
+        Generator\ClassGenerator::class,
+        Generator\TraitGenerator::class,
+        Generator\PropertyGenerator::class,
+        Generator\ConstructorGenerator::class,
+        Generator\ClassMethodGenerator::class,
+    ];
+
+    public function composeMergedFileCode(array $fileSegments): string
     {
         $statements = [];
-        $statements = $this->addFileStatement($statements, $fileSegments, new Generator\NamespaceGenerator());
-        $statements = $this->addFileStatement($statements, $fileSegments, new Generator\FileCommentGenerator());
-        $statements = $this->addFileStatement($statements, $fileSegments, new Generator\UseGenerator());
-        $statements = $this->addFileStatement($statements, $fileSegments, new Generator\ClassGenerator());
-        $statements = $this->addFileStatement($statements, $fileSegments, new Generator\TraitGenerator());
-        $statements = $this->addFileStatement($statements, $fileSegments, new Generator\PropertyGenerator());
-        $statements = $this->addFileStatement($statements, $fileSegments, new Generator\ConstructorGenerator());
-        $statements = $this->addFileStatement($statements, $fileSegments, new Generator\ClassMethodGenerator());
+
+        foreach ($this->generators as $generator) {
+            $statements = $this->addFileStatement($statements, $fileSegments, $generator);
+        }
 
         $prettyPrinter = new PrettyPrinter();
         $fileCode = $prettyPrinter->prettyPrintFile($statements);
@@ -38,8 +44,12 @@ class ClassComposer
         return str_replace('<?php' . chr(10), '', $fileCode);
     }
 
-    protected function addFileStatement(array $statements, array $fileSegments, GeneratorInterface $generator): array
-    {
+    protected function addFileStatement(
+        array $statements,
+        array $fileSegments,
+        string $generatorClassName
+    ): array {
+        $generator = new $generatorClassName();
         return $generator->generate($statements, $fileSegments);
     }
 }

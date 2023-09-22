@@ -15,8 +15,9 @@ declare(strict_types=1);
 
 namespace Evoweb\Extender\Composer\Generator;
 
+use Evoweb\Extender\Parser\FileSegments;
 use PhpParser\Comment\Doc;
-use PhpParser\Node\Stmt\Namespace_;
+use PhpParser\Node\Stmt\Nop;
 
 class FileCommentGenerator implements GeneratorInterface
 {
@@ -24,15 +25,12 @@ class FileCommentGenerator implements GeneratorInterface
     {
         $commentText = $this->createCommentText($fileSegments);
 
-        $namespace = $this->getNamespace($statements);
-        $namespace->setDocComment(new Doc($commentText));
+        $nop = new Nop();
+        $nop->setDocComment(new Doc($commentText));
+
+        $statements[] = $nop;
 
         return $statements;
-    }
-
-    protected function getNamespace(array $statements): Namespace_
-    {
-        return $statements[0];
     }
 
     protected function createCommentText(array $fileSegments): string
@@ -40,11 +38,12 @@ class FileCommentGenerator implements GeneratorInterface
         $fileComment = [
             '/*',
             ' * This file is composed by "extender"',
-            ' * Merged class with class parts of:',
+            ' * Merged class with parts of files:',
         ];
 
+        /** @var FileSegments $fileSegment */
         foreach ($fileSegments as $fileSegment) {
-            $fileComment[] = ' *  - ' . $fileSegment['filePath'];
+            $fileComment[] = ' *  - ' . $fileSegment->getFilePath();
         }
 
         $fileComment[] = ' */';
