@@ -56,6 +56,8 @@ cleanBuildFiles() {
         ../../../vendor/ \
         ../../../composer.lock ; \
         echo "done"
+    git checkout ../../../composer.json ; \
+        echo "composer.json reset"
 }
 
 cleanRenderedDocumentationFiles() {
@@ -130,7 +132,7 @@ OPTIND=1
 # Array for invalid options
 INVALID_OPTIONS=();
 # Simple option parsing based on getopts (! not getopt)
-while getopts ":a:s:c:d:i:j:k:p:e:xy:q:o:nhuv" OPT; do
+while getopts ":a:s:c:d:i:j:k:p:e:xy:q:r:o:nhuv" OPT; do
     case ${OPT} in
         s)
             TEST_SUITE=${OPTARG}
@@ -146,6 +148,9 @@ while getopts ":a:s:c:d:i:j:k:p:e:xy:q:o:nhuv" OPT; do
             ;;
         r)
             COMPOSER_PARAMETER=${OPTARG}
+            ;;
+        v)
+            SCRIPT_VERBOSE=1
             ;;
     esac
 done

@@ -27,15 +27,16 @@
 		}
 	},
 	"require": {
-		"typo3/cms-core": "^11.0 || ^12.2 || dev-main",
-		"nikic/php-parser": "^4.13.2 || ^4.15.4"
+		"nikic/php-parser": "^4.13.2 || ^4.15.4",
+		"typo3/cms-core": "^11.5 || ^12.4 || dev-main"
 	},
 	"require-dev": {
 		"evoweb/base_extension": "*",
 		"evoweb/extending_extension": "*",
-		"typo3/cms-extensionmanager": "^11.0 || ^12.2 || dev-main",
-		"sbuerk/typo3-cmscomposerinstallers-testingframework-bridge": "dev-main",
-		"typo3/testing-framework": "^6.6.2 || ^8.0.2 || dev-main"
+		"phpunit/phpunit": "^9.5.10 || ^10.1.1",
+		"symfony/polyfill-php80": "^1.16",
+		"typo3/cms-extensionmanager": "^11.5 || ^12.4 || dev-main",
+		"typo3/testing-framework": "^6.16.9 || ^8.0.2 || dev-main"
 	},
 	"extra": {
 		"typo3/cms": {

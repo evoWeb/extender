@@ -34,9 +34,7 @@ checkResources () {
     echo "#################################################################" >&2
     echo "" >&2
 
-    ./runTests.sh -s clean
-    ./additionalTests.sh -s clean
-    git checkout ../../composer.json
+    cleanup
 }
 
 #################################################
@@ -55,45 +53,59 @@ runFunctionalTests () {
     local TEST_PATH=${4}
     local PREFER_LOWEST=${5}
 
-    echo "#################################################################" >&2
-    echo "Run unit and/or functional tests on TYPO3 ${TYPO3_VERSION}" >&2
-    echo "with PHP ${PHP_VERSION} and testing framework ${TESTING_FRAMEWORK}">&2
-    echo "#################################################################" >&2
+    echo "###########################################################################" >&2
+    echo "Run unit and/or functional tests with" >&2
+    echo " - TYPO3 ${TYPO3_VERSION}" >&2
+    echo " - PHP ${PHP_VERSION}">&2
+    echo " - Testing framework ${TESTING_FRAMEWORK}">&2
+    echo " - Test path ${TEST_PATH}">&2
+    echo " - Additional ${PREFER_LOWEST}">&2
+    echo "###########################################################################" >&2
 
     echo -n "Restore composer.json state  ... " ; \
-        rm ../../composer.lock ; \
-        git checkout ../../composer.json ; \
+        rm -f ../../composer.lock ; \
+        git restore ../../composer.json ; \
         echo "done"
 
     ./runTests.sh -s cleanTests
 
-    ./additionalTests.sh -p ${PHP_VERSION} -s lintPhp || exit 1 ; \
+    ./additionalTests.sh \
+        -p ${PHP_VERSION} \
+        -s lintPhp || exit 1 ; \
         EXIT_CODE_LINT=$?
 
-    ./runTests.sh -p ${PHP_VERSION} -s composerInstall || exit 1 ; \
-        EXIT_CODE_INSTALL=$?
-
-    ./additionalTests.sh -p ${PHP_VERSION} \
+    ./additionalTests.sh \
+        -p ${PHP_VERSION} \
         -s composerInstallPackage \
         -q "typo3/cms-core:${TYPO3_VERSION}" \
-        -r " --dev ${PREFER_LOWEST}" || exit 1 ; \
+        -r " ${PREFER_LOWEST}" || exit 1 ; \
         EXIT_CODE_CORE=$?
 
-    ./additionalTests.sh -p ${PHP_VERSION} \
+    ./additionalTests.sh \
+        -p ${PHP_VERSION} \
         -s composerInstallPackage \
         -q "typo3/testing-framework:${TESTING_FRAMEWORK}" \
         -r " --dev ${PREFER_LOWEST}" || exit 1 ; \
         EXIT_CODE_FRAMEWORK=$?
 
-    ./runTests.sh -p ${PHP_VERSION} -s composerValidate || exit 1 ; \
+    ./runTests.sh \
+        -p ${PHP_VERSION} \
+        -s composerValidate || exit 1 ; \
         EXIT_CODE_VALIDATE=$?
 
-    ./runTests.sh -p ${PHP_VERSION} -d sqlite -s functional ${TEST_PATH} || exit 1 ; \
+    ./runTests.sh \
+        -p ${PHP_VERSION} \
+        -d sqlite \
+        -s functional ${TEST_PATH} || exit 1 ; \
         EXIT_CODE_FUNCTIONAL=$?
 
-    echo "#################################################################" >&2
-    echo "Run unit and/or functional tests on TYPO3 ${TYPO3_VERSION}" >&2
-    echo "with PHP ${PHP_VERSION} and testing framework ${TESTING_FRAMEWORK}">&2
+    echo "###########################################################################" >&2
+    echo "Finished unit and/or functional tests with" >&2
+    echo " - TYPO3 ${TYPO3_VERSION}" >&2
+    echo " - PHP ${PHP_VERSION}">&2
+    echo " - Testing framework ${TESTING_FRAMEWORK}">&2
+    echo " - Test path ${TEST_PATH}">&2
+    echo " - Additional ${PREFER_LOWEST}">&2
     if [[ ${EXIT_CODE_LINT} -eq 0 ]] && \
         [[ ${EXIT_CODE_INSTALL} -eq 0 ]] && \
         [[ ${EXIT_CODE_CORE} -eq 0 ]] && \
@@ -106,7 +118,7 @@ runFunctionalTests () {
         echo -e "${RED}FAILURE${NC}" >&2
         exit 1
     fi
-    echo "#################################################################" >&2
+    echo "###########################################################################" >&2
     echo "" >&2
 }
 
@@ -118,30 +130,34 @@ runFunctionalTests () {
 cleanup () {
     ./runTests.sh -s clean
     ./additionalTests.sh -s clean
-    git checkout ../../composer.json
+    echo "Cleaned up all test related files"
 }
 
-DEBUG_TESTS=true
+DEBUG_TESTS=false
 if [[ $DEBUG_TESTS != true ]]; then
     checkResources
 
     runFunctionalTests "7.4" "^11.5" "^6.16.9" "Tests/Functional" || exit 1
-    runFunctionalTests "7.4" "^11.5" "^6.6.2" "Tests/Functional" "--prefer-lowest" || exit 1
+    cleanup
+    runFunctionalTests "7.4" "^11.5" "^6.16.9" "Tests/Functional" "--prefer-lowest" || exit 1
+    cleanup
     runFunctionalTests "8.2" "^11.5" "^6.16.9" "Tests/Functional" || exit 1
-    runFunctionalTests "8.2" "^11.5" "^6.6.2" "Tests/Functional" "--prefer-lowest" || exit 1
+    cleanup
+    runFunctionalTests "8.2" "^11.5" "^6.16.9" "Tests/Functional" "--prefer-lowest" || exit 1
+    cleanup
 
-    runFunctionalTests "8.1" "^12.4" "^8.0.5" "Tests/Functional12" || exit 1
-    runFunctionalTests "8.1" "^12.4" "^8.0.5" "Tests/Functional12" "--prefer-lowest" || exit 1
-    runFunctionalTests "8.2" "^12.4" "^8.0.5" "Tests/Functional12" || exit 1
-    runFunctionalTests "8.2" "^12.4" "^8.0.5" "Tests/Functional12" "--prefer-lowest" || exit 1
-
+    runFunctionalTests "8.1" "^12.4" "^8.0.6" "Tests/Functional12" || exit 1
+    cleanup
+    runFunctionalTests "8.1" "^12.4" "^8.0.6" "Tests/Functional12" "--prefer-lowest" || exit 1
+    cleanup
+    runFunctionalTests "8.2" "^12.4" "^8.0.6" "Tests/Functional12" || exit 1
+    cleanup
+    runFunctionalTests "8.2" "^12.4" "^8.0.6" "Tests/Functional12" "--prefer-lowest" || exit 1
     cleanup
 else
     cleanup
-    # runFunctionalTests "7.4" "^11.5" "^6.16.9" "Tests/Functional" || exit 1
-    # runFunctionalTests "8.2" "^12.4" "^8.0.5" "Tests/Functional12" || exit 1
-    # ./runTests.sh -x -p 8.1 -d sqlite -s functional -e "--group selected" Tests/Functional
-    # ./runTests.sh -x -p 7.4 -d sqlite -s functional -e "" Tests/Functional
+    runFunctionalTests "8.2" "^11.5" "^6.16.9" "Tests/Functional" || exit 1
+    cleanup
     # ./runTests.sh -x -p 8.2 -d sqlite -s functional -e "--group selected" Tests/Functional12
     # ./runTests.sh -x -p 8.2 -d sqlite -s functional Tests/Functional12
 fi
