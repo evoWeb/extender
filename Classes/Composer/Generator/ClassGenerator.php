@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace Evoweb\Extender\Composer\Generator;
 
 use Evoweb\Extender\Parser\FileSegments;
+use PhpParser\Node\Name;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\Namespace_;
 
@@ -31,12 +32,28 @@ class ClassGenerator implements GeneratorInterface
                 if ($fileSegment->isBaseClass()) {
                     continue;
                 }
-                $class->implements = [...$class->implements, ...$fileSegment->getClass()->implements];
+                $class->implements = $this->getUniqueImplements($fileSegments);
             }
             $namespace->stmts[] = $class;
         }
 
         return $statements;
+    }
+
+    protected function getUniqueImplements(array $fileSegments): array
+    {
+        $implements = [];
+        /** @var FileSegments $fileSegment */
+        foreach ($fileSegments as $fileSegment) {
+            /** @var Name $currentImplement */
+            foreach ($fileSegment->getClass()->implements as $currentImplement) {
+                if (isset($implements[(string)$currentImplement])) {
+                    continue;
+                }
+                $implements[(string)$currentImplement] = $currentImplement;
+            }
+        }
+        return array_values($implements);
     }
 
     protected function getNamespace(array $statements): ?Namespace_
