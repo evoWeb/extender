@@ -16,9 +16,11 @@ declare(strict_types=1);
 namespace Evoweb\Extender\Composer\Generator;
 
 use Evoweb\Extender\Parser\FileSegments;
+use PhpParser\Node\Expr\StaticCall;
 use PhpParser\Node\Param;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
+use PhpParser\Node\Stmt\Expression;
 use PhpParser\Node\Stmt\Namespace_;
 
 class ConstructorGenerator implements GeneratorInterface
@@ -54,17 +56,48 @@ class ConstructorGenerator implements GeneratorInterface
             if (!$constructor) {
                 continue;
             }
-            /** @var Param $param */
-            foreach ($constructor->params as $param) {
-                if (isset($params[$param->var->name])) {
-                    continue;
-                }
-                $params[$param->var->name] = $param;
-            }
-            $stmts = [...$stmts, ...$constructor->stmts];
+
+            $params = $this->getConstructorParameter($params, $constructor->params);
+            $stmts = $this->getConstructorStatements($stmts, $constructor->stmts, $fileSegment->isBaseClass());
         }
 
         return [$params, $stmts];
+    }
+
+    protected function getConstructorParameter(array $result, array $params): array
+    {
+        /** @var Param $param */
+        foreach ($params as $param) {
+            if (isset($result[$param->var->name])) {
+                continue;
+            }
+            $result[$param->var->name] = $param;
+        }
+
+        return $result;
+    }
+
+    protected function getConstructorStatements(array $result, array $stmts, bool $isBaseClass): array
+    {
+        if ($isBaseClass) {
+            $result = [...$result, ...$stmts];
+        } else {
+            /** @var Expression $stmt */
+            foreach ($stmts as $stmt) {
+                $expr = $stmt->expr;
+                if (
+                    !(
+                        $expr instanceof StaticCall
+                        && (string)$expr->class === 'parent'
+                        && (string)$expr->name === '__construct'
+                    )
+                ) {
+                    $result[] = $stmt;
+                }
+            }
+        }
+
+        return $result;
     }
 
     protected function hasConstructor(array $fileSegments): bool

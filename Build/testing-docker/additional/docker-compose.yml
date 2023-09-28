@@ -83,7 +83,7 @@ services:
       "
 
   makedoc:
-    image: ghcr.io/t3docs/render-documentation:v3.0.dev30
+    image: ghcr.io/t3docs/render-documentation:latest
     volumes:
       - ${CORE_ROOT}:/PROJECT:ro
       - ${CORE_ROOT}/Documentation-GENERATED-temp:/RESULT
@@ -96,7 +96,7 @@ services:
       "
 
   removedoc:
-    image: ghcr.io/t3docs/render-documentation:v3.0.dev30
+    image: ghcr.io/t3docs/render-documentation:latest
     volumes:
       - ${CORE_ROOT}:/PROJECT
     entrypoint: >

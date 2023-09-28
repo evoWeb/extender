@@ -1,4 +1,4 @@
-.. include:: ../Includes.txt
+.. include:: /Includes.rst.txt
 
 .. _installation:
 
@@ -22,7 +22,8 @@ Download via Composer
 Add evoweb/extender to the require in your composer.json like in the following
 example and run 'composer install'.
 
-::
+.. code-block:: json
+   :caption: composer.json
 
 	{
 		"require": {

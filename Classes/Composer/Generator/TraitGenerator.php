@@ -18,6 +18,7 @@ namespace Evoweb\Extender\Composer\Generator;
 use Evoweb\Extender\Parser\FileSegments;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\Namespace_;
+use PhpParser\Node\Stmt\TraitUse;
 
 class TraitGenerator implements GeneratorInterface
 {
@@ -27,13 +28,27 @@ class TraitGenerator implements GeneratorInterface
         $class = $this->getClass($namespace);
 
         if ($class) {
-            /** @var FileSegments $fileSegment */
-            foreach ($fileSegments as $fileSegment) {
-                $class->stmts = [...$class->stmts, ...$fileSegment->getTraits()];
-            }
+            $class->stmts = [...$class->stmts, ...$this->getUniqueTraits($fileSegments)];
         }
 
         return $statements;
+    }
+
+    protected function getUniqueTraits(array $fileSegments): array
+    {
+        $traits = [];
+        /** @var FileSegments $fileSegment */
+        foreach ($fileSegments as $fileSegment) {
+            foreach ($fileSegment->getTraits() as $currentTraits) {
+                foreach ($currentTraits->traits as $currentTrait) {
+                    if (isset($traits[(string)$currentTrait])) {
+                        continue;
+                    }
+                    $traits[(string)$currentTrait] = new TraitUse([$currentTrait]);
+                }
+            }
+        }
+        return array_values($traits);
     }
 
     protected function getNamespace(array $statements): ?Namespace_

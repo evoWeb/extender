@@ -87,6 +87,7 @@ class ClassCacheManager
     {
         $type = $baseClass ? 'base' : 'extend';
         $filePath = $this->composerClassLoader->findFile($className);
+        $filePath = realpath($filePath);
 
         if ($filePath === false || $filePath === '') {
             throw new $exceptionClass(

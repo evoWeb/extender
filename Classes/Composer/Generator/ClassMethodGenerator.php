@@ -27,13 +27,25 @@ class ClassMethodGenerator implements GeneratorInterface
         $class = $this->getClass($namespace);
 
         if ($class) {
-            /** @var FileSegments $fileSegment */
-            foreach ($fileSegments as $fileSegment) {
-                $class->stmts = [...$class->stmts, ...$fileSegment->getMethods()];
-            }
+            $class->stmts = [...$class->stmts, ...$this->getUniqueClassMethods($fileSegments)];
         }
 
         return $statements;
+    }
+
+    protected function getUniqueClassMethods(array $fileSegments): array
+    {
+        $classMethods = [];
+        /** @var FileSegments $fileSegment */
+        foreach ($fileSegments as $fileSegment) {
+            foreach ($fileSegment->getMethods() as $currentMethod) {
+                if (isset($classMethods[(string)$currentMethod->name])) {
+                    continue;
+                }
+                $classMethods[(string)$currentMethod->name] = $currentMethod;
+            }
+        }
+        return array_values($classMethods);
     }
 
     protected function getNamespace(array $statements): ?Namespace_

@@ -1,4 +1,4 @@
-.. include:: ../Includes.txt
+.. include:: /Includes.rst.txt
 
 .. _breaking-change:
 
@@ -9,7 +9,7 @@ Breaking change
 Change of command name
 ----------------------
 
-The comand was renamed from "extender:rebuild" to "extender:clearClassCache"
+The command was renamed from "extender:rebuild" to "extender:clearClassCache"
 to better reflect what the command is doing.
 
 Change of extending configuration in 10.0.0
@@ -32,20 +32,22 @@ _________
 
 Migrate configuration from array to yaml.
 
-:: before ext_localconf.php
+.. code-block::
+   :caption: before ext_localconf.php
 
-    $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['base_extension']['extender'][
-        \Fixture\BaseExtension\Domain\Model\Blob::class
-    ]['extending_extension'] = 'EXT:extending_extension/Classes/Domain/Model/BlobExtend.php';
+   $GLOBALS['TYPO3_CONF_VARS']['EXTENSIONS']['base_extension']['extender'][
+       \Fixture\BaseExtension\Domain\Model\Blob::class
+   ]['extending_extension'] = 'EXT:extending_extension/Classes/Domain/Model/BlobExtend.php';
 
 
-:: after Services.yaml
+.. code-block:: yaml
+   :caption: after Services.yaml
 
-  Fixture\ExtendingExtension\Domain\Model\BlobExtend:
-    tags:
-      -
-        name: 'extender.extends'
-        class: Fixture\BaseExtension\Domain\Model\Blob
+   Fixture\ExtendingExtension\Domain\Model\BlobExtend:
+     tags:
+       -
+         name: 'extender.extends'
+         class: Fixture\BaseExtension\Domain\Model\Blob
 
 
 Change of extending configuration in 7.0.0
@@ -69,11 +71,12 @@ ______________________
 
 All extensions that use EXTCONF in registration of class extending like.
 
-::
+.. code-block::
+   :caption: before ext_localconf.php
 
-	$GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['store_finder']['extender'][
-		\Evoweb\StoreFinder\Domain\Model\Location::class
-	]['sitepackage'] = 'EXT:sitepackage/Classes/Domain/Model/Location.php';
+   $GLOBALS['TYPO3_CONF_VARS']['EXTCONF']['store_finder']['extender'][
+       \Evoweb\StoreFinder\Domain\Model\Location::class
+   ]['sitepackage'] = 'EXT:sitepackage/Classes/Domain/Model/Location.php';
 
 
 Migration

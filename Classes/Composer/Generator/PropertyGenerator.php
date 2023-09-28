@@ -28,15 +28,25 @@ class PropertyGenerator implements GeneratorInterface
         $class = $this->getClass($namespace);
 
         if ($class) {
-            /** @var FileSegments $fileSegment */
-            foreach ($fileSegments as $fileSegment) {
-                foreach ($fileSegment->getProperties() as $property) {
-                    $class->stmts[] = new Property(Class_::MODIFIER_PROTECTED, [$property]);
-                }
-            }
+            $class->stmts = [...$class->stmts, ...$this->getUniqueProperties($fileSegments)];
         }
 
         return $statements;
+    }
+
+    protected function getUniqueProperties(array $fileSegments): array
+    {
+        $properties = [];
+        /** @var FileSegments $fileSegment */
+        foreach ($fileSegments as $fileSegment) {
+            foreach ($fileSegment->getProperties() as $property) {
+                if (isset($properties[(string)$property->name])) {
+                    continue;
+                }
+                $properties[(string)$property->name] = new Property(Class_::MODIFIER_PROTECTED, [$property]);
+            }
+        }
+        return array_values($properties);
     }
 
     protected function getNamespace(array $statements): ?Namespace_

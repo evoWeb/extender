@@ -1,4 +1,4 @@
-.. include:: ../Includes.txt
+.. include:: /Includes.rst.txt
 
 .. _configuration:
 
@@ -13,7 +13,8 @@ Configure the extend of a class
 Since version 10.0.0 the registration of class extends needs to be configured in
 services.yaml like in this example.
 
-::
+.. code-block:: yaml
+   :caption: Services.yaml
 
     services:
 
