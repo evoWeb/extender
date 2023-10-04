@@ -4,4 +4,4 @@ use Evoweb\Extender\Cache\CacheFactory;
 
 defined('TYPO3') or die();
 
-CacheFactory::configureCache();
+CacheFactory::addClassCacheConfigToGlobalTypo3ConfVars();

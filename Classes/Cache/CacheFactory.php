@@ -37,7 +37,7 @@ class CacheFactory
 
     public function createCache(string $identifier): ?FrontendInterface
     {
-        self::configureCache();
+        self::addClassCacheConfigToGlobalTypo3ConfVars();
         try {
             $cache = Bootstrap::createCache($identifier);
         } catch (\Exception $e) {
@@ -46,7 +46,7 @@ class CacheFactory
         return $cache;
     }
 
-    public static function configureCache(): void
+    public static function addClassCacheConfigToGlobalTypo3ConfVars(): void
     {
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['extender'] = static::$configuration;
     }

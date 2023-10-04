@@ -21,7 +21,7 @@ class AbstractTestBase extends FunctionalTestCase
 
     public function setUp(): void
     {
-        CacheFactory::configureCache();
+        CacheFactory::addClassCacheConfigToGlobalTypo3ConfVars();
         parent::setUp();
     }
 
