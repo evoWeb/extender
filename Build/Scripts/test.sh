@@ -62,11 +62,6 @@ runFunctionalTests () {
     echo " - Additional ${PREFER_LOWEST}">&2
     echo "###########################################################################" >&2
 
-    echo -n "Restore composer.json state  ... " ; \
-        rm -f ../../composer.lock ; \
-        git restore ../../composer.json ; \
-        echo "done"
-
     ./runTests.sh -s cleanTests
 
     ./additionalTests.sh \
