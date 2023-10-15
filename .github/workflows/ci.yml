@@ -83,12 +83,6 @@ jobs:
             -p ${{ matrix.packages.php }} \
             -s lintPhp
 
-      - name: Composer install
-        run: |
-          Build/Scripts/runTests.sh \
-            -p ${{ matrix.packages.php }} \
-            -s composerInstall
-
       - name: Composer install core
         run: |
           Build/Scripts/additionalTests.sh \
