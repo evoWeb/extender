@@ -77,11 +77,17 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Composer
+      - name: PHP lint
         run: |
           Build/Scripts/additionalTests.sh \
             -p ${{ matrix.packages.php }} \
             -s lintPhp
+
+      - name: Composer install
+        run: |
+          Build/Scripts/runTests.sh \
+            -p ${{ matrix.packages.php }} \
+            -s composerInstall
 
       - name: Composer install core
         run: |
@@ -116,6 +122,7 @@ jobs:
         run: |
           Build/Scripts/runTests.sh -s clean
           Build/Scripts/additionalTests.sh -s clean
+          git checkout composer.json
 
   TERUpload:
     needs: [ resources, testsuite ]

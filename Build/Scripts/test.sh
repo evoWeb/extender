@@ -54,7 +54,7 @@ runFunctionalTests () {
     local PREFER_LOWEST=${5}
 
     echo "###########################################################################" >&2
-    echo "Run unit and/or functional tests with" >&2
+    echo " Run unit and/or functional tests with" >&2
     echo " - TYPO3 ${TYPO3_VERSION}" >&2
     echo " - PHP ${PHP_VERSION}">&2
     echo " - Testing framework ${TESTING_FRAMEWORK}">&2
@@ -67,6 +67,11 @@ runFunctionalTests () {
     ./additionalTests.sh \
         -p ${PHP_VERSION} \
         -s lintPhp || exit 1 ; \
+        EXIT_CODE_LINT=$?
+
+    ./runTests.sh \
+        -p ${PHP_VERSION} \
+        -s composerInstall || exit 1 ; \
         EXIT_CODE_LINT=$?
 
     ./additionalTests.sh \
