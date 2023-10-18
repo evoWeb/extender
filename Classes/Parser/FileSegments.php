@@ -18,7 +18,7 @@ namespace Evoweb\Extender\Parser;
 use PhpParser\Node\Name;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
-use PhpParser\Node\Stmt\PropertyProperty;
+use PhpParser\Node\Stmt\Property;
 use PhpParser\Node\Stmt\TraitUse;
 use PhpParser\Node\Stmt\UseUse;
 
@@ -47,7 +47,7 @@ class FileSegments implements \JsonSerializable
     protected array $traits = [];
 
     /**
-     * @var PropertyProperty[]
+     * @var Property[]
      */
     protected array $properties = [];
 
@@ -155,7 +155,7 @@ class FileSegments implements \JsonSerializable
     }
 
     /**
-     * @return PropertyProperty[]
+     * @return Property[]
      */
     public function getProperties(): array
     {
@@ -167,9 +167,9 @@ class FileSegments implements \JsonSerializable
         $this->properties = $properties;
     }
 
-    public function addProperty(PropertyProperty $propertyProperty): void
+    public function addProperty(Property $property): void
     {
-        $this->properties[] = $propertyProperty;
+        $this->properties[] = $property;
     }
 
     public function getConstructor(): ?ClassMethod

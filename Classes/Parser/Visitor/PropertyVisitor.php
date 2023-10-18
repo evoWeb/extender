@@ -16,7 +16,7 @@ declare(strict_types=1);
 namespace Evoweb\Extender\Parser\Visitor;
 
 use PhpParser\Node;
-use PhpParser\Node\Stmt\PropertyProperty;
+use PhpParser\Node\Stmt\Property;
 
 class PropertyVisitor extends AbstractVisitor
 {
@@ -24,7 +24,7 @@ class PropertyVisitor extends AbstractVisitor
 
     public function enterNode(Node $node): void
     {
-        if ($node instanceof PropertyProperty) {
+        if ($node instanceof Property) {
             $this->fileSegment->addProperty($node);
         }
     }

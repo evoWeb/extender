@@ -40,10 +40,16 @@ class PropertyGenerator implements GeneratorInterface
         /** @var FileSegments $fileSegment */
         foreach ($fileSegments as $fileSegment) {
             foreach ($fileSegment->getProperties() as $property) {
-                if (isset($properties[(string)$property->name])) {
-                    continue;
+                if (count($property->props) == 1) {
+                    $properties[] = $property;
+                } else {
+                    foreach ($property->props as $propertyProperty) {
+                        $properties[(string)$propertyProperty->name] = new Property(
+                            Class_::MODIFIER_PROTECTED,
+                            [$propertyProperty]
+                        );
+                    }
                 }
-                $properties[(string)$property->name] = new Property(Class_::MODIFIER_PROTECTED, [$property]);
             }
         }
         return array_values($properties);
