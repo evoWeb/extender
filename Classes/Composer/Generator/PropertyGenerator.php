@@ -41,7 +41,8 @@ class PropertyGenerator implements GeneratorInterface
         foreach ($fileSegments as $fileSegment) {
             foreach ($fileSegment->getProperties() as $property) {
                 if (count($property->props) == 1) {
-                    $properties[] = $property;
+                    $propertyProperty = $property->props[0];
+                    $properties[(string)$propertyProperty->name] = $property;
                 } else {
                     foreach ($property->props as $propertyProperty) {
                         $properties[(string)$propertyProperty->name] = new Property(

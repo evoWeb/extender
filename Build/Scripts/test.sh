@@ -115,6 +115,7 @@ runFunctionalTests () {
     fi
     echo "###########################################################################" >&2
     echo "" >&2
+    cleanup
 }
 
 #################################################
@@ -130,25 +131,25 @@ cleanup () {
 
 DEBUG_TESTS=false
 if [[ $DEBUG_TESTS != true ]]; then
-    checkResources
-
-    runFunctionalTests "7.4" "^11.5" "^6.16.9" "Tests/Functional" || exit 1
-    cleanup
-    runFunctionalTests "7.4" "^11.5" "^6.16.9" "Tests/Functional" "--prefer-lowest" || exit 1
-    cleanup
-    runFunctionalTests "8.2" "^11.5" "^6.16.9" "Tests/Functional" || exit 1
-    cleanup
-    runFunctionalTests "8.2" "^11.5" "^6.16.9" "Tests/Functional" "--prefer-lowest" || exit 1
+#    checkResources
     cleanup
 
-    runFunctionalTests "8.1" "^12.4" "^8.0.6" "Tests/Functional12" || exit 1
-    cleanup
-    runFunctionalTests "8.1" "^12.4" "^8.0.6" "Tests/Functional12" "--prefer-lowest" || exit 1
-    cleanup
-    runFunctionalTests "8.2" "^12.4" "^8.0.6" "Tests/Functional12" || exit 1
-    cleanup
-    runFunctionalTests "8.2" "^12.4" "^8.0.6" "Tests/Functional12" "--prefer-lowest" || exit 1
-    cleanup
+    LOWEST="--prefer-lowest"
+    TCORE="^11.5"
+    TFRAMEWORK="^6.16.9"
+    TPATH="Tests/Functional"
+    runFunctionalTests "7.4" ${TCORE} ${TFRAMEWORK} ${TPATH} || exit 1
+    runFunctionalTests "7.4" ${TCORE} ${TFRAMEWORK} ${TPATH} ${LOWEST} || exit 1
+    runFunctionalTests "8.2" ${TCORE} ${TFRAMEWORK} ${TPATH} || exit 1
+    runFunctionalTests "8.2" ${TCORE} ${TFRAMEWORK} ${TPATH} ${LOWEST} || exit 1
+
+    TCORE="^12.4"
+    TFRAMEWORK="^8.0.6"
+    TPATH="Tests/Functional12"
+    runFunctionalTests "8.1" ${TCORE} ${TFRAMEWORK} ${TPATH} || exit 1
+    runFunctionalTests "8.1" ${TCORE} ${TFRAMEWORK} ${TPATH} ${LOWEST} || exit 1
+    runFunctionalTests "8.2" ${TCORE} ${TFRAMEWORK} ${TPATH} || exit 1
+    runFunctionalTests "8.2" ${TCORE} ${TFRAMEWORK} ${TPATH} ${LOWEST} || exit 1
 else
     cleanup
     runFunctionalTests "8.2" "^11.5" "^6.16.9" "Tests/Functional" || exit 1

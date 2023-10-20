@@ -30,7 +30,7 @@ class ClassComposerTest extends AbstractTestBase
         $fileSegments->addUseUse(new Stmt\UseUse(new Node\Name('Evoweb\Domain\Model\Test')));
         $fileSegments->setClass(new Stmt\Class_('ComposeMergedFileCode'));
         $fileSegments->addTrait(new Stmt\TraitUse([new Node\Name('Evoweb\TestTrait')]));
-        $fileSegments->addProperty(new Stmt\PropertyProperty('testProperty'));
+        $fileSegments->addProperty(new Stmt\Property(2, [new Stmt\PropertyProperty('testProperty')]));
         $fileSegments->setConstructor(new Stmt\ClassMethod('__construct'));
         $fileSegments->addMethod(new Stmt\ClassMethod('getTestProperty'));
 
@@ -48,7 +48,7 @@ class ClassComposerTest extends AbstractTestBase
      */
     public function addFileStatement(): void
     {
-        $subject = new class() extends ClassComposer {
+        $subject = new class () extends ClassComposer {
             public function addFileStatement(
                 array $statements,
                 array $fileSegments,

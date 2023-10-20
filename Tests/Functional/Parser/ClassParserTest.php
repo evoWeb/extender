@@ -28,7 +28,7 @@ class ClassParserTest extends AbstractTestBase
             new Stmt\UseUse(new Node\Name('Evoweb\Domain\Model\Test')),
             new Stmt\Class_('GetFileSegments'),
             new Stmt\TraitUse([new Node\Name('Evoweb\TestTrait')]),
-            new Stmt\PropertyProperty('testProperty'),
+            new Stmt\Property(2, [new Stmt\PropertyProperty('testProperty')]),
             new Stmt\ClassMethod('__construct'),
             new Stmt\ClassMethod('getTestProperty'),
         ]);
