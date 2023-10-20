@@ -21,9 +21,8 @@ jobs:
 
       - name: Cleanup
         run: |
-          Build/Scripts/runTests.sh -s clean ; \
-          Build/Scripts/additionalTests.sh -s clean ; \
-          git checkout composer.json
+          Build/Scripts/runTests.sh -s clean
+          Build/Scripts/additionalTests.sh -s clean
 
   testsuite:
     name: All php tests
@@ -89,7 +88,7 @@ jobs:
             -p ${{ matrix.packages.php }} \
             -s composerInstallPackage \
             -q "typo3/cms-core:${{ matrix.packages.core }}" \
-            -r " ${PREFER_LOWEST}"
+            -r " ${{ matrix.packages.prefer }}"
 
       - name: Composer install framework
         run: |
@@ -116,7 +115,6 @@ jobs:
         run: |
           Build/Scripts/runTests.sh -s clean
           Build/Scripts/additionalTests.sh -s clean
-          git checkout composer.json
 
   TERUpload:
     needs: [ resources, testsuite ]
