@@ -131,8 +131,7 @@ cleanup () {
 
 DEBUG_TESTS=false
 if [[ $DEBUG_TESTS != true ]]; then
-#    checkResources
-    cleanup
+    checkResources
 
     LOWEST="--prefer-lowest"
     TCORE="^11.5"
