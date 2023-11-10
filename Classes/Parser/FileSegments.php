@@ -18,6 +18,7 @@ namespace Evoweb\Extender\Parser;
 use PhpParser\Node\Name;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
+use PhpParser\Node\Stmt\ClassConst;
 use PhpParser\Node\Stmt\Property;
 use PhpParser\Node\Stmt\TraitUse;
 use PhpParser\Node\Stmt\UseUse;
@@ -45,6 +46,11 @@ class FileSegments implements \JsonSerializable
      * @var TraitUse[]
      */
     protected array $traits = [];
+
+    /**
+     * @var ClassConst[]
+     */
+    protected array $classConsts = [];
 
     /**
      * @var Property[]
@@ -152,6 +158,24 @@ class FileSegments implements \JsonSerializable
     public function addTrait(TraitUse $traitUse): void
     {
         $this->traits[] = $traitUse;
+    }
+
+    /**
+     * @return ClassConst[]
+     */
+    public function getClassConsts(): array
+    {
+        return $this->classConsts;
+    }
+
+    public function setClassConsts(array $classConst): void
+    {
+        $this->classConsts = $classConst;
+    }
+
+    public function addClassConst(ClassConst $classConst): void
+    {
+        $this->classConsts[] = $classConst;
     }
 
     /**
