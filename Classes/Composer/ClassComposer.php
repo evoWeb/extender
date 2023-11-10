@@ -25,6 +25,7 @@ class ClassComposer
         Generator\UseGenerator::class,
         Generator\ClassGenerator::class,
         Generator\TraitGenerator::class,
+        Generator\ConstantGenerator::class,
         Generator\PropertyGenerator::class,
         Generator\ConstructorGenerator::class,
         Generator\ClassMethodGenerator::class,

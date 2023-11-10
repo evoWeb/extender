@@ -27,6 +27,7 @@ class ClassParser
         Visitor\UseVisitor::class,
         Visitor\ClassVisitor::class,
         Visitor\TraitVisitor::class,
+        Visitor\ConstantVisitor::class,
         Visitor\PropertyVisitor::class,
         Visitor\ConstructorVisitor::class,
         Visitor\ClassMethodVisitor::class,
