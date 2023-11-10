@@ -1,0 +1,29 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: false
+    public: false
+
+  Fixture\ExtendingExtension\:
+    resource: '../Classes/*'
+
+  Fixture\ExtendingExtension\Controller\TestController:
+    public: true
+
+  Fixture\ExtendingExtension\Domain\Model\BlobExtend:
+    tags:
+      -
+        name: 'extender.extends'
+        class: Fixture\BaseExtension\Domain\Model\Blob
+
+  Fixture\ExtendingExtension\Domain\Model\BlobWithStorageExtend:
+    tags:
+      -
+        name: 'extender.extends'
+        class: Fixture\BaseExtension\Domain\Model\AnotherBlob
+      -
+        name: 'extender.extends'
+        class: Fixture\BaseExtension\Domain\Model\BlobWithStorage
+      -
+        name: 'extender.extends'
+        class: Fixture\BaseExtension\Domain\Model\BlobWithStorageAndConstructorArgument

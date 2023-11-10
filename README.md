@@ -5,7 +5,9 @@
 [![Monthly Downloads](https://poser.pugx.org/evoweb/extender/d/monthly)](https://packagist.org/packages/evoweb/extender)
 [![Total Downloads](https://poser.pugx.org/evoweb/extender/downloads)](https://packagist.org/packages/evoweb/extender)
 
-See full documentation at https://docs.typo3.org/p/evoweb/extender/main/en-us/
+# !IMPORTANT WIP
+Currently, the extending process gets refactored. Please don't use it in
+productive projects.
 
 ## Installation
 
@@ -15,7 +17,18 @@ The recommended way to install TYPO3 Console is by using [Composer](https://getc
 
     composer require evoweb/extender
 
-### via TYPO3 Extension Repository
+### quick introduction
 
-Download and install the extension with the extension manager module or directly download from the
-[TER](https://extensions.typo3.org/extension/extender/).
+Add the extending classname to your packages Services.yaml and add a tag to it.
+The tag must contain the name 'extender.extends' and the class it is extending.
+
+Services.yaml
+```yaml
+services:
+
+  Fixture\ExtendingExtension\Domain\Model\BlobExtend:
+    tags:
+      -
+        name: 'extender.extends'
+        class: Fixture\BaseExtension\Domain\Model\Blob
+```

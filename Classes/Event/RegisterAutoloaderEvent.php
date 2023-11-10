@@ -2,8 +2,6 @@
 
 declare(strict_types=1);
 
-namespace Evoweb\Extender\Event;
-
 /*
  * This file is part of the "extender" Extension for TYPO3 CMS.
  *
@@ -15,7 +13,10 @@ namespace Evoweb\Extender\Event;
  * LICENSE.txt file that was distributed with this source code.
  */
 
-use Evoweb\Extender\Utility\ClassLoader;
+namespace Evoweb\Extender\Event;
+
+use Evoweb\Extender\Loader\ClassLoader;
+use Psr\Container\ContainerExceptionInterface;
 use Psr\Container\ContainerInterface;
 use Psr\EventDispatcher\StoppableEventInterface;
 
@@ -23,7 +24,37 @@ class RegisterAutoloaderEvent implements StoppableEventInterface
 {
     public function __construct(ContainerInterface $container)
     {
-        spl_autoload_register([$container->get(ClassLoader::class), 'loadClass'], true, true);
+        try {
+            $autoloader = [$container->get(ClassLoader::class), 'loadClass'];
+            if ($this->autoloaderAlreadyRegistered($autoloader)) {
+                $this->unregisterAutoloader($autoloader);
+            }
+            spl_autoload_register($autoloader, true, true);
+        } catch (ContainerExceptionInterface $e) {}
+    }
+
+    protected function autoloaderAlreadyRegistered(array $autoloader): bool
+    {
+        $result = false;
+
+        $autoloaderClass = get_class($autoloader[0]);
+        $currentAutoLoaders = spl_autoload_functions();
+        foreach ($currentAutoLoaders as $currentAutoLoader) {
+            if (
+                is_array($currentAutoLoader)
+                && get_class($currentAutoLoader[0]) === $autoloaderClass
+            ) {
+                $result = true;
+                break;
+            }
+        }
+
+        return $result;
+    }
+
+    protected function unregisterAutoloader(array $autoloader): void
+    {
+        spl_autoload_unregister($autoloader);
     }
 
     public function isPropagationStopped(): bool

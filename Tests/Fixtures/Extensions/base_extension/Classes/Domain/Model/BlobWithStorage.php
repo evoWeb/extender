@@ -2,15 +2,22 @@
 
 namespace Fixture\BaseExtension\Domain\Model;
 
-class BlobWithStorage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+use TYPO3\CMS\Extbase\Domain\Model\FileReference;
+
+class BlobWithStorage extends AbstractEntity
 {
     protected string $property = '';
 
-    protected \TYPO3\CMS\Extbase\Persistence\ObjectStorage $storage;
+    /**
+     * @var ObjectStorage<FileReference>
+     */
+    protected ObjectStorage $storage;
 
     public function __construct()
     {
-        $this->storage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->storage = new ObjectStorage();
     }
 
     public function getProperty(): string
@@ -18,17 +25,17 @@ class BlobWithStorage extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         return $this->property;
     }
 
-    public function setProperty(string $property)
+    public function setProperty(string $property): void
     {
         $this->property = $property;
     }
 
-    public function getStorage(): \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+    public function getStorage(): ObjectStorage
     {
         return $this->storage;
     }
 
-    public function setStorage(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $storage)
+    public function setStorage(ObjectStorage $storage): void
     {
         $this->storage = $storage;
     }

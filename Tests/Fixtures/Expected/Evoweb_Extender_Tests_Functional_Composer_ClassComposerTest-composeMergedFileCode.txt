@@ -1,0 +1,1 @@
+"\n\/*\n * This file is composed by \"extender\"\n * Merged class with parts of files:\n *  - base.php\n *\/\n\nnamespace Evoweb\\TestNamespace;\n\nuse Evoweb\\Domain\\Model\\Test;\nclass ComposeMergedFileCode\n{\n    use Evoweb\\TestTrait;\n    protected $testProperty;\n    public function __construct()\n    {\n    }\n    function getTestProperty()\n    {\n    }\n}"

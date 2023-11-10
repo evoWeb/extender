@@ -1,32 +1,62 @@
 services:
   _defaults:
-    autowire: false
-    autoconfigure: false
+    autowire: true
+    autoconfigure: true
     public: false
 
   Evoweb\Extender\:
     resource: '../Classes/*'
 
-  extender.cache:
-    class: TYPO3\CMS\Core\Cache\Frontend\PhpFrontend
+  cache.extender:
+    class: TYPO3\CMS\Core\Cache\Frontend\FrontendInterface
     # We can not use CacheManager, as it can not be
     # injected/instantiated prior (or during) ext_localconf.php
     # loading therefore we use an own factory instead.
-    factory: ['@Evoweb\Extender\Utility\ClassCacheFactory', 'createCache']
+    factory: ['@Evoweb\Extender\Cache\CacheFactory', 'createCache']
+    arguments: ['extender']
 
-  Evoweb\Extender\Command\ExtenderRebuildCommand:
-    arguments: ['@Evoweb\Extender\Utility\ClassCacheManager']
-    tags:
-      - { name: 'console.command', command: 'extender:rebuild', schedulable: false }
-
-  Evoweb\Extender\Utility\ClassCacheManager:
+  Evoweb\Extender\Cache\ClassCacheManager:
     arguments:
-      $classCache: '@extender.cache'
+      $classCache: '@cache.extender'
       $composerClassLoader: '@Composer\Autoload\ClassLoader'
+      $classParser: '@Evoweb\Extender\Parser\ClassParser'
+      $classComposer: '@Evoweb\Extender\Composer\ClassComposer'
+      $register: '@Evoweb\Extender\Configuration\Register'
     public: true
 
-  Evoweb\Extender\Utility\ClassLoader:
+  Evoweb\Extender\Command\ClearCommand:
+    tags:
+      -
+        name: 'console.command'
+        command: 'extender:clearClassCache'
+        description: 'CLI command for the "extender" extension - clear cache'
+        schedulable: false
+
+  Evoweb\Extender\Composer\ClassComposer:
+    public: true
+
+  Evoweb\Extender\Configuration\Register:
+    public: true
+
+  Evoweb\Extender\Event\RegisterAutoloaderEvent:
     arguments:
-      $classCache: '@extender.cache'
-      $classCacheManager: '@Evoweb\Extender\Utility\ClassCacheManager'
+      $container: '@service_container'
+    shared: false
+
+  Evoweb\Extender\Hooks\DataHandlerClearCachePostProcHook:
+    public: true
+
+  Evoweb\Extender\Loader\ClassLoader:
+    arguments:
+      $classCache: '@cache.extender'
+      $classCacheManager: '@Evoweb\Extender\Cache\ClassCacheManager'
+      $register: '@Evoweb\Extender\Configuration\Register'
+    public: true
+
+  Evoweb\Extender\Parser\ClassParser:
+    arguments:
+      $parserFactory: '@PhpParser\ParserFactory'
+    public: true
+
+  PhpParser\ParserFactory:
     public: true
