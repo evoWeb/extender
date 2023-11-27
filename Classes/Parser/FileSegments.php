@@ -59,6 +59,8 @@ class FileSegments implements \JsonSerializable
 
     protected ?ClassMethod $constructor = null;
 
+    protected ?ClassMethod $initializeObject = null;
+
     /**
      * @var ClassMethod[]
      */
@@ -204,6 +206,16 @@ class FileSegments implements \JsonSerializable
     public function setConstructor(?ClassMethod $constructor): void
     {
         $this->constructor = $constructor;
+    }
+
+    public function getInitializeObject(): ?ClassMethod
+    {
+        return $this->initializeObject;
+    }
+
+    public function setInitializeObject(?ClassMethod $initializeObject): void
+    {
+        $this->initializeObject = $initializeObject;
     }
 
     /**

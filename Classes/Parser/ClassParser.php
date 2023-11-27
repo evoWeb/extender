@@ -30,6 +30,7 @@ class ClassParser
         Visitor\ConstantVisitor::class,
         Visitor\PropertyVisitor::class,
         Visitor\ConstructorVisitor::class,
+        Visitor\InitializeObjectVisitor::class,
         Visitor\ClassMethodVisitor::class,
     ];
 
