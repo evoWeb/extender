@@ -27,7 +27,7 @@ example and run 'composer install'.
 
 	{
 		"require": {
-			"typo3/cms-core": "^10.0",
+			"typo3/cms-core": "^12.0",
 			"evoweb/extender": "*",
 		}
 	}

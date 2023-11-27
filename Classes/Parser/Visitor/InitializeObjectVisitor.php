@@ -18,20 +18,12 @@ namespace Evoweb\Extender\Parser\Visitor;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\ClassMethod;
 
-class ClassMethodVisitor extends AbstractVisitor
+class InitializeObjectVisitor extends AbstractVisitor
 {
-    protected array $disallowedMethodNames = [
-        '__construct',
-        'initializeObject',
-    ];
-
     public function enterNode(Node $node): void
     {
-        if (
-            $node instanceof ClassMethod
-            && !in_array((string)$node->name, $this->disallowedMethodNames)
-        ) {
-            $this->fileSegment->addMethod($node);
+        if ($node instanceof ClassMethod && (string)$node->name === 'initializeObject') {
+            $this->fileSegment->setInitializeObject($node);
         }
     }
 }

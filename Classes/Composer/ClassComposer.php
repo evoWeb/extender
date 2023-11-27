@@ -28,6 +28,7 @@ class ClassComposer
         Generator\ConstantGenerator::class,
         Generator\PropertyGenerator::class,
         Generator\ConstructorGenerator::class,
+        Generator\InitializeObjectGenerator::class,
         Generator\ClassMethodGenerator::class,
     ];
 
