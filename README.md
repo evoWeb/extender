@@ -9,7 +9,7 @@
 
 ### via Composer
 
-The recommended way to install TYPO3 Console is by using [Composer](https://getcomposer.org):
+The recommended way to install EXT:extender is by using [Composer](https://getcomposer.org):
 
     composer require evoweb/extender
 
