@@ -26,16 +26,20 @@
 		}
 	},
 	"require": {
+		"typo3/cms-core": "^11.5 || ^12.4 || 12.4.x-dev || dev-main",
 		"nikic/php-parser": "^4.13.2 || ^4.15.4",
-		"typo3/cms-core": "^11.5 || ^12.4 || dev-main"
+		"psr/container": "^2.0",
+		"psr/event-dispatcher": "^1.0",
+		"symfony/console": "^6.4 || ^7.0",
+		"symfony/dependency-injection": "^6.4 || ^7.0"
 	},
 	"require-dev": {
 		"evoweb/base_extension": "*",
 		"evoweb/extending_extension": "*",
 		"phpunit/phpunit": "^9.5.10 || ^10.1.1",
 		"symfony/polyfill-php80": "^1.16",
-		"typo3/cms-extensionmanager": "^11.5 || ^12.4 || dev-main",
-		"typo3/testing-framework": "^6.16.9 || ^8.0.2 || dev-main"
+		"typo3/cms-extensionmanager": "^11.5 || ^12.4 || 12.4.x-dev || dev-main",
+		"typo3/testing-framework": "^6.16.9 || ^8.0.2 || 12.4.x-dev || dev-main"
 	},
 	"extra": {
 		"typo3/cms": {
