@@ -5,15 +5,11 @@
 [![Monthly Downloads](https://poser.pugx.org/evoweb/extender/d/monthly)](https://packagist.org/packages/evoweb/extender)
 [![Total Downloads](https://poser.pugx.org/evoweb/extender/downloads)](https://packagist.org/packages/evoweb/extender)
 
-# !IMPORTANT WIP
-Currently, the extending process gets refactored. Please don't use it in
-productive projects.
-
 ## Installation
 
 ### via Composer
 
-The recommended way to install TYPO3 Console is by using [Composer](https://getcomposer.org):
+The recommended way to install EXT:extender is by using [Composer](https://getcomposer.org):
 
     composer require evoweb/extender
 

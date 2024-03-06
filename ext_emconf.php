@@ -9,10 +9,10 @@ $EM_CONF['extender'] = [
     'author_email' => 'extender@evoweb.de',
     'author_company' => 'evoWeb',
     'state' => 'stable',
-    'version' => '10.1.0',
+    'version' => '10.1.1',
     'constraints' => [
         'depends' => [
-            'typo3' => '11.0.0-12.2.99',
+            'typo3' => '11.5.0-12.4.99',
         ],
     ],
 ];

@@ -42,7 +42,10 @@ class RegisterAutoloaderEvent implements StoppableEventInterface
         foreach ($currentAutoLoaders as $currentAutoLoader) {
             if (
                 is_array($currentAutoLoader)
-                && get_class($currentAutoLoader[0]) === $autoloaderClass
+                && (
+                    (is_object($currentAutoLoader[0]) && get_class($currentAutoLoader[0]) === $autoloaderClass)
+                    || (is_string($currentAutoLoader[0]) && $currentAutoLoader[0] === $autoloaderClass)
+                )
             ) {
                 $result = true;
                 break;
