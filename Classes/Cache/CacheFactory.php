@@ -40,7 +40,7 @@ class CacheFactory
         self::addClassCacheConfigToGlobalTypo3ConfVars();
         try {
             $cache = Bootstrap::createCache($identifier);
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             $cache = null;
         }
         return $cache;

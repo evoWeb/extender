@@ -8,12 +8,11 @@ use Evoweb\Extender\Parser\FileSegments;
 use Evoweb\Extender\Tests\Functional\AbstractTestBase;
 use PhpParser\Node;
 use PhpParser\Node\Stmt;
+use PHPUnit\Framework\Attributes\Test;
 
 class ClassComposerTest extends AbstractTestBase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function composeMergedFileCode(): void
     {
         $basePath = 'base.php';
@@ -26,11 +25,11 @@ class ClassComposerTest extends AbstractTestBase
         $fileSegments->setFilePath($basePath);
         $fileSegments->setBaseClass(true);
         $fileSegments->setCode($code);
-        $fileSegments->setNamespace(new Node\Name('Evoweb\TestNamespace'));
-        $fileSegments->addUseUse(new Stmt\UseUse(new Node\Name('Evoweb\Domain\Model\Test')));
+        $fileSegments->setNamespace(new Node\Name('Fixture\BaseExtension\Domain\Model'));
+        $fileSegments->addUseUse(new Node\UseItem(new Node\Name('Evoweb\Domain\Model\Test')));
         $fileSegments->setClass(new Stmt\Class_('ComposeMergedFileCode'));
         $fileSegments->addTrait(new Stmt\TraitUse([new Node\Name('Evoweb\TestTrait')]));
-        $fileSegments->addProperty(new Stmt\Property(2, [new Stmt\PropertyProperty('testProperty')]));
+        $fileSegments->addProperty(new Stmt\Property(2, [new Node\PropertyItem('testProperty')]));
         $fileSegments->setConstructor(new Stmt\ClassMethod('__construct'));
         $fileSegments->addMethod(new Stmt\ClassMethod('getTestProperty'));
 
@@ -43,9 +42,7 @@ class ClassComposerTest extends AbstractTestBase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function addFileStatement(): void
     {
         $subject = new class () extends ClassComposer {
@@ -58,7 +55,7 @@ class ClassComposerTest extends AbstractTestBase
             }
         };
 
-        $namespaceName = new Node\Name('Evoweb\TestNamespace');
+        $namespaceName = new Node\Name('Fixture\BaseExtension\Domain\Model');
 
         $fileSegments = new FileSegments();
         $fileSegments->setBaseClass(true);

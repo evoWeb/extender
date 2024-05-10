@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace Evoweb\Extender\Composer\Generator;
 
 use Evoweb\Extender\Parser\FileSegments;
+use PhpParser\Modifiers;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Property;
@@ -46,7 +47,7 @@ class PropertyGenerator implements GeneratorInterface
                 } else {
                     foreach ($property->props as $propertyProperty) {
                         $properties[(string)$propertyProperty->name] = new Property(
-                            Class_::MODIFIER_PROTECTED,
+                            Modifiers::PROTECTED,
                             [$propertyProperty]
                         );
                     }

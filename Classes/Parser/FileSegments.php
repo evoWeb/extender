@@ -22,6 +22,7 @@ use PhpParser\Node\Stmt\ClassConst;
 use PhpParser\Node\Stmt\Property;
 use PhpParser\Node\Stmt\TraitUse;
 use PhpParser\Node\Stmt\UseUse;
+use PhpParser\Node\UseItem;
 
 class FileSegments implements \JsonSerializable
 {
@@ -129,7 +130,7 @@ class FileSegments implements \JsonSerializable
         $this->uses = $uses;
     }
 
-    public function addUseUse(UseUse $useUse): void
+    public function addUseUse(UseItem $useUse): void
     {
         $this->uses[] = $useUse;
     }

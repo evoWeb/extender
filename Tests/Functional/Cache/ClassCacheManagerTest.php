@@ -5,27 +5,26 @@ namespace Evoweb\Extender\Tests\Functional\Cache;
 use Composer\Autoload\ClassLoader;
 use Evoweb\Extender\Cache\ClassCacheManager;
 use Evoweb\Extender\Composer\ClassComposer;
-use Evoweb\Extender\Configuration\Register;
+use Evoweb\Extender\Configuration\ClassRegister;
 use Evoweb\Extender\Exception\BaseFileNotFoundException;
 use Evoweb\Extender\Parser\ClassParser;
 use Evoweb\Extender\Parser\FileSegments;
 use Evoweb\Extender\Tests\Functional\AbstractTestBase;
 use Fixture\BaseExtension\Domain\Model\Blob;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 
 class ClassCacheManagerTest extends AbstractTestBase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function build(): void
     {
         $classCache = $this->createMock(FrontendInterface::class);
-        $composerClassLoader = $this->createMock(ClassLoader::class);
+        $classLoader = $this->createMock(ClassLoader::class);
         $classParser = $this->createMock(ClassParser::class);
         $classComposer = $this->createMock(ClassComposer::class);
-        $register = $this->createMock(Register::class);
+        $classRegister = $this->createMock(ClassRegister::class);
 
         /** @var ClassCacheManager|MockObject $subject */
         $subject = $this->getMockBuilder(ClassCacheManager::class)
@@ -35,7 +34,7 @@ class ClassCacheManagerTest extends AbstractTestBase
                 'getMergedFileCode',
                 'addFileToCache'
             ])
-            ->setConstructorArgs([$classCache, $composerClassLoader, $classParser, $classComposer, $register])
+            ->setConstructorArgs([$classCache, $classLoader, $classParser, $classComposer, $classRegister])
             ->getMock();
 
         $subject->expects($this->once())->method('getBaseClassFileSegments')->willReturn(new FileSegments());
@@ -46,23 +45,21 @@ class ClassCacheManagerTest extends AbstractTestBase
         $subject->build('test', Blob::class);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getBaseClassFileSegments(): void
     {
         $classCache = $this->createMock(FrontendInterface::class);
-        $composerClassLoader = $this->createMock(ClassLoader::class);
+        $classLoader = $this->createMock(ClassLoader::class);
         $classParser = $this->createMock(ClassParser::class);
         $classComposer = $this->createMock(ClassComposer::class);
-        $register = $this->createMock(Register::class);
+        $classRegister = $this->createMock(ClassRegister::class);
 
-        $subject = new class(
+        $subject = new class (
             $classCache,
-            $composerClassLoader,
+            $classLoader,
             $classParser,
             $classComposer,
-            $register
+            $classRegister
         ) extends ClassCacheManager {
             public function getBaseClassFileSegments(string $className): FileSegments
             {
@@ -85,25 +82,23 @@ class ClassCacheManagerTest extends AbstractTestBase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getExtendingClassesFileSegments(): void
     {
         $classCache = $this->createMock(FrontendInterface::class);
-        $composerClassLoader = $this->createMock(ClassLoader::class);
+        $classLoader = $this->createMock(ClassLoader::class);
         $classParser = $this->createMock(ClassParser::class);
         $classComposer = $this->createMock(ClassComposer::class);
 
-        $register = $this->createMock(Register::class);
-        $register->expects($this->once())->method('getExtendingClasses')->willReturn(['test2', 'test3']);
+        $classRegister = $this->createMock(ClassRegister::class);
+        $classRegister->expects($this->once())->method('getExtendingClasses')->willReturn(['test2', 'test3']);
 
-        $subject = new class(
+        $subject = new class (
             $classCache,
-            $composerClassLoader,
+            $classLoader,
             $classParser,
             $classComposer,
-            $register
+            $classRegister
         ) extends ClassCacheManager {
             public function getExtendingClassesFileSegments(string $baseClassName): array
             {
@@ -126,21 +121,19 @@ class ClassCacheManagerTest extends AbstractTestBase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getFileSegments(): void
     {
         $classCache = $this->createMock(FrontendInterface::class);
         $classComposer = $this->createMock(ClassComposer::class);
-        $register = $this->createMock(Register::class);
+        $classRegister = $this->createMock(ClassRegister::class);
 
         $basePath = realpath(
             __DIR__ . '/../../Fixtures/Extensions/base_extension/Classes/Domain/Model/GetFileSegments.php'
         );
 
-        $composerClassLoader = $this->createMock(ClassLoader::class);
-        $composerClassLoader->expects($this->once())->method('findFile')->willReturn($basePath);
+        $ClassLoader = $this->createMock(ClassLoader::class);
+        $ClassLoader->expects($this->once())->method('findFile')->willReturn($basePath);
 
         $expected = new FileSegments();
         $expected->setBaseClass(true);
@@ -148,12 +141,12 @@ class ClassCacheManagerTest extends AbstractTestBase
         $classParser = $this->createMock(ClassParser::class);
         $classParser->expects($this->once())->method('getFileSegments')->willReturn($expected);
 
-        $subject = new class(
+        $subject = new class (
             $classCache,
-            $composerClassLoader,
+            $ClassLoader,
             $classParser,
             $classComposer,
-            $register
+            $classRegister
         ) extends ClassCacheManager {
             public function getFileSegments(string $className, bool $baseClass, string $exceptionClass): FileSegments
             {
@@ -166,25 +159,23 @@ class ClassCacheManagerTest extends AbstractTestBase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getMergedFileCode(): void
     {
         $classCache = $this->createMock(FrontendInterface::class);
-        $composerClassLoader = $this->createMock(ClassLoader::class);
+        $classLoader = $this->createMock(ClassLoader::class);
         $classParser = $this->createMock(ClassParser::class);
-        $register = $this->createMock(Register::class);
+        $classRegister = $this->createMock(ClassRegister::class);
 
         $classComposer = $this->createMock(ClassComposer::class);
         $classComposer->expects($this->once())->method('composeMergedFileCode')->willReturn('');
 
-        $subject = new class(
+        $subject = new class (
             $classCache,
-            $composerClassLoader,
+            $classLoader,
             $classParser,
             $classComposer,
-            $register
+            $classRegister
         ) extends ClassCacheManager {
             public function getMergedFileCode(array $fileSegments): string
             {
@@ -199,25 +190,23 @@ class ClassCacheManagerTest extends AbstractTestBase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function addFileToCache(): void
     {
-        $composerClassLoader = $this->createMock(ClassLoader::class);
+        $classLoader = $this->createMock(ClassLoader::class);
         $classParser = $this->createMock(ClassParser::class);
         $classComposer = $this->createMock(ClassComposer::class);
-        $register = $this->createMock(Register::class);
+        $classRegister = $this->createMock(ClassRegister::class);
 
         $classCache = $this->createMock(FrontendInterface::class);
         $classCache->expects($this->once())->method('set')->willReturn(null);
 
-        $subject = new class(
+        $subject = new class (
             $classCache,
-            $composerClassLoader,
+            $classLoader,
             $classParser,
             $classComposer,
-            $register
+            $classRegister
         ) extends ClassCacheManager {
             public function addFileToCache(string $cacheEntryIdentifier, string $code): void
             {

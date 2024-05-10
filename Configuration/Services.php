@@ -19,6 +19,6 @@ use Evoweb\Extender\DependencyInjection\RegisterExtenderPass;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 
-return static function (ContainerConfigurator $container, ContainerBuilder $containerBuilder) {
+return static function (ContainerConfigurator $container, ContainerBuilder $containerBuilder): void {
     $containerBuilder->addCompilerPass(new RegisterExtenderPass());
 };

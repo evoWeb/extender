@@ -2,31 +2,28 @@
 
 namespace Evoweb\Extender\Tests\Functional\Configuration;
 
-use Evoweb\Extender\Configuration\Register;
+use Evoweb\Extender\Configuration\ClassRegister;
 use Evoweb\Extender\Tests\Functional\AbstractTestBase;
+use PHPUnit\Framework\Attributes\Test;
 
 class RegisterTest extends AbstractTestBase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function hasBaseClassName(): void
     {
-        $subject = new Register(['test' => []]);
+        $subject = new ClassRegister(['test' => []]);
 
         $condition = $subject->hasBaseClassName('test');
 
         self::assertTrue($condition);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getExtendingClasses(): void
     {
         $expected = ['test2', 'test3'];
 
-        $subject = new Register(['test' => $expected]);
+        $subject = new ClassRegister(['test' => $expected]);
 
         $actual = $subject->getExtendingClasses('test');
 

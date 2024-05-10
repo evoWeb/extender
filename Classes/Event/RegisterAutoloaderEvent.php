@@ -30,7 +30,8 @@ class RegisterAutoloaderEvent implements StoppableEventInterface
                 $this->unregisterAutoloader($autoloader);
             }
             spl_autoload_register($autoloader, true, true);
-        } catch (ContainerExceptionInterface $e) {}
+        } catch (ContainerExceptionInterface) {
+        }
     }
 
     protected function autoloaderAlreadyRegistered(array $autoloader): bool

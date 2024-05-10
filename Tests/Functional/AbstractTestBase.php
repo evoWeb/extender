@@ -4,7 +4,7 @@ namespace Evoweb\Extender\Tests\Functional;
 
 use Composer\Autoload\ClassLoader;
 use Evoweb\Extender\Cache\CacheFactory;
-use Evoweb\Extender\Configuration\Register;
+use Evoweb\Extender\Configuration\ClassRegister;
 use PhpParser\PrettyPrinter\Standard as PrettyPrinter;
 use Psr\Container\ContainerExceptionInterface;
 use TYPO3\CMS\Core\Core\Environment;
@@ -13,7 +13,7 @@ use TYPO3\TestingFramework\Core\Functional\FunctionalTestCase;
 
 class AbstractTestBase extends FunctionalTestCase
 {
-    protected $testExtensionsToLoad = [
+    protected array $testExtensionsToLoad = [
         'typo3conf/ext/extender',
         'typo3conf/ext/base_extension',
         'typo3conf/ext/extending_extension',
@@ -41,7 +41,7 @@ class AbstractTestBase extends FunctionalTestCase
     protected function getPhpVersion(): string
     {
         $version = explode('.', PHP_VERSION);
-        return $version[0] * 100 + $version[1];
+        return $version[0] * 100 + (int)$version[1];
     }
 
     protected function convertStatementsIntoCode(array $statements): string
@@ -49,21 +49,23 @@ class AbstractTestBase extends FunctionalTestCase
         return trim((new PrettyPrinter())->prettyPrint($statements));
     }
 
-    protected function getComposerClassLoader(): ?ClassLoader
+    protected function getClassLoader(): ?ClassLoader
     {
         $classLoader = null;
         try {
             $classLoader = GeneralUtility::getContainer()->get(ClassLoader::class);
-        } catch (ContainerExceptionInterface $e) {}
+        } catch (ContainerExceptionInterface) {
+        }
         return $classLoader;
     }
 
-    protected function getRegister(): ?Register
+    protected function getClassRegister(): ?ClassRegister
     {
-        $register = null;
+        $classRegister = null;
         try {
-            $register = GeneralUtility::getContainer()->get(Register::class);
-        } catch (ContainerExceptionInterface $e) {}
-        return $register;
+            $classRegister = GeneralUtility::getContainer()->get(ClassRegister::class);
+        } catch (ContainerExceptionInterface) {
+        }
+        return $classRegister;
     }
 }

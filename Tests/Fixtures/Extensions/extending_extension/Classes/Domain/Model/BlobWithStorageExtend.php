@@ -2,15 +2,19 @@
 
 namespace Fixture\ExtendingExtension\Domain\Model;
 
-class BlobWithStorageExtend extends \Fixture\BaseExtension\Domain\Model\BlobWithStorage
+use Fixture\BaseExtension\Domain\Model\BlobWithStorage;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+
+class BlobWithStorageExtend extends BlobWithStorage
 {
     protected int $otherProperty = 0;
 
-    protected \TYPO3\CMS\Extbase\Persistence\ObjectStorage $otherStorage;
+    protected ObjectStorage $otherStorage;
 
     public function __construct()
     {
-        $this->otherStorage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        parent::__construct();
+        $this->otherStorage = new ObjectStorage();
     }
 
     public function getOtherProperty(): int
@@ -18,17 +22,17 @@ class BlobWithStorageExtend extends \Fixture\BaseExtension\Domain\Model\BlobWith
         return $this->otherProperty;
     }
 
-    public function setOtherProperty(int $otherProperty)
+    public function setOtherProperty(int $otherProperty): void
     {
         $this->otherProperty = $otherProperty;
     }
 
-    public function getOtherStorage(): \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+    public function getOtherStorage(): ObjectStorage
     {
         return $this->otherStorage;
     }
 
-    public function setOtherStorage(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $otherStorage)
+    public function setOtherStorage(ObjectStorage $otherStorage): void
     {
         $this->otherStorage = $otherStorage;
     }

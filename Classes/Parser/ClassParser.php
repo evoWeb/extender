@@ -17,11 +17,10 @@ namespace Evoweb\Extender\Parser;
 
 use PhpParser\NodeTraverser;
 use PhpParser\ParserFactory;
+use PhpParser\PhpVersion;
 
 class ClassParser
 {
-    protected ParserFactory $parserFactory;
-
     protected array $visitors = [
         Visitor\NamespaceVisitor::class,
         Visitor\UseVisitor::class,
@@ -34,9 +33,8 @@ class ClassParser
         Visitor\ClassMethodVisitor::class,
     ];
 
-    public function __construct(ParserFactory $parserFactory)
+    public function __construct(protected ParserFactory $parserFactory)
     {
-        $this->parserFactory = $parserFactory;
     }
 
     public function getFileSegments(string $filePath): FileSegments
@@ -46,13 +44,14 @@ class ClassParser
         $fileSegments->setCode(file_get_contents($filePath));
 
         try {
-            $parser = $this->parserFactory->create(ParserFactory::ONLY_PHP7);
+            $parser = $this->parserFactory->createForVersion(PhpVersion::fromComponents(8, 2));
             $fileSegments->setStatements($parser->parse($fileSegments->getCode()));
 
             foreach ($this->visitors as $visitor) {
                 $this->traverseStatements($fileSegments, $visitor);
             }
-        } catch (\Exception $e) {}
+        } catch (\Exception) {
+        }
 
         return $fileSegments;
     }

@@ -5,13 +5,12 @@ namespace Evoweb\Extender\Tests\Functional\Event;
 use Evoweb\Extender\Event\RegisterAutoloaderEvent;
 use Evoweb\Extender\Loader\ClassLoader;
 use Evoweb\Extender\Tests\Functional\AbstractTestBase;
+use PHPUnit\Framework\Attributes\Test;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class RegisterAutoloaderEventTest extends AbstractTestBase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function registerAutoloader(): void
     {
         new RegisterAutoloaderEvent(GeneralUtility::getContainer());
@@ -24,14 +23,12 @@ class RegisterAutoloaderEventTest extends AbstractTestBase
         self::assertTrue($condition);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function autoloaderAlreadyRegistered(): void
     {
         $autoloader = [GeneralUtility::getContainer()->get(ClassLoader::class), 'loadClass'];
 
-        $subject = new class() extends RegisterAutoloaderEvent {
+        $subject = new class () extends RegisterAutoloaderEvent {
             public function __construct()
             {
             }
@@ -47,16 +44,14 @@ class RegisterAutoloaderEventTest extends AbstractTestBase
         self::assertTrue($condition);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function unregisterAutoloader(): void
     {
         $autoloaderClass = ClassLoader::class;
         $autoloader = [GeneralUtility::getContainer()->get($autoloaderClass), 'loadClass'];
         spl_autoload_register($autoloader, true, true);
 
-        $subject = new class() extends RegisterAutoloaderEvent {
+        $subject = new class () extends RegisterAutoloaderEvent {
             public function __construct()
             {
             }
@@ -84,14 +79,12 @@ class RegisterAutoloaderEventTest extends AbstractTestBase
         self::assertTrue($condition);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function isPropagationStopped(): void
     {
-        $register = new RegisterAutoloaderEvent(GeneralUtility::getContainer());
+        $registerAutoloaderEvent = new RegisterAutoloaderEvent(GeneralUtility::getContainer());
 
-        $condition = $register->isPropagationStopped();
+        $condition = $registerAutoloaderEvent->isPropagationStopped();
 
         self::assertTrue($condition);
     }

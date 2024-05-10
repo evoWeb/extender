@@ -25,11 +25,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ClearCommand extends Command
 {
-    protected CacheFactory $cacheFactory;
-
-    public function __construct(CacheFactory $cacheFactory)
+    public function __construct(protected CacheFactory $cacheFactory)
     {
-        $this->cacheFactory = $cacheFactory;
         parent::__construct();
     }
 

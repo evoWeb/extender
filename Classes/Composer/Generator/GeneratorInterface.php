@@ -20,10 +20,7 @@ use Evoweb\Extender\Parser\FileSegments;
 interface GeneratorInterface
 {
     /**
-     * @param array $statements
      * @param FileSegments[] $fileSegments
-     *
-     * @return array
      */
     public function generate(array $statements, array $fileSegments): array;
 }

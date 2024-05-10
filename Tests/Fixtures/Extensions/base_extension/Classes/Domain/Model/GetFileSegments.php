@@ -1,12 +1,12 @@
 <?php
 
-namespace Evoweb\TestNamespace;
+namespace Fixture\BaseExtension\Domain\Model;
 
-use Evoweb\Domain\Model\Test;
+use Fixture\BaseExtension\Domain\Test;
 
 class GetFileSegments
 {
-    use Evoweb\TestTrait;
+    use Fixture\BaseExtension\TestTrait;
 
     protected string $testProperty = '';
 

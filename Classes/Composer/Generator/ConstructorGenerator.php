@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace Evoweb\Extender\Composer\Generator;
 
 use Evoweb\Extender\Parser\FileSegments;
+use PhpParser\Modifiers;
 use PhpParser\Node\Expr\StaticCall;
 use PhpParser\Node\Param;
 use PhpParser\Node\Stmt\Class_;
@@ -35,7 +36,7 @@ class ConstructorGenerator implements GeneratorInterface
             $class->stmts[] = new ClassMethod(
                 '__construct',
                 [
-                    'flags' => Class_::MODIFIER_PUBLIC,
+                    'flags' => Modifiers::PUBLIC,
                     'params' => $params,
                     'stmts' => $stmts,
                 ]

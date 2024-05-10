@@ -2,7 +2,9 @@
 
 namespace Fixture\BaseExtension\Domain\Model;
 
-class AnotherBlob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+
+class AnotherBlob extends AbstractEntity
 {
     protected string $property = '';
 
@@ -11,7 +13,7 @@ class AnotherBlob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         return $this->property;
     }
 
-    public function setProperty(string $property)
+    public function setProperty(string $property): void
     {
         $this->property = $property;
     }

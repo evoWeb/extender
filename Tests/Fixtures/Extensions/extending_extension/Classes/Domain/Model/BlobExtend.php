@@ -2,7 +2,6 @@
 
 namespace Fixture\ExtendingExtension\Domain\Model;
 
-use Evoweb\Extender\Exception;
 use Fixture\BaseExtension\Domain\Model\Blob;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait as T;
@@ -15,7 +14,7 @@ class BlobExtend extends Blob implements LoggerAwareInterface
 
     public function __construct($property = 'b', $otherProperty = 1)
     {
-        parent::__construct();
+        parent::__construct($property);
         $this->otherProperty = $otherProperty;
     }
 

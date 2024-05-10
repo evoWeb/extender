@@ -5,12 +5,11 @@ namespace Evoweb\Extender\Tests\Functional\Composer\Generator;
 use Evoweb\Extender\Composer\Generator\FileCommentGenerator;
 use Evoweb\Extender\Parser\FileSegments;
 use Evoweb\Extender\Tests\Functional\AbstractTestBase;
+use PHPUnit\Framework\Attributes\Test;
 
 class FileCommentGeneratorTest extends AbstractTestBase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function generate(): void
     {
         $baseFileSegment = new FileSegments();
@@ -36,9 +35,7 @@ class FileCommentGeneratorTest extends AbstractTestBase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function createCommentText(): void
     {
         $baseFileSegment = new FileSegments();
@@ -50,7 +47,7 @@ class FileCommentGeneratorTest extends AbstractTestBase
             $extendFileSegment,
         ];
 
-        $subject = new class() extends FileCommentGenerator {
+        $subject = new class () extends FileCommentGenerator {
             public function createCommentText(array $fileSegments): string
             {
                 return parent::createCommentText($fileSegments);
