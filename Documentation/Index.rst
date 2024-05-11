@@ -1,7 +1,5 @@
 .. include:: /Includes.rst.txt
 
-.. _start:
-
 =============================================
 Extender: Extbase class extending on steroids
 =============================================
@@ -9,20 +7,25 @@ Extender: Extbase class extending on steroids
 :Extension key:
     extender
 
+:Package name:
+   evoweb/extender
+
 :Version:
     |release|
 
 :Language:
     en
 
-:Author:
-    evoWeb
-
-:License:
-    Open Content License available from http://www.opencontent.org/opl.shtml
-
 :Copyright:
     2014-2023
+
+:Author:
+    Sebastian Fischer
+
+:License:
+   This document is published under the
+   `Open Publication <https://www.opencontent.org/openpub/>`__.
+   license.
 
 :Rendered:
     |today|
@@ -54,4 +57,3 @@ a GNU/GPL CMS/Framework available from http://typo3.org
    :hidden:
 
    Sitemap
-   genindex

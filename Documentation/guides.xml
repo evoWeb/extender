@@ -12,6 +12,7 @@
                edit-on-github-branch="develop"
                edit-on-github="evoWeb/extender"
                typo3-core-preferred="stable"
+               interlink-shortcode="evoweb/extender"
     />
     <project title="extender"
              release="11.0.0"
