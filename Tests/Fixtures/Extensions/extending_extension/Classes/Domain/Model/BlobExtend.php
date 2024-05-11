@@ -2,11 +2,10 @@
 
 namespace Fixture\ExtendingExtension\Domain\Model;
 
-use Fixture\BaseExtension\Domain\Model\Blob;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait as T;
 
-class BlobExtend extends Blob implements LoggerAwareInterface
+class BlobExtend extends \Fixture\BaseExtension\Domain\Model\Blob implements LoggerAwareInterface
 {
     use T;
 

@@ -123,3 +123,52 @@ EXT:extender/Tests/Fixtures/Extensions/base_extension/Classes/Domain/Model/Blob.
 
 The extend file content is derived from
 EXT:extender/Tests/Fixtures/Extensions/extending_extension/Classes/Domain/Model/BlobExtend.php
+
+Important
+---------
+As in both files shown, it's important to use the FQCN to extend of, else the
+usage of the class gets written to the merged file and result in two classes
+with the same name in the cache file.
+
+.. code-block:: php
+   :caption: Correct extension
+
+    namespace Fixture\ExtendingClass\Domain\Model;
+
+    class ExtendingModel extends \Fixture\BaseClass\Domain\Model\BaseModel
+    {
+    }
+
+.. code-block:: php
+   :caption: Result with correct extension
+
+    namespace Fixture\ExtendingClass\Domain\Model;
+
+    class BaseModel
+    {
+    }
+
+While linting the file will not raise an error and the class is usable,
+it will definitely irritate editors like PHPStorm or Visual Code.
+
+.. code-block:: php
+   :caption: Wrong extension
+
+    namespace Fixture\ExtendingClass\Domain\Model;
+
+    use Fixture\BaseClass\Domain\Model\BaseModel;
+
+    class ExtendingModel extends BaseModel
+    {
+    }
+
+.. code-block:: php
+   :caption: Result with wrong extension
+
+    namespace Fixture\BaseClass\Domain\Model;
+
+    use Fixture\BaseClass\Domain\Model\BaseModel;
+
+    class BaseModel
+    {
+    }

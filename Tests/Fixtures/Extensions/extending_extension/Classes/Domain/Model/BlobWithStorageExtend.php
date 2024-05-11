@@ -2,10 +2,9 @@
 
 namespace Fixture\ExtendingExtension\Domain\Model;
 
-use Fixture\BaseExtension\Domain\Model\BlobWithStorage;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
-class BlobWithStorageExtend extends BlobWithStorage
+class BlobWithStorageExtend extends \Fixture\BaseExtension\Domain\Model\BlobWithStorage
 {
     protected int $otherProperty = 0;
 
