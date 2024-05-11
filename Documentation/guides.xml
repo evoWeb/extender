@@ -11,7 +11,7 @@
                project-issues="https://github.com/evoWeb/extender/issues"
                edit-on-github-branch="develop"
                edit-on-github="evoWeb/extender"
-               typo3-core-preferred="main"
+               typo3-core-preferred="stable"
     />
     <project title="extender"
              release="11.0.0"
