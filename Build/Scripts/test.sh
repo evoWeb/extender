@@ -133,6 +133,7 @@ DEBUG_TESTS=false
 if [[ $DEBUG_TESTS != true ]]; then
     checkResources
 
+    LOWEST="--prefer-lowest"
     TCORE="^13.0"
     TFRAMEWORK="dev-main"
     TPATH="Tests/Functional"
