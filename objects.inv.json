@@ -1,0 +1,212 @@
+{
+    "std:doc": {
+        "Breaking\/Index": [
+            "-",
+            "-",
+            "Breaking\/Index.html",
+            "Breaking change"
+        ],
+        "Configuration\/Index": [
+            "-",
+            "-",
+            "Configuration\/Index.html",
+            "Configuration"
+        ],
+        "Index": [
+            "-",
+            "-",
+            "Index.html",
+            "Extender: Extbase class extending on steroids"
+        ],
+        "Installation\/Index": [
+            "-",
+            "-",
+            "Installation\/Index.html",
+            "Installation"
+        ],
+        "Introduction\/Index": [
+            "-",
+            "-",
+            "Introduction\/Index.html",
+            "Introduction"
+        ],
+        "Sitemap": [
+            "-",
+            "-",
+            "Sitemap.html",
+            "Sitemap"
+        ],
+        "Testing\/Index": [
+            "-",
+            "-",
+            "Testing\/Index.html",
+            "Testing"
+        ]
+    },
+    "std:label": {
+        "breaking-change": [
+            "-",
+            "-",
+            "Breaking\/Index.html#breaking-change",
+            "Breaking change"
+        ],
+        "configuration": [
+            "-",
+            "-",
+            "Configuration\/Index.html#configuration",
+            "Configuration"
+        ],
+        "installation": [
+            "-",
+            "-",
+            "Installation\/Index.html#installation",
+            "Installation"
+        ],
+        "introduction": [
+            "-",
+            "-",
+            "Introduction\/Index.html#introduction",
+            "Introduction"
+        ],
+        "testing": [
+            "-",
+            "-",
+            "Testing\/Index.html#testing",
+            "Testing"
+        ]
+    },
+    "std:title": {
+        "breaking-change-1": [
+            "-",
+            "-",
+            "Breaking\/Index.html#breaking-change-1",
+            "Breaking change"
+        ],
+        "change-of-command-name": [
+            "-",
+            "-",
+            "Breaking\/Index.html#change-of-command-name",
+            "Change of command name"
+        ],
+        "change-of-extending-configuration-in-10-0-0": [
+            "-",
+            "-",
+            "Breaking\/Index.html#change-of-extending-configuration-in-10-0-0",
+            "Change of extending configuration in 10.0.0"
+        ],
+        "description": [
+            "-",
+            "-",
+            "Breaking\/Index.html#description",
+            "Description"
+        ],
+        "impact": [
+            "-",
+            "-",
+            "Breaking\/Index.html#impact",
+            "Impact"
+        ],
+        "migration": [
+            "-",
+            "-",
+            "Breaking\/Index.html#migration",
+            "Migration"
+        ],
+        "change-of-extending-configuration-in-7-0-0": [
+            "-",
+            "-",
+            "Breaking\/Index.html#change-of-extending-configuration-in-7-0-0",
+            "Change of extending configuration in 7.0.0"
+        ],
+        "affected-installations": [
+            "-",
+            "-",
+            "Breaking\/Index.html#affected-installations",
+            "Affected Installations"
+        ],
+        "configuration-1": [
+            "-",
+            "-",
+            "Configuration\/Index.html#configuration-1",
+            "Configuration"
+        ],
+        "configure-the-extend-of-a-class": [
+            "-",
+            "-",
+            "Configuration\/Index.html#configure-the-extend-of-a-class",
+            "Configure the extend of a class"
+        ],
+        "extender-extbase-class-extending-on-steroids": [
+            "-",
+            "-",
+            "Index.html#extender-extbase-class-extending-on-steroids",
+            "Extender: Extbase class extending on steroids"
+        ],
+        "installation-1": [
+            "-",
+            "-",
+            "Installation\/Index.html#installation-1",
+            "Installation"
+        ],
+        "download-via-extension-manager": [
+            "-",
+            "-",
+            "Installation\/Index.html#download-via-extension-manager",
+            "Download via Extension Manager"
+        ],
+        "download-via-composer": [
+            "-",
+            "-",
+            "Installation\/Index.html#download-via-composer",
+            "Download via Composer"
+        ],
+        "introduction-1": [
+            "-",
+            "-",
+            "Introduction\/Index.html#introduction-1",
+            "Introduction"
+        ],
+        "extending-classes": [
+            "-",
+            "-",
+            "Introduction\/Index.html#extending-classes",
+            "Extending classes"
+        ],
+        "deep-dive-into-an-example": [
+            "-",
+            "-",
+            "Introduction\/Index.html#deep-dive-into-an-example",
+            "Deep dive into an example"
+        ],
+        "explanation": [
+            "-",
+            "-",
+            "Introduction\/Index.html#explanation",
+            "Explanation"
+        ],
+        "example-source": [
+            "-",
+            "-",
+            "Introduction\/Index.html#example-source",
+            "Example source"
+        ],
+        "important": [
+            "-",
+            "-",
+            "Introduction\/Index.html#important",
+            "Important"
+        ],
+        "sitemap": [
+            "-",
+            "-",
+            "Sitemap.html#sitemap",
+            "Sitemap"
+        ],
+        "testing-1": [
+            "-",
+            "-",
+            "Testing\/Index.html#testing-1",
+            "Testing"
+        ]
+    }
+}
