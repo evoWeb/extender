@@ -11,9 +11,9 @@
 <meta content="" name="docsearch:package_type">
 <meta content="" name="docsearch:release">
 <meta content="" name="docsearch:version">
-<meta content="2024-05-19T17:41:02+00:00" name="docsearch:modified">
-<meta content="2024-05-19T17:41:02+00:00" name="dc.modified">
-<meta content="2024-05-19T17:41:02+00:00" property="article:modified_time">
+<meta content="2024-05-22T15:57:51+00:00" name="docsearch:modified">
+<meta content="2024-05-22T15:57:51+00:00" name="dc.modified">
+<meta content="2024-05-22T15:57:51+00:00" property="article:modified_time">
     <link href="http://purl.org/dc/elements/1.1/" rel="schema.dc">
 <link href="../_resources/css/theme.css" rel="stylesheet">
 <link href="https://docs.typo3.org/search/" rel="search" title="Search">
@@ -236,20 +236,19 @@ file is ignored.</p>
 
     <p>All uses from base and extending file are taken uniquely. If an use appears
 with diverting as alias it is present twice in the merged file.</p>
-        <div class="code-block-caption">
-            <span class="caption-text">example of uses appearing twice</span>
-        </div><div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>use Psr\Log\LoggerAwareTrait;
+    <div class="code-block-caption">
+        <span class="caption-text">example of uses appearing twice</span>
+    </div><div class="code-block-wrapper" translate="no">
+            
+    <pre class="code-block"><code>use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerAwareTrait as T;</code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
-    </div></li>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+    </div>
+</div></li>
     <li>
     <p>Class</p>
 
@@ -312,82 +311,78 @@ EXT:extender/Tests/Fixtures/Extensions/extending_extension/Classes/Domain/Model/
 usage of the class gets written to the merged file and result in two classes
 with the same name in the cache file.</p>
 
-                    <div class="code-block-caption">
-            <span class="caption-text">Correct extension</span>
-        </div><div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code class="hljs php"><span class="hljs-keyword">namespace</span> <span class="hljs-title">Fixture</span>\<span class="hljs-title">ExtendingClass</span>\<span class="hljs-title">Domain</span>\<span class="hljs-title">Model</span>;
+                <div class="code-block-caption">
+        <span class="caption-text">Correct extension</span>
+    </div><div class="code-block-wrapper" translate="no">
+            
+    <pre class="code-block"><code class="hljs php"><span class="hljs-keyword">namespace</span> <span class="hljs-title">Fixture</span>\<span class="hljs-title">ExtendingClass</span>\<span class="hljs-title">Domain</span>\<span class="hljs-title">Model</span>;
 
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ExtendingModel</span> <span class="hljs-keyword">extends</span> \<span class="hljs-title">Fixture</span>\<span class="hljs-title">BaseClass</span>\<span class="hljs-title">Domain</span>\<span class="hljs-title">Model</span>\<span class="hljs-title">BaseModel</span>
 </span>{
 }</code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
-                    <div class="code-block-caption">
-            <span class="caption-text">Result with correct extension</span>
-        </div><div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code class="hljs php"><span class="hljs-keyword">namespace</span> <span class="hljs-title">Fixture</span>\<span class="hljs-title">ExtendingClass</span>\<span class="hljs-title">Domain</span>\<span class="hljs-title">Model</span>;
+</div>
+                <div class="code-block-caption">
+        <span class="caption-text">Result with correct extension</span>
+    </div><div class="code-block-wrapper" translate="no">
+            
+    <pre class="code-block"><code class="hljs php"><span class="hljs-keyword">namespace</span> <span class="hljs-title">Fixture</span>\<span class="hljs-title">ExtendingClass</span>\<span class="hljs-title">Domain</span>\<span class="hljs-title">Model</span>;
 
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BaseModel</span>
 </span>{
 }</code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p>While linting the file will not raise an error and the class is usable,
 it will definitely irritate editors like PHPStorm or Visual Code.</p>
 
-                    <div class="code-block-caption">
-            <span class="caption-text">Wrong extension</span>
-        </div><div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code class="hljs php"><span class="hljs-keyword">namespace</span> <span class="hljs-title">Fixture</span>\<span class="hljs-title">ExtendingClass</span>\<span class="hljs-title">Domain</span>\<span class="hljs-title">Model</span>;
+                <div class="code-block-caption">
+        <span class="caption-text">Wrong extension</span>
+    </div><div class="code-block-wrapper" translate="no">
+            
+    <pre class="code-block"><code class="hljs php"><span class="hljs-keyword">namespace</span> <span class="hljs-title">Fixture</span>\<span class="hljs-title">ExtendingClass</span>\<span class="hljs-title">Domain</span>\<span class="hljs-title">Model</span>;
 
 <span class="hljs-keyword">use</span> <span class="hljs-title">Fixture</span>\<span class="hljs-title">BaseClass</span>\<span class="hljs-title">Domain</span>\<span class="hljs-title">Model</span>\<span class="hljs-title">BaseModel</span>;
 
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ExtendingModel</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">BaseModel</span>
 </span>{
 }</code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
-                    <div class="code-block-caption">
-            <span class="caption-text">Result with wrong extension</span>
-        </div><div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code class="hljs php"><span class="hljs-keyword">namespace</span> <span class="hljs-title">Fixture</span>\<span class="hljs-title">BaseClass</span>\<span class="hljs-title">Domain</span>\<span class="hljs-title">Model</span>;
+</div>
+                <div class="code-block-caption">
+        <span class="caption-text">Result with wrong extension</span>
+    </div><div class="code-block-wrapper" translate="no">
+            
+    <pre class="code-block"><code class="hljs php"><span class="hljs-keyword">namespace</span> <span class="hljs-title">Fixture</span>\<span class="hljs-title">BaseClass</span>\<span class="hljs-title">Domain</span>\<span class="hljs-title">Model</span>;
 
 <span class="hljs-keyword">use</span> <span class="hljs-title">Fixture</span>\<span class="hljs-title">BaseClass</span>\<span class="hljs-title">Domain</span>\<span class="hljs-title">Model</span>\<span class="hljs-title">BaseModel</span>;
 
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BaseModel</span>
 </span>{
 }</code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
     </section>
     </section>
         <!-- content end -->
@@ -463,7 +458,7 @@ it will definitely irritate editors like PHPStorm or Visual Code.</p>
         <div class="frame-container">
             <div class="frame-inner">
                                 <div class="footer-additional">
-                    <p class="text-center">Last rendered: May 19, 2024 17:41</p>
+                    <p class="text-center">Last rendered: May 22, 2024 15:57</p>
                 </div>
                 <div class="footer-meta">
                     <ul class="footer-meta-navigation">

@@ -11,9 +11,9 @@
 <meta content="" name="docsearch:package_type">
 <meta content="" name="docsearch:release">
 <meta content="" name="docsearch:version">
-<meta content="2024-05-19T17:41:02+00:00" name="docsearch:modified">
-<meta content="2024-05-19T17:41:02+00:00" name="dc.modified">
-<meta content="2024-05-19T17:41:02+00:00" property="article:modified_time">
+<meta content="2024-05-22T15:57:51+00:00" name="docsearch:modified">
+<meta content="2024-05-22T15:57:51+00:00" name="dc.modified">
+<meta content="2024-05-22T15:57:51+00:00" property="article:modified_time">
     <link href="http://purl.org/dc/elements/1.1/" rel="schema.dc">
 <link href="../_resources/css/theme.css" rel="stylesheet">
 <link href="https://docs.typo3.org/search/" rel="search" title="Search">
@@ -132,7 +132,7 @@ license.</p>
 
         <dd class="field-odd">
             
-    <p>Sun, 19 May 2024 17:41:02 +0000</p>
+    <p>Wed, 22 May 2024 15:57:51 +0000</p>
         </dd>
     </dl>
             <hr />
@@ -232,7 +232,7 @@ license.</p>
 
         <dd class="field-odd">
             
-    <p>Sun, 19 May 2024 17:41:02 +0000</p>
+    <p>Wed, 22 May 2024 15:57:51 +0000</p>
         </dd>
     </dl>
             <hr />
@@ -380,20 +380,19 @@ file is ignored.</p>
 
     <p>All uses from base and extending file are taken uniquely. If an use appears
 with diverting as alias it is present twice in the merged file.</p>
-        <div class="code-block-caption">
-            <span class="caption-text">example of uses appearing twice</span>
-        </div><div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>use Psr\Log\LoggerAwareTrait;
+    <div class="code-block-caption">
+        <span class="caption-text">example of uses appearing twice</span>
+    </div><div class="code-block-wrapper" translate="no">
+            
+    <pre class="code-block"><code>use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerAwareTrait as T;</code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
-    </div></li>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
+    </div>
+</div></li>
     <li>
     <p>Class</p>
 
@@ -456,82 +455,78 @@ EXT:extender/Tests/Fixtures/Extensions/extending_extension/Classes/Domain/Model/
 usage of the class gets written to the merged file and result in two classes
 with the same name in the cache file.</p>
 
-                    <div class="code-block-caption">
-            <span class="caption-text">Correct extension</span>
-        </div><div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code class="hljs php"><span class="hljs-keyword">namespace</span> <span class="hljs-title">Fixture</span>\<span class="hljs-title">ExtendingClass</span>\<span class="hljs-title">Domain</span>\<span class="hljs-title">Model</span>;
+                <div class="code-block-caption">
+        <span class="caption-text">Correct extension</span>
+    </div><div class="code-block-wrapper" translate="no">
+            
+    <pre class="code-block"><code class="hljs php"><span class="hljs-keyword">namespace</span> <span class="hljs-title">Fixture</span>\<span class="hljs-title">ExtendingClass</span>\<span class="hljs-title">Domain</span>\<span class="hljs-title">Model</span>;
 
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ExtendingModel</span> <span class="hljs-keyword">extends</span> \<span class="hljs-title">Fixture</span>\<span class="hljs-title">BaseClass</span>\<span class="hljs-title">Domain</span>\<span class="hljs-title">Model</span>\<span class="hljs-title">BaseModel</span>
 </span>{
 }</code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
-                    <div class="code-block-caption">
-            <span class="caption-text">Result with correct extension</span>
-        </div><div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code class="hljs php"><span class="hljs-keyword">namespace</span> <span class="hljs-title">Fixture</span>\<span class="hljs-title">ExtendingClass</span>\<span class="hljs-title">Domain</span>\<span class="hljs-title">Model</span>;
+</div>
+                <div class="code-block-caption">
+        <span class="caption-text">Result with correct extension</span>
+    </div><div class="code-block-wrapper" translate="no">
+            
+    <pre class="code-block"><code class="hljs php"><span class="hljs-keyword">namespace</span> <span class="hljs-title">Fixture</span>\<span class="hljs-title">ExtendingClass</span>\<span class="hljs-title">Domain</span>\<span class="hljs-title">Model</span>;
 
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BaseModel</span>
 </span>{
 }</code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p>While linting the file will not raise an error and the class is usable,
 it will definitely irritate editors like PHPStorm or Visual Code.</p>
 
-                    <div class="code-block-caption">
-            <span class="caption-text">Wrong extension</span>
-        </div><div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code class="hljs php"><span class="hljs-keyword">namespace</span> <span class="hljs-title">Fixture</span>\<span class="hljs-title">ExtendingClass</span>\<span class="hljs-title">Domain</span>\<span class="hljs-title">Model</span>;
+                <div class="code-block-caption">
+        <span class="caption-text">Wrong extension</span>
+    </div><div class="code-block-wrapper" translate="no">
+            
+    <pre class="code-block"><code class="hljs php"><span class="hljs-keyword">namespace</span> <span class="hljs-title">Fixture</span>\<span class="hljs-title">ExtendingClass</span>\<span class="hljs-title">Domain</span>\<span class="hljs-title">Model</span>;
 
 <span class="hljs-keyword">use</span> <span class="hljs-title">Fixture</span>\<span class="hljs-title">BaseClass</span>\<span class="hljs-title">Domain</span>\<span class="hljs-title">Model</span>\<span class="hljs-title">BaseModel</span>;
 
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ExtendingModel</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">BaseModel</span>
 </span>{
 }</code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
-                    <div class="code-block-caption">
-            <span class="caption-text">Result with wrong extension</span>
-        </div><div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code class="hljs php"><span class="hljs-keyword">namespace</span> <span class="hljs-title">Fixture</span>\<span class="hljs-title">BaseClass</span>\<span class="hljs-title">Domain</span>\<span class="hljs-title">Model</span>;
+</div>
+                <div class="code-block-caption">
+        <span class="caption-text">Result with wrong extension</span>
+    </div><div class="code-block-wrapper" translate="no">
+            
+    <pre class="code-block"><code class="hljs php"><span class="hljs-keyword">namespace</span> <span class="hljs-title">Fixture</span>\<span class="hljs-title">BaseClass</span>\<span class="hljs-title">Domain</span>\<span class="hljs-title">Model</span>;
 
 <span class="hljs-keyword">use</span> <span class="hljs-title">Fixture</span>\<span class="hljs-title">BaseClass</span>\<span class="hljs-title">Domain</span>\<span class="hljs-title">Model</span>\<span class="hljs-title">BaseModel</span>;
 
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BaseModel</span>
 </span>{
 }</code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
     </section>
     </section>
 
@@ -556,24 +551,23 @@ the extension by hitting the action for that.</p>
     <p>Add evoweb/extender to the require in your composer.json like in the following
 example and run &#039;composer install&#039;.</p>
 
-                    <div class="code-block-caption">
-            <span class="caption-text">composer.json</span>
-        </div><div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code class="hljs json">{
+                <div class="code-block-caption">
+        <span class="caption-text">composer.json</span>
+    </div><div class="code-block-wrapper" translate="no">
+            
+    <pre class="code-block"><code class="hljs json">{
 	<span class="hljs-attr">"require"</span>: {
 		<span class="hljs-attr">"typo3/cms-core"</span>: <span class="hljs-string">"^12.0"</span>,
 		<span class="hljs-attr">"evoweb/extender"</span>: <span class="hljs-string">"*"</span>,
 	}
 }</code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
     <p>Alternatively if you have an existing project with a configured composer.json you
 can add extender with the command by running &#039;composer require evoweb/extender&#039;.</p>
@@ -593,25 +587,24 @@ can add extender with the command by running &#039;composer require evoweb/exten
     <p>Since version 10.0.0 the registration of class extends needs to be configured in
 services.yaml like in this example.</p>
 
-                    <div class="code-block-caption">
-            <span class="caption-text">Services.yaml</span>
-        </div><div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code class="hljs yaml"><span class="hljs-attr">services:</span>
+                <div class="code-block-caption">
+        <span class="caption-text">Services.yaml</span>
+    </div><div class="code-block-wrapper" translate="no">
+            
+    <pre class="code-block"><code class="hljs yaml"><span class="hljs-attr">services:</span>
 
   <span class="hljs-string">Fixture\ExtendingExtension\Domain\Model\BlobExtend:</span>
     <span class="hljs-attr">tags:</span>
       <span class="hljs-bullet">-</span>
         <span class="hljs-attr">name:</span> <span class="hljs-string">'extender.extends'</span>
         <span class="hljs-attr">class:</span> <span class="hljs-string">Fixture\BaseExtension\Domain\Model\Blob</span></code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
             
 
 <ul>
@@ -654,38 +647,36 @@ to better reflect what the command is doing.</p>
             
     <p>Migrate configuration from array to yaml.</p>
 
-                    <div class="code-block-caption">
-            <span class="caption-text">before ext_localconf.php</span>
-        </div><div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>$GLOBALS[&#039;TYPO3_CONF_VARS&#039;][&#039;EXTENSIONS&#039;][&#039;base_extension&#039;][&#039;extender&#039;][
+                <div class="code-block-caption">
+        <span class="caption-text">before ext_localconf.php</span>
+    </div><div class="code-block-wrapper" translate="no">
+            
+    <pre class="code-block"><code>$GLOBALS[&#039;TYPO3_CONF_VARS&#039;][&#039;EXTENSIONS&#039;][&#039;base_extension&#039;][&#039;extender&#039;][
     \Fixture\BaseExtension\Domain\Model\Blob::class
 ][&#039;extending_extension&#039;] = &#039;EXT:extending_extension/Classes/Domain/Model/BlobExtend.php&#039;;</code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
-                    <div class="code-block-caption">
-            <span class="caption-text">after Services.yaml</span>
-        </div><div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code class="hljs yaml"><span class="hljs-string">Fixture\ExtendingExtension\Domain\Model\BlobExtend:</span>
+</div>
+                <div class="code-block-caption">
+        <span class="caption-text">after Services.yaml</span>
+    </div><div class="code-block-wrapper" translate="no">
+            
+    <pre class="code-block"><code class="hljs yaml"><span class="hljs-string">Fixture\ExtendingExtension\Domain\Model\BlobExtend:</span>
   <span class="hljs-attr">tags:</span>
     <span class="hljs-bullet">-</span>
       <span class="hljs-attr">name:</span> <span class="hljs-string">'extender.extends'</span>
       <span class="hljs-attr">class:</span> <span class="hljs-string">Fixture\BaseExtension\Domain\Model\Blob</span></code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
     </section>
     </section>
             <section class="section" id="change-of-extending-configuration-in-7-0-0">
@@ -708,21 +699,20 @@ fills the array but this array is not used anymore.</p>
             
     <p>All extensions that use EXTCONF in registration of class extending like.</p>
 
-                    <div class="code-block-caption">
-            <span class="caption-text">before ext_localconf.php</span>
-        </div><div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>$GLOBALS[&#039;TYPO3_CONF_VARS&#039;][&#039;EXTCONF&#039;][&#039;store_finder&#039;][&#039;extender&#039;][
+                <div class="code-block-caption">
+        <span class="caption-text">before ext_localconf.php</span>
+    </div><div class="code-block-wrapper" translate="no">
+            
+    <pre class="code-block"><code>$GLOBALS[&#039;TYPO3_CONF_VARS&#039;][&#039;EXTCONF&#039;][&#039;store_finder&#039;][&#039;extender&#039;][
     \Evoweb\StoreFinder\Domain\Model\Location::class
 ][&#039;sitepackage&#039;] = &#039;EXT:sitepackage/Classes/Domain/Model/Location.php&#039;;</code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
     </section>
             <section class="section" id="migration">
             <h3>Migration<a class="headerlink" href="#migration" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
@@ -812,7 +802,7 @@ fills the array but this array is not used anymore.</p>
         <div class="frame-container">
             <div class="frame-inner">
                                 <div class="footer-additional">
-                    <p class="text-center">Last rendered: May 19, 2024 17:41</p>
+                    <p class="text-center">Last rendered: May 22, 2024 15:57</p>
                 </div>
                 <div class="footer-meta">
                     <ul class="footer-meta-navigation">

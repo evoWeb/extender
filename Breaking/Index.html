@@ -11,9 +11,9 @@
 <meta content="" name="docsearch:package_type">
 <meta content="" name="docsearch:release">
 <meta content="" name="docsearch:version">
-<meta content="2024-05-19T17:41:02+00:00" name="docsearch:modified">
-<meta content="2024-05-19T17:41:02+00:00" name="dc.modified">
-<meta content="2024-05-19T17:41:02+00:00" property="article:modified_time">
+<meta content="2024-05-22T15:57:51+00:00" name="docsearch:modified">
+<meta content="2024-05-22T15:57:51+00:00" name="dc.modified">
+<meta content="2024-05-22T15:57:51+00:00" property="article:modified_time">
     <link href="http://purl.org/dc/elements/1.1/" rel="schema.dc">
 <link href="../_resources/css/theme.css" rel="stylesheet">
 <link href="https://docs.typo3.org/search/" rel="search" title="Search">
@@ -167,38 +167,36 @@ to better reflect what the command is doing.</p>
             
     <p>Migrate configuration from array to yaml.</p>
 
-                    <div class="code-block-caption">
-            <span class="caption-text">before ext_localconf.php</span>
-        </div><div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>$GLOBALS[&#039;TYPO3_CONF_VARS&#039;][&#039;EXTENSIONS&#039;][&#039;base_extension&#039;][&#039;extender&#039;][
+                <div class="code-block-caption">
+        <span class="caption-text">before ext_localconf.php</span>
+    </div><div class="code-block-wrapper" translate="no">
+            
+    <pre class="code-block"><code>$GLOBALS[&#039;TYPO3_CONF_VARS&#039;][&#039;EXTENSIONS&#039;][&#039;base_extension&#039;][&#039;extender&#039;][
     \Fixture\BaseExtension\Domain\Model\Blob::class
 ][&#039;extending_extension&#039;] = &#039;EXT:extending_extension/Classes/Domain/Model/BlobExtend.php&#039;;</code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
-                    <div class="code-block-caption">
-            <span class="caption-text">after Services.yaml</span>
-        </div><div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code class="hljs yaml"><span class="hljs-string">Fixture\ExtendingExtension\Domain\Model\BlobExtend:</span>
+</div>
+                <div class="code-block-caption">
+        <span class="caption-text">after Services.yaml</span>
+    </div><div class="code-block-wrapper" translate="no">
+            
+    <pre class="code-block"><code class="hljs yaml"><span class="hljs-string">Fixture\ExtendingExtension\Domain\Model\BlobExtend:</span>
   <span class="hljs-attr">tags:</span>
     <span class="hljs-bullet">-</span>
       <span class="hljs-attr">name:</span> <span class="hljs-string">'extender.extends'</span>
       <span class="hljs-attr">class:</span> <span class="hljs-string">Fixture\BaseExtension\Domain\Model\Blob</span></code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
     </section>
     </section>
             <section class="section" id="change-of-extending-configuration-in-7-0-0">
@@ -221,21 +219,20 @@ fills the array but this array is not used anymore.</p>
             
     <p>All extensions that use EXTCONF in registration of class extending like.</p>
 
-                    <div class="code-block-caption">
-            <span class="caption-text">before ext_localconf.php</span>
-        </div><div class="code-block-wrapper" translate="no">
-                        
-        <pre class="code-block"><code>$GLOBALS[&#039;TYPO3_CONF_VARS&#039;][&#039;EXTCONF&#039;][&#039;store_finder&#039;][&#039;extender&#039;][
+                <div class="code-block-caption">
+        <span class="caption-text">before ext_localconf.php</span>
+    </div><div class="code-block-wrapper" translate="no">
+            
+    <pre class="code-block"><code>$GLOBALS[&#039;TYPO3_CONF_VARS&#039;][&#039;EXTCONF&#039;][&#039;store_finder&#039;][&#039;extender&#039;][
     \Evoweb\StoreFinder\Domain\Model\Location::class
 ][&#039;sitepackage&#039;] = &#039;EXT:sitepackage/Classes/Domain/Model/Location.php&#039;;</code></pre>
-        <div>
-            <button class="code-block-copy" title="Copy to clipboard">
-                <i class="fa-regular fa-copy code-block-copy-icon"></i>
-                <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
-            </button>
-            <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
-        </div>
+    <div>        <button class="code-block-copy" title="Copy to clipboard">
+            <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
+            <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
+        </button>
+        <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
+</div>
     </section>
             <section class="section" id="migration">
             <h3>Migration<a class="headerlink" href="#migration" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
@@ -318,7 +315,7 @@ fills the array but this array is not used anymore.</p>
         <div class="frame-container">
             <div class="frame-inner">
                                 <div class="footer-additional">
-                    <p class="text-center">Last rendered: May 19, 2024 17:41</p>
+                    <p class="text-center">Last rendered: May 22, 2024 15:57</p>
                 </div>
                 <div class="footer-meta">
                     <ul class="footer-meta-navigation">
