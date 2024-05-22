@@ -84,6 +84,7 @@ class RegisterAutoloaderEventTest extends AbstractTestBase
     {
         $registerAutoloaderEvent = new RegisterAutoloaderEvent(GeneralUtility::getContainer());
 
+        // @extensionScannerIgnoreLine
         $condition = $registerAutoloaderEvent->isPropagationStopped();
 
         self::assertTrue($condition);

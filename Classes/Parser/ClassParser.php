@@ -44,6 +44,7 @@ class ClassParser
         $fileSegments->setCode(file_get_contents($filePath));
 
         try {
+            // @extensionScannerIgnoreLine
             $parser = $this->parserFactory->createForVersion(PhpVersion::fromComponents(8, 2));
             $fileSegments->setStatements($parser->parse($fileSegments->getCode()));
 
