@@ -1,5 +1,16 @@
 <?php
 
+/*
+ * This file is developed by evoWeb.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ */
+
 namespace Evoweb\Extender\Tests\Functional\Event;
 
 use Evoweb\Extender\Event\RegisterAutoloaderEvent;
@@ -29,9 +40,7 @@ class RegisterAutoloaderEventTest extends AbstractTestBase
         $autoloader = [GeneralUtility::getContainer()->get(ClassLoader::class), 'loadClass'];
 
         $subject = new class () extends RegisterAutoloaderEvent {
-            public function __construct()
-            {
-            }
+            public function __construct() {}
 
             public function autoloaderAlreadyRegistered(array $autoloader): bool
             {
@@ -52,9 +61,7 @@ class RegisterAutoloaderEventTest extends AbstractTestBase
         spl_autoload_register($autoloader, true, true);
 
         $subject = new class () extends RegisterAutoloaderEvent {
-            public function __construct()
-            {
-            }
+            public function __construct() {}
 
             public function unregisterAutoloader(array $autoloader): void
             {

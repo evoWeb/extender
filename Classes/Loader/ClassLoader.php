@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the "extender" Extension for TYPO3 CMS.
+ * This file is developed by evoWeb.
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
@@ -27,8 +27,7 @@ class ClassLoader implements SingletonInterface
         protected FrontendInterface|PhpFrontend $classCache,
         protected ClassCacheManager $classCacheManager,
         protected ClassRegister $classRegister
-    ) {
-    }
+    ) {}
 
     /**
      * Loads php files containing classes or interfaces part of the

@@ -1,5 +1,16 @@
 <?php
 
+/*
+ * This file is developed by evoWeb.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ */
+
 namespace Evoweb\Extender\Tests\Functional\Parser;
 
 use Evoweb\Extender\Parser\ClassParser;
@@ -22,7 +33,7 @@ class ClassParserTest extends AbstractTestBase
         $parser = $this->getMockBuilder(Php7::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $parser->expects($this->once())->method('parse')->willReturn([
+        $parser->expects(self::once())->method('parse')->willReturn([
             new Stmt\Namespace_(new Node\Name('Fixture\BaseExtension\Domain\Model')),
             new Node\UseItem(new Node\Name('Evoweb\Domain\Model\Test')),
             new Stmt\Class_('GetFileSegments'),
@@ -35,7 +46,7 @@ class ClassParserTest extends AbstractTestBase
         /** @var ParserFactory|MockObject $parserFactory */
         $parserFactory = $this->createMock(ParserFactory::class);
         $parserFactory
-            ->expects($this->once())
+            ->expects(self::once())
             ->method('createForVersion')
             ->willReturn($parser);
 

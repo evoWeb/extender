@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the "extender" Extension for TYPO3 CMS.
+ * This file is developed by evoWeb.
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
@@ -17,8 +17,8 @@ namespace Evoweb\Extender\Composer\Generator;
 
 use Evoweb\Extender\Parser\FileSegments;
 use PhpParser\Node\Stmt\Class_;
-use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\ClassConst;
+use PhpParser\Node\Stmt\Namespace_;
 
 class ConstantGenerator implements GeneratorInterface
 {

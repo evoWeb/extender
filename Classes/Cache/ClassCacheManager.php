@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the "extender" Extension for TYPO3 CMS.
+ * This file is developed by evoWeb.
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
@@ -32,8 +32,7 @@ class ClassCacheManager
         protected ClassParser $classParser,
         protected ClassComposer $classComposer,
         protected ClassRegister $classRegister
-    ) {
-    }
+    ) {}
 
     /**
      * Build merged file and cache for base and extending files
@@ -45,7 +44,7 @@ class ClassCacheManager
     {
         $fileSegments = [
             $this->getBaseClassFileSegments($className),
-            ...$this->getExtendingClassesFileSegments($className)
+            ...$this->getExtendingClassesFileSegments($className),
         ];
 
         $code = $this->getMergedFileCode($fileSegments);

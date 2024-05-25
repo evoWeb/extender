@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the "extender" Extension for TYPO3 CMS.
+ * This file is developed by evoWeb.
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
@@ -33,9 +33,7 @@ class ClassParser
         Visitor\ClassMethodVisitor::class,
     ];
 
-    public function __construct(protected ParserFactory $parserFactory)
-    {
-    }
+    public function __construct(protected ParserFactory $parserFactory) {}
 
     public function getFileSegments(string $filePath): FileSegments
     {

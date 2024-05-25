@@ -1,5 +1,16 @@
 <?php
 
+/*
+ * This file is developed by evoWeb.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ */
+
 namespace Evoweb\Extender\Tests\Functional\Cache;
 
 use Composer\Autoload\ClassLoader;
@@ -32,15 +43,15 @@ class ClassCacheManagerTest extends AbstractTestBase
                 'getBaseClassFileSegments',
                 'getExtendingClassesFileSegments',
                 'getMergedFileCode',
-                'addFileToCache'
+                'addFileToCache',
             ])
             ->setConstructorArgs([$classCache, $classLoader, $classParser, $classComposer, $classRegister])
             ->getMock();
 
-        $subject->expects($this->once())->method('getBaseClassFileSegments')->willReturn(new FileSegments());
-        $subject->expects($this->once())->method('getExtendingClassesFileSegments')->willReturn([]);
-        $subject->expects($this->once())->method('getMergedFileCode')->willReturn('');
-        $subject->expects($this->once())->method('addFileToCache');
+        $subject->expects(self::once())->method('getBaseClassFileSegments')->willReturn(new FileSegments());
+        $subject->expects(self::once())->method('getExtendingClassesFileSegments')->willReturn([]);
+        $subject->expects(self::once())->method('getMergedFileCode')->willReturn('');
+        $subject->expects(self::once())->method('addFileToCache');
 
         $subject->build('test', Blob::class);
     }
@@ -91,7 +102,7 @@ class ClassCacheManagerTest extends AbstractTestBase
         $classComposer = $this->createMock(ClassComposer::class);
 
         $classRegister = $this->createMock(ClassRegister::class);
-        $classRegister->expects($this->once())->method('getExtendingClasses')->willReturn(['test2', 'test3']);
+        $classRegister->expects(self::once())->method('getExtendingClasses')->willReturn(['test2', 'test3']);
 
         $subject = new class (
             $classCache,
@@ -113,7 +124,7 @@ class ClassCacheManagerTest extends AbstractTestBase
 
         $expected = [
             new FileSegments(),
-            new FileSegments()
+            new FileSegments(),
         ];
 
         $actual = $subject->getExtendingClassesFileSegments('test');
@@ -133,13 +144,13 @@ class ClassCacheManagerTest extends AbstractTestBase
         );
 
         $ClassLoader = $this->createMock(ClassLoader::class);
-        $ClassLoader->expects($this->once())->method('findFile')->willReturn($basePath);
+        $ClassLoader->expects(self::once())->method('findFile')->willReturn($basePath);
 
         $expected = new FileSegments();
         $expected->setBaseClass(true);
 
         $classParser = $this->createMock(ClassParser::class);
-        $classParser->expects($this->once())->method('getFileSegments')->willReturn($expected);
+        $classParser->expects(self::once())->method('getFileSegments')->willReturn($expected);
 
         $subject = new class (
             $classCache,
@@ -168,7 +179,7 @@ class ClassCacheManagerTest extends AbstractTestBase
         $classRegister = $this->createMock(ClassRegister::class);
 
         $classComposer = $this->createMock(ClassComposer::class);
-        $classComposer->expects($this->once())->method('composeMergedFileCode')->willReturn('');
+        $classComposer->expects(self::once())->method('composeMergedFileCode')->willReturn('');
 
         $subject = new class (
             $classCache,
@@ -199,7 +210,7 @@ class ClassCacheManagerTest extends AbstractTestBase
         $classRegister = $this->createMock(ClassRegister::class);
 
         $classCache = $this->createMock(FrontendInterface::class);
-        $classCache->expects($this->once())->method('set')->willReturn(null);
+        $classCache->expects(self::once())->method('set')->willReturn(null);
 
         $subject = new class (
             $classCache,

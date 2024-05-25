@@ -1,11 +1,22 @@
 <?php
 
+/*
+ * This file is developed by evoWeb.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ */
+
 namespace Evoweb\Extender\Tests\Functional\Utility;
 
 use Evoweb\Extender\Cache\CacheFactory;
+use Evoweb\Extender\Cache\ClassCacheManager;
 use Evoweb\Extender\Composer\ClassComposer;
 use Evoweb\Extender\Configuration\ClassRegister;
-use Evoweb\Extender\Cache\ClassCacheManager;
 use Evoweb\Extender\Loader\ClassLoader;
 use Evoweb\Extender\Parser\ClassParser;
 use Evoweb\Extender\Tests\Functional\AbstractTestBase;
@@ -31,8 +42,8 @@ class ClassLoaderTest extends AbstractTestBase
         $cacheMock = $this->getMockBuilder(PhpFrontend::class)
             ->setConstructorArgs(['extender', $cacheBackend])
             ->getMock();
-        $cacheMock->expects($this->once())->method('has')->willReturn(true);
-        $cacheMock->expects($this->once())->method('requireOnce')->willReturn(true);
+        $cacheMock->expects(self::once())->method('has')->willReturn(true);
+        $cacheMock->expects(self::once())->method('requireOnce')->willReturn(true);
 
         $subject = new ClassLoader($cacheMock, $classCacheManager, $classRegister);
 

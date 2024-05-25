@@ -17,9 +17,7 @@ namespace Evoweb\Extender\Configuration;
 
 class ClassRegister
 {
-    public function __construct(protected array $extendedClasses = [])
-    {
-    }
+    public function __construct(protected array $extendedClasses = []) {}
 
     public function hasBaseClassName(string $className): bool
     {
