@@ -49,7 +49,7 @@ class ExtenderRebuildCommand extends Command
      *
      * @return int
      */
-    public function execute(InputInterface $input, OutputInterface $output)
+    public function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->classCacheManager->reBuild();
         return 0;
