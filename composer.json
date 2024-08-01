@@ -29,7 +29,7 @@
 		}
 	},
 	"require": {
-		"typo3/cms-core": "^13.0 || 13.0.x-dev || dev-main",
+		"typo3/cms-core": "^13.0 || 13.3.x-dev || dev-main",
 		"nikic/php-parser": "^5.0",
 		"psr/container": "^2.0",
 		"psr/event-dispatcher": "^1.0",
