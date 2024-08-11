@@ -1,28 +1,38 @@
 <?php
 
+/*
+ * This file is developed by evoWeb.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ */
+
 namespace Evoweb\Extender\Tests\Functional\Utility;
 
 use Evoweb\Extender\Cache\CacheFactory;
-use Evoweb\Extender\Composer\ClassComposer;
-use Evoweb\Extender\Configuration\Register;
 use Evoweb\Extender\Cache\ClassCacheManager;
+use Evoweb\Extender\Composer\ClassComposer;
+use Evoweb\Extender\Configuration\ClassRegister;
 use Evoweb\Extender\Loader\ClassLoader;
 use Evoweb\Extender\Parser\ClassParser;
 use Evoweb\Extender\Tests\Functional\AbstractTestBase;
 use Fixture\BaseExtension\Domain\Model\Blob;
 use PhpParser\ParserFactory;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Core\Cache\Backend\FileBackend;
 use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
 
 class ClassLoaderTest extends AbstractTestBase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function loadClass(): void
     {
-        $register = new Register(['test' => []]);
+        $classRegister = new ClassRegister(['test' => []]);
         /** @var ClassCacheManager $classCacheManager */
         $classCacheManager = $this->createMock(ClassCacheManager::class);
 
@@ -32,30 +42,28 @@ class ClassLoaderTest extends AbstractTestBase
         $cacheMock = $this->getMockBuilder(PhpFrontend::class)
             ->setConstructorArgs(['extender', $cacheBackend])
             ->getMock();
-        $cacheMock->expects($this->once())->method('has')->willReturn(true);
-        $cacheMock->expects($this->once())->method('requireOnce')->willReturn(true);
+        $cacheMock->expects(self::once())->method('has')->willReturn(true);
+        $cacheMock->expects(self::once())->method('requireOnce')->willReturn(true);
 
-        $subject = new ClassLoader($cacheMock, $classCacheManager, $register);
+        $subject = new ClassLoader($cacheMock, $classCacheManager, $classRegister);
 
         $condition = $subject->loadClass('test');
 
         self::assertTrue($condition);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function isValidClassName(): void
     {
-        $register = new Register(['test' => []]);
+        $classRegister = new ClassRegister(['test' => []]);
         /** @var ClassCacheManager $classCacheManager */
         $classCacheManager = $this->createMock(ClassCacheManager::class);
-        /** @var PhpFrontend $classCache */
+        /** @var PhpFrontend|MockObject $classCache */
         $classCache = $this->getMockBuilder(PhpFrontend::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $subject = new class($classCache, $classCacheManager, $register) extends ClassLoader {
+        $subject = new class ($classCache, $classCacheManager, $classRegister) extends ClassLoader {
             public function isValidClassName(string $className): bool
             {
                 return parent::isValidClassName($className);
@@ -69,14 +77,12 @@ class ClassLoaderTest extends AbstractTestBase
 
     // todo
     // disable due to Blob is loaded in setup and can not be loaded again
-    /**
-     * @ test
-     * @ group selected
-     */
+    // #[Test]
+    // #[Group('selected')]
     public function extendedClassIsOfBaseType(): void
     {
-        $composerClassLoader = $this->getComposerClassLoader();
-        $register = $this->getRegister();
+        $classLoader = $this->getClassLoader();
+        $classRegister = $this->getClassRegister();
         $cacheManager = new CacheFactory();
         $classCache = $cacheManager->createCache('extender');
         $parserFactory = new ParserFactory();
@@ -84,14 +90,14 @@ class ClassLoaderTest extends AbstractTestBase
         $classComposer = new ClassComposer();
         $classCacheManager = new ClassCacheManager(
             $classCache,
-            $composerClassLoader,
+            $classLoader,
             $classParser,
             $classComposer,
-            $register
+            $classRegister
         );
 
         $expected = 'Fixture\BaseExtension\Domain\Model\Blob';
-        $subject = new ClassLoader($classCache, $classCacheManager, $register);
+        $subject = new ClassLoader($classCache, $classCacheManager, $classRegister);
         $subject->loadClass($expected);
 
         $actual = get_class(new Blob());
@@ -101,14 +107,12 @@ class ClassLoaderTest extends AbstractTestBase
 
     // todo
     // disable due to Blob is loaded in setup and can not be loaded again
-    /**
-     * @ test
-     * @ group selected
-     */
+    // #[Test]
+    // #[Group('selected')]
     public function extendedClassHasOtherProperty(): void
     {
-        $composerClassLoader = $this->getComposerClassLoader();
-        $register = $this->getRegister();
+        $classLoader = $this->getClassLoader();
+        $classRegister = $this->getClassRegister();
         $cacheManager = new CacheFactory();
         $classCache = $cacheManager->createCache('extender');
         $parserFactory = new ParserFactory();
@@ -116,14 +120,14 @@ class ClassLoaderTest extends AbstractTestBase
         $classComposer = new ClassComposer();
         $classCacheManager = new ClassCacheManager(
             $classCache,
-            $composerClassLoader,
+            $classLoader,
             $classParser,
             $classComposer,
-            $register
+            $classRegister
         );
 
         $className = 'Fixture\BaseExtension\Domain\Model\Blob';
-        $subject = new ClassLoader($classCache, $classCacheManager, $register);
+        $subject = new ClassLoader($classCache, $classCacheManager, $classRegister);
         $subject->loadClass($className);
 
         $blob = new Blob();

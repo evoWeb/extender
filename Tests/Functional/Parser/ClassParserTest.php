@@ -1,5 +1,16 @@
 <?php
 
+/*
+ * This file is developed by evoWeb.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ */
+
 namespace Evoweb\Extender\Tests\Functional\Parser;
 
 use Evoweb\Extender\Parser\ClassParser;
@@ -10,32 +21,34 @@ use PhpParser\Node;
 use PhpParser\Node\Stmt;
 use PhpParser\Parser\Php7;
 use PhpParser\ParserFactory;
+use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 
 class ClassParserTest extends AbstractTestBase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function getFileSegments(): void
     {
         /** @var Php7|MockObject $parser */
         $parser = $this->getMockBuilder(Php7::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $parser->expects($this->once())->method('parse')->willReturn([
-            new Stmt\Namespace_(new Node\Name('Evoweb\TestNamespace')),
-            new Stmt\UseUse(new Node\Name('Evoweb\Domain\Model\Test')),
+        $parser->expects(self::once())->method('parse')->willReturn([
+            new Stmt\Namespace_(new Node\Name('Fixture\BaseExtension\Domain\Model')),
+            new Node\UseItem(new Node\Name('Evoweb\Domain\Model\Test')),
             new Stmt\Class_('GetFileSegments'),
             new Stmt\TraitUse([new Node\Name('Evoweb\TestTrait')]),
-            new Stmt\Property(2, [new Stmt\PropertyProperty('testProperty')]),
+            new Stmt\Property(2, [new Node\PropertyItem('testProperty')]),
             new Stmt\ClassMethod('__construct'),
             new Stmt\ClassMethod('getTestProperty'),
         ]);
 
         /** @var ParserFactory|MockObject $parserFactory */
         $parserFactory = $this->createMock(ParserFactory::class);
-        $parserFactory->expects($this->once())->method('create')->willReturn($parser);
+        $parserFactory
+            ->expects(self::once())
+            ->method('createForVersion')
+            ->willReturn($parser);
 
         $subject = new ClassParser($parserFactory);
 
@@ -53,22 +66,20 @@ class ClassParserTest extends AbstractTestBase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function getFileSegment(): void
     {
         /** @var ParserFactory|MockObject $parser */
         $parserFactory = $this->createMock(ParserFactory::class);
 
-        $subject = new class($parserFactory) extends ClassParser {
+        $subject = new class ($parserFactory) extends ClassParser {
             public function traverseStatements(FileSegments $fileSegment, string $visitorClassName): void
             {
                 parent::traverseStatements($fileSegment, $visitorClassName);
             }
         };
 
-        $expected = new Node\Name('Evoweb\TestNamespace');
+        $expected = new Node\Name('Fixture\BaseExtension\Domain\Model');
 
         $fileSegment = new FileSegments();
         $fileSegment->setStatements([new Stmt\Namespace_($expected)]);

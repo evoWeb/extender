@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the "extender" Extension for TYPO3 CMS.
+ * This file is developed by evoWeb.
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
@@ -15,11 +15,11 @@ declare(strict_types=1);
 
 namespace Evoweb\Extender\Cache;
 
-use TYPO3\CMS\Core\Core\Bootstrap;
 use TYPO3\CMS\Core\Cache\Backend\AbstractBackend;
 use TYPO3\CMS\Core\Cache\Backend\FileBackend;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
+use TYPO3\CMS\Core\Core\Bootstrap;
 
 class CacheFactory
 {
@@ -40,7 +40,7 @@ class CacheFactory
         self::addClassCacheConfigToGlobalTypo3ConfVars();
         try {
             $cache = Bootstrap::createCache($identifier);
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             $cache = null;
         }
         return $cache;

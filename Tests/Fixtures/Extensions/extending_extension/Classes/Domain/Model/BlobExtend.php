@@ -1,13 +1,22 @@
 <?php
 
+/*
+ * This file is developed by evoWeb.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ */
+
 namespace Fixture\ExtendingExtension\Domain\Model;
 
-use Evoweb\Extender\Exception;
-use Fixture\BaseExtension\Domain\Model\Blob;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait as T;
 
-class BlobExtend extends Blob implements LoggerAwareInterface
+class BlobExtend extends \Fixture\BaseExtension\Domain\Model\Blob implements LoggerAwareInterface
 {
     use T;
 
@@ -15,7 +24,7 @@ class BlobExtend extends Blob implements LoggerAwareInterface
 
     public function __construct($property = 'b', $otherProperty = 1)
     {
-        parent::__construct();
+        parent::__construct($property);
         $this->otherProperty = $otherProperty;
     }
 

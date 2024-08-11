@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the "extender" Extension for TYPO3 CMS.
+ * This file is developed by evoWeb.
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
@@ -30,7 +30,8 @@ class RegisterAutoloaderEvent implements StoppableEventInterface
                 $this->unregisterAutoloader($autoloader);
             }
             spl_autoload_register($autoloader, true, true);
-        } catch (ContainerExceptionInterface $e) {}
+        } catch (ContainerExceptionInterface) {
+        }
     }
 
     protected function autoloaderAlreadyRegistered(array $autoloader): bool

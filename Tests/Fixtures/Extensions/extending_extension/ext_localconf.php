@@ -1,9 +1,12 @@
 <?php
 
-\TYPO3\CMS\Extbase\Utility\ExtensionUtility::configurePlugin(
+use Fixture\ExtendingExtension\Controller\TestController;
+use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
+
+ExtensionUtility::configurePlugin(
     'ExtendingExtension',
     'Test',
     [
-        \Fixture\ExtendingExtension\Controller\TestController::class => 'show',
+        TestController::class => 'show',
     ]
 );

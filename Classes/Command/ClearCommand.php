@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the "extender" Extension for TYPO3 CMS.
+ * This file is developed by evoWeb.
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
@@ -16,6 +16,7 @@ declare(strict_types=1);
 namespace Evoweb\Extender\Command;
 
 use Evoweb\Extender\Cache\CacheFactory;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
@@ -25,11 +26,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class ClearCommand extends Command
 {
-    protected CacheFactory $cacheFactory;
-
-    public function __construct(CacheFactory $cacheFactory)
+    public function __construct(protected CacheFactory $cacheFactory)
     {
-        $this->cacheFactory = $cacheFactory;
         parent::__construct();
     }
 
@@ -38,8 +36,9 @@ class ClearCommand extends Command
         $result = self::SUCCESS;
         try {
             $this->cacheFactory->createCache('extender')->flush();
+            $output->writeln('<info>Cache cleared</info>');
         } catch (\Exception $e) {
-            $output->writeln($e->getMessage());
+            $output->writeln('<error>' . $e->getMessage() . '</error>');
             $result = self::FAILURE;
         }
         return $result;

@@ -1,17 +1,31 @@
 <?php
 
+/*
+ * This file is developed by evoWeb.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ */
+
 namespace Fixture\BaseExtension\Domain\Model;
 
-class BlobWithStorageAndConstructorArgument extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
+
+class BlobWithStorageAndConstructorArgument extends AbstractEntity
 {
     protected string $property = '';
 
-    protected \TYPO3\CMS\Extbase\Persistence\ObjectStorage $storage;
+    protected ObjectStorage $storage;
 
     public function __construct($property = '')
     {
         $this->property = $property;
-        $this->storage = new \TYPO3\CMS\Extbase\Persistence\ObjectStorage();
+        $this->storage = new ObjectStorage();
     }
 
     public function getProperty(): string
@@ -19,17 +33,17 @@ class BlobWithStorageAndConstructorArgument extends \TYPO3\CMS\Extbase\DomainObj
         return $this->property;
     }
 
-    public function setProperty(string $property)
+    public function setProperty(string $property): void
     {
         $this->property = $property;
     }
 
-    public function getStorage(): \TYPO3\CMS\Extbase\Persistence\ObjectStorage
+    public function getStorage(): ObjectStorage
     {
         return $this->storage;
     }
 
-    public function setStorage(\TYPO3\CMS\Extbase\Persistence\ObjectStorage $storage)
+    public function setStorage(ObjectStorage $storage): void
     {
         $this->storage = $storage;
     }

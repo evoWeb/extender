@@ -23,23 +23,26 @@
 		"allow-plugins": {
 			"typo3/class-alias-loader": true,
 			"typo3/cms-composer-installers": true
+		},
+		"platform": {
+			"ext-intl": "8.2.1"
 		}
 	},
 	"require": {
-		"typo3/cms-core": "^11.5 || ^12.4 || 12.4.x-dev || dev-main",
-		"nikic/php-parser": "^4.13.2 || ^4.15.4",
-		"psr/container": "^1.1 || ^2.0",
+		"typo3/cms-core": "^13.0 || 13.3.x-dev || dev-main",
+		"nikic/php-parser": "^5.0",
+		"psr/container": "^2.0",
 		"psr/event-dispatcher": "^1.0",
-		"symfony/console": "^5.4 || ^6.4 || ^7.0",
-		"symfony/dependency-injection": "^5.4 || ^6.4 || ^7.0"
+		"symfony/console": "^7.0",
+		"symfony/dependency-injection": "^7.0"
 	},
 	"require-dev": {
 		"evoweb/base_extension": "*",
 		"evoweb/extending_extension": "*",
-		"phpunit/phpunit": "^9.5.10 || ^10.1.1",
-		"symfony/polyfill-php80": "^1.16",
-		"typo3/cms-extensionmanager": "^11.5 || ^12.4 || 12.4.x-dev || dev-main",
-		"typo3/testing-framework": "^6.16.9 || ^8.0.2 || 12.4.x-dev || dev-main"
+		"friendsofphp/php-cs-fixer": "^3.57.1",
+		"phpunit/phpunit": "^11.0.3",
+		"typo3/cms-extensionmanager": "^13.0 || 13.0.x-dev || dev-main",
+		"typo3/testing-framework": "dev-main"
 	},
 	"extra": {
 		"typo3/cms": {

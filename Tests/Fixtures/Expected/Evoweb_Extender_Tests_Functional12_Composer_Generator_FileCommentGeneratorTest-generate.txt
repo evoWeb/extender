@@ -1,6 +1,0 @@
-/*
- * This file is composed by "extender"
- * Merged class with parts of files:
- *  - base.php
- *  - extend.php
- */

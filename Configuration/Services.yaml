@@ -1,11 +1,11 @@
 services:
   _defaults:
-    autowire: true
-    autoconfigure: true
+    autowire: false
+    autoconfigure: false
     public: false
 
   Evoweb\Extender\:
-    resource: '../Classes/*'
+    resource: '../Classes/'
 
   cache.extender:
     class: TYPO3\CMS\Core\Cache\Frontend\FrontendInterface
@@ -18,24 +18,25 @@ services:
   Evoweb\Extender\Cache\ClassCacheManager:
     arguments:
       $classCache: '@cache.extender'
-      $composerClassLoader: '@Composer\Autoload\ClassLoader'
+      $classLoader: '@Composer\Autoload\ClassLoader'
       $classParser: '@Evoweb\Extender\Parser\ClassParser'
       $classComposer: '@Evoweb\Extender\Composer\ClassComposer'
-      $register: '@Evoweb\Extender\Configuration\Register'
+      $classRegister: '@Evoweb\Extender\Configuration\ClassRegister'
     public: true
 
   Evoweb\Extender\Command\ClearCommand:
     tags:
-      -
-        name: 'console.command'
+      - name: 'console.command'
         command: 'extender:clearClassCache'
         description: 'CLI command for the "extender" extension - clear cache'
         schedulable: false
+    arguments:
+      $cacheFactory: '@Evoweb\Extender\Cache\CacheFactory'
 
   Evoweb\Extender\Composer\ClassComposer:
     public: true
 
-  Evoweb\Extender\Configuration\Register:
+  Evoweb\Extender\Configuration\ClassRegister:
     public: true
 
   Evoweb\Extender\Event\RegisterAutoloaderEvent:
@@ -43,14 +44,11 @@ services:
       $container: '@service_container'
     shared: false
 
-  Evoweb\Extender\Hooks\DataHandlerClearCachePostProcHook:
-    public: true
-
   Evoweb\Extender\Loader\ClassLoader:
     arguments:
       $classCache: '@cache.extender'
       $classCacheManager: '@Evoweb\Extender\Cache\ClassCacheManager'
-      $register: '@Evoweb\Extender\Configuration\Register'
+      $classRegister: '@Evoweb\Extender\Configuration\ClassRegister'
     public: true
 
   Evoweb\Extender\Parser\ClassParser:

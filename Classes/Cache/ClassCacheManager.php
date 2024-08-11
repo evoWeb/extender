@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the "extender" Extension for TYPO3 CMS.
+ * This file is developed by evoWeb.
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
@@ -17,7 +17,7 @@ namespace Evoweb\Extender\Cache;
 
 use Composer\Autoload\ClassLoader;
 use Evoweb\Extender\Composer\ClassComposer;
-use Evoweb\Extender\Configuration\Register;
+use Evoweb\Extender\Configuration\ClassRegister;
 use Evoweb\Extender\Exception\BaseFileNotFoundException;
 use Evoweb\Extender\Exception\ExtendingFileNotFoundException;
 use Evoweb\Extender\Parser\ClassParser;
@@ -26,29 +26,13 @@ use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 
 class ClassCacheManager
 {
-    protected FrontendInterface $classCache;
-
-    protected ClassLoader $composerClassLoader;
-
-    protected ClassParser $classParser;
-
-    protected ClassComposer $classComposer;
-
-    protected Register $register;
-
     public function __construct(
-        FrontendInterface $classCache,
-        ClassLoader $composerClassLoader,
-        ClassParser $classParser,
-        ClassComposer $classComposer,
-        Register $register
-    ) {
-        $this->classCache = $classCache;
-        $this->composerClassLoader = $composerClassLoader;
-        $this->classParser = $classParser;
-        $this->classComposer = $classComposer;
-        $this->register = $register;
-    }
+        protected FrontendInterface $classCache,
+        protected ClassLoader $classLoader,
+        protected ClassParser $classParser,
+        protected ClassComposer $classComposer,
+        protected ClassRegister $classRegister
+    ) {}
 
     /**
      * Build merged file and cache for base and extending files
@@ -60,7 +44,7 @@ class ClassCacheManager
     {
         $fileSegments = [
             $this->getBaseClassFileSegments($className),
-            ...$this->getExtendingClassesFileSegments($className)
+            ...$this->getExtendingClassesFileSegments($className),
         ];
 
         $code = $this->getMergedFileCode($fileSegments);
@@ -76,7 +60,7 @@ class ClassCacheManager
     {
         $filesSegments = [];
 
-        foreach ($this->register->getExtendingClasses($baseClassName) as $className) {
+        foreach ($this->classRegister->getExtendingClasses($baseClassName) as $className) {
             $filesSegments[] = $this->getFileSegments($className, false, ExtendingFileNotFoundException::class);
         }
 
@@ -86,7 +70,7 @@ class ClassCacheManager
     protected function getFileSegments(string $className, bool $baseClass, string $exceptionClass): FileSegments
     {
         $type = $baseClass ? 'base' : 'extend';
-        $filePath = $this->composerClassLoader->findFile($className);
+        $filePath = $this->classLoader->findFile($className);
         $filePath = realpath($filePath);
 
         if ($filePath === false || $filePath === '') {
@@ -116,6 +100,7 @@ class ClassCacheManager
     {
         try {
             $this->classCache->set($cacheEntryIdentifier, $code);
-        } catch (\Exception $e) {}
+        } catch (\Exception) {
+        }
     }
 }

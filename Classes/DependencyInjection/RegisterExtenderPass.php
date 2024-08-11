@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the "extender" Extension for TYPO3 CMS.
+ * This file is developed by evoWeb.
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
@@ -15,7 +15,7 @@ declare(strict_types=1);
 
 namespace Evoweb\Extender\DependencyInjection;
 
-use Evoweb\Extender\Configuration\Register;
+use Evoweb\Extender\Configuration\ClassRegister;
 use Evoweb\Extender\Event\RegisterAutoloaderEvent;
 use Psr\EventDispatcher\EventDispatcherInterface;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -53,7 +53,7 @@ class RegisterExtenderPass implements CompilerPassInterface
             }
         }
 
-        $registerDefinition = $container->getDefinition(Register::class);
-        $registerDefinition->setArguments([$extendedClasses]);
+        $classRegisterDefinition = $container->getDefinition(ClassRegister::class);
+        $classRegisterDefinition->setArguments([$extendedClasses]);
     }
 }

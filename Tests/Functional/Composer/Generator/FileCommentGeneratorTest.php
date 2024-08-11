@@ -1,16 +1,26 @@
 <?php
 
+/*
+ * This file is developed by evoWeb.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ */
+
 namespace Evoweb\Extender\Tests\Functional\Composer\Generator;
 
 use Evoweb\Extender\Composer\Generator\FileCommentGenerator;
 use Evoweb\Extender\Parser\FileSegments;
 use Evoweb\Extender\Tests\Functional\AbstractTestBase;
+use PHPUnit\Framework\Attributes\Test;
 
 class FileCommentGeneratorTest extends AbstractTestBase
 {
-    /**
-     * @test
-     */
+    #[Test]
     public function generate(): void
     {
         $baseFileSegment = new FileSegments();
@@ -36,9 +46,7 @@ class FileCommentGeneratorTest extends AbstractTestBase
         self::assertEquals($expected, $actual);
     }
 
-    /**
-     * @test
-     */
+    #[Test]
     public function createCommentText(): void
     {
         $baseFileSegment = new FileSegments();
@@ -50,7 +58,7 @@ class FileCommentGeneratorTest extends AbstractTestBase
             $extendFileSegment,
         ];
 
-        $subject = new class() extends FileCommentGenerator {
+        $subject = new class () extends FileCommentGenerator {
             public function createCommentText(array $fileSegments): string
             {
                 return parent::createCommentText($fileSegments);

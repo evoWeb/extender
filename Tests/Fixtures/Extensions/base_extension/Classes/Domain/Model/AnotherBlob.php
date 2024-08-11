@@ -1,8 +1,21 @@
 <?php
 
+/*
+ * This file is developed by evoWeb.
+ *
+ * It is free software; you can redistribute it and/or modify it under
+ * the terms of the GNU General Public License, either version 2
+ * of the License, or any later version.
+ *
+ * For the full copyright and license information, please read the
+ * LICENSE.txt file that was distributed with this source code.
+ */
+
 namespace Fixture\BaseExtension\Domain\Model;
 
-class AnotherBlob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
+
+class AnotherBlob extends AbstractEntity
 {
     protected string $property = '';
 
@@ -11,7 +24,7 @@ class AnotherBlob extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
         return $this->property;
     }
 
-    public function setProperty(string $property)
+    public function setProperty(string $property): void
     {
         $this->property = $property;
     }

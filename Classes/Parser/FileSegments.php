@@ -3,7 +3,7 @@
 declare(strict_types=1);
 
 /*
- * This file is part of the "extender" Extension for TYPO3 CMS.
+ * This file is developed by evoWeb.
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
@@ -17,11 +17,12 @@ namespace Evoweb\Extender\Parser;
 
 use PhpParser\Node\Name;
 use PhpParser\Node\Stmt\Class_;
-use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\ClassConst;
+use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Property;
 use PhpParser\Node\Stmt\TraitUse;
 use PhpParser\Node\Stmt\UseUse;
+use PhpParser\Node\UseItem;
 
 class FileSegments implements \JsonSerializable
 {
@@ -129,7 +130,7 @@ class FileSegments implements \JsonSerializable
         $this->uses = $uses;
     }
 
-    public function addUseUse(UseUse $useUse): void
+    public function addUseUse(UseItem $useUse): void
     {
         $this->uses[] = $useUse;
     }
