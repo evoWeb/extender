@@ -1,11 +1,11 @@
 services:
   _defaults:
-    autowire: true
-    autoconfigure: true
+    autowire: false
+    autoconfigure: false
     public: false
 
   Evoweb\Extender\:
-    resource: '../Classes/*'
+    resource: '../Classes/'
 
   cache.extender:
     class: TYPO3\CMS\Core\Cache\Frontend\FrontendInterface
@@ -30,6 +30,8 @@ services:
         command: 'extender:clearClassCache'
         description: 'CLI command for the "extender" extension - clear cache'
         schedulable: false
+    arguments:
+      $cacheFactory: '@Evoweb\Extender\Cache\CacheFactory'
 
   Evoweb\Extender\Composer\ClassComposer:
     public: true
