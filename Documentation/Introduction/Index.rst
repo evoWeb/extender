@@ -1,17 +1,15 @@
-.. include:: /Includes.rst.txt
-
-.. _introduction:
+..  include:: /Includes.rst.txt
+..  index:: Introduction
+..  _introduction:
 
 ============
 Introduction
 ============
 
-
 This Documentation was written for version 7.0.x of the extension.
 
-
 Extending classes
------------------
+=================
 
 The sole purpose of this extension is to fill a gap that extbase leaves open.
 
@@ -37,86 +35,84 @@ every clear system cache or clear all caches. After that a hook gets called that
 rebuilds the class cache. Unless a huge amount of extends are configured there
 should be a prefilled class cache on every request.
 
-
 Deep dive into an example
--------------------------
+=========================
 
 The cache manager parses the base and extend files to gather the colored parts
 of the following images, generates a combined file as shown in the merged result
 and adds it to the cache.
 
-
 .. rst-class:: bignums
 
-#. Base class file
+    - Base class file
 
-   .. figure:: Images/base.png
+      .. figure:: Images/base.png
 
-#. Extend class file
+    - Extend class file
 
-   .. figure:: Images/extend.png
+      .. figure:: Images/extend.png
 
-#. Merged result file
+    - Merged result file
 
-   .. figure:: Images/merged.png
+      .. figure:: Images/merged.png
 
 Explanation
------------
+===========
 
 ..  rst-class:: bignums-attention
 
-   #. Namespace
+    - Namespace
 
       The Namespace is taken from the base file. The namespace of the extended
       file is ignored.
 
-   #. Uses
+    - Uses
 
       All uses from base and extending file are taken uniquely. If an use appears
       with diverting as alias it is present twice in the merged file.
 
-      .. code-block::
-        :caption: example of uses appearing twice
+      ..  code-block::
+          :caption: example of uses appearing twice
 
-        use Psr\Log\LoggerAwareTrait;
-        use Psr\Log\LoggerAwareTrait as T;
+          use Psr\Log\LoggerAwareTrait;
+          use Psr\Log\LoggerAwareTrait as T;
 
-   #. Class
+    - Class
 
       The class name and the extends part is taken from the base class.
 
-   #. Implements
+    - Implements
 
       Implements are used uniquely from the base and extend file
 
-   #. Traits
+    - Traits
 
       All traits from base and extend file are taken uniquely.
 
-   #. Properties
+    - Properties
 
       All properties from base and extend file are taken without check if they
       are not colliding.
 
-   #. Construct
+    - Construct
 
       The __construct of base and extend file are taken with merged contents and
       arguments. Where arguments from base take priority.
       All line of code in the method are taken. If the __construct of the extend
       file contains a parent::__construct call it gets removed.
 
-   #. Methods
+    - Methods
 
       All methods beside __construct from base and extend file are taken without
       check if they are not colliding.
 
-   #. Comment
+    - Comment
 
       The comment is based on the base and extending files and display which
       files path were taken into account.
 
 Example source
---------------
+==============
 
 The base file content could be found in
 EXT:extender/Tests/Fixtures/Extensions/base_extension/Classes/Domain/Model/Blob.php
@@ -125,13 +121,17 @@ The extend file content is derived from
 EXT:extender/Tests/Fixtures/Extensions/extending_extension/Classes/Domain/Model/BlobExtend.php
 
 Important
----------
+=========
+
+Correct
+-----
+
 As in both files shown, it's important to use the FQCN to extend of, else the
 usage of the class gets written to the merged file and result in two classes
 with the same name in the cache file.
 
-.. code-block:: php
-   :caption: Correct extension
+..  code-block:: php
+    :caption: Correct extending
 
     namespace Fixture\ExtendingClass\Domain\Model;
 
@@ -139,8 +139,8 @@ with the same name in the cache file.
     {
     }
 
-.. code-block:: php
-   :caption: Result with correct extension
+..  code-block:: php
+    :caption: Result with correct extending
 
     namespace Fixture\ExtendingClass\Domain\Model;
 
@@ -148,11 +148,14 @@ with the same name in the cache file.
     {
     }
 
+Wrong
+-----
+
 While linting the file will not raise an error and the class is usable,
 it will definitely irritate editors like PHPStorm or Visual Code.
 
-.. code-block:: php
-   :caption: Wrong extension
+..  code-block:: php
+    :caption: Wrong extension
 
     namespace Fixture\ExtendingClass\Domain\Model;
 
@@ -162,8 +165,8 @@ it will definitely irritate editors like PHPStorm or Visual Code.
     {
     }
 
-.. code-block:: php
-   :caption: Result with wrong extension
+..  code-block:: php
+    :caption: Result with wrong extension
 
     namespace Fixture\BaseClass\Domain\Model;
 

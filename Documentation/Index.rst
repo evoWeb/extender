@@ -1,4 +1,6 @@
-.. include:: /Includes.rst.txt
+..  include:: /Includes.rst.txt
+
+..  _start:
 
 =============================================
 Extender: Extbase class extending on steroids
@@ -16,9 +18,6 @@ Extender: Extbase class extending on steroids
 :Language:
     en
 
-:Copyright:
-    2014-2023
-
 :Author:
     Sebastian Fischer
 
@@ -29,6 +28,9 @@ Extender: Extbase class extending on steroids
 
 :Rendered:
     |today|
+
+:Copyright:
+    2014-2023
 
 ----
 
