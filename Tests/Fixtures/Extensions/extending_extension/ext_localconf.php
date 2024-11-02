@@ -8,5 +8,7 @@ ExtensionUtility::configurePlugin(
     'Test',
     [
         TestController::class => 'show',
-    ]
+    ],
+    [],
+    ExtensionUtility::PLUGIN_TYPE_CONTENT_ELEMENT
 );
