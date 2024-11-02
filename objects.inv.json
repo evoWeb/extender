@@ -1,210 +1,228 @@
 {
     "std:doc": {
         "Breaking\/Index": [
-            "-",
-            "-",
+            "extender",
+            "11.0.0",
             "Breaking\/Index.html",
             "Breaking change"
         ],
         "Configuration\/Index": [
-            "-",
-            "-",
+            "extender",
+            "11.0.0",
             "Configuration\/Index.html",
             "Configuration"
         ],
         "Index": [
-            "-",
-            "-",
+            "extender",
+            "11.0.0",
             "Index.html",
             "Extender: Extbase class extending on steroids"
         ],
         "Installation\/Index": [
-            "-",
-            "-",
+            "extender",
+            "11.0.0",
             "Installation\/Index.html",
             "Installation"
         ],
         "Introduction\/Index": [
-            "-",
-            "-",
+            "extender",
+            "11.0.0",
             "Introduction\/Index.html",
             "Introduction"
         ],
         "Sitemap": [
-            "-",
-            "-",
+            "extender",
+            "11.0.0",
             "Sitemap.html",
             "Sitemap"
         ],
         "Testing\/Index": [
-            "-",
-            "-",
+            "extender",
+            "11.0.0",
             "Testing\/Index.html",
             "Testing"
         ]
     },
     "std:label": {
-        "breaking-change": [
-            "-",
-            "-",
-            "Breaking\/Index.html#breaking-change",
+        "breaking-changes": [
+            "extender",
+            "11.0.0",
+            "Breaking\/Index.html#breaking-changes",
             "Breaking change"
         ],
         "configuration": [
-            "-",
-            "-",
+            "extender",
+            "11.0.0",
             "Configuration\/Index.html#configuration",
             "Configuration"
         ],
+        "start": [
+            "extender",
+            "11.0.0",
+            "Index.html#start",
+            "Extender: Extbase class extending on steroids"
+        ],
         "installation": [
-            "-",
-            "-",
+            "extender",
+            "11.0.0",
             "Installation\/Index.html#installation",
             "Installation"
         ],
         "introduction": [
-            "-",
-            "-",
+            "extender",
+            "11.0.0",
             "Introduction\/Index.html#introduction",
             "Introduction"
         ],
         "testing": [
-            "-",
-            "-",
+            "extender",
+            "11.0.0",
             "Testing\/Index.html#testing",
             "Testing"
         ]
     },
     "std:title": {
-        "breaking-change-1": [
-            "-",
-            "-",
-            "Breaking\/Index.html#breaking-change-1",
+        "breaking-change": [
+            "extender",
+            "11.0.0",
+            "Breaking\/Index.html#breaking-change",
             "Breaking change"
         ],
         "change-of-command-name": [
-            "-",
-            "-",
+            "extender",
+            "11.0.0",
             "Breaking\/Index.html#change-of-command-name",
             "Change of command name"
         ],
         "change-of-extending-configuration-in-10-0-0": [
-            "-",
-            "-",
+            "extender",
+            "11.0.0",
             "Breaking\/Index.html#change-of-extending-configuration-in-10-0-0",
             "Change of extending configuration in 10.0.0"
         ],
         "description": [
-            "-",
-            "-",
+            "extender",
+            "11.0.0",
             "Breaking\/Index.html#description",
             "Description"
         ],
         "impact": [
-            "-",
-            "-",
+            "extender",
+            "11.0.0",
             "Breaking\/Index.html#impact",
             "Impact"
         ],
         "migration": [
-            "-",
-            "-",
+            "extender",
+            "11.0.0",
             "Breaking\/Index.html#migration",
             "Migration"
         ],
         "change-of-extending-configuration-in-7-0-0": [
-            "-",
-            "-",
+            "extender",
+            "11.0.0",
             "Breaking\/Index.html#change-of-extending-configuration-in-7-0-0",
             "Change of extending configuration in 7.0.0"
         ],
         "affected-installations": [
-            "-",
-            "-",
+            "extender",
+            "11.0.0",
             "Breaking\/Index.html#affected-installations",
             "Affected Installations"
         ],
         "configuration-1": [
-            "-",
-            "-",
+            "extender",
+            "11.0.0",
             "Configuration\/Index.html#configuration-1",
             "Configuration"
         ],
         "configure-the-extend-of-a-class": [
-            "-",
-            "-",
+            "extender",
+            "11.0.0",
             "Configuration\/Index.html#configure-the-extend-of-a-class",
             "Configure the extend of a class"
         ],
         "extender-extbase-class-extending-on-steroids": [
-            "-",
-            "-",
+            "extender",
+            "11.0.0",
             "Index.html#extender-extbase-class-extending-on-steroids",
             "Extender: Extbase class extending on steroids"
         ],
         "installation-1": [
-            "-",
-            "-",
+            "extender",
+            "11.0.0",
             "Installation\/Index.html#installation-1",
             "Installation"
         ],
-        "download-via-extension-manager": [
-            "-",
-            "-",
-            "Installation\/Index.html#download-via-extension-manager",
-            "Download via Extension Manager"
+        "require-via-command": [
+            "extender",
+            "11.0.0",
+            "Installation\/Index.html#require-via-command",
+            "Require via command"
         ],
-        "download-via-composer": [
-            "-",
-            "-",
-            "Installation\/Index.html#download-via-composer",
-            "Download via Composer"
+        "modify-composer-json": [
+            "extender",
+            "11.0.0",
+            "Installation\/Index.html#modify-composer-json",
+            "Modify composer.json"
         ],
         "introduction-1": [
-            "-",
-            "-",
+            "extender",
+            "11.0.0",
             "Introduction\/Index.html#introduction-1",
             "Introduction"
         ],
         "extending-classes": [
-            "-",
-            "-",
+            "extender",
+            "11.0.0",
             "Introduction\/Index.html#extending-classes",
             "Extending classes"
         ],
         "deep-dive-into-an-example": [
-            "-",
-            "-",
+            "extender",
+            "11.0.0",
             "Introduction\/Index.html#deep-dive-into-an-example",
             "Deep dive into an example"
         ],
         "explanation": [
-            "-",
-            "-",
+            "extender",
+            "11.0.0",
             "Introduction\/Index.html#explanation",
             "Explanation"
         ],
         "example-source": [
-            "-",
-            "-",
+            "extender",
+            "11.0.0",
             "Introduction\/Index.html#example-source",
             "Example source"
         ],
         "important": [
-            "-",
-            "-",
+            "extender",
+            "11.0.0",
             "Introduction\/Index.html#important",
             "Important"
         ],
+        "correct": [
+            "extender",
+            "11.0.0",
+            "Introduction\/Index.html#correct",
+            "Correct"
+        ],
+        "wrong": [
+            "extender",
+            "11.0.0",
+            "Introduction\/Index.html#wrong",
+            "Wrong"
+        ],
         "sitemap": [
-            "-",
-            "-",
+            "extender",
+            "11.0.0",
             "Sitemap.html#sitemap",
             "Sitemap"
         ],
         "testing-1": [
-            "-",
-            "-",
+            "extender",
+            "11.0.0",
             "Testing\/Index.html#testing-1",
             "Testing"
         ]

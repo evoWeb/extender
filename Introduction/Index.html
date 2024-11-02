@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 <head>
-    <title>Introduction documentation</title>
+    <title>Introduction — extender 11.0.0 documentation</title>
 
     
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="phpdocumentor/guides" name="generator">
-<meta content="" name="docsearch:name">
+<meta content="extender" name="docsearch:name">
 <meta content="" name="docsearch:package_type">
-<meta content="" name="docsearch:release">
-<meta content="" name="docsearch:version">
-<meta content="2024-08-11T12:14:06+00:00" name="docsearch:modified">
-<meta content="2024-08-11T12:14:06+00:00" name="dc.modified">
-<meta content="2024-08-11T12:14:06+00:00" property="article:modified_time">
+<meta content="11.0.0" name="docsearch:release">
+<meta content="11.0.0" name="docsearch:version">
+<meta content="2024-11-02T11:01:19+00:00" name="docsearch:modified">
+<meta content="2024-11-02T11:01:19+00:00" name="dc.modified">
+<meta content="2024-11-02T11:01:19+00:00" property="article:modified_time">
     <link href="http://purl.org/dc/elements/1.1/" rel="schema.dc">
 <link href="../_resources/css/theme.css" rel="stylesheet">
 <link href="https://docs.typo3.org/search/" rel="search" title="Search">
@@ -37,24 +37,27 @@
     <div class="page-header">
         <div class="page-header-inner">
             <div class="row">
-                <div class="col-sm-3 col-md-4 col-lg-6">
+                <div class="col-md-2 col-lg-4">
                     <a class="logo" href="https://docs.typo3.org/" title="TYPO3 Documentation">
                         <img alt="TYPO3 Logo" class="logo-image" src="../_resources/img/typo3-logo.svg" width="484" height="130">
                     </a>
                 </div>
-                <div class="col-sm-9 col-md-8 col-lg-6">
-                    <search role="search">
-                        <form action="https://docs.typo3.org/search/search" id="global-search-form" method="get">
-			                <div class="sr-only"><label for="globalsearchinput">TYPO3 documentation...</label></div>
-                            <div class="input-group mb-3 mt-sm-3">
-                                <select class="form-select search__scope" id="searchscope" name="scope">
-                                    <option value="">Search all</option>
-                                </select>
-                                <input autocomplete="off" class="form-control shadow-none" id="globalsearchinput" name="q" placeholder="TYPO3 documentation..." type="text" value="">
-                                <button class="btn btn-light search__submit" type="submit"><i class="fa fa-search"></i>&nbsp;<span class="d-none d-md-inline">Search</span></button>
-                            </div>
-                        </form>
-                    </search>
+                <div class="col-md-10 col-lg-8">
+                    <div class="menu-search-wrapper">
+                        <all-documentations-menu data-override-url="https://render-guides.ddev.site/menu-proxy.php"></all-documentations-menu>
+                                                <search role="search">
+                            <form action="https://docs.typo3.org/search/search" id="global-search-form" method="get">
+                                <div class="sr-only"><label for="globalsearchinput">TYPO3 documentation...</label></div>
+                                <div class="input-group mb-3 mt-sm-3">
+                                    <select class="form-select search__scope" id="searchscope" name="scope">
+                                        <option value="">Search all</option>
+                                    </select>
+                                    <input autocomplete="off" class="form-control shadow-none" id="globalsearchinput" name="q" placeholder="TYPO3 documentation..." type="text" value="">
+                                    <button class="btn btn-light search__submit" type="submit"><i class="fa fa-search"></i>&nbsp;<span class="d-none d-md-inline">Search</span></button>
+                                </div>
+                            </form>
+                        </search>
+                    </div>
                 </div>
             </div>
         </div>
@@ -68,8 +71,22 @@
                     
 <div class="toc-header">
     <div class="toc-title">
-        <a class="toc-title-project" href="../Index.html"></a>
-            </div>
+        <a class="toc-title-project" href="../Index.html">extender</a>
+            <div class="toc-version-wrapper" id="toc-version-wrapper">
+                <!--
+                    LOCAL RENDERING NOTICE:
+                    https://docs.typo3.org/other/t3docs/render-guides/main/en-us/Developer/AjaxVersions.html
+                -->
+
+                <div id="toc-version" class="toc-version" data-override-url-proxy="https://render-guides.ddev.site/versions-proxy.php?url=" data-override-url-self="https://docs.typo3.org/m/typo3/tutorial-getting-started/12.4/en-us/Concepts/Index.html">
+                
+                    <span class="toc-version-prefix">Release:</span>
+                    <span class="toc-version-number">11.0.0</span>
+                </div>
+                <div id="toc-version-options" class="toc-version-options">
+                    <p><span class="fa fa-spinner fa-spin"></span> Loading data.</p>
+                </div>
+            </div></div>
     <div class="toc-actions">
         <label class="toc-toggle" for="toggleToc">
             Menu
@@ -78,8 +95,7 @@
 </div>                    <div class="toc-collapse">
                                                 <div aria-label="main navigation" class="toc" role="navigation">
                                 <div aria-label="Main navigation" class="main_menu" role="navigation">
-        
-    <ul class="menu-level-1">
+            <ul class="menu-level-1">
     <li class=" current active">
     <a href="#" aria-current="page">
         Introduction
@@ -95,8 +111,7 @@
     </a></li>    <li class="">
     <a href="../Testing/Index.html">
         Testing
-    </a></li>    </ul>
-    <ul class="menu-level-1">
+    </a></li>    </ul>    <ul class="menu-level-1">
     <li class="">
     <a href="../Sitemap.html">
         Sitemap
@@ -111,6 +126,9 @@
                     <li><a href="https://docs.typo3.org/m/typo3/docs-how-to-document/main/en-us/WritingDocsOfficial/GithubMethod.html" rel="nofollow noopener" target="_blank">
                     How to edit
             </a></li>
+                    <li><a href="https://github.com/evoWeb/extender/edit/develop/Documentation/Introduction/Index.rst" rel="nofollow noopener" target="_blank">
+                    Edit current document on GitHub
+            </a></li>
         </ul>
 </div>
                         </div>
@@ -124,13 +142,21 @@
     <li class="breadcrumb-item"><a href="../Index.html">Extender: Extbase class extending on steroids</a></li>
                     <li aria-current="page"  class="breadcrumb-item  active">Introduction</li>
         </ol>
-        <div class="breadcrumb-additions">    <a class="btn btn-sm btn-light" href="../_sources/Introduction/Index.rst.txt" rel="nofollow noopener" target="_blank">
+        <div class="breadcrumb-additions">        <a class="btn btn-sm btn-light" href="https://github.com/evoWeb/extender/issues/new/choose?title=Problem+on+https%3A%2F%2Fgithub.com%2FevoWeb%2Fextender%2FIntroduction%2FIndex.html" id="btnReportIssue" rel="nofollow noopener" target="_blank">
+            <span class="btn-icon"><i class="fas fa-bug"></i></span>
+            <span class="btn-text">Report issue</span>
+        </a>
+        <a class="btn btn-sm btn-light" href="../_sources/Introduction/Index.rst.txt" rel="nofollow noopener" target="_blank">
         <span class="btn-icon"><span class="fas fa-code"></span></span>
         <span class="btn-text">View source</span>
     </a>
         <a class="btn btn-sm btn-light" href="https://docs.typo3.org/m/typo3/docs-how-to-document/main/en-us/WritingDocsOfficial/GithubMethod.html" id="btnHowToEdit" rel="nofollow noopener" target="_blank">
         <span class="btn-icon"><span class="fas fa-info-circle"></span></span>
         <span class="btn-text">How to edit</span>
+    </a>
+        <a class="btn btn-sm btn-secondary" href="https://github.com/evoWeb/extender/edit/develop/Documentation/Introduction/Index.rst" id="btnEditOnGitHub" rel="nofollow noopener" target="_blank">
+        <span class="btn-icon"><span class="fab fa-github"></span></span>
+        <span class="btn-text">Edit on GitHub</span>
     </a>
     </div>    </nav>
                     
@@ -140,12 +166,12 @@
                 
 <section class="section" id="introduction-1" data-rst-anchor="introduction">
             <a id="introduction"></a>
-            <h1>Introduction<a class="headerlink" href="#introduction-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h1>
+            <h1>Introduction<a class="headerlink" href="#introduction-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h1>
             
     <p>This Documentation was written for version 7.0.x of the extension.</p>
 
             <section class="section" id="extending-classes">
-            <h2>Extending classes<a class="headerlink" href="#extending-classes" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <h2>Extending classes<a class="headerlink" href="#extending-classes" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
     <p>The sole purpose of this extension is to fill a gap that extbase leaves open.</p>
 
@@ -178,16 +204,16 @@ should be a prefilled class cache on every request.</p>
 
     </section>
             <section class="section" id="deep-dive-into-an-example">
-            <h2>Deep dive into an example<a class="headerlink" href="#deep-dive-into-an-example" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <h2>Deep dive into an example<a class="headerlink" href="#deep-dive-into-an-example" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
     <p>The cache manager parses the base and extend files to gather the colored parts
 of the following images, generates a combined file as shown in the merged result
 and adds it to the cache.</p>
 
             
-    
-<ol class="bignums">
-    <li>
+
+<ul class="bignums">
+    <li class="dash">
     <p>Base class file</p>
 <figure>
     <img
@@ -197,7 +223,7 @@ and adds it to the cache.</p>
 
             
             </figure></li>
-    <li>
+    <li class="dash">
     <p>Extend class file</p>
 <figure>
     <img
@@ -207,7 +233,7 @@ and adds it to the cache.</p>
 
             
             </figure></li>
-    <li>
+    <li class="dash">
     <p>Merged result file</p>
 <figure>
     <img
@@ -217,21 +243,21 @@ and adds it to the cache.</p>
 
             
             </figure></li>
-</ol>
+</ul>
 
     </section>
             <section class="section" id="explanation">
-            <h2>Explanation<a class="headerlink" href="#explanation" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <h2>Explanation<a class="headerlink" href="#explanation" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
-    
-<ol class="bignums-attention">
-    <li>
+
+<ul class="bignums-attention">
+    <li class="dash">
     <p>Namespace</p>
 
     <p>The Namespace is taken from the base file. The namespace of the extended
 file is ignored.</p>
 </li>
-    <li>
+    <li class="dash">
     <p>Uses</p>
 
     <p>All uses from base and extending file are taken uniquely. If an use appears
@@ -242,35 +268,35 @@ with diverting as alias it is present twice in the merged file.</p>
             
     <pre class="code-block"><code>use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerAwareTrait as T;</code></pre>
-    <div>        <button class="code-block-copy" title="Copy to clipboard">
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
         </button>
         <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
 </div></li>
-    <li>
+    <li class="dash">
     <p>Class</p>
 
     <p>The class name and the extends part is taken from the base class.</p>
 </li>
-    <li>
+    <li class="dash">
     <p>Implements</p>
 
     <p>Implements are used uniquely from the base and extend file</p>
 </li>
-    <li>
+    <li class="dash">
     <p>Traits</p>
 
     <p>All traits from base and extend file are taken uniquely.</p>
 </li>
-    <li>
+    <li class="dash">
     <p>Properties</p>
 
     <p>All properties from base and extend file are taken without check if they
 are not colliding.</p>
 </li>
-    <li>
+    <li class="dash">
     <p>Construct</p>
 
     <p>The __construct of base and extend file are taken with merged contents and
@@ -278,23 +304,23 @@ arguments. Where arguments from base take priority.
 All line of code in the method are taken. If the __construct of the extend
 file contains a parent::__construct call it gets removed.</p>
 </li>
-    <li>
+    <li class="dash">
     <p>Methods</p>
 
     <p>All methods beside __construct from base and extend file are taken without
 check if they are not colliding.</p>
 </li>
-    <li>
+    <li class="dash">
     <p>Comment</p>
 
     <p>The comment is based on the base and extending files and display which
 files path were taken into account.</p>
 </li>
-</ol>
+</ul>
 
     </section>
             <section class="section" id="example-source">
-            <h2>Example source<a class="headerlink" href="#example-source" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <h2>Example source<a class="headerlink" href="#example-source" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
     <p>The base file content could be found in
 EXT:extender/Tests/Fixtures/Extensions/base_extension/Classes/Domain/Model/Blob.php</p>
@@ -305,14 +331,16 @@ EXT:extender/Tests/Fixtures/Extensions/extending_extension/Classes/Domain/Model/
 
     </section>
             <section class="section" id="important">
-            <h2>Important<a class="headerlink" href="#important" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <h2>Important<a class="headerlink" href="#important" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
+            <section class="section" id="correct">
+            <h3>Correct<a class="headerlink" href="#correct" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
             
     <p>As in both files shown, it&#039;s important to use the FQCN to extend of, else the
 usage of the class gets written to the merged file and result in two classes
 with the same name in the cache file.</p>
 
                 <div class="code-block-caption">
-        <span class="caption-text">Correct extension</span>
+        <span class="caption-text">Correct extending</span>
     </div><div class="code-block-wrapper" translate="no">
             
     <pre class="code-block"><code class="hljs php"><span class="hljs-keyword">namespace</span> <span class="hljs-title">Fixture</span>\<span class="hljs-title">ExtendingClass</span>\<span class="hljs-title">Domain</span>\<span class="hljs-title">Model</span>;
@@ -320,7 +348,7 @@ with the same name in the cache file.</p>
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ExtendingModel</span> <span class="hljs-keyword">extends</span> \<span class="hljs-title">Fixture</span>\<span class="hljs-title">BaseClass</span>\<span class="hljs-title">Domain</span>\<span class="hljs-title">Model</span>\<span class="hljs-title">BaseModel</span>
 </span>{
 }</code></pre>
-    <div>        <button class="code-block-copy" title="Copy to clipboard">
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
         </button>
@@ -328,7 +356,7 @@ with the same name in the cache file.</p>
     </div>
 </div>
                 <div class="code-block-caption">
-        <span class="caption-text">Result with correct extension</span>
+        <span class="caption-text">Result with correct extending</span>
     </div><div class="code-block-wrapper" translate="no">
             
     <pre class="code-block"><code class="hljs php"><span class="hljs-keyword">namespace</span> <span class="hljs-title">Fixture</span>\<span class="hljs-title">ExtendingClass</span>\<span class="hljs-title">Domain</span>\<span class="hljs-title">Model</span>;
@@ -336,13 +364,16 @@ with the same name in the cache file.</p>
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BaseModel</span>
 </span>{
 }</code></pre>
-    <div>        <button class="code-block-copy" title="Copy to clipboard">
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
         </button>
         <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
 </div>
+    </section>
+            <section class="section" id="wrong">
+            <h3>Wrong<a class="headerlink" href="#wrong" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
             
     <p>While linting the file will not raise an error and the class is usable,
 it will definitely irritate editors like PHPStorm or Visual Code.</p>
@@ -358,7 +389,7 @@ it will definitely irritate editors like PHPStorm or Visual Code.</p>
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">ExtendingModel</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">BaseModel</span>
 </span>{
 }</code></pre>
-    <div>        <button class="code-block-copy" title="Copy to clipboard">
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
         </button>
@@ -376,13 +407,14 @@ it will definitely irritate editors like PHPStorm or Visual Code.</p>
 <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">BaseModel</span>
 </span>{
 }</code></pre>
-    <div>        <button class="code-block-copy" title="Copy to clipboard">
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
         </button>
         <span class="code-block-check-tooltip code-block-hide" aria-live="polite">Copied!</span>
     </div>
 </div>
+    </section>
     </section>
     </section>
         <!-- content end -->
@@ -410,7 +442,7 @@ it will definitely irritate editors like PHPStorm or Visual Code.</p>
     </main>
 
     <div class="modal fade" id="linkReferenceModal" tabindex="-1" aria-labelledby="linkReferenceModalLabel"
-    aria-hidden="true" data-current-filename="Introduction/Index">
+    aria-hidden="true" data-current-filename="Introduction/Index" data-interlink-shortcode="evoweb/extender">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -428,7 +460,8 @@ it will definitely irritate editors like PHPStorm or Visual Code.</p>
                     <p>Copy and freely share the link</p>
                 </div>
                 <div class="mb-3">
-                    <div class="alert alert-warning alert-permalink-rst" role="alert">This link target has no permanent anchor assigned.The link below can be used, but is prone to change if the page gets moved.
+                    <div class="alert alert-warning alert-permalink-rst" role="alert">This link target has no permanent anchor assigned.                        You can make a <a href="https://github.com/evoWeb/extender/edit/develop/Documentation/Introduction/Index.rst">pull request on GitHub</a> to suggest an anchor.
+                        The link below can be used, but is prone to change if the page gets moved.
                     </div>
                     <label for="permalink-rst" class="col-form-label">reStructuredText (reST):</label>
                     <div class="input-group">
@@ -477,10 +510,18 @@ it will definitely irritate editors like PHPStorm or Visual Code.</p>
     <div class="frame frame-ruler-before frame-background-dark">
         <div class="frame-container">
             <div class="frame-inner">
-                                <div class="footer-additional">
-                    <p class="text-center">Last rendered: Aug 11, 2024 12:14</p>
+                <ul class="footer-simplemenu">
+                        <li><a href="https://github.com/evoWeb/extender" title="Home" rel="nofollow noopener"><span>Home</span></a></li>
+                                                <li><a href="extender@evoweb.de" title="Contact" rel="nofollow noopener"><span>Contact</span></a></li>
+                                                <li><a href="https://github.com/evoWeb/extender/issues" rel="nofollow noopener" title="Issues"><span>Issues</span></a></li>
+                                                <li><a href="https://github.com/evoWeb/extender" rel="nofollow noopener" title="Repository"><span>Repository</span></a></li>
+                                            </ul>                <div class="footer-additional">
+                    <p class="text-center">Last rendered: Nov 02, 2024 11:01</p>
                 </div>
                 <div class="footer-meta">
+                                        <div class="footer-meta-copyright">
+                        &copy; since 2014 by evoWeb
+                    </div>
                     <ul class="footer-meta-navigation">
                         <li><a href="https://typo3.org/legal-notice" rel="nofollow" target="_blank" title="Legal Notice">Legal Notice</a></li>
                         <li><a href="https://typo3.org/privacy-policy" rel="nofollow" target="_blank" title="Privacy Policy">Privacy Policy</a></li>

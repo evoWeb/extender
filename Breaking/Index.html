@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 <head>
-    <title>Breaking change documentation</title>
+    <title>Breaking change — extender 11.0.0 documentation</title>
 
     
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 <meta content="phpdocumentor/guides" name="generator">
-<meta content="" name="docsearch:name">
+<meta content="extender" name="docsearch:name">
 <meta content="" name="docsearch:package_type">
-<meta content="" name="docsearch:release">
-<meta content="" name="docsearch:version">
-<meta content="2024-08-11T12:14:06+00:00" name="docsearch:modified">
-<meta content="2024-08-11T12:14:06+00:00" name="dc.modified">
-<meta content="2024-08-11T12:14:06+00:00" property="article:modified_time">
+<meta content="11.0.0" name="docsearch:release">
+<meta content="11.0.0" name="docsearch:version">
+<meta content="2024-11-02T11:01:19+00:00" name="docsearch:modified">
+<meta content="2024-11-02T11:01:19+00:00" name="dc.modified">
+<meta content="2024-11-02T11:01:19+00:00" property="article:modified_time">
     <link href="http://purl.org/dc/elements/1.1/" rel="schema.dc">
 <link href="../_resources/css/theme.css" rel="stylesheet">
 <link href="https://docs.typo3.org/search/" rel="search" title="Search">
@@ -37,24 +37,27 @@
     <div class="page-header">
         <div class="page-header-inner">
             <div class="row">
-                <div class="col-sm-3 col-md-4 col-lg-6">
+                <div class="col-md-2 col-lg-4">
                     <a class="logo" href="https://docs.typo3.org/" title="TYPO3 Documentation">
                         <img alt="TYPO3 Logo" class="logo-image" src="../_resources/img/typo3-logo.svg" width="484" height="130">
                     </a>
                 </div>
-                <div class="col-sm-9 col-md-8 col-lg-6">
-                    <search role="search">
-                        <form action="https://docs.typo3.org/search/search" id="global-search-form" method="get">
-			                <div class="sr-only"><label for="globalsearchinput">TYPO3 documentation...</label></div>
-                            <div class="input-group mb-3 mt-sm-3">
-                                <select class="form-select search__scope" id="searchscope" name="scope">
-                                    <option value="">Search all</option>
-                                </select>
-                                <input autocomplete="off" class="form-control shadow-none" id="globalsearchinput" name="q" placeholder="TYPO3 documentation..." type="text" value="">
-                                <button class="btn btn-light search__submit" type="submit"><i class="fa fa-search"></i>&nbsp;<span class="d-none d-md-inline">Search</span></button>
-                            </div>
-                        </form>
-                    </search>
+                <div class="col-md-10 col-lg-8">
+                    <div class="menu-search-wrapper">
+                        <all-documentations-menu data-override-url="https://render-guides.ddev.site/menu-proxy.php"></all-documentations-menu>
+                                                <search role="search">
+                            <form action="https://docs.typo3.org/search/search" id="global-search-form" method="get">
+                                <div class="sr-only"><label for="globalsearchinput">TYPO3 documentation...</label></div>
+                                <div class="input-group mb-3 mt-sm-3">
+                                    <select class="form-select search__scope" id="searchscope" name="scope">
+                                        <option value="">Search all</option>
+                                    </select>
+                                    <input autocomplete="off" class="form-control shadow-none" id="globalsearchinput" name="q" placeholder="TYPO3 documentation..." type="text" value="">
+                                    <button class="btn btn-light search__submit" type="submit"><i class="fa fa-search"></i>&nbsp;<span class="d-none d-md-inline">Search</span></button>
+                                </div>
+                            </form>
+                        </search>
+                    </div>
                 </div>
             </div>
         </div>
@@ -68,8 +71,22 @@
                     
 <div class="toc-header">
     <div class="toc-title">
-        <a class="toc-title-project" href="../Index.html"></a>
-            </div>
+        <a class="toc-title-project" href="../Index.html">extender</a>
+            <div class="toc-version-wrapper" id="toc-version-wrapper">
+                <!--
+                    LOCAL RENDERING NOTICE:
+                    https://docs.typo3.org/other/t3docs/render-guides/main/en-us/Developer/AjaxVersions.html
+                -->
+
+                <div id="toc-version" class="toc-version" data-override-url-proxy="https://render-guides.ddev.site/versions-proxy.php?url=" data-override-url-self="https://docs.typo3.org/m/typo3/tutorial-getting-started/12.4/en-us/Concepts/Index.html">
+                
+                    <span class="toc-version-prefix">Release:</span>
+                    <span class="toc-version-number">11.0.0</span>
+                </div>
+                <div id="toc-version-options" class="toc-version-options">
+                    <p><span class="fa fa-spinner fa-spin"></span> Loading data.</p>
+                </div>
+            </div></div>
     <div class="toc-actions">
         <label class="toc-toggle" for="toggleToc">
             Menu
@@ -78,8 +95,7 @@
 </div>                    <div class="toc-collapse">
                                                 <div aria-label="main navigation" class="toc" role="navigation">
                                 <div aria-label="Main navigation" class="main_menu" role="navigation">
-        
-    <ul class="menu-level-1">
+            <ul class="menu-level-1">
     <li class="">
     <a href="../Introduction/Index.html">
         Introduction
@@ -95,8 +111,7 @@
     </a></li>    <li class="">
     <a href="../Testing/Index.html">
         Testing
-    </a></li>    </ul>
-    <ul class="menu-level-1">
+    </a></li>    </ul>    <ul class="menu-level-1">
     <li class="">
     <a href="../Sitemap.html">
         Sitemap
@@ -111,6 +126,9 @@
                     <li><a href="https://docs.typo3.org/m/typo3/docs-how-to-document/main/en-us/WritingDocsOfficial/GithubMethod.html" rel="nofollow noopener" target="_blank">
                     How to edit
             </a></li>
+                    <li><a href="https://github.com/evoWeb/extender/edit/develop/Documentation/Breaking/Index.rst" rel="nofollow noopener" target="_blank">
+                    Edit current document on GitHub
+            </a></li>
         </ul>
 </div>
                         </div>
@@ -124,7 +142,11 @@
     <li class="breadcrumb-item"><a href="../Index.html">Extender: Extbase class extending on steroids</a></li>
                     <li aria-current="page"  class="breadcrumb-item  active">Breaking change</li>
         </ol>
-        <div class="breadcrumb-additions">    <a class="btn btn-sm btn-light" href="../_sources/Breaking/Index.rst.txt" rel="nofollow noopener" target="_blank">
+        <div class="breadcrumb-additions">        <a class="btn btn-sm btn-light" href="https://github.com/evoWeb/extender/issues/new/choose?title=Problem+on+https%3A%2F%2Fgithub.com%2FevoWeb%2Fextender%2FBreaking%2FIndex.html" id="btnReportIssue" rel="nofollow noopener" target="_blank">
+            <span class="btn-icon"><i class="fas fa-bug"></i></span>
+            <span class="btn-text">Report issue</span>
+        </a>
+        <a class="btn btn-sm btn-light" href="../_sources/Breaking/Index.rst.txt" rel="nofollow noopener" target="_blank">
         <span class="btn-icon"><span class="fas fa-code"></span></span>
         <span class="btn-text">View source</span>
     </a>
@@ -132,38 +154,42 @@
         <span class="btn-icon"><span class="fas fa-info-circle"></span></span>
         <span class="btn-text">How to edit</span>
     </a>
+        <a class="btn btn-sm btn-secondary" href="https://github.com/evoWeb/extender/edit/develop/Documentation/Breaking/Index.rst" id="btnEditOnGitHub" rel="nofollow noopener" target="_blank">
+        <span class="btn-icon"><span class="fab fa-github"></span></span>
+        <span class="btn-text">Edit on GitHub</span>
+    </a>
     </div>    </nav>
                     
 <article class="document" itemscope="itemscope" itemtype="http://schema.org/Article" role="main">
     <div itemprop="articleBody">
         <!-- content start -->
                 
-<section class="section" id="breaking-change-1" data-rst-anchor="breaking-change">
-            <a id="breaking-change"></a>
-            <h1>Breaking change<a class="headerlink" href="#breaking-change-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h1>
+<section class="section" id="breaking-change" data-rst-anchor="breaking-changes">
+            <a id="breaking-changes"></a>
+            <h1>Breaking change<a class="headerlink" href="#breaking-change" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h1>
             <section class="section" id="change-of-command-name">
-            <h2>Change of command name<a class="headerlink" href="#change-of-command-name" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <h2>Change of command name<a class="headerlink" href="#change-of-command-name" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             
     <p>The command was renamed from &quot;extender:rebuild&quot; to &quot;extender:clearClassCache&quot;
 to better reflect what the command is doing.</p>
 
     </section>
             <section class="section" id="change-of-extending-configuration-in-10-0-0">
-            <h2>Change of extending configuration in 10.0.0<a class="headerlink" href="#change-of-extending-configuration-in-10-0-0" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <h2>Change of extending configuration in 10.0.0<a class="headerlink" href="#change-of-extending-configuration-in-10-0-0" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             <section class="section" id="description">
-            <h3>Description<a class="headerlink" href="#description" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <h3>Description<a class="headerlink" href="#description" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
             
     <p>Since version 10.0.0 the registration happens in services.yaml</p>
 
     </section>
             <section class="section" id="impact">
-            <h3>Impact<a class="headerlink" href="#impact" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <h3>Impact<a class="headerlink" href="#impact" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
             
     <p>All class extending in ext_localconf.php needs to be replaced and converted</p>
 
     </section>
             <section class="section" id="migration">
-            <h3>Migration<a class="headerlink" href="#migration" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <h3>Migration<a class="headerlink" href="#migration" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
             
     <p>Migrate configuration from array to yaml.</p>
 
@@ -171,10 +197,10 @@ to better reflect what the command is doing.</p>
         <span class="caption-text">before ext_localconf.php</span>
     </div><div class="code-block-wrapper" translate="no">
             
-    <pre class="code-block"><code>$GLOBALS[&#039;TYPO3_CONF_VARS&#039;][&#039;EXTENSIONS&#039;][&#039;base_extension&#039;][&#039;extender&#039;][
+    <pre class="code-block"><code class="hljs php">$GLOBALS[<span class="hljs-string">'TYPO3_CONF_VARS'</span>][<span class="hljs-string">'EXTENSIONS'</span>][<span class="hljs-string">'base_extension'</span>][<span class="hljs-string">'extender'</span>][
     \Fixture\BaseExtension\Domain\Model\Blob::class
-][&#039;extending_extension&#039;] = &#039;EXT:extending_extension/Classes/Domain/Model/BlobExtend.php&#039;;</code></pre>
-    <div>        <button class="code-block-copy" title="Copy to clipboard">
+][<span class="hljs-string">'extending_extension'</span>] = <span class="hljs-string">'EXT:extending_extension/Classes/Domain/Model/BlobExtend.php'</span>;</code></pre>
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
         </button>
@@ -190,7 +216,7 @@ to better reflect what the command is doing.</p>
     <span class="hljs-bullet">-</span>
       <span class="hljs-attr">name:</span> <span class="hljs-string">'extender.extends'</span>
       <span class="hljs-attr">class:</span> <span class="hljs-string">Fixture\BaseExtension\Domain\Model\Blob</span></code></pre>
-    <div>        <button class="code-block-copy" title="Copy to clipboard">
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
         </button>
@@ -200,22 +226,22 @@ to better reflect what the command is doing.</p>
     </section>
     </section>
             <section class="section" id="change-of-extending-configuration-in-7-0-0">
-            <h2>Change of extending configuration in 7.0.0<a class="headerlink" href="#change-of-extending-configuration-in-7-0-0" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h2>
+            <h2>Change of extending configuration in 7.0.0<a class="headerlink" href="#change-of-extending-configuration-in-7-0-0" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
             <section class="section" id="description">
-            <h3>Description<a class="headerlink" href="#description" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <h3>Description<a class="headerlink" href="#description" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
             
     <p>Since version 7.0.0 all usage of EXTCONF is replaced with EXTENSIONS.</p>
 
     </section>
             <section class="section" id="impact">
-            <h3>Impact<a class="headerlink" href="#impact" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <h3>Impact<a class="headerlink" href="#impact" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
             
     <p>All class extending still using EXTCONF to not work anymore. So the code still
 fills the array but this array is not used anymore.</p>
 
     </section>
             <section class="section" id="affected-installations">
-            <h3>Affected Installations<a class="headerlink" href="#affected-installations" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <h3>Affected Installations<a class="headerlink" href="#affected-installations" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
             
     <p>All extensions that use EXTCONF in registration of class extending like.</p>
 
@@ -223,10 +249,10 @@ fills the array but this array is not used anymore.</p>
         <span class="caption-text">before ext_localconf.php</span>
     </div><div class="code-block-wrapper" translate="no">
             
-    <pre class="code-block"><code>$GLOBALS[&#039;TYPO3_CONF_VARS&#039;][&#039;EXTCONF&#039;][&#039;store_finder&#039;][&#039;extender&#039;][
+    <pre class="code-block"><code class="hljs php">$GLOBALS[<span class="hljs-string">'TYPO3_CONF_VARS'</span>][<span class="hljs-string">'EXTCONF'</span>][<span class="hljs-string">'store_finder'</span>][<span class="hljs-string">'extender'</span>][
     \Evoweb\StoreFinder\Domain\Model\Location::class
-][&#039;sitepackage&#039;] = &#039;EXT:sitepackage/Classes/Domain/Model/Location.php&#039;;</code></pre>
-    <div>        <button class="code-block-copy" title="Copy to clipboard">
+][<span class="hljs-string">'sitepackage'</span>] = <span class="hljs-string">'EXT:sitepackage/Classes/Domain/Model/Location.php'</span>;</code></pre>
+    <div class="code-block-actions">        <button class="code-block-copy" title="Copy to clipboard">
             <i class="icon fa-regular fa-copy code-block-copy-icon"></i>
             <i class="fa-solid fa-check code-block-check-icon code-block-hide"></i>
         </button>
@@ -235,7 +261,7 @@ fills the array but this array is not used anymore.</p>
 </div>
     </section>
             <section class="section" id="migration">
-            <h3>Migration<a class="headerlink" href="#migration" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">¶</a></h3>
+            <h3>Migration<a class="headerlink" href="#migration" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
             
     <p>Replace the usage of EXTCONF with EXTENSIONS to have the class extended again.</p>
 
@@ -267,7 +293,7 @@ fills the array but this array is not used anymore.</p>
     </main>
 
     <div class="modal fade" id="linkReferenceModal" tabindex="-1" aria-labelledby="linkReferenceModalLabel"
-    aria-hidden="true" data-current-filename="Breaking/Index">
+    aria-hidden="true" data-current-filename="Breaking/Index" data-interlink-shortcode="evoweb/extender">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -285,7 +311,8 @@ fills the array but this array is not used anymore.</p>
                     <p>Copy and freely share the link</p>
                 </div>
                 <div class="mb-3">
-                    <div class="alert alert-warning alert-permalink-rst" role="alert">This link target has no permanent anchor assigned.The link below can be used, but is prone to change if the page gets moved.
+                    <div class="alert alert-warning alert-permalink-rst" role="alert">This link target has no permanent anchor assigned.                        You can make a <a href="https://github.com/evoWeb/extender/edit/develop/Documentation/Breaking/Index.rst">pull request on GitHub</a> to suggest an anchor.
+                        The link below can be used, but is prone to change if the page gets moved.
                     </div>
                     <label for="permalink-rst" class="col-form-label">reStructuredText (reST):</label>
                     <div class="input-group">
@@ -334,10 +361,18 @@ fills the array but this array is not used anymore.</p>
     <div class="frame frame-ruler-before frame-background-dark">
         <div class="frame-container">
             <div class="frame-inner">
-                                <div class="footer-additional">
-                    <p class="text-center">Last rendered: Aug 11, 2024 12:14</p>
+                <ul class="footer-simplemenu">
+                        <li><a href="https://github.com/evoWeb/extender" title="Home" rel="nofollow noopener"><span>Home</span></a></li>
+                                                <li><a href="extender@evoweb.de" title="Contact" rel="nofollow noopener"><span>Contact</span></a></li>
+                                                <li><a href="https://github.com/evoWeb/extender/issues" rel="nofollow noopener" title="Issues"><span>Issues</span></a></li>
+                                                <li><a href="https://github.com/evoWeb/extender" rel="nofollow noopener" title="Repository"><span>Repository</span></a></li>
+                                            </ul>                <div class="footer-additional">
+                    <p class="text-center">Last rendered: Nov 02, 2024 11:01</p>
                 </div>
                 <div class="footer-meta">
+                                        <div class="footer-meta-copyright">
+                        &copy; since 2014 by evoWeb
+                    </div>
                     <ul class="footer-meta-navigation">
                         <li><a href="https://typo3.org/legal-notice" rel="nofollow" target="_blank" title="Legal Notice">Legal Notice</a></li>
                         <li><a href="https://typo3.org/privacy-policy" rel="nofollow" target="_blank" title="Privacy Policy">Privacy Policy</a></li>
