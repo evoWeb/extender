@@ -22,7 +22,7 @@ use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Property;
 use PhpParser\Node\Stmt\TraitUse;
 use PhpParser\Node\Stmt\UseUse;
-use PhpParser\Node\UseItem;
+use PhpParser\Node;
 
 class FileSegments implements \JsonSerializable
 {
@@ -32,6 +32,9 @@ class FileSegments implements \JsonSerializable
 
     protected string $code = '';
 
+    /**
+     * @var Node[]
+     */
     protected array $statements = [];
 
     protected ?Name $namespace = null;
@@ -97,11 +100,17 @@ class FileSegments implements \JsonSerializable
         $this->code = $code;
     }
 
+    /**
+     * @return Node[]
+     */
     public function getStatements(): array
     {
         return $this->statements;
     }
 
+    /**
+     * @param Node[] $statements
+     */
     public function setStatements(array $statements): void
     {
         $this->statements = $statements;
@@ -125,12 +134,15 @@ class FileSegments implements \JsonSerializable
         return $this->uses;
     }
 
+    /**
+     * @param UseUse[] $uses
+     */
     public function setUses(array $uses): void
     {
         $this->uses = $uses;
     }
 
-    public function addUseUse(UseItem $useUse): void
+    public function addUseUse(UseUse $useUse): void
     {
         $this->uses[] = $useUse;
     }
@@ -153,6 +165,9 @@ class FileSegments implements \JsonSerializable
         return $this->traits;
     }
 
+    /**
+     * @param TraitUse[] $traits
+     */
     public function setTraits(array $traits): void
     {
         $this->traits = $traits;
@@ -171,6 +186,9 @@ class FileSegments implements \JsonSerializable
         return $this->classConsts;
     }
 
+    /**
+     * @param ClassConst[] $classConst
+     */
     public function setClassConsts(array $classConst): void
     {
         $this->classConsts = $classConst;
@@ -189,6 +207,9 @@ class FileSegments implements \JsonSerializable
         return $this->properties;
     }
 
+    /**
+     * @param Property[] $properties
+     */
     public function setProperties(array $properties): void
     {
         $this->properties = $properties;
@@ -227,6 +248,9 @@ class FileSegments implements \JsonSerializable
         return $this->methods;
     }
 
+    /**
+     * @param ClassMethod[] $methods
+     */
     public function setMethods(array $methods): void
     {
         $this->methods = $methods;
@@ -237,6 +261,9 @@ class FileSegments implements \JsonSerializable
         $this->methods[] = $classMethod;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return [

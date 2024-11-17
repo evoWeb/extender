@@ -20,6 +20,8 @@ use Evoweb\Extender\Tests\Functional\AbstractTestBase;
 use PhpParser\Node;
 use PhpParser\Node\Stmt;
 use PHPUnit\Framework\Attributes\Test;
+use PhpParser\Node\PropertyItem;
+use PhpParser\Node\Stmt\Property;
 
 class ClassComposerTest extends AbstractTestBase
 {
@@ -37,10 +39,11 @@ class ClassComposerTest extends AbstractTestBase
         $fileSegments->setBaseClass(true);
         $fileSegments->setCode($code);
         $fileSegments->setNamespace(new Node\Name('Fixture\BaseExtension\Domain\Model'));
-        $fileSegments->addUseUse(new Node\UseItem(new Node\Name('Evoweb\Domain\Model\Test')));
+        $fileSegments->addUseUse(new Stmt\UseUse(new Node\Name('Evoweb\Domain\Model\Test')));
         $fileSegments->setClass(new Stmt\Class_('ComposeMergedFileCode'));
         $fileSegments->addTrait(new Stmt\TraitUse([new Node\Name('Evoweb\TestTrait')]));
-        $fileSegments->addProperty(new Stmt\Property(2, [new Node\PropertyItem('testProperty')]));
+        // @phpstan-ignore argument.type
+        $fileSegments->addProperty(new Property(2, [new PropertyItem('testProperty')]));
         $fileSegments->setConstructor(new Stmt\ClassMethod('__construct'));
         $fileSegments->addMethod(new Stmt\ClassMethod('getTestProperty'));
 
@@ -57,6 +60,11 @@ class ClassComposerTest extends AbstractTestBase
     public function addFileStatement(): void
     {
         $subject = new class () extends ClassComposer {
+            /**
+             * @param Node[] $statements
+             * @param FileSegments[] $fileSegments
+             * @return Node[]
+             */
             public function addFileStatement(
                 array $statements,
                 array $fileSegments,

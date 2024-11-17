@@ -13,12 +13,12 @@ declare(strict_types=1);
  * LICENSE.txt file that was distributed with this source code.
  */
 
-namespace Fixture\ExtendingExtension\Controller;
+namespace EvowebTests\ExtendingExtension\Controller;
 
-use Fixture\BaseExtension\Domain\Model\Blob;
-use Fixture\BaseExtension\Domain\Model\BlobWithStorage;
-use Fixture\ExtendingExtension\Domain\Model\BlobExtend;
-use Fixture\ExtendingExtension\Domain\Model\BlobWithStorageExtend;
+use EvowebTests\BaseExtension\Domain\Model\Blob;
+use EvowebTests\BaseExtension\Domain\Model\BlobWithStorage;
+use EvowebTests\ExtendingExtension\Domain\Model\BlobExtend;
+use EvowebTests\ExtendingExtension\Domain\Model\BlobWithStorageExtend;
 use Psr\Http\Message\ResponseInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 use TYPO3\CMS\Extbase\Mvc\Controller\ActionController;

@@ -20,7 +20,10 @@ use PhpParser\Node\Stmt\Class_;
 
 class ClassVisitor extends AbstractVisitor
 {
-    public function enterNode(Node $node): void
+    /**
+     * @return int|Node|Node[]|null
+     */
+    public function enterNode(Node $node): int|null|Node|array
     {
         if ($node instanceof Class_) {
             $class = clone $node;
@@ -28,5 +31,6 @@ class ClassVisitor extends AbstractVisitor
 
             $this->fileSegment->setClass($class);
         }
+        return $node;
     }
 }

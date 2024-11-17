@@ -20,10 +20,14 @@ use PhpParser\Node\Stmt\Namespace_;
 
 class NamespaceVisitor extends AbstractVisitor
 {
-    public function enterNode(Node $node): void
+    /**
+     * @return int|Node|Node[]|null
+     */
+    public function enterNode(Node $node): int|null|Node|array
     {
         if ($node instanceof Namespace_) {
             $this->fileSegment->setNamespace($node->name);
         }
+        return $node;
     }
 }

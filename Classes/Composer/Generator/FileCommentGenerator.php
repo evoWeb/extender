@@ -33,6 +33,9 @@ class FileCommentGenerator implements GeneratorInterface
         return $statements;
     }
 
+    /**
+     * @param FileSegments[] $fileSegments
+     */
     protected function createCommentText(array $fileSegments): string
     {
         $fileComment = [
@@ -41,7 +44,6 @@ class FileCommentGenerator implements GeneratorInterface
             ' * Merged class with parts of files:',
         ];
 
-        /** @var FileSegments $fileSegment */
         foreach ($fileSegments as $fileSegment) {
             $fileComment[] = ' *  - ' . $fileSegment->getFilePath();
         }

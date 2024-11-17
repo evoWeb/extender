@@ -16,11 +16,18 @@ declare(strict_types=1);
 namespace Evoweb\Extender\Composer\Generator;
 
 use Evoweb\Extender\Parser\FileSegments;
+use PhpParser\Node;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Use_;
+use PhpParser\Node\Stmt\UseUse;
 
 class UseGenerator implements GeneratorInterface
 {
+    /**
+     * @param Node[] $statements
+     * @param FileSegments[] $fileSegments
+     * @return Node[]
+     */
     public function generate(array $statements, array $fileSegments): array
     {
         $namespace = $this->getNamespace($statements);
@@ -33,22 +40,13 @@ class UseGenerator implements GeneratorInterface
         return $statements;
     }
 
-    protected function getNamespace(array $statements): ?Namespace_
-    {
-        $namespace = null;
-        foreach ($statements as $statement) {
-            if ($statement instanceof Namespace_) {
-                $namespace = $statement;
-                break;
-            }
-        }
-        return $namespace;
-    }
-
+    /**
+     * @param FileSegments[] $fileSegments
+     * @return UseUse[]
+     */
     protected function getUniqueUses(array $fileSegments): array
     {
         $uses = [];
-        /** @var FileSegments $fileSegment */
         foreach ($fileSegments as $fileSegment) {
             foreach ($fileSegment->getUses() as $use) {
                 $name = $use->name . $use->getAlias();
@@ -59,5 +57,20 @@ class UseGenerator implements GeneratorInterface
             }
         }
         return array_values($uses);
+    }
+
+    /**
+     * @param Node[] $statements
+     */
+    protected function getNamespace(array $statements): ?Namespace_
+    {
+        $namespace = null;
+        foreach ($statements as $statement) {
+            if ($statement instanceof Namespace_) {
+                $namespace = $statement;
+                break;
+            }
+        }
+        return $namespace;
     }
 }

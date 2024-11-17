@@ -1,6 +1,6 @@
 <?php
 
-use Fixture\ExtendingExtension\Controller\TestController;
+use EvowebTests\ExtendingExtension\Controller\TestController;
 use TYPO3\CMS\Extbase\Utility\ExtensionUtility;
 
 ExtensionUtility::configurePlugin(

@@ -59,6 +59,9 @@ class FileCommentGeneratorTest extends AbstractTestBase
         ];
 
         $subject = new class () extends FileCommentGenerator {
+            /**
+             * @param FileSegments[] $fileSegments
+             */
             public function createCommentText(array $fileSegments): string
             {
                 return parent::createCommentText($fileSegments);

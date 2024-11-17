@@ -34,6 +34,9 @@ class RegisterAutoloaderEvent implements StoppableEventInterface
         }
     }
 
+    /**
+     * @param array<ClassLoader|string> $autoloader
+     */
     protected function autoloaderAlreadyRegistered(array $autoloader): bool
     {
         $result = false;
@@ -56,6 +59,9 @@ class RegisterAutoloaderEvent implements StoppableEventInterface
         return $result;
     }
 
+    /**
+     * @param array<ClassLoader|string> $autoloader
+     */
     protected function unregisterAutoloader(array $autoloader): void
     {
         spl_autoload_unregister($autoloader);

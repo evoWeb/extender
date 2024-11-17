@@ -56,6 +56,9 @@ class ClassCacheManager
         return $this->getFileSegments($className, true, BaseFileNotFoundException::class);
     }
 
+    /**
+     * @return FileSegments[]
+     */
     protected function getExtendingClassesFileSegments(string $baseClassName): array
     {
         $filesSegments = [];
@@ -73,7 +76,7 @@ class ClassCacheManager
         $filePath = $this->classLoader->findFile($className);
         $filePath = realpath($filePath);
 
-        if ($filePath === false || $filePath === '') {
+        if ($filePath === false) {
             throw new $exceptionClass(
                 'Composer did not find the file path for ' . $type . ' class "' . $className . '"'
             );
@@ -91,6 +94,9 @@ class ClassCacheManager
         return $fileSegments;
     }
 
+    /**
+     * @param FileSegments[] $fileSegments
+     */
     protected function getMergedFileCode(array $fileSegments): string
     {
         return $this->classComposer->composeMergedFileCode($fileSegments);

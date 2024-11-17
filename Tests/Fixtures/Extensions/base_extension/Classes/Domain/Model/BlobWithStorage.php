@@ -11,7 +11,7 @@
  * LICENSE.txt file that was distributed with this source code.
  */
 
-namespace Fixture\BaseExtension\Domain\Model;
+namespace EvowebTests\BaseExtension\Domain\Model;
 
 use TYPO3\CMS\Extbase\Domain\Model\FileReference;
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
@@ -41,11 +41,17 @@ class BlobWithStorage extends AbstractEntity
         $this->property = $property;
     }
 
+    /**
+     * @return ObjectStorage<FileReference>
+     */
     public function getStorage(): ObjectStorage
     {
         return $this->storage;
     }
 
+    /**
+     * @param ObjectStorage<FileReference> $storage
+     */
     public function setStorage(ObjectStorage $storage): void
     {
         $this->storage = $storage;

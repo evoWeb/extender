@@ -20,12 +20,18 @@ use PhpParser\Node\Stmt\ClassMethod;
 
 class ClassMethodVisitor extends AbstractVisitor
 {
+    /**
+     * @var string[]
+     */
     protected array $disallowedMethodNames = [
         '__construct',
         'initializeObject',
     ];
 
-    public function enterNode(Node $node): void
+    /**
+     * @return int|Node|Node[]|null
+     */
+    public function enterNode(Node $node): int|null|Node|array
     {
         if (
             $node instanceof ClassMethod
@@ -33,5 +39,6 @@ class ClassMethodVisitor extends AbstractVisitor
         ) {
             $this->fileSegment->addMethod($node);
         }
+        return $node;
     }
 }

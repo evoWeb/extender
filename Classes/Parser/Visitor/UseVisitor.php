@@ -20,10 +20,14 @@ use PhpParser\Node\Stmt\UseUse;
 
 class UseVisitor extends AbstractVisitor
 {
-    public function enterNode(Node $node): void
+    /**
+     * @return int|Node|Node[]|null
+     */
+    public function enterNode(Node $node): int|null|Node|array
     {
         if ($node instanceof UseUse) {
             $this->fileSegment->addUseUse($node);
         }
+        return $node;
     }
 }

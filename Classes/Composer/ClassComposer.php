@@ -15,10 +15,16 @@ declare(strict_types=1);
 
 namespace Evoweb\Extender\Composer;
 
+use Evoweb\Extender\Composer\Generator\GeneratorInterface;
+use Evoweb\Extender\Parser\FileSegments;
+use PhpParser\Node;
 use PhpParser\PrettyPrinter\Standard as PrettyPrinter;
 
 class ClassComposer
 {
+    /**
+     * @var string[]
+     */
     protected array $generators = [
         Generator\FileCommentGenerator::class,
         Generator\NamespaceGenerator::class,
@@ -32,6 +38,9 @@ class ClassComposer
         Generator\ClassMethodGenerator::class,
     ];
 
+    /**
+     * @param FileSegments[] $fileSegments
+     */
     public function composeMergedFileCode(array $fileSegments): string
     {
         $statements = [];
@@ -46,11 +55,17 @@ class ClassComposer
         return str_replace('<?php' . chr(10), '', $fileCode);
     }
 
+    /**
+     * @param Node[] $statements
+     * @param FileSegments[] $fileSegments
+     * @return Node[]
+     */
     protected function addFileStatement(
         array $statements,
         array $fileSegments,
         string $generatorClassName
     ): array {
+        /** @var GeneratorInterface $generator */
         $generator = new $generatorClassName();
         return $generator->generate($statements, $fileSegments);
     }

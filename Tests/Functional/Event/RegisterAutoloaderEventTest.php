@@ -37,11 +37,15 @@ class RegisterAutoloaderEventTest extends AbstractTestBase
     #[Test]
     public function autoloaderAlreadyRegistered(): void
     {
-        $autoloader = [GeneralUtility::getContainer()->get(ClassLoader::class), 'loadClass'];
+        $autoloaderClass = ClassLoader::class;
+        $autoloader = [GeneralUtility::getContainer()->get($autoloaderClass), 'loadClass'];
 
         $subject = new class () extends RegisterAutoloaderEvent {
             public function __construct() {}
 
+            /**
+             * @param array<object|string> $autoloader
+             */
             public function autoloaderAlreadyRegistered(array $autoloader): bool
             {
                 return parent::autoloaderAlreadyRegistered($autoloader);
@@ -63,6 +67,9 @@ class RegisterAutoloaderEventTest extends AbstractTestBase
         $subject = new class () extends RegisterAutoloaderEvent {
             public function __construct() {}
 
+            /**
+             * @param array<object|string> $autoloader
+             */
             public function unregisterAutoloader(array $autoloader): void
             {
                 parent::unregisterAutoloader($autoloader);

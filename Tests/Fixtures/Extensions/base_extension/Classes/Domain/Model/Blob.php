@@ -11,7 +11,7 @@
  * LICENSE.txt file that was distributed with this source code.
  */
 
-namespace Fixture\BaseExtension\Domain\Model;
+namespace EvowebTests\BaseExtension\Domain\Model;
 
 use TYPO3\CMS\Extbase\DomainObject\AbstractEntity;
 
@@ -19,7 +19,7 @@ class Blob extends AbstractEntity
 {
     protected string $property = '';
 
-    public function __construct($property = 'a')
+    public function __construct(string $property = 'a')
     {
         $this->property = $property;
     }

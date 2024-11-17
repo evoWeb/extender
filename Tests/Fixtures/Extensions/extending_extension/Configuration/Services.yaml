@@ -4,26 +4,26 @@ services:
     autoconfigure: false
     public: false
 
-  Fixture\ExtendingExtension\:
+  EvowebTests\ExtendingExtension\:
     resource: '../Classes/*'
 
-  Fixture\ExtendingExtension\Controller\TestController:
+  EvowebTests\ExtendingExtension\Controller\TestController:
     public: true
 
-  Fixture\ExtendingExtension\Domain\Model\BlobExtend:
+  EvowebTests\ExtendingExtension\Domain\Model\BlobExtend:
     tags:
       -
         name: 'extender.extends'
-        class: Fixture\BaseExtension\Domain\Model\Blob
+        class: EvowebTests\BaseExtension\Domain\Model\Blob
 
-  Fixture\ExtendingExtension\Domain\Model\BlobWithStorageExtend:
+  EvowebTests\ExtendingExtension\Domain\Model\BlobWithStorageExtend:
     tags:
       -
         name: 'extender.extends'
-        class: Fixture\BaseExtension\Domain\Model\AnotherBlob
+        class: EvowebTests\BaseExtension\Domain\Model\AnotherBlob
       -
         name: 'extender.extends'
-        class: Fixture\BaseExtension\Domain\Model\BlobWithStorage
+        class: EvowebTests\BaseExtension\Domain\Model\BlobWithStorage
       -
         name: 'extender.extends'
-        class: Fixture\BaseExtension\Domain\Model\BlobWithStorageAndConstructorArgument
+        class: EvowebTests\BaseExtension\Domain\Model\BlobWithStorageAndConstructorArgument

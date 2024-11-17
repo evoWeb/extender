@@ -21,6 +21,9 @@ use PhpParser\PhpVersion;
 
 class ClassParser
 {
+    /**
+     * @var string[]
+     */
     protected array $visitors = [
         Visitor\NamespaceVisitor::class,
         Visitor\UseVisitor::class,
@@ -43,6 +46,7 @@ class ClassParser
 
         try {
             // @extensionScannerIgnoreLine
+            // @phpstan-ignore method.notFound
             $parser = $this->parserFactory->createForVersion(PhpVersion::fromComponents(8, 2));
             $fileSegments->setStatements($parser->parse($fileSegments->getCode()));
 

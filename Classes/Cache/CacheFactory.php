@@ -23,6 +23,9 @@ use TYPO3\CMS\Core\Core\Bootstrap;
 
 class CacheFactory
 {
+    /**
+     * @var array<string, string|string[]|array<string, string>>
+     */
     protected static array $configuration = [
         'frontend' => PhpFrontend::class,
         'backend' => FileBackend::class,
