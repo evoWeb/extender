@@ -97,7 +97,7 @@ class ClassLoaderTest extends AbstractTestBase
             $classRegister
         );
 
-        $expected = 'Fixture\BaseExtension\Domain\Model\Blob';
+        $expected = 'EvowebTests\BaseExtension\Domain\Model\Blob';
         $subject = new ClassLoader($classCache, $classCacheManager, $classRegister);
         $subject->loadClass($expected);
 
@@ -128,7 +128,7 @@ class ClassLoaderTest extends AbstractTestBase
             $classRegister
         );
 
-        $className = 'Fixture\BaseExtension\Domain\Model\Blob';
+        $className = 'EvowebTests\BaseExtension\Domain\Model\Blob';
         $subject = new ClassLoader($classCache, $classCacheManager, $classRegister);
         $subject->loadClass($className);
 

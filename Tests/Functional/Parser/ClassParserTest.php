@@ -36,7 +36,7 @@ class ClassParserTest extends AbstractTestBase
             ->disableOriginalConstructor()
             ->getMock();
         $parser->expects(self::once())->method('parse')->willReturn([
-            new Stmt\Namespace_(new Node\Name('Fixture\BaseExtension\Domain\Model')),
+            new Stmt\Namespace_(new Node\Name('EvowebTests\BaseExtension\Domain\Model')),
             new Node\UseItem(new Node\Name('Evoweb\Domain\Model\Test')),
             new Stmt\Class_('GetFileSegments'),
             new Stmt\TraitUse([new Node\Name('Evoweb\TestTrait')]),
@@ -82,7 +82,7 @@ class ClassParserTest extends AbstractTestBase
             }
         };
 
-        $expected = new Node\Name('Fixture\BaseExtension\Domain\Model');
+        $expected = new Node\Name('EvowebTests\BaseExtension\Domain\Model');
 
         $fileSegment = new FileSegments();
         $fileSegment->setStatements([new Stmt\Namespace_($expected)]);

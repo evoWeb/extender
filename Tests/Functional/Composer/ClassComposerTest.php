@@ -38,7 +38,7 @@ class ClassComposerTest extends AbstractTestBase
         $fileSegments->setFilePath($basePath);
         $fileSegments->setBaseClass(true);
         $fileSegments->setCode($code);
-        $fileSegments->setNamespace(new Node\Name('Fixture\BaseExtension\Domain\Model'));
+        $fileSegments->setNamespace(new Node\Name('EvowebTests\BaseExtension\Domain\Model'));
         $fileSegments->addUseUse(new Stmt\UseUse(new Node\Name('Evoweb\Domain\Model\Test')));
         $fileSegments->setClass(new Stmt\Class_('ComposeMergedFileCode'));
         $fileSegments->addTrait(new Stmt\TraitUse([new Node\Name('Evoweb\TestTrait')]));
@@ -74,7 +74,7 @@ class ClassComposerTest extends AbstractTestBase
             }
         };
 
-        $namespaceName = new Node\Name('Fixture\BaseExtension\Domain\Model');
+        $namespaceName = new Node\Name('EvowebTests\BaseExtension\Domain\Model');
 
         $fileSegments = new FileSegments();
         $fileSegments->setBaseClass(true);
