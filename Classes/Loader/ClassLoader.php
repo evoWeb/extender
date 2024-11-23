@@ -17,8 +17,6 @@ namespace Evoweb\Extender\Loader;
 
 use Evoweb\Extender\Cache\ClassCacheManager;
 use Evoweb\Extender\Configuration\ClassRegister;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
-use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
 use TYPO3\CMS\Core\SingletonInterface;
 
