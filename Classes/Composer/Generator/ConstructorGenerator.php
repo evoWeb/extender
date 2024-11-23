@@ -81,7 +81,6 @@ class ConstructorGenerator implements GeneratorInterface
      */
     protected function getConstructorParameter(array $result, array $params): array
     {
-        /** @var Param $param */
         foreach ($params as $param) {
             if (isset($result[$param->var->name])) {
                 continue;
@@ -128,7 +127,6 @@ class ConstructorGenerator implements GeneratorInterface
     {
         $result = false;
 
-        /** @var FileSegments $fileSegment */
         foreach ($fileSegments as $fileSegment) {
             if ($fileSegment->getConstructor()) {
                 $result = true;

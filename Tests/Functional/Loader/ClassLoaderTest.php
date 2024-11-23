@@ -11,7 +11,7 @@
  * LICENSE.txt file that was distributed with this source code.
  */
 
-namespace Evoweb\Extender\Tests\Functional\Utility;
+namespace Evoweb\Extender\Tests\Functional\Loader;
 
 use Evoweb\Extender\Cache\CacheFactory;
 use Evoweb\Extender\Cache\ClassCacheManager;

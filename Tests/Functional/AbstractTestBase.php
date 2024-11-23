@@ -16,7 +16,6 @@ namespace Evoweb\Extender\Tests\Functional;
 use Composer\Autoload\ClassLoader;
 use Evoweb\Extender\Cache\CacheFactory;
 use Evoweb\Extender\Configuration\ClassRegister;
-use Evoweb\Extender\Parser\FileSegments;
 use PhpParser\Node;
 use PhpParser\PrettyPrinter\Standard as PrettyPrinter;
 use Psr\Container\ContainerExceptionInterface;
