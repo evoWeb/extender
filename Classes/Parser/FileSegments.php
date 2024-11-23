@@ -21,7 +21,7 @@ use PhpParser\Node\Stmt\ClassConst;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Property;
 use PhpParser\Node\Stmt\TraitUse;
-use PhpParser\Node\Stmt\UseUse;
+use PhpParser\Node\UseItem;
 use PhpParser\Node;
 
 class FileSegments implements \JsonSerializable
@@ -40,7 +40,7 @@ class FileSegments implements \JsonSerializable
     protected ?Name $namespace = null;
 
     /**
-     * @var UseUse[]
+     * @var UseItem[]
      */
     protected array $uses = [];
 
@@ -127,7 +127,7 @@ class FileSegments implements \JsonSerializable
     }
 
     /**
-     * @return UseUse[]
+     * @return UseItem[]
      */
     public function getUses(): array
     {
@@ -135,16 +135,16 @@ class FileSegments implements \JsonSerializable
     }
 
     /**
-     * @param UseUse[] $uses
+     * @param UseItem[] $uses
      */
     public function setUses(array $uses): void
     {
         $this->uses = $uses;
     }
 
-    public function addUseUse(UseUse $useUse): void
+    public function addUse(UseItem $use): void
     {
-        $this->uses[] = $useUse;
+        $this->uses[] = $use;
     }
 
     public function getClass(): ?Class_

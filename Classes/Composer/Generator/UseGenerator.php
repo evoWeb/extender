@@ -19,7 +19,7 @@ use Evoweb\Extender\Parser\FileSegments;
 use PhpParser\Node;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Use_;
-use PhpParser\Node\Stmt\UseUse;
+use PhpParser\Node\UseItem;
 
 class UseGenerator implements GeneratorInterface
 {
@@ -42,7 +42,7 @@ class UseGenerator implements GeneratorInterface
 
     /**
      * @param FileSegments[] $fileSegments
-     * @return UseUse[]
+     * @return UseItem[]
      */
     protected function getUniqueUses(array $fileSegments): array
     {

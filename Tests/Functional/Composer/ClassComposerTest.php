@@ -18,7 +18,9 @@ use Evoweb\Extender\Composer\Generator\NamespaceGenerator;
 use Evoweb\Extender\Parser\FileSegments;
 use Evoweb\Extender\Tests\Functional\AbstractTestBase;
 use PhpParser\Node;
+use PhpParser\Node\Name;
 use PhpParser\Node\Stmt;
+use PhpParser\Node\UseItem;
 use PHPUnit\Framework\Attributes\Test;
 use PhpParser\Node\PropertyItem;
 use PhpParser\Node\Stmt\Property;
@@ -38,10 +40,10 @@ class ClassComposerTest extends AbstractTestBase
         $fileSegments->setFilePath($basePath);
         $fileSegments->setBaseClass(true);
         $fileSegments->setCode($code);
-        $fileSegments->setNamespace(new Node\Name('EvowebTests\BaseExtension\Domain\Model'));
-        $fileSegments->addUseUse(new Stmt\UseUse(new Node\Name('Evoweb\Domain\Model\Test')));
+        $fileSegments->setNamespace(new Name('EvowebTests\BaseExtension\Domain\Model'));
+        $fileSegments->addUse(new UseItem(new Name('Evoweb\Domain\Model\Test')));
         $fileSegments->setClass(new Stmt\Class_('ComposeMergedFileCode'));
-        $fileSegments->addTrait(new Stmt\TraitUse([new Node\Name('Evoweb\TestTrait')]));
+        $fileSegments->addTrait(new Stmt\TraitUse([new Name('Evoweb\TestTrait')]));
         // @phpstan-ignore argument.type
         $fileSegments->addProperty(new Property(2, [new PropertyItem('testProperty')]));
         $fileSegments->setConstructor(new Stmt\ClassMethod('__construct'));
@@ -74,13 +76,13 @@ class ClassComposerTest extends AbstractTestBase
             }
         };
 
-        $namespaceName = new Node\Name('EvowebTests\BaseExtension\Domain\Model');
+        $namespaceName = new Name('EvowebTests\BaseExtension\Domain\Model');
 
         $fileSegments = new FileSegments();
         $fileSegments->setBaseClass(true);
         $fileSegments->setNamespace($namespaceName);
 
-        $expected = [new Node\Stmt\Namespace_($namespaceName)];
+        $expected = [new Stmt\Namespace_($namespaceName)];
 
         $actual = $subject->addFileStatement([], [$fileSegments], NamespaceGenerator::class);
 

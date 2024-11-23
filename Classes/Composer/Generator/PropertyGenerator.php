@@ -21,7 +21,6 @@ use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Property;
-use PhpParser\Node\Stmt\UseUse;
 
 class PropertyGenerator implements GeneratorInterface
 {
