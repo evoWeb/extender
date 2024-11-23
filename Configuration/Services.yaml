@@ -43,8 +43,10 @@ services:
       $container: '@service_container'
     shared: false
 
-  Evoweb\Extender\Hooks\DataHandlerClearCachePostProcHook:
+  Evoweb\Extender\Hooks\ClearCacheHook:
     public: true
+    arguments:
+      $classCache: '@cache.extender'
 
   Evoweb\Extender\Loader\ClassLoader:
     arguments:
