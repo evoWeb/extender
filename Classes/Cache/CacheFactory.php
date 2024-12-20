@@ -54,6 +54,6 @@ class CacheFactory
     {
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['extender'] = static::$configuration;
         $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['clearCachePostProc']['extender'] =
-            ClearCacheHook::class . '->';
+            ClearCacheHook::class . '->clearCachePostProc';
     }
 }
