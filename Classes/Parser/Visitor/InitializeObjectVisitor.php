@@ -20,10 +20,14 @@ use PhpParser\Node\Stmt\ClassMethod;
 
 class InitializeObjectVisitor extends AbstractVisitor
 {
-    public function enterNode(Node $node): void
+    /**
+     * @return int|Node|Node[]|null
+     */
+    public function enterNode(Node $node): int|null|Node|array
     {
         if ($node instanceof ClassMethod && (string)$node->name === 'initializeObject') {
             $this->fileSegment->setInitializeObject($node);
         }
+        return $node;
     }
 }

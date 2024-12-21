@@ -20,12 +20,14 @@ use PhpParser\Node\Stmt\Property;
 
 class PropertyVisitor extends AbstractVisitor
 {
-    protected array $properties = [];
-
-    public function enterNode(Node $node): void
+    /**
+     * @return int|Node|Node[]|null
+     */
+    public function enterNode(Node $node): int|null|Node|array
     {
         if ($node instanceof Property) {
             $this->fileSegment->addProperty($node);
         }
+        return $node;
     }
 }

@@ -16,6 +16,7 @@ namespace Evoweb\Extender\Tests\Functional;
 use Composer\Autoload\ClassLoader;
 use Evoweb\Extender\Cache\CacheFactory;
 use Evoweb\Extender\Configuration\ClassRegister;
+use PhpParser\Node;
 use PhpParser\PrettyPrinter\Standard as PrettyPrinter;
 use Psr\Container\ContainerExceptionInterface;
 use TYPO3\CMS\Core\Core\Environment;
@@ -52,9 +53,12 @@ class AbstractTestBase extends FunctionalTestCase
     protected function getPhpVersion(): string
     {
         $version = explode('.', PHP_VERSION);
-        return $version[0] * 100 + (int)$version[1];
+        return (string)((int)$version[0] * 100 + (int)$version[1]);
     }
 
+    /**
+     * @param Node[] $statements
+     */
     protected function convertStatementsIntoCode(array $statements): string
     {
         return trim((new PrettyPrinter())->prettyPrint($statements));

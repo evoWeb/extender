@@ -17,14 +17,13 @@ namespace Evoweb\Extender\Loader;
 
 use Evoweb\Extender\Cache\ClassCacheManager;
 use Evoweb\Extender\Configuration\ClassRegister;
-use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
 use TYPO3\CMS\Core\SingletonInterface;
 
 class ClassLoader implements SingletonInterface
 {
     public function __construct(
-        protected FrontendInterface|PhpFrontend $classCache,
+        protected PhpFrontend $classCache,
         protected ClassCacheManager $classCacheManager,
         protected ClassRegister $classRegister
     ) {}

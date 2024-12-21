@@ -17,6 +17,9 @@ namespace Evoweb\Extender\Configuration;
 
 class ClassRegister
 {
+    /**
+     * @param array<string, string[]> $extendedClasses
+     */
     public function __construct(protected array $extendedClasses = []) {}
 
     public function hasBaseClassName(string $className): bool
@@ -24,6 +27,9 @@ class ClassRegister
         return isset($this->extendedClasses[$className]);
     }
 
+    /**
+     * @return string[]
+     */
     public function getExtendingClasses(string $className): array
     {
         return is_array($this->extendedClasses[$className] ?? false)

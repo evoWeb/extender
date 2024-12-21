@@ -11,7 +11,7 @@
  * LICENSE.txt file that was distributed with this source code.
  */
 
-namespace Evoweb\Extender\Tests\Functional\Utility;
+namespace Evoweb\Extender\Tests\Functional\Loader;
 
 use Evoweb\Extender\Cache\CacheFactory;
 use Evoweb\Extender\Cache\ClassCacheManager;
@@ -20,7 +20,7 @@ use Evoweb\Extender\Configuration\ClassRegister;
 use Evoweb\Extender\Loader\ClassLoader;
 use Evoweb\Extender\Parser\ClassParser;
 use Evoweb\Extender\Tests\Functional\AbstractTestBase;
-use Fixture\BaseExtension\Domain\Model\Blob;
+use EvowebTests\BaseExtension\Domain\Model\Blob;
 use PhpParser\ParserFactory;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -84,6 +84,7 @@ class ClassLoaderTest extends AbstractTestBase
         $classLoader = $this->getClassLoader();
         $classRegister = $this->getClassRegister();
         $cacheManager = new CacheFactory();
+        /** @var PhpFrontend $classCache */
         $classCache = $cacheManager->createCache('extender');
         $parserFactory = new ParserFactory();
         $classParser = new ClassParser($parserFactory);
@@ -96,7 +97,7 @@ class ClassLoaderTest extends AbstractTestBase
             $classRegister
         );
 
-        $expected = 'Fixture\BaseExtension\Domain\Model\Blob';
+        $expected = 'EvowebTests\BaseExtension\Domain\Model\Blob';
         $subject = new ClassLoader($classCache, $classCacheManager, $classRegister);
         $subject->loadClass($expected);
 
@@ -114,6 +115,7 @@ class ClassLoaderTest extends AbstractTestBase
         $classLoader = $this->getClassLoader();
         $classRegister = $this->getClassRegister();
         $cacheManager = new CacheFactory();
+        /** @var PhpFrontend $classCache */
         $classCache = $cacheManager->createCache('extender');
         $parserFactory = new ParserFactory();
         $classParser = new ClassParser($parserFactory);
@@ -126,7 +128,7 @@ class ClassLoaderTest extends AbstractTestBase
             $classRegister
         );
 
-        $className = 'Fixture\BaseExtension\Domain\Model\Blob';
+        $className = 'EvowebTests\BaseExtension\Domain\Model\Blob';
         $subject = new ClassLoader($classCache, $classCacheManager, $classRegister);
         $subject->loadClass($className);
 

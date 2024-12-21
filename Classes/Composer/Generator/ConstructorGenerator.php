@@ -17,8 +17,10 @@ namespace Evoweb\Extender\Composer\Generator;
 
 use Evoweb\Extender\Parser\FileSegments;
 use PhpParser\Modifiers;
+use PhpParser\Node;
 use PhpParser\Node\Expr\StaticCall;
 use PhpParser\Node\Param;
+use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Expression;
@@ -26,6 +28,11 @@ use PhpParser\Node\Stmt\Namespace_;
 
 class ConstructorGenerator implements GeneratorInterface
 {
+    /**
+     * @param Node[] $statements
+     * @param FileSegments[] $fileSegments
+     * @return Node[]
+     */
     public function generate(array $statements, array $fileSegments): array
     {
         $namespace = $this->getNamespace($statements);
@@ -46,12 +53,14 @@ class ConstructorGenerator implements GeneratorInterface
         return $statements;
     }
 
+    /**
+     * @param FileSegments[] $fileSegments
+     * @return array<Param[]|Stmt[]>
+     */
     protected function getParamsAndStmts(array $fileSegments): array
     {
         $params = [];
         $stmts = [];
-
-        /** @var FileSegments $fileSegment */
         foreach ($fileSegments as $fileSegment) {
             $constructor = $fileSegment->getConstructor();
             if (!$constructor) {
@@ -65,9 +74,13 @@ class ConstructorGenerator implements GeneratorInterface
         return [$params, $stmts];
     }
 
+    /**
+     * @param Param[] $result
+     * @param Param[] $params
+     * @return Param[]
+     */
     protected function getConstructorParameter(array $result, array $params): array
     {
-        /** @var Param $param */
         foreach ($params as $param) {
             if (isset($result[$param->var->name])) {
                 continue;
@@ -78,6 +91,12 @@ class ConstructorGenerator implements GeneratorInterface
         return $result;
     }
 
+    /**
+     * @param Stmt[] $result
+     * @param Stmt[]|Expression[] $stmts
+     * @param bool $isBaseClass
+     * @return Stmt[]
+     */
     protected function getConstructorStatements(array $result, array $stmts, bool $isBaseClass): array
     {
         if ($isBaseClass) {
@@ -101,11 +120,13 @@ class ConstructorGenerator implements GeneratorInterface
         return $result;
     }
 
+    /**
+     * @param FileSegments[] $fileSegments
+     */
     protected function hasConstructor(array $fileSegments): bool
     {
         $result = false;
 
-        /** @var FileSegments $fileSegment */
         foreach ($fileSegments as $fileSegment) {
             if ($fileSegment->getConstructor()) {
                 $result = true;
@@ -116,6 +137,9 @@ class ConstructorGenerator implements GeneratorInterface
         return $result;
     }
 
+    /**
+     * @param Node[] $statements
+     */
     protected function getNamespace(array $statements): ?Namespace_
     {
         $namespace = null;

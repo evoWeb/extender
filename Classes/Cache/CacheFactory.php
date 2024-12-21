@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace Evoweb\Extender\Cache;
 
+use Evoweb\Extender\Hooks\ClearCacheHook;
 use TYPO3\CMS\Core\Cache\Backend\AbstractBackend;
 use TYPO3\CMS\Core\Cache\Backend\FileBackend;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
@@ -23,6 +24,9 @@ use TYPO3\CMS\Core\Core\Bootstrap;
 
 class CacheFactory
 {
+    /**
+     * @var array<string, string|string[]|array<string, string>>
+     */
     protected static array $configuration = [
         'frontend' => PhpFrontend::class,
         'backend' => FileBackend::class,
@@ -49,5 +53,7 @@ class CacheFactory
     public static function addClassCacheConfigToGlobalTypo3ConfVars(): void
     {
         $GLOBALS['TYPO3_CONF_VARS']['SYS']['caching']['cacheConfigurations']['extender'] = static::$configuration;
+        $GLOBALS['TYPO3_CONF_VARS']['SC_OPTIONS']['t3lib/class.t3lib_tcemain.php']['clearCachePostProc']['extender'] =
+            ClearCacheHook::class . '->clearCachePostProc';
     }
 }

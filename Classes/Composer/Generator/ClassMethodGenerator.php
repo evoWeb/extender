@@ -16,11 +16,18 @@ declare(strict_types=1);
 namespace Evoweb\Extender\Composer\Generator;
 
 use Evoweb\Extender\Parser\FileSegments;
+use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
+use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Namespace_;
 
 class ClassMethodGenerator implements GeneratorInterface
 {
+    /**
+     * @param Node[] $statements
+     * @param FileSegments[] $fileSegments
+     * @return Node[]
+     */
     public function generate(array $statements, array $fileSegments): array
     {
         $namespace = $this->getNamespace($statements);
@@ -33,10 +40,13 @@ class ClassMethodGenerator implements GeneratorInterface
         return $statements;
     }
 
+    /**
+     * @param FileSegments[] $fileSegments
+     * @return ClassMethod[]
+     */
     protected function getUniqueClassMethods(array $fileSegments): array
     {
         $classMethods = [];
-        /** @var FileSegments $fileSegment */
         foreach ($fileSegments as $fileSegment) {
             foreach ($fileSegment->getMethods() as $currentMethod) {
                 if (isset($classMethods[(string)$currentMethod->name])) {
@@ -48,6 +58,9 @@ class ClassMethodGenerator implements GeneratorInterface
         return array_values($classMethods);
     }
 
+    /**
+     * @param Node[] $statements
+     */
     protected function getNamespace(array $statements): ?Namespace_
     {
         $namespace = null;

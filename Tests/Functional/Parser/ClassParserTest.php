@@ -23,6 +23,8 @@ use PhpParser\Parser\Php7;
 use PhpParser\ParserFactory;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
+use PhpParser\Node\PropertyItem;
+use PhpParser\Node\Stmt\Property;
 
 class ClassParserTest extends AbstractTestBase
 {
@@ -34,11 +36,12 @@ class ClassParserTest extends AbstractTestBase
             ->disableOriginalConstructor()
             ->getMock();
         $parser->expects(self::once())->method('parse')->willReturn([
-            new Stmt\Namespace_(new Node\Name('Fixture\BaseExtension\Domain\Model')),
+            new Stmt\Namespace_(new Node\Name('EvowebTests\BaseExtension\Domain\Model')),
             new Node\UseItem(new Node\Name('Evoweb\Domain\Model\Test')),
             new Stmt\Class_('GetFileSegments'),
             new Stmt\TraitUse([new Node\Name('Evoweb\TestTrait')]),
-            new Stmt\Property(2, [new Node\PropertyItem('testProperty')]),
+            // @phpstan-ignore argument.type
+            new Property(2, [new PropertyItem('testProperty')]),
             new Stmt\ClassMethod('__construct'),
             new Stmt\ClassMethod('getTestProperty'),
         ]);
@@ -69,7 +72,7 @@ class ClassParserTest extends AbstractTestBase
     #[Test]
     public function getFileSegment(): void
     {
-        /** @var ParserFactory|MockObject $parser */
+        /** @var ParserFactory|MockObject $parserFactory */
         $parserFactory = $this->createMock(ParserFactory::class);
 
         $subject = new class ($parserFactory) extends ClassParser {
@@ -79,7 +82,7 @@ class ClassParserTest extends AbstractTestBase
             }
         };
 
-        $expected = new Node\Name('Fixture\BaseExtension\Domain\Model');
+        $expected = new Node\Name('EvowebTests\BaseExtension\Domain\Model');
 
         $fileSegment = new FileSegments();
         $fileSegment->setStatements([new Stmt\Namespace_($expected)]);

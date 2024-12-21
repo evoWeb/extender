@@ -15,10 +15,17 @@ declare(strict_types=1);
 
 namespace Evoweb\Extender\Composer\Generator;
 
+use Evoweb\Extender\Parser\FileSegments;
+use PhpParser\Node;
 use PhpParser\Node\Stmt\Namespace_;
 
 class NamespaceGenerator implements GeneratorInterface
 {
+    /**
+     * @param Node[] $statements
+     * @param FileSegments[] $fileSegments
+     * @return Node[]
+     */
     public function generate(array $statements, array $fileSegments): array
     {
         foreach ($fileSegments as $fileSegment) {

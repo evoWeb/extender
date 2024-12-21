@@ -20,10 +20,14 @@ use PhpParser\Node\Stmt\TraitUse;
 
 class TraitVisitor extends AbstractVisitor
 {
-    public function enterNode(Node $node): void
+    /**
+     * @return int|Node|Node[]|null
+     */
+    public function enterNode(Node $node): int|null|Node|array
     {
         if ($node instanceof TraitUse) {
             $this->fileSegment->addTrait($node);
         }
+        return $node;
     }
 }

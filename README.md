@@ -1,6 +1,6 @@
 # TYPO3 Extending extbase domain models
 
-![build](https://github.com/evoWeb/extender/workflows/build/badge.svg?branch=develop)
+![build](https://github.com/evoWeb/extender/actions/workflows/ci.yml/badge.svg?branch=develop)
 [![Latest Stable Version](https://poser.pugx.org/evoweb/extender/v/stable)](https://packagist.org/packages/evoweb/extender)
 [![Monthly Downloads](https://poser.pugx.org/evoweb/extender/d/monthly)](https://packagist.org/packages/evoweb/extender)
 [![Total Downloads](https://poser.pugx.org/evoweb/extender/downloads)](https://packagist.org/packages/evoweb/extender)

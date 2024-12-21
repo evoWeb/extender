@@ -16,11 +16,14 @@ declare(strict_types=1);
 namespace Evoweb\Extender\Composer\Generator;
 
 use Evoweb\Extender\Parser\FileSegments;
+use PhpParser\Node;
 
 interface GeneratorInterface
 {
     /**
+     * @param Node[] $statements
      * @param FileSegments[] $fileSegments
+     * @return Node[]
      */
     public function generate(array $statements, array $fileSegments): array;
 }

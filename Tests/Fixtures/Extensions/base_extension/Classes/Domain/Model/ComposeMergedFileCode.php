@@ -11,11 +11,11 @@
  * LICENSE.txt file that was distributed with this source code.
  */
 
-namespace Fixture\BaseExtension\Domain\Model;
+namespace EvowebTests\BaseExtension\Domain\Model;
 
 class ComposeMergedFileCode
 {
-    use Fixture\BaseExtension\TestTrait;
+    use \EvowebTests\BaseExtension\Traits\TestTrait;
 
     protected string $testProperty = '';
 

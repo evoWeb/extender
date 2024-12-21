@@ -17,12 +17,18 @@ namespace Evoweb\Extender\Composer\Generator;
 
 use Evoweb\Extender\Parser\FileSegments;
 use PhpParser\Modifiers;
+use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\Namespace_;
 use PhpParser\Node\Stmt\Property;
 
 class PropertyGenerator implements GeneratorInterface
 {
+    /**
+     * @param Node[] $statements
+     * @param FileSegments[] $fileSegments
+     * @return Node[]
+     */
     public function generate(array $statements, array $fileSegments): array
     {
         $namespace = $this->getNamespace($statements);
@@ -35,10 +41,13 @@ class PropertyGenerator implements GeneratorInterface
         return $statements;
     }
 
+    /**
+     * @param FileSegments[] $fileSegments
+     * @return Property[]
+     */
     protected function getUniqueProperties(array $fileSegments): array
     {
         $properties = [];
-        /** @var FileSegments $fileSegment */
         foreach ($fileSegments as $fileSegment) {
             foreach ($fileSegment->getProperties() as $property) {
                 if (count($property->props) == 1) {
@@ -57,6 +66,9 @@ class PropertyGenerator implements GeneratorInterface
         return array_values($properties);
     }
 
+    /**
+     * @param Node[] $statements
+     */
     protected function getNamespace(array $statements): ?Namespace_
     {
         $namespace = null;

@@ -11,14 +11,18 @@
  * LICENSE.txt file that was distributed with this source code.
  */
 
-namespace Fixture\ExtendingExtension\Domain\Model;
+namespace EvowebTests\ExtendingExtension\Domain\Model;
 
+use TYPO3\CMS\Extbase\Domain\Model\Category;
 use TYPO3\CMS\Extbase\Persistence\ObjectStorage;
 
-class BlobWithStorageExtend extends \Fixture\BaseExtension\Domain\Model\BlobWithStorage
+class BlobWithStorageExtend extends \EvowebTests\BaseExtension\Domain\Model\BlobWithStorage
 {
     protected int $otherProperty = 0;
 
+    /**
+     * @var ObjectStorage<Category>
+     */
     protected ObjectStorage $otherStorage;
 
     public function __construct()
@@ -37,11 +41,17 @@ class BlobWithStorageExtend extends \Fixture\BaseExtension\Domain\Model\BlobWith
         $this->otherProperty = $otherProperty;
     }
 
+    /**
+     * @return ObjectStorage<Category>
+     */
     public function getOtherStorage(): ObjectStorage
     {
         return $this->otherStorage;
     }
 
+    /**
+     * @param ObjectStorage<Category> $otherStorage
+     */
     public function setOtherStorage(ObjectStorage $otherStorage): void
     {
         $this->otherStorage = $otherStorage;

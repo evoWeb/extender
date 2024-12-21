@@ -11,18 +11,18 @@
  * LICENSE.txt file that was distributed with this source code.
  */
 
-namespace Fixture\ExtendingExtension\Domain\Model;
+namespace EvowebTests\ExtendingExtension\Domain\Model;
 
 use Psr\Log\LoggerAwareInterface;
-use Psr\Log\LoggerAwareTrait as T;
+use Psr\Log\LoggerAwareTrait;
 
-class BlobExtend extends \Fixture\BaseExtension\Domain\Model\Blob implements LoggerAwareInterface
+class BlobExtend extends \EvowebTests\BaseExtension\Domain\Model\Blob implements LoggerAwareInterface
 {
-    use T;
+    use LoggerAwareTrait;
 
     protected int $otherProperty = 0;
 
-    public function __construct($property = 'b', $otherProperty = 1)
+    public function __construct(string $property = 'b', int $otherProperty = 1)
     {
         parent::__construct($property);
         $this->otherProperty = $otherProperty;

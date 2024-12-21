@@ -1,5 +1,5 @@
 {
-	"name": "evoweb/base_extension",
+	"name": "evowebtests/base-extension",
 	"description": "Base fixture for extender testing",
 	"type": "typo3-cms-extension",
 	"license": "GPL-2.0-or-later",
@@ -7,7 +7,7 @@
 
 	"autoload": {
 		"psr-4": {
-			"Fixture\\BaseExtension\\": "Classes/"
+			"EvowebTests\\BaseExtension\\": "Classes/"
 		}
 	},
 	"extra": {

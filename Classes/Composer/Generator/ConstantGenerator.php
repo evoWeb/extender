@@ -16,12 +16,18 @@ declare(strict_types=1);
 namespace Evoweb\Extender\Composer\Generator;
 
 use Evoweb\Extender\Parser\FileSegments;
+use PhpParser\Node;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassConst;
 use PhpParser\Node\Stmt\Namespace_;
 
 class ConstantGenerator implements GeneratorInterface
 {
+    /**
+     * @param Node[] $statements
+     * @param FileSegments[] $fileSegments
+     * @return Node[]
+     */
     public function generate(array $statements, array $fileSegments): array
     {
         $namespace = $this->getNamespace($statements);
@@ -34,10 +40,13 @@ class ConstantGenerator implements GeneratorInterface
         return $statements;
     }
 
+    /**
+     * @param FileSegments[] $fileSegments
+     * @return ClassConst[]
+     */
     protected function getUniqueClassConstants(array $fileSegments): array
     {
         $classConstant = [];
-        /** @var FileSegments $fileSegment */
         foreach ($fileSegments as $fileSegment) {
             foreach ($fileSegment->getClassConsts() as $currentClassConstant) {
                 foreach ($currentClassConstant->consts as $currentConst) {
@@ -51,6 +60,9 @@ class ConstantGenerator implements GeneratorInterface
         return array_values($classConstant);
     }
 
+    /**
+     * @param Node[] $statements
+     */
     protected function getNamespace(array $statements): ?Namespace_
     {
         $namespace = null;

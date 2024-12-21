@@ -16,14 +16,18 @@ declare(strict_types=1);
 namespace Evoweb\Extender\Parser\Visitor;
 
 use PhpParser\Node;
-use PhpParser\Node\Stmt\UseUse;
+use PhpParser\Node\UseItem;
 
 class UseVisitor extends AbstractVisitor
 {
-    public function enterNode(Node $node): void
+    /**
+     * @return int|Node|Node[]|null
+     */
+    public function enterNode(Node $node): int|null|Node|array
     {
-        if ($node instanceof UseUse) {
-            $this->fileSegment->addUseUse($node);
+        if ($node instanceof UseItem) {
+            $this->fileSegment->addUse($node);
         }
+        return $node;
     }
 }

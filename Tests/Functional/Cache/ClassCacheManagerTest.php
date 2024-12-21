@@ -21,7 +21,7 @@ use Evoweb\Extender\Exception\BaseFileNotFoundException;
 use Evoweb\Extender\Parser\ClassParser;
 use Evoweb\Extender\Parser\FileSegments;
 use Evoweb\Extender\Tests\Functional\AbstractTestBase;
-use Fixture\BaseExtension\Domain\Model\Blob;
+use EvowebTests\BaseExtension\Domain\Model\Blob;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
@@ -111,6 +111,9 @@ class ClassCacheManagerTest extends AbstractTestBase
             $classComposer,
             $classRegister
         ) extends ClassCacheManager {
+            /**
+             * @return FileSegments[]
+             */
             public function getExtendingClassesFileSegments(string $baseClassName): array
             {
                 return parent::getExtendingClassesFileSegments($baseClassName);
@@ -188,6 +191,9 @@ class ClassCacheManagerTest extends AbstractTestBase
             $classComposer,
             $classRegister
         ) extends ClassCacheManager {
+            /**
+             * @param FileSegments[] $fileSegments
+             */
             public function getMergedFileCode(array $fileSegments): string
             {
                 return parent::getMergedFileCode($fileSegments);

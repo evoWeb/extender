@@ -20,12 +20,14 @@ use PhpParser\Node\Stmt\ClassConst;
 
 class ConstantVisitor extends AbstractVisitor
 {
-    protected array $properties = [];
-
-    public function enterNode(Node $node): void
+    /**
+     * @return int|Node|Node[]|null
+     */
+    public function enterNode(Node $node): int|null|Node|array
     {
         if ($node instanceof ClassConst) {
             $this->fileSegment->addClassConst($node);
         }
+        return $node;
     }
 }

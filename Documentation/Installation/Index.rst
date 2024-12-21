@@ -1,37 +1,37 @@
-.. include:: /Includes.rst.txt
-
-.. _installation:
+..  include:: /Includes.rst.txt
+..  index:: Installation
+..  _installation:
 
 ============
 Installation
 ============
 
+As EXT:extender is based on composer and its mechanisms the installation is only
+possible with composer methods.
 
-Download via Extension Manager
-------------------------------
+**WARNING** In previous versions it was possible to use extender when installed
+via the Extension Manager. This is not possible anymore.
 
-In the TYPO3 Backend go to Admin Tools > Extensions. Change in the dropdown on
-the top left to 'Get Extensions', enter the extension key 'extender' in the text
-field below the headline 'Get Extensions' and hit go. In the result list install
-the extension by hitting the action for that.
+Require via command
+===================
 
+You can add extender with composer require.
 
-Download via Composer
----------------------
+..  code-block:: bash
+    composer require evoweb/extender
 
-Add evoweb/extender to the require in your composer.json like in the following
-example and run 'composer install'.
+Modify composer.json
+====================
 
-.. code-block:: json
-   :caption: composer.json
+Additionally evoweb/extender can be added to the require in your composer.json,
+like in the following example and run 'composer install'.
 
-	{
-		"require": {
-			"typo3/cms-core": "^12.0",
-			"evoweb/extender": "*",
-		}
-	}
+..  code-block:: json
+    :caption: composer.json
 
-
-Alternatively if you have an existing project with a configured composer.json you
-can add extender with the command by running 'composer require evoweb/extender'.
+    {
+        "require": {
+            ...
+            "evoweb/extender": "*"
+        }
+    }
