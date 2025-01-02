@@ -16,7 +16,7 @@ class ClearCacheHook
      */
     public function clearCachePostProc(array $parameters): void
     {
-        if (Environment::getContext()->isDevelopment() && $parameters['cacheCmd'] === 'all') {
+        if (Environment::getContext()->isDevelopment() && ($parameters['cacheCmd'] ?? '') === 'all') {
             $this->classCache->flush();
         }
     }
