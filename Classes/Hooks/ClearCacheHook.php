@@ -25,6 +25,10 @@ class ClearCacheHook
             if ($this->cacheManager->hasCache('extbase_reflection')) {
                 $this->cacheManager->getCache('extbase_reflection')?->flush();
             }
+
+            if ($this->cacheManager->hasCache('classes')) {
+                $this->cacheManager->getCache('classes')?->flush();
+            }
         }
     }
 }
