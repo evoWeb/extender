@@ -48,6 +48,7 @@ services:
     public: true
     arguments:
       $classCache: '@cache.extender'
+      $cacheManager: '@TYPO3\CMS\Core\Cache\CacheManager'
 
   Evoweb\Extender\Loader\ClassLoader:
     arguments:
