@@ -27,7 +27,6 @@ class ClearCacheHook
 
         $container = $this->bootService->getContainer(true);
         $eventDispatcher = $container->get(EventDispatcherInterface::class);
-        $container = $this->bootService->getContainer(true);
         $groups = $container->get(CacheManager::class)->getCacheGroups();
 
         $event = new CacheFlushEvent($groups);
