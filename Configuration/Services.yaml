@@ -48,6 +48,7 @@ services:
     public: true
     arguments:
       $classCache: '@cache.extender'
+      $bootService: '@TYPO3\CMS\Core\Core\BootService'
 
   Evoweb\Extender\Loader\ClassLoader:
     arguments:
