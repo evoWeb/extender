@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="no-js" lang="en">
 <head>
-    <title>extender 11.0.2
+    <title>extender 11.1.0
         documentation</title>
 
     
@@ -10,16 +10,16 @@
 <meta content="phpdocumentor/guides" name="generator">
 <meta content="extender" name="docsearch:name">
 <meta content="" name="docsearch:package_type">
-<meta content="11.0.2" name="docsearch:release">
-<meta content="11.0.2" name="docsearch:version">
-<meta content="2025-01-02T20:33:47+00:00" name="docsearch:modified">
-<meta content="2025-01-02T20:33:47+00:00" name="dc.modified">
-<meta content="2025-01-02T20:33:47+00:00" property="article:modified_time">
+<meta content="11.1.0" name="docsearch:release">
+<meta content="11.1.0" name="docsearch:version">
+<meta content="2025-12-06T19:41:54+00:00" name="docsearch:modified">
+<meta content="2025-12-06T19:41:54+00:00" name="dc.modified">
+<meta content="2025-12-06T19:41:54+00:00" property="article:modified_time">
     <link href="http://purl.org/dc/elements/1.1/" rel="schema.dc">
 <link href="../_resources/css/theme.css" rel="stylesheet">
 <link href="https://docs.typo3.org/search/" rel="search" title="Search">
-<script src="https://typo3.azureedge.net/typo3infrastructure/universe/dist/webcomponents-loader.js"></script>
-<script src="https://typo3.azureedge.net/typo3infrastructure/universe/dist/typo3-universe.js" type="module"></script>
+<script src="https://cdn.typo3.com/typo3infrastructure/universe/dist/webcomponents-loader.js"></script>
+<script src="https://cdn.typo3.com/typo3infrastructure/universe/dist/typo3-universe.js" type="module"></script>
                 </head>
 <body>
 <div class="page">
@@ -33,15 +33,37 @@
     </div>
     <div class="page-header">
         <div class="page-header-inner">
-            <div class="row">
-                <div class="col-md-2 col-lg-4">
+            <div class="d-flex flex-wrap">
+                <div class="logo-wrapper">
                     <a class="logo" href="https://docs.typo3.org/" title="TYPO3 Documentation">
                         <img alt="TYPO3 Logo" class="logo-image" src="../_resources/img/typo3-logo.svg" width="484" height="130">
                     </a>
                 </div>
-                <div class="col-md-10 col-lg-8">
+                <div class="align-self-center order-lg-2 order-last">
+                    
+<div class="toc-header">
+    <div class="toc-title pe-3">
+                            <a class="toc-title-project" href="../Index.html">Extender: Extbase class extending on steroids</a>
+            </div>
+    <label for="languageSelect" class="visually-hidden">Select language</label>
+        <select id="languageSelect" class="form-select d-none">
+        </select>
+
+                                  
+        <label for="versionSelect" class="visually-hidden">Select version</label>
+        <select id="versionSelect" class="form-select"
+                data-current-version="11.1.0"
+            data-override-url-proxy="../_resources/js/versions-proxy.php?url=" data-override-url-self="https://docs.typo3.org/m/typo3/tutorial-getting-started/12.4/en-us/Concepts/Index.html"
+        >
+            <option disabled selected>Loading versions...</option>
+        </select>
+    </div>                </div>
+                <div class="ms-auto order-lg-3 d-flex">
                     <div class="menu-search-wrapper">
-                        <all-documentations-menu data-override-url="https://render-guides.ddev.site/_resources/js/menu-proxy.php"></all-documentations-menu>
+                        <button id="toc-toggle" class="btn btn-light d-block d-lg-none" tabindex="0" aria-controls="toc-collapse" aria-expanded="false">
+                            <i class="fas fa-bars"></i> <span class="visually-hidden">Mobile Menu</span>
+                        </button>
+                        <all-documentations-menu data-override-url="../_resources/js/menu-proxy.php"></all-documentations-menu>
                                                 <search role="search">
                             <form action="https://docs.typo3.org/search/search" id="global-search-form" method="get">
                                 <div class="sr-only"><label for="globalsearchinput">TYPO3 documentation...</label></div>
@@ -50,11 +72,28 @@
                                         <option value="">Search all</option>
                                     </select>
                                     <input autocomplete="off" class="form-control shadow-none" id="globalsearchinput" name="q" placeholder="TYPO3 documentation..." type="text" value="">
-                                    <button class="btn btn-light search__submit" type="submit"><i class="fa fa-search"></i>&nbsp;<span class="d-none d-md-inline">Search</span></button>
+                                    <button class="btn btn-light" type="submit"><i class="fa fa-search"></i>&nbsp;<span class="d-none d-md-inline">Search</span></button>
                                 </div>
                             </form>
                             <div id="global-search-root"></div>
                         </search>
+                        <div class="position-relative d-inline-block">
+                            <button id="options-toggle" class="btn btn-light d-block" type="button" aria-expanded="false">
+                                <i class="fas fa-cog"></i> <span class="visually-hidden">Options</span>
+                            </button>
+
+                            <div id="options-panel"
+                                 class="shadow p-3"
+                                 role="menu"
+                                 aria-hidden="true">
+                                <h6 class="dropdown-header text-muted text-uppercase small mb-2">Options</h6>
+
+                                                                                                        <a class="dropdown-item d-flex align-items-center gap-2" href="../Index.html" rel="noopener">
+                                        <i class="fas fa-file-alt"></i>
+                                        Switch to regular view
+                                    </a>
+                                                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -64,31 +103,8 @@
         <div class="page-main-inner">
             <div class="page-main-navigation">
                 <nav>
-                    
-<div class="toc-header">
-    <div class="toc-title">
-        <a class="toc-title-project" href="#">extender</a>
-            <div class="toc-version-wrapper" id="toc-version-wrapper">
-                <!--
-                    LOCAL RENDERING NOTICE:
-                    https://docs.typo3.org/other/t3docs/render-guides/main/en-us/Developer/AjaxVersions.html
-                -->
 
-                <div id="toc-version" class="toc-version" data-override-url-proxy="https://render-guides.ddev.site/_resources/js/versions-proxy.php?url=" data-override-url-self="https://docs.typo3.org/m/typo3/tutorial-getting-started/12.4/en-us/Concepts/Index.html">
-                
-                    <span class="toc-version-prefix">Release:</span>
-                    <span class="toc-version-number" tabindex="0">11.0.2</span>
-                </div>
-                <div id="toc-version-options" class="toc-version-options">
-                    <p><span class="fa fa-spinner fa-spin"></span> Loading data.</p>
-                </div>
-            </div></div>
-    <div class="toc-actions">
-        <button id="toc-toggle" class="btn btn-light d-block d-lg-none" tabindex="0" aria-controls="toc-collapse" aria-expanded="false">
-            Menu
-        </button>
-    </div>
-</div>                    <div id="toc-collapse">
+                    <div id="toc-collapse">
                                                 <div aria-label="main navigation" class="toc"
                              role="navigation">
                                                                                 </div>
@@ -101,7 +117,7 @@
             
 <section class="section" id="extender-extbase-class-extending-on-steroids" data-rst-anchor="start">
             <a id="start"></a>
-            <h1>Extender: Extbase class extending on steroids<a class="headerlink" href="#extender-extbase-class-extending-on-steroids" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h1>
+            <h1>Extender: Extbase class extending on steroids<a class="headerlink" href="#extender-extbase-class-extending-on-steroids" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h1>
             <dl class="field-list simple ">
             <dt class="field-odd">Extension key</dt>
 
@@ -119,7 +135,7 @@
 
         <dd class="field-odd">
             
-    <p>11.0.2</p>
+    <p>11.1.0</p>
         </dd>
             <dt class="field-odd">Language</dt>
 
@@ -145,109 +161,7 @@ license.</p>
 
         <dd class="field-odd">
             
-    <p>Thu, 02 Jan 2025 20:33:47 +0000</p>
-        </dd>
-            <dt class="field-odd">Copyright</dt>
-
-        <dd class="field-odd">
-            
-    <p>2014-2023</p>
-        </dd>
-    </dl>
-            <hr />
-            
-    <p>Makes extending classes fully transparent</p>
-
-            
-    <p>The content of this document is related to TYPO3,
-a GNU/GPL CMS/Framework available from <a href="http://typo3.org">http://typo3.org</a></p>
-
-            <hr />
-            
-    <p><strong>Table of Contents</strong></p>
-
-            <div class="toctree-wrapper compound">
-        <ul class="menu-level">
-    <li class="toc-item">
-    <a href="#introduction-1">Introduction</a>
-
-
-</li>
-    <li class="toc-item">
-    <a href="#installation-1">Installation</a>
-
-
-</li>
-    <li class="toc-item">
-    <a href="#configuration-1">Configuration</a>
-
-
-</li>
-    <li class="toc-item">
-    <a href="#breaking-change">Breaking change</a>
-
-
-</li>
-    <li class="toc-item">
-    <a href="#testing-1">Testing</a>
-
-
-</li>
-    </ul>
-</div>
-            
-    </section>
-
-        </article>
-<article>
-            
-<section class="section" id="extender-extbase-class-extending-on-steroids" data-rst-anchor="start">
-            <a id="start"></a>
-            <h1>Extender: Extbase class extending on steroids<a class="headerlink" href="#extender-extbase-class-extending-on-steroids" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h1>
-            <dl class="field-list simple ">
-            <dt class="field-odd">Extension key</dt>
-
-        <dd class="field-odd">
-            
-    <p>extender</p>
-        </dd>
-            <dt class="field-odd">Package name</dt>
-
-        <dd class="field-odd">
-            
-    <p>evoweb/extender</p>
-        </dd>
-            <dt class="field-odd">Version</dt>
-
-        <dd class="field-odd">
-            
-    <p>11.0.2</p>
-        </dd>
-            <dt class="field-odd">Language</dt>
-
-        <dd class="field-odd">
-            
-    <p>en</p>
-        </dd>
-            <dt class="field-odd">Author</dt>
-
-        <dd class="field-odd">
-            
-    <p>Sebastian Fischer</p>
-        </dd>
-            <dt class="field-odd">License</dt>
-
-        <dd class="field-odd">
-            
-    <p>This document is published under the
-<a href="https://www.opencontent.org/openpub/">Open Publication</a>.
-license.</p>
-        </dd>
-            <dt class="field-odd">Rendered</dt>
-
-        <dd class="field-odd">
-            
-    <p>Thu, 02 Jan 2025 20:33:47 +0000</p>
+    <p>Sat, 06 Dec 2025 19:41:54 +0000</p>
         </dd>
             <dt class="field-odd">Copyright</dt>
 
@@ -305,12 +219,12 @@ a GNU/GPL CMS/Framework available from <a href="http://typo3.org">http://typo3.o
             
 <section class="section" id="introduction-1" data-rst-anchor="introduction">
             <a id="introduction"></a>
-            <h1>Introduction<a class="headerlink" href="#introduction-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h1>
+            <h1>Introduction<a class="headerlink" href="#introduction-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h1>
             
     <p>This Documentation was written for version 7.0.x of the extension.</p>
 
             <section class="section" id="extending-classes">
-            <h2>Extending classes<a class="headerlink" href="#extending-classes" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
+            <h2>Extending classes<a class="headerlink" href="#extending-classes" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h2>
             
     <p>The sole purpose of this extension is to fill a gap that extbase leaves open.</p>
 
@@ -343,7 +257,7 @@ should be a prefilled class cache on every request.</p>
 
     </section>
             <section class="section" id="deep-dive-into-an-example">
-            <h2>Deep dive into an example<a class="headerlink" href="#deep-dive-into-an-example" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
+            <h2>Deep dive into an example<a class="headerlink" href="#deep-dive-into-an-example" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h2>
             
     <p>The cache manager parses the base and extend files to gather the colored parts
 of the following images, generates a combined file as shown in the merged result
@@ -386,7 +300,7 @@ and adds it to the cache.</p>
 
     </section>
             <section class="section" id="explanation">
-            <h2>Explanation<a class="headerlink" href="#explanation" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
+            <h2>Explanation<a class="headerlink" href="#explanation" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h2>
             
 
 <ul class="bignums-attention">
@@ -459,7 +373,7 @@ files path were taken into account.</p>
 
     </section>
             <section class="section" id="example-source">
-            <h2>Example source<a class="headerlink" href="#example-source" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
+            <h2>Example source<a class="headerlink" href="#example-source" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h2>
             
     <p>The base file content could be found in
 EXT:extender/Tests/Fixtures/Extensions/base_extension/Classes/Domain/Model/Blob.php</p>
@@ -470,9 +384,9 @@ EXT:extender/Tests/Fixtures/Extensions/extending_extension/Classes/Domain/Model/
 
     </section>
             <section class="section" id="important">
-            <h2>Important<a class="headerlink" href="#important" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
+            <h2>Important<a class="headerlink" href="#important" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h2>
             <section class="section" id="correct">
-            <h3>Correct<a class="headerlink" href="#correct" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
+            <h3>Correct<a class="headerlink" href="#correct" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h3>
             
     <p>As in both files shown, it&#039;s important to use the FQCN to extend of, else the
 usage of the class gets written to the merged file and result in two classes
@@ -512,7 +426,7 @@ with the same name in the cache file.</p>
 </div>
     </section>
             <section class="section" id="wrong">
-            <h3>Wrong<a class="headerlink" href="#wrong" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
+            <h3>Wrong<a class="headerlink" href="#wrong" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h3>
             
     <p>While linting the file will not raise an error and the class is usable,
 it will definitely irritate editors like PHPStorm or Visual Code.</p>
@@ -562,7 +476,7 @@ it will definitely irritate editors like PHPStorm or Visual Code.</p>
             
 <section class="section" id="installation-1" data-rst-anchor="installation">
             <a id="installation"></a>
-            <h1>Installation<a class="headerlink" href="#installation-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h1>
+            <h1>Installation<a class="headerlink" href="#installation-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h1>
             
     <p>As EXT:extender is based on composer and its mechanisms the installation is only
 possible with composer methods.</p>
@@ -572,7 +486,7 @@ possible with composer methods.</p>
 via the Extension Manager. This is not possible anymore.</p>
 
             <section class="section" id="require-via-command">
-            <h2>Require via command<a class="headerlink" href="#require-via-command" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
+            <h2>Require via command<a class="headerlink" href="#require-via-command" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h2>
             
     <p>You can add extender with composer require.</p>
 
@@ -588,7 +502,7 @@ via the Extension Manager. This is not possible anymore.</p>
 </div>
     </section>
             <section class="section" id="modify-composer-json">
-            <h2>Modify composer.json<a class="headerlink" href="#modify-composer-json" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
+            <h2>Modify composer.json<a class="headerlink" href="#modify-composer-json" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h2>
             
     <p>Additionally evoweb/extender can be added to the require in your composer.json,
 like in the following example and run &#039;composer install&#039;.</p>
@@ -618,9 +532,9 @@ like in the following example and run &#039;composer install&#039;.</p>
             
 <section class="section" id="configuration-1" data-rst-anchor="configuration">
             <a id="configuration"></a>
-            <h1>Configuration<a class="headerlink" href="#configuration-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h1>
+            <h1>Configuration<a class="headerlink" href="#configuration-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h1>
             <section class="section" id="configure-the-extend-of-a-class">
-            <h2>Configure the extend of a class<a class="headerlink" href="#configure-the-extend-of-a-class" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
+            <h2>Configure the extend of a class<a class="headerlink" href="#configure-the-extend-of-a-class" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h2>
             
     <p>Since version 10.0.0 the registration of class extends needs to be configured in
 services.yaml like in this example.</p>
@@ -657,30 +571,30 @@ services.yaml like in this example.</p>
             
 <section class="section" id="breaking-change" data-rst-anchor="breaking-changes">
             <a id="breaking-changes"></a>
-            <h1>Breaking change<a class="headerlink" href="#breaking-change" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h1>
+            <h1>Breaking change<a class="headerlink" href="#breaking-change" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h1>
             <section class="section" id="change-of-command-name">
-            <h2>Change of command name<a class="headerlink" href="#change-of-command-name" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
+            <h2>Change of command name<a class="headerlink" href="#change-of-command-name" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h2>
             
     <p>The command was renamed from &quot;extender:rebuild&quot; to &quot;extender:clearClassCache&quot;
 to better reflect what the command is doing.</p>
 
     </section>
             <section class="section" id="change-of-extending-configuration-in-10-0-0">
-            <h2>Change of extending configuration in 10.0.0<a class="headerlink" href="#change-of-extending-configuration-in-10-0-0" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
+            <h2>Change of extending configuration in 10.0.0<a class="headerlink" href="#change-of-extending-configuration-in-10-0-0" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h2>
             <section class="section" id="description">
-            <h3>Description<a class="headerlink" href="#description" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
+            <h3>Description<a class="headerlink" href="#description" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h3>
             
     <p>Since version 10.0.0 the registration happens in services.yaml</p>
 
     </section>
             <section class="section" id="impact">
-            <h3>Impact<a class="headerlink" href="#impact" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
+            <h3>Impact<a class="headerlink" href="#impact" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h3>
             
     <p>All class extending in ext_localconf.php needs to be replaced and converted</p>
 
     </section>
             <section class="section" id="migration">
-            <h3>Migration<a class="headerlink" href="#migration" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
+            <h3>Migration<a class="headerlink" href="#migration" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h3>
             
     <p>Migrate configuration from array to yaml.</p>
 
@@ -717,22 +631,22 @@ to better reflect what the command is doing.</p>
     </section>
     </section>
             <section class="section" id="change-of-extending-configuration-in-7-0-0">
-            <h2>Change of extending configuration in 7.0.0<a class="headerlink" href="#change-of-extending-configuration-in-7-0-0" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h2>
+            <h2>Change of extending configuration in 7.0.0<a class="headerlink" href="#change-of-extending-configuration-in-7-0-0" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h2>
             <section class="section" id="description">
-            <h3>Description<a class="headerlink" href="#description" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
+            <h3>Description<a class="headerlink" href="#description" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h3>
             
     <p>Since version 7.0.0 all usage of EXTCONF is replaced with EXTENSIONS.</p>
 
     </section>
             <section class="section" id="impact">
-            <h3>Impact<a class="headerlink" href="#impact" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
+            <h3>Impact<a class="headerlink" href="#impact" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h3>
             
     <p>All class extending still using EXTCONF to not work anymore. So the code still
 fills the array but this array is not used anymore.</p>
 
     </section>
             <section class="section" id="affected-installations">
-            <h3>Affected Installations<a class="headerlink" href="#affected-installations" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
+            <h3>Affected Installations<a class="headerlink" href="#affected-installations" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h3>
             
     <p>All extensions that use EXTCONF in registration of class extending like.</p>
 
@@ -752,7 +666,7 @@ fills the array but this array is not used anymore.</p>
 </div>
     </section>
             <section class="section" id="migration">
-            <h3>Migration<a class="headerlink" href="#migration" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h3>
+            <h3>Migration<a class="headerlink" href="#migration" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h3>
             
     <p>Replace the usage of EXTCONF with EXTENSIONS to have the class extended again.</p>
 
@@ -765,7 +679,7 @@ fills the array but this array is not used anymore.</p>
             
 <section class="section" id="testing-1" data-rst-anchor="testing">
             <a id="testing"></a>
-            <h1>Testing<a class="headerlink" href="#testing-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h1>
+            <h1>Testing<a class="headerlink" href="#testing-1" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h1>
             <figure>
     <img
     src="Images/phpstorm_configuration.png"
@@ -780,7 +694,7 @@ fills the array but this array is not used anymore.</p>
 <article>
             
 <section class="section" id="sitemap">
-            <h1>Sitemap<a class="headerlink" href="#sitemap" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline"><i class="fa-solid fa-paragraph"></i></a></h1>
+            <h1>Sitemap<a class="headerlink" href="#sitemap" data-bs-toggle="modal" data-bs-target="#linkReferenceModal"  title="Reference this headline">&nbsp;<i class="fa-solid fa-link"></i></a></h1>
     </section>
 
         </article>
@@ -801,11 +715,6 @@ fills the array but this array is not used anymore.</p>
             <div class="modal-body">
                 <div class="alert alert-success d-none" id="permalink-alert-success" role="alert"></div>
                 <div class="mb-3">
-                    <label for="permalink-uri" class="col-form-label">URL</label>
-                    <div class="input-group">
-                        <input class="form-control code" id="permalink-uri" readonly>
-                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-uri"><i class="far fa-clone"></i></button>
-                    </div>
                     <div class="permalink-short-wrapper">
                         <label for="permalink-short" class="col-form-label">Permalink (Shortlink)</label>
                         <div class="input-group">
@@ -813,6 +722,11 @@ fills the array but this array is not used anymore.</p>
                             <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-short"><i class="far fa-clone"></i></button>
                         </div>
                         <p><em>Copy and freely share the link</em></p>
+                    </div>
+                    <label for="permalink-uri" class="col-form-label">URL</label>
+                    <div class="input-group">
+                        <input class="form-control code" id="permalink-uri" readonly>
+                        <button type="button" class="btn btn-outline-secondary copy-button" data-target="permalink-uri"><i class="far fa-clone"></i></button>
                     </div>
                 </div>
                 <div class="mb-3">
@@ -878,7 +792,7 @@ fills the array but this array is not used anymore.</p>
                                                 <li><a href="https://github.com/evoWeb/extender/issues" rel="nofollow noopener" title="Issues"><span>Issues</span></a></li>
                                                 <li><a href="https://github.com/evoWeb/extender" rel="nofollow noopener" title="Repository"><span>Repository</span></a></li>
                                             </ul>                <div class="footer-additional">
-                    <p class="text-center">Last rendered: Jan 02, 2025 20:33</p>
+                    <p class="text-center">Last rendered: Dec 06, 2025 19:41</p>
                 </div>
                 <div class="footer-meta">
                                         <div class="footer-meta-copyright">
