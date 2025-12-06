@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -16,7 +16,7 @@ declare(strict_types=1);
 namespace Evoweb\Extender\Cache;
 
 use Evoweb\Extender\Hooks\ClearCacheHook;
-use TYPO3\CMS\Core\Cache\Backend\AbstractBackend;
+use Exception;
 use TYPO3\CMS\Core\Cache\Backend\FileBackend;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
@@ -25,7 +25,7 @@ use TYPO3\CMS\Core\Core\Bootstrap;
 class CacheFactory
 {
     /**
-     * @var array<string, string|string[]|array<string, string>>
+     * @var array<string, array<int|string, int|string>|string>
      */
     protected static array $configuration = [
         'frontend' => PhpFrontend::class,
@@ -35,16 +35,16 @@ class CacheFactory
             'system',
         ],
         'options' => [
-            'defaultLifetime' => AbstractBackend::UNLIMITED_LIFETIME,
+            'defaultLifetime' => 2592000,
         ],
     ];
 
-    public function createCache(string $identifier): ?FrontendInterface
+    public function getCache(string $identifier): ?FrontendInterface
     {
         self::addClassCacheConfigToGlobalTypo3ConfVars();
         try {
             $cache = Bootstrap::createCache($identifier);
-        } catch (\Exception) {
+        } catch (Exception) {
             $cache = null;
         }
         return $cache;

@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace Evoweb\Extender\Parser;
 
+use Exception;
 use PhpParser\NodeTraverser;
 use PhpParser\ParserFactory;
 use PhpParser\PhpVersion;
@@ -36,7 +37,9 @@ class ClassParser
         Visitor\ClassMethodVisitor::class,
     ];
 
-    public function __construct(protected ParserFactory $parserFactory) {}
+    public function __construct(protected ParserFactory $parserFactory)
+    {
+    }
 
     public function getFileSegments(string $filePath): FileSegments
     {
@@ -46,14 +49,13 @@ class ClassParser
 
         try {
             // @extensionScannerIgnoreLine
-            // @phpstan-ignore method.notFound
             $parser = $this->parserFactory->createForVersion(PhpVersion::fromComponents(8, 2));
             $fileSegments->setStatements($parser->parse($fileSegments->getCode()));
 
             foreach ($this->visitors as $visitor) {
                 $this->traverseStatements($fileSegments, $visitor);
             }
-        } catch (\Exception) {
+        } catch (Exception) {
         }
 
         return $fileSegments;

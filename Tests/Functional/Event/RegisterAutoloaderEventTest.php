@@ -5,7 +5,7 @@
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -17,6 +17,7 @@ use Evoweb\Extender\Event\RegisterAutoloaderEvent;
 use Evoweb\Extender\Loader\ClassLoader;
 use Evoweb\Extender\Tests\Functional\AbstractTestBase;
 use PHPUnit\Framework\Attributes\Test;
+use Psr\Container\ContainerInterface;
 use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class RegisterAutoloaderEventTest extends AbstractTestBase
@@ -40,8 +41,11 @@ class RegisterAutoloaderEventTest extends AbstractTestBase
         $autoloaderClass = ClassLoader::class;
         $autoloader = [GeneralUtility::getContainer()->get($autoloaderClass), 'loadClass'];
 
-        $subject = new class () extends RegisterAutoloaderEvent {
-            public function __construct() {}
+        $subject = new class ($this->getContainer()) extends RegisterAutoloaderEvent {
+            public function __construct(ContainerInterface $container)
+            {
+                parent::__construct($container);
+            }
 
             /**
              * @param array<object|string> $autoloader
@@ -64,8 +68,11 @@ class RegisterAutoloaderEventTest extends AbstractTestBase
         $autoloader = [GeneralUtility::getContainer()->get($autoloaderClass), 'loadClass'];
         spl_autoload_register($autoloader, true, true);
 
-        $subject = new class () extends RegisterAutoloaderEvent {
-            public function __construct() {}
+        $subject = new class ($this->getContainer()) extends RegisterAutoloaderEvent {
+            public function __construct(ContainerInterface $container)
+            {
+                parent::__construct($container);
+            }
 
             /**
              * @param array<object|string> $autoloader
