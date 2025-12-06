@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -15,6 +15,7 @@ declare(strict_types=1);
 
 namespace Evoweb\Extender\Parser;
 
+use JsonSerializable;
 use PhpParser\Node\Name;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassConst;
@@ -24,7 +25,7 @@ use PhpParser\Node\Stmt\TraitUse;
 use PhpParser\Node\UseItem;
 use PhpParser\Node;
 
-class FileSegments implements \JsonSerializable
+class FileSegments implements JsonSerializable
 {
     protected string $filePath = '';
 
@@ -134,14 +135,6 @@ class FileSegments implements \JsonSerializable
         return $this->uses;
     }
 
-    /**
-     * @param UseItem[] $uses
-     */
-    public function setUses(array $uses): void
-    {
-        $this->uses = $uses;
-    }
-
     public function addUse(UseItem $use): void
     {
         $this->uses[] = $use;
@@ -165,14 +158,6 @@ class FileSegments implements \JsonSerializable
         return $this->traits;
     }
 
-    /**
-     * @param TraitUse[] $traits
-     */
-    public function setTraits(array $traits): void
-    {
-        $this->traits = $traits;
-    }
-
     public function addTrait(TraitUse $traitUse): void
     {
         $this->traits[] = $traitUse;
@@ -186,14 +171,6 @@ class FileSegments implements \JsonSerializable
         return $this->classConsts;
     }
 
-    /**
-     * @param ClassConst[] $classConst
-     */
-    public function setClassConsts(array $classConst): void
-    {
-        $this->classConsts = $classConst;
-    }
-
     public function addClassConst(ClassConst $classConst): void
     {
         $this->classConsts[] = $classConst;
@@ -205,14 +182,6 @@ class FileSegments implements \JsonSerializable
     public function getProperties(): array
     {
         return $this->properties;
-    }
-
-    /**
-     * @param Property[] $properties
-     */
-    public function setProperties(array $properties): void
-    {
-        $this->properties = $properties;
     }
 
     public function addProperty(Property $property): void

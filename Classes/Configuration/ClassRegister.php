@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -15,12 +15,17 @@ declare(strict_types=1);
 
 namespace Evoweb\Extender\Configuration;
 
+use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
+
+#[Autoconfigure(public: true)]
 class ClassRegister
 {
     /**
      * @param array<string, string[]> $extendedClasses
      */
-    public function __construct(protected array $extendedClasses = []) {}
+    public function __construct(protected array $extendedClasses = [])
+    {
+    }
 
     public function hasBaseClassName(string $className): bool
     {

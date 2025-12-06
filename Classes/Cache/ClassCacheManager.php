@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -22,17 +22,21 @@ use Evoweb\Extender\Exception\BaseFileNotFoundException;
 use Evoweb\Extender\Exception\ExtendingFileNotFoundException;
 use Evoweb\Extender\Parser\ClassParser;
 use Evoweb\Extender\Parser\FileSegments;
+use Exception;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 
 class ClassCacheManager
 {
     public function __construct(
+        #[Autowire(service: 'cache.extender')]
         protected FrontendInterface $classCache,
         protected ClassLoader $classLoader,
         protected ClassParser $classParser,
         protected ClassComposer $classComposer,
         protected ClassRegister $classRegister
-    ) {}
+    ) {
+    }
 
     /**
      * Build merged file and cache for base and extending files
@@ -106,7 +110,7 @@ class ClassCacheManager
     {
         try {
             $this->classCache->set($cacheEntryIdentifier, $code);
-        } catch (\Exception) {
+        } catch (Exception) {
         }
     }
 }

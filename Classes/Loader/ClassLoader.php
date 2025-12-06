@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -17,16 +17,21 @@ namespace Evoweb\Extender\Loader;
 
 use Evoweb\Extender\Cache\ClassCacheManager;
 use Evoweb\Extender\Configuration\ClassRegister;
+use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
+use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
 use TYPO3\CMS\Core\SingletonInterface;
 
+#[Autoconfigure(public: true)]
 class ClassLoader implements SingletonInterface
 {
     public function __construct(
+        #[Autowire(service: 'cache.extender')]
         protected PhpFrontend $classCache,
         protected ClassCacheManager $classCacheManager,
         protected ClassRegister $classRegister
-    ) {}
+    ) {
+    }
 
     /**
      * Loads php files containing classes or interfaces part of the

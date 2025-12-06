@@ -5,7 +5,7 @@
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -21,9 +21,9 @@ use Evoweb\Extender\Loader\ClassLoader;
 use Evoweb\Extender\Parser\ClassParser;
 use Evoweb\Extender\Tests\Functional\AbstractTestBase;
 use EvowebTests\BaseExtension\Domain\Model\Blob;
+use EvowebTests\ExtendingExtension\Domain\Model\BlobExtend;
 use PhpParser\ParserFactory;
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Core\Cache\Backend\FileBackend;
 use TYPO3\CMS\Core\Cache\Frontend\PhpFrontend;
 
@@ -33,12 +33,8 @@ class ClassLoaderTest extends AbstractTestBase
     public function loadClass(): void
     {
         $classRegister = new ClassRegister(['test' => []]);
-        /** @var ClassCacheManager $classCacheManager */
         $classCacheManager = $this->createMock(ClassCacheManager::class);
-
-        /** @var FileBackend $cacheBackend */
         $cacheBackend = $this->createMock(FileBackend::class);
-        /** @var PhpFrontend|MockObject $cacheMock */
         $cacheMock = $this->getMockBuilder(PhpFrontend::class)
             ->setConstructorArgs(['extender', $cacheBackend])
             ->getMock();
@@ -56,9 +52,7 @@ class ClassLoaderTest extends AbstractTestBase
     public function isValidClassName(): void
     {
         $classRegister = new ClassRegister(['test' => []]);
-        /** @var ClassCacheManager $classCacheManager */
         $classCacheManager = $this->createMock(ClassCacheManager::class);
-        /** @var PhpFrontend|MockObject $classCache */
         $classCache = $this->getMockBuilder(PhpFrontend::class)
             ->disableOriginalConstructor()
             ->getMock();
@@ -132,6 +126,7 @@ class ClassLoaderTest extends AbstractTestBase
         $subject = new ClassLoader($classCache, $classCacheManager, $classRegister);
         $subject->loadClass($className);
 
+        /** @var BlobExtend|Blob $blob */
         $blob = new Blob();
         $condition = property_exists($blob, 'otherProperty');
 

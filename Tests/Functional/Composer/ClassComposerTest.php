@@ -5,7 +5,7 @@
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -44,7 +44,6 @@ class ClassComposerTest extends AbstractTestBase
         $fileSegments->addUse(new UseItem(new Name('Evoweb\Domain\Model\Test')));
         $fileSegments->setClass(new Stmt\Class_('ComposeMergedFileCode'));
         $fileSegments->addTrait(new Stmt\TraitUse([new Name('Evoweb\TestTrait')]));
-        // @phpstan-ignore argument.type
         $fileSegments->addProperty(new Property(2, [new PropertyItem('testProperty')]));
         $fileSegments->setConstructor(new Stmt\ClassMethod('__construct'));
         $fileSegments->addMethod(new Stmt\ClassMethod('getTestProperty'));

@@ -5,7 +5,7 @@
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -23,7 +23,6 @@ use Evoweb\Extender\Parser\FileSegments;
 use Evoweb\Extender\Tests\Functional\AbstractTestBase;
 use EvowebTests\BaseExtension\Domain\Model\Blob;
 use PHPUnit\Framework\Attributes\Test;
-use PHPUnit\Framework\MockObject\MockObject;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
 
 class ClassCacheManagerTest extends AbstractTestBase
@@ -37,7 +36,6 @@ class ClassCacheManagerTest extends AbstractTestBase
         $classComposer = $this->createMock(ClassComposer::class);
         $classRegister = $this->createMock(ClassRegister::class);
 
-        /** @var ClassCacheManager|MockObject $subject */
         $subject = $this->getMockBuilder(ClassCacheManager::class)
             ->onlyMethods([
                 'getBaseClassFileSegments',
@@ -216,7 +214,7 @@ class ClassCacheManagerTest extends AbstractTestBase
         $classRegister = $this->createMock(ClassRegister::class);
 
         $classCache = $this->createMock(FrontendInterface::class);
-        $classCache->expects(self::once())->method('set')->willReturn(null);
+        $classCache->expects(self::once())->method('set');
 
         $subject = new class (
             $classCache,

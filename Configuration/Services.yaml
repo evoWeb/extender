@@ -1,7 +1,7 @@
 services:
   _defaults:
-    autowire: false
-    autoconfigure: false
+    autowire: true
+    autoconfigure: true
     public: false
 
   Evoweb\Extender\:
@@ -9,57 +9,11 @@ services:
 
   cache.extender:
     class: TYPO3\CMS\Core\Cache\Frontend\FrontendInterface
-    # We can not use CacheManager, as it can not be
-    # injected/instantiated prior (or during) ext_localconf.php
-    # loading therefore we use an own factory instead.
-    factory: ['@Evoweb\Extender\Cache\CacheFactory', 'createCache']
-    arguments: ['extender']
-
-  Evoweb\Extender\Cache\ClassCacheManager:
-    arguments:
-      $classCache: '@cache.extender'
-      $classLoader: '@Composer\Autoload\ClassLoader'
-      $classParser: '@Evoweb\Extender\Parser\ClassParser'
-      $classComposer: '@Evoweb\Extender\Composer\ClassComposer'
-      $classRegister: '@Evoweb\Extender\Configuration\ClassRegister'
-    public: true
-
-  Evoweb\Extender\Command\ClearCommand:
-    tags:
-      - name: 'console.command'
-        command: 'extender:clearClassCache'
-        description: 'CLI command for the "extender" extension - clear cache'
-        schedulable: false
-    arguments:
-      $cacheFactory: '@Evoweb\Extender\Cache\CacheFactory'
-
-  Evoweb\Extender\Composer\ClassComposer:
-    public: true
-
-  Evoweb\Extender\Configuration\ClassRegister:
-    public: true
-
-  Evoweb\Extender\Event\RegisterAutoloaderEvent:
-    arguments:
-      $container: '@service_container'
-    shared: false
-
-  Evoweb\Extender\Hooks\ClearCacheHook:
-    public: true
-    arguments:
-      $classCache: '@cache.extender'
-
-  Evoweb\Extender\Loader\ClassLoader:
-    arguments:
-      $classCache: '@cache.extender'
-      $classCacheManager: '@Evoweb\Extender\Cache\ClassCacheManager'
-      $classRegister: '@Evoweb\Extender\Configuration\ClassRegister'
-    public: true
-
-  Evoweb\Extender\Parser\ClassParser:
-    arguments:
-      $parserFactory: '@PhpParser\ParserFactory'
-    public: true
+    # We can't use CacheManager, as it can't be
+    # injected/instantiated prior (or during) ext_localconf.php loading.
+    # In consequence, we need to use our own factory instead.
+    factory: [ '@Evoweb\Extender\Cache\CacheFactory', 'getCache' ]
+    arguments: [ 'extender' ]
 
   PhpParser\ParserFactory:
     public: true

@@ -7,7 +7,7 @@ declare(strict_types=1);
  *
  * It is free software; you can redistribute it and/or modify it under
  * the terms of the GNU General Public License, either version 2
- * of the License, or any later version.
+ * of the License or any later version.
  *
  * For the full copyright and license information, please read the
  * LICENSE.txt file that was distributed with this source code.
@@ -16,13 +16,22 @@ declare(strict_types=1);
 namespace Evoweb\Extender\Command;
 
 use Evoweb\Extender\Cache\CacheFactory;
+use Exception;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\DependencyInjection\Attribute\Autoconfigure;
+use TYPO3\CMS\Core\Attribute\AsNonSchedulableCommand;
 
 /**
  * CLI command for the 'extender' extension - clear cache
  */
+#[AsCommand(
+    'extender:clearClassCache',
+    'CLI command for the "extender" extension - clear cache'
+)]
+#[AsNonSchedulableCommand]
 class ClearCommand extends Command
 {
     public function __construct(protected CacheFactory $cacheFactory)
@@ -36,7 +45,7 @@ class ClearCommand extends Command
         try {
             $this->cacheFactory->createCache('extender')->flush();
             $output->writeln('<info>Cache cleared</info>');
-        } catch (\Exception $e) {
+        } catch (Exception $e) {
             $output->writeln('<error>' . $e->getMessage() . '</error>');
             $result = self::FAILURE;
         }
