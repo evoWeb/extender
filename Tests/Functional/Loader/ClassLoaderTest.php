@@ -79,7 +79,7 @@ class ClassLoaderTest extends AbstractTestBase
         $classRegister = $this->getClassRegister();
         $cacheManager = new CacheFactory();
         /** @var PhpFrontend $classCache */
-        $classCache = $cacheManager->createCache('extender');
+        $classCache = $cacheManager->getCache('extender');
         $parserFactory = new ParserFactory();
         $classParser = new ClassParser($parserFactory);
         $classComposer = new ClassComposer();
@@ -110,7 +110,7 @@ class ClassLoaderTest extends AbstractTestBase
         $classRegister = $this->getClassRegister();
         $cacheManager = new CacheFactory();
         /** @var PhpFrontend $classCache */
-        $classCache = $cacheManager->createCache('extender');
+        $classCache = $cacheManager->getCache('extender');
         $parserFactory = new ParserFactory();
         $classParser = new ClassParser($parserFactory);
         $classComposer = new ClassComposer();

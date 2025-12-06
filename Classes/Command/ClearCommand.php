@@ -43,7 +43,7 @@ class ClearCommand extends Command
     {
         $result = self::SUCCESS;
         try {
-            $this->cacheFactory->createCache('extender')->flush();
+            $this->cacheFactory->getCache('extender')->flush();
             $output->writeln('<info>Cache cleared</info>');
         } catch (Exception $e) {
             $output->writeln('<error>' . $e->getMessage() . '</error>');
