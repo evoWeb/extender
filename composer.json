@@ -33,7 +33,7 @@
 		"psr/event-dispatcher": "^1.0",
 		"symfony/cache-contracts": "^2.5.3",
 		"symfony/console": "^7.3",
-		"symfony/dependency-injection": "^7.3",
+		"symfony/dependency-injection": "^7.3 || ^7.4",
 		"symfony/event-dispatcher-contracts": "^3.4.2"
 	},
 	"require-dev": {
