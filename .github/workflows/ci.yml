@@ -14,7 +14,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          persist-credentials: false
 
       - name: Test documentation build
         run: Build/Scripts/additionalTests.sh -s buildDocumentation
@@ -30,91 +32,93 @@ jobs:
         packages:
           - php: '8.2'
             core: '^13.0'
-            framework: 'dev-main'
+            framework: '^9.2.1'
             prefer: ''
             testpath: 'Tests/Functional'
 
           - php: '8.2'
             core: '^13.0'
-            framework: 'dev-main'
+            framework: '^9.2.1'
             prefer: '--prefer-lowest'
             testpath: 'Tests/Functional'
 
           - php: '8.3'
             core: '^13.0'
-            framework: 'dev-main'
+            framework: '^9.2.1'
             prefer: ''
             testpath: 'Tests/Functional'
 
           - php: '8.3'
             core: '^13.0'
-            framework: 'dev-main'
+            framework: '^9.2.1'
             prefer: '--prefer-lowest'
             testpath: 'Tests/Functional'
 
           - php: '8.4'
             core: '^13.0'
-            framework: 'dev-main'
+            framework: '^9.2.1'
             prefer: ''
             testpath: 'Tests/Functional'
 
           - php: '8.4'
             core: '^13.4'
-            framework: 'dev-main'
+            framework: '^9.2.1'
             prefer: '--prefer-lowest'
             testpath: 'Tests/Functional'
 
           - php: '8.2'
-            core: '^14.0'
-            framework: 'dev-main'
+            core: '^14.3'
+            framework: '^9.5.0'
             prefer: ''
             testpath: 'Tests/Functional'
 
           - php: '8.2'
-            core: '^14.0'
-            framework: 'dev-main'
+            core: '^14.3'
+            framework: '^9.5.0'
             prefer: '--prefer-lowest'
             testpath: 'Tests/Functional'
 
           - php: '8.3'
-            core: '^14.0'
-            framework: 'dev-main'
+            core: '^14.3'
+            framework: '^9.5.0'
             prefer: ''
             testpath: 'Tests/Functional'
 
           - php: '8.3'
-            core: '^14.0'
-            framework: 'dev-main'
+            core: '^14.3'
+            framework: '^9.5.0'
             prefer: '--prefer-lowest'
             testpath: 'Tests/Functional'
 
           - php: '8.4'
-            core: '^14.0'
-            framework: 'dev-main'
+            core: '^14.3'
+            framework: '^9.5.0'
             prefer: ''
             testpath: 'Tests/Functional'
 
-#          - php: '8.4'
-#            core: '^14.0'
-#            framework: 'dev-main'
-#            prefer: '--prefer-lowest'
-#            testpath: 'Tests/Functional'
+          - php: '8.4'
+            core: '^14.3'
+            framework: '^9.5.0'
+            prefer: '--prefer-lowest'
+            testpath: 'Tests/Functional'
 
           - php: '8.5'
-            core: '^14.0'
-            framework: 'dev-main'
+            core: '^14.3'
+            framework: '^9.5.0'
             prefer: ''
             testpath: 'Tests/Functional'
 
-#          - php: '8.5'
-#            core: '^14.0'
-#            framework: 'dev-main'
-#            prefer: '--prefer-lowest'
-#            testpath: 'Tests/Functional'
+          - php: '8.5'
+            core: '^14.3'
+            framework: '^9.5.0'
+            prefer: '--prefer-lowest'
+            testpath: 'Tests/Functional'
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          persist-credentials: false
 
       - name: PHP lint
         run: |
@@ -161,7 +165,9 @@ jobs:
     name: TYPO3 TER release
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6
+        with:
+          persist-credentials: false
 
       - name: Publish to TER
         uses: tomasnorre/typo3-upload-ter@v2

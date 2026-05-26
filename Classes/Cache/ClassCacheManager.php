@@ -24,7 +24,9 @@ use Evoweb\Extender\Parser\ClassParser;
 use Evoweb\Extender\Parser\FileSegments;
 use Exception;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
+use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
+use TYPO3\CMS\Core\Utility\GeneralUtility;
 
 class ClassCacheManager
 {
@@ -110,6 +112,7 @@ class ClassCacheManager
     {
         try {
             $this->classCache->set($cacheEntryIdentifier, $code);
+            GeneralUtility::makeInstance(CacheManager::class)->getCache('extbase')->flush();
         } catch (Exception) {
         }
     }
