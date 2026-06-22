@@ -18,101 +18,28 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Test documentation build
-        run: Build/Scripts/additionalTests.sh -s buildDocumentation
+      - name: Test with phpstan
+        run: Build/Scripts/runTests.sh -s phpstan
 
-      - name: Cleanup
-        run: Build/Scripts/additionalTests.sh -s clean
+      - name: Test cgl
+        run: Build/Scripts/runTests.sh -s cgl -n
+
+      - name: Test documentation build
+        run: Build/Scripts/runTests.sh -s buildDocumentation
 
   testsuite:
     name: All php tests
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        php: ['8.2', '8.3', '8.4', '8.5']
+        prefer: ['', '--prefer-lowest']
         packages:
-          - php: '8.2'
-            core: '^13.0'
+          - core: '^13.4'
             framework: '^9.2.1'
-            prefer: ''
-            testpath: 'Tests/Functional'
 
-          - php: '8.2'
-            core: '^13.0'
-            framework: '^9.2.1'
-            prefer: '--prefer-lowest'
-            testpath: 'Tests/Functional'
-
-          - php: '8.3'
-            core: '^13.0'
-            framework: '^9.2.1'
-            prefer: ''
-            testpath: 'Tests/Functional'
-
-          - php: '8.3'
-            core: '^13.0'
-            framework: '^9.2.1'
-            prefer: '--prefer-lowest'
-            testpath: 'Tests/Functional'
-
-          - php: '8.4'
-            core: '^13.0'
-            framework: '^9.2.1'
-            prefer: ''
-            testpath: 'Tests/Functional'
-
-          - php: '8.4'
-            core: '^13.4'
-            framework: '^9.2.1'
-            prefer: '--prefer-lowest'
-            testpath: 'Tests/Functional'
-
-          - php: '8.2'
-            core: '^14.3'
+          - core: '^14.3'
             framework: '^9.5.0'
-            prefer: ''
-            testpath: 'Tests/Functional'
-
-          - php: '8.2'
-            core: '^14.3'
-            framework: '^9.5.0'
-            prefer: '--prefer-lowest'
-            testpath: 'Tests/Functional'
-
-          - php: '8.3'
-            core: '^14.3'
-            framework: '^9.5.0'
-            prefer: ''
-            testpath: 'Tests/Functional'
-
-          - php: '8.3'
-            core: '^14.3'
-            framework: '^9.5.0'
-            prefer: '--prefer-lowest'
-            testpath: 'Tests/Functional'
-
-          - php: '8.4'
-            core: '^14.3'
-            framework: '^9.5.0'
-            prefer: ''
-            testpath: 'Tests/Functional'
-
-          - php: '8.4'
-            core: '^14.3'
-            framework: '^9.5.0'
-            prefer: '--prefer-lowest'
-            testpath: 'Tests/Functional'
-
-          - php: '8.5'
-            core: '^14.3'
-            framework: '^9.5.0'
-            prefer: ''
-            testpath: 'Tests/Functional'
-
-          - php: '8.5'
-            core: '^14.3'
-            framework: '^9.5.0'
-            prefer: '--prefer-lowest'
-            testpath: 'Tests/Functional'
 
     steps:
       - name: Checkout
@@ -150,11 +77,6 @@ jobs:
             -p ${{ matrix.packages.php }} \
             -d sqlite \
             -s functional ${{ matrix.packages.path }}
-
-      - name: Cleanup
-        run: |
-          Build/Scripts/runTests.sh -s clean
-          Build/Scripts/additionalTests.sh -s clean
 
   TERUpload:
     needs: [ resources, testsuite ]
