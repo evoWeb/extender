@@ -18,17 +18,29 @@ jobs:
         with:
           persist-credentials: false
 
-      - name: Test with phpstan
-        run: Build/Scripts/runTests.sh -p 8.4 -s composerInstall
+      - name: Install
+        run: |
+          Build/Scripts/runTests.sh \
+            -p 8.4 \
+            -s composerInstall
 
-      - name: Test with phpstan
-        run: Build/Scripts/runTests.sh -p 8.4 -s phpstan
+      - name: Run the phpstan
+        run: |
+          Build/Scripts/runTests.sh \
+            -p 8.4 \
+            -s phpstan
 
-      - name: Test cgl
-        run: Build/Scripts/runTests.sh -p 8.4 -s cgl -n
+      - name: Run the cgl lint
+        run: |
+          Build/Scripts/runTests.sh \
+            -p 8.4 \
+            -s cgl
 
       - name: Test documentation build
-        run: Build/Scripts/runTests.sh -p 8.4 -s checkRstRenderingSingle
+        run: |
+          Build/Scripts/runTests.sh \
+            -p 8.4 \
+            -s checkRstRenderingSingle
 
   testsuite:
     name: All php tests
