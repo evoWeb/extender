@@ -28,7 +28,7 @@ jobs:
         run: Build/Scripts/runTests.sh -p 8.4 -s cgl -n
 
       - name: Test documentation build
-        run: Build/Scripts/runTests.sh -p 8.4 -s buildDocumentation
+        run: Build/Scripts/runTests.sh -p 8.4 -s checkRstRenderingSingle
 
   testsuite:
     name: All php tests
