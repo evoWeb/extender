@@ -44,7 +44,7 @@ class ConstantVisitorTest extends AbstractTestBase
         $traverser->addVisitor($visitor);
         $traverser->traverse([$class]);
 
-        $this->assertEquals($constant2, $fileSegments->getClassConsts()[1]);
+        self::assertEquals($constant2, $fileSegments->getClassConsts()[1]);
     }
 
     #[Test]
@@ -67,8 +67,8 @@ CODE;
 
         $traverser = new NodeTraverser();
         $traverser->addVisitor($visitor);
-        $traverser->traverse($ast);
+        $traverser->traverse($ast ?? []);
 
-        $this->assertEquals('constant2', $fileSegments->getClassConsts()[1]->consts[0]->name);
+        self::assertEquals('constant2', $fileSegments->getClassConsts()[1]->consts[0]->name);
     }
 }

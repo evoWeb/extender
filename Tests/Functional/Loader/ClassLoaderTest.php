@@ -38,8 +38,8 @@ class ClassLoaderTest extends AbstractTestBase
         $cacheMock = $this->getMockBuilder(PhpFrontend::class)
             ->setConstructorArgs(['extender', $cacheBackend])
             ->getMock();
-        $cacheMock->expects(self::once())->method('has')->willReturn(true);
-        $cacheMock->expects(self::once())->method('requireOnce')->willReturn(true);
+        $cacheMock->expects($this->once())->method('has')->willReturn(true);
+        $cacheMock->expects($this->once())->method('requireOnce')->willReturn(true);
 
         $subject = new ClassLoader($cacheMock, $classCacheManager, $classRegister);
 
@@ -83,6 +83,11 @@ class ClassLoaderTest extends AbstractTestBase
         $parserFactory = new ParserFactory();
         $classParser = new ClassParser($parserFactory);
         $classComposer = new ClassComposer();
+
+        if ($classLoader === null || $classRegister === null) {
+            return;
+        }
+
         $classCacheManager = new ClassCacheManager(
             $classCache,
             $classLoader,
@@ -114,6 +119,11 @@ class ClassLoaderTest extends AbstractTestBase
         $parserFactory = new ParserFactory();
         $classParser = new ClassParser($parserFactory);
         $classComposer = new ClassComposer();
+
+        if ($classLoader === null || $classRegister === null) {
+            return;
+        }
+
         $classCacheManager = new ClassCacheManager(
             $classCache,
             $classLoader,

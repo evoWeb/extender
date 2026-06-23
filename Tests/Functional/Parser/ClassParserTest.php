@@ -18,12 +18,12 @@ use Evoweb\Extender\Parser\FileSegments;
 use Evoweb\Extender\Parser\Visitor\NamespaceVisitor;
 use Evoweb\Extender\Tests\Functional\AbstractTestBase;
 use PhpParser\Node;
+use PhpParser\Node\PropertyItem;
 use PhpParser\Node\Stmt;
+use PhpParser\Node\Stmt\Property;
 use PhpParser\Parser\Php7;
 use PhpParser\ParserFactory;
 use PHPUnit\Framework\Attributes\Test;
-use PhpParser\Node\PropertyItem;
-use PhpParser\Node\Stmt\Property;
 
 class ClassParserTest extends AbstractTestBase
 {
@@ -33,7 +33,7 @@ class ClassParserTest extends AbstractTestBase
         $parser = $this->getMockBuilder(Php7::class)
             ->disableOriginalConstructor()
             ->getMock();
-        $parser->expects(self::once())->method('parse')->willReturn([
+        $parser->expects($this->once())->method('parse')->willReturn([
             new Stmt\Namespace_(new Node\Name('EvowebTests\BaseExtension\Domain\Model')),
             new Node\UseItem(new Node\Name('Evoweb\Domain\Model\Test')),
             new Stmt\Class_('GetFileSegments'),
@@ -45,7 +45,7 @@ class ClassParserTest extends AbstractTestBase
 
         $parserFactory = $this->createMock(ParserFactory::class);
         $parserFactory
-            ->expects(self::once())
+            ->expects($this->once())
             ->method('createForVersion')
             ->willReturn($parser);
 
@@ -58,8 +58,8 @@ class ClassParserTest extends AbstractTestBase
 
         $expected = $this->getExpected(__CLASS__ . '-' . __FUNCTION__);
 
-        $fileSegments = $subject->getFileSegments($basePath);
-        $fileSegments->setFilePath(str_replace($pathSegment, '', $fileSegments->getFilePath()));
+        $fileSegments = $subject->getFileSegments((string)$basePath);
+        $fileSegments->setFilePath(str_replace((string)$pathSegment, '', $fileSegments->getFilePath()));
         $actual = json_encode($fileSegments);
 
         self::assertEquals($expected, $actual);

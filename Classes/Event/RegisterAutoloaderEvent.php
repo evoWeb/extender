@@ -30,17 +30,20 @@ class RegisterAutoloaderEvent implements StoppableEventInterface
         ContainerInterface $container
     ) {
         try {
-            $autoloader = [$container->get(ClassLoader::class), 'loadClass'];
+            /** @var ClassLoader $classLoader */
+            $classLoader = $container->get(ClassLoader::class);
+            $autoloader = [$classLoader, 'loadClass'];
             if ($this->autoloaderAlreadyRegistered($autoloader)) {
                 $this->unregisterAutoloader($autoloader);
             }
+            /** @var callable(string): void $autoloader */
             spl_autoload_register($autoloader, true, true);
         } catch (ContainerExceptionInterface) {
         }
     }
 
     /**
-     * @param array<ClassLoader|string> $autoloader
+     * @param array{0: ClassLoader, 1: string} $autoloader
      */
     protected function autoloaderAlreadyRegistered(array $autoloader): bool
     {
@@ -65,10 +68,11 @@ class RegisterAutoloaderEvent implements StoppableEventInterface
     }
 
     /**
-     * @param array<ClassLoader|string> $autoloader
+     * @param array{0: ClassLoader, 1: string} $autoloader
      */
     protected function unregisterAutoloader(array $autoloader): void
     {
+        assert(is_callable($autoloader));
         spl_autoload_unregister($autoloader);
     }
 

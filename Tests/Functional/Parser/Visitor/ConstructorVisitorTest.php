@@ -42,7 +42,7 @@ class ConstructorVisitorTest extends AbstractTestBase
         $traverser->addVisitor($visitor);
         $traverser->traverse([$class]);
 
-        $this->assertEquals($classMethode2, $fileSegments->getConstructor());
+        self::assertEquals($classMethode2, $fileSegments->getConstructor());
     }
 
     #[Test]
@@ -64,8 +64,8 @@ CODE;
 
         $traverser = new NodeTraverser();
         $traverser->addVisitor($visitor);
-        $traverser->traverse($ast);
+        $traverser->traverse($ast ?? []);
 
-        $this->assertEquals('__construct', $fileSegments->getConstructor()->name);
+        self::assertEquals('__construct', $fileSegments->getConstructor()?->name);
     }
 }

@@ -23,9 +23,7 @@ class ClassRegister
     /**
      * @param array<string, string[]> $extendedClasses
      */
-    public function __construct(protected array $extendedClasses = [])
-    {
-    }
+    public function __construct(protected array $extendedClasses = []) {}
 
     public function hasBaseClassName(string $className): bool
     {

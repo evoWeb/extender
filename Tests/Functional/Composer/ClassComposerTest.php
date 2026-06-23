@@ -19,11 +19,11 @@ use Evoweb\Extender\Parser\FileSegments;
 use Evoweb\Extender\Tests\Functional\AbstractTestBase;
 use PhpParser\Node;
 use PhpParser\Node\Name;
+use PhpParser\Node\PropertyItem;
 use PhpParser\Node\Stmt;
+use PhpParser\Node\Stmt\Property;
 use PhpParser\Node\UseItem;
 use PHPUnit\Framework\Attributes\Test;
-use PhpParser\Node\PropertyItem;
-use PhpParser\Node\Stmt\Property;
 
 class ClassComposerTest extends AbstractTestBase
 {
@@ -32,7 +32,7 @@ class ClassComposerTest extends AbstractTestBase
     {
         $basePath = 'base.php';
 
-        $code = file_get_contents(realpath(
+        $code = (string)file_get_contents((string)realpath(
             __DIR__ . '/../../Fixtures/Extensions/base_extension/Classes/Domain/Model/ComposeMergedFileCode.php'
         ));
 
@@ -60,7 +60,7 @@ class ClassComposerTest extends AbstractTestBase
     #[Test]
     public function addFileStatement(): void
     {
-        $subject = new class () extends ClassComposer {
+        $subject = new class extends ClassComposer {
             /**
              * @param Node[] $statements
              * @param FileSegments[] $fileSegments

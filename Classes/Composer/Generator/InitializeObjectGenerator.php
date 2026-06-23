@@ -19,12 +19,15 @@ use Evoweb\Extender\Parser\FileSegments;
 use PhpParser\Modifiers;
 use PhpParser\Node;
 use PhpParser\Node\Expr\StaticCall;
+use PhpParser\Node\Expr\Variable;
+use PhpParser\Node\Identifier;
+use PhpParser\Node\Name;
 use PhpParser\Node\Param;
+use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Expression;
 use PhpParser\Node\Stmt\Namespace_;
-use PhpParser\Node\Stmt;
 
 class InitializeObjectGenerator implements GeneratorInterface
 {
@@ -36,6 +39,10 @@ class InitializeObjectGenerator implements GeneratorInterface
     public function generate(array $statements, array $fileSegments): array
     {
         $namespace = $this->getNamespace($statements);
+        if ($namespace === null) {
+            return $statements;
+        }
+
         $class = $this->getClass($namespace);
 
         if ($class && $this->hasInitializeObject($fileSegments)) {
@@ -55,7 +62,7 @@ class InitializeObjectGenerator implements GeneratorInterface
 
     /**
      * @param FileSegments[] $fileSegments
-     * @return array<Param[]|Stmt[]>
+     * @return array{Param[], Stmt[]}
      */
     protected function getParamsAndStmts(array $fileSegments): array
     {
@@ -70,7 +77,7 @@ class InitializeObjectGenerator implements GeneratorInterface
             $params = $this->getInitializeObjectParameter($params, $initializeObject->getParams());
             $stmts = $this->getInitializeObjectStatements(
                 $stmts,
-                $initializeObject->getStmts(),
+                $initializeObject->getStmts() ?? [],
                 $fileSegment->isBaseClass()
             );
         }
@@ -86,10 +93,11 @@ class InitializeObjectGenerator implements GeneratorInterface
     protected function getInitializeObjectParameter(array $result, array $params): array
     {
         foreach ($params as $param) {
-            if (isset($result[$param->var->name])) {
+            $name = $param->var instanceof Variable && is_string($param->var->name) ? $param->var->name : null;
+            if ($name === null || isset($result[$name])) {
                 continue;
             }
-            $result[$param->var->name] = $param;
+            $result[$name] = $param;
         }
 
         return $result;
@@ -97,7 +105,7 @@ class InitializeObjectGenerator implements GeneratorInterface
 
     /**
      * @param Stmt[] $result
-     * @param Stmt[]|Expression[] $stmts
+     * @param Stmt[] $stmts
      * @param bool $isBaseClass
      * @return Stmt[]
      */
@@ -107,13 +115,15 @@ class InitializeObjectGenerator implements GeneratorInterface
             $result = [...$result, ...$stmts];
         } else {
             foreach ($stmts as $stmt) {
-                /** @var Expression|StaticCall $stmt */
+                /** @var Expression $stmt */
                 $expr = $stmt->expr;
                 if (
                     !(
                         $expr instanceof StaticCall
-                        && (string)$expr->class === 'parent'
-                        && (string)$expr->name === 'initializeObject'
+                        && $expr->class instanceof Name
+                        && $expr->class->toString() === 'parent'
+                        && $expr->name instanceof Identifier
+                        && $expr->name->toString() === 'initializeObject'
                     )
                 ) {
                     $result[] = $stmt;

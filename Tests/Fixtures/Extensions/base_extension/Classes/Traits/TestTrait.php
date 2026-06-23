@@ -2,6 +2,4 @@
 
 namespace EvowebTests\BaseExtension\Traits;
 
-trait TestTrait
-{
-}
+trait TestTrait {}

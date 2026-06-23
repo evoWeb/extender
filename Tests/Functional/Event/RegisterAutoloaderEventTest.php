@@ -39,7 +39,9 @@ class RegisterAutoloaderEventTest extends AbstractTestBase
     public function autoloaderAlreadyRegistered(): void
     {
         $autoloaderClass = ClassLoader::class;
-        $autoloader = [GeneralUtility::getContainer()->get($autoloaderClass), 'loadClass'];
+        /** @var ClassLoader $classLoader */
+        $classLoader = GeneralUtility::getContainer()->get($autoloaderClass);
+        $autoloader = [$classLoader, 'loadClass'];
 
         $subject = new class ($this->getContainer()) extends RegisterAutoloaderEvent {
             public function __construct(ContainerInterface $container)
@@ -48,7 +50,7 @@ class RegisterAutoloaderEventTest extends AbstractTestBase
             }
 
             /**
-             * @param array<object|string> $autoloader
+             * @param array{0: ClassLoader, 1: string} $autoloader
              */
             public function autoloaderAlreadyRegistered(array $autoloader): bool
             {
@@ -65,8 +67,12 @@ class RegisterAutoloaderEventTest extends AbstractTestBase
     public function unregisterAutoloader(): void
     {
         $autoloaderClass = ClassLoader::class;
-        $autoloader = [GeneralUtility::getContainer()->get($autoloaderClass), 'loadClass'];
-        spl_autoload_register($autoloader, true, true);
+        /** @var ClassLoader $classLoader */
+        $classLoader = GeneralUtility::getContainer()->get($autoloaderClass);
+        $autoloader = [$classLoader, 'loadClass'];
+        /** @var callable(string): void $autoloaderCallable */
+        $autoloaderCallable = $autoloader;
+        spl_autoload_register($autoloaderCallable, true, true);
 
         $subject = new class ($this->getContainer()) extends RegisterAutoloaderEvent {
             public function __construct(ContainerInterface $container)
@@ -75,7 +81,7 @@ class RegisterAutoloaderEventTest extends AbstractTestBase
             }
 
             /**
-             * @param array<object|string> $autoloader
+             * @param array{0: ClassLoader, 1: string} $autoloader
              */
             public function unregisterAutoloader(array $autoloader): void
             {
@@ -90,6 +96,7 @@ class RegisterAutoloaderEventTest extends AbstractTestBase
         foreach ($currentAutoLoaders as $currentAutoLoader) {
             if (
                 is_array($currentAutoLoader)
+                && is_object($currentAutoLoader[0])
                 && get_class($currentAutoLoader[0]) === $autoloaderClass
             ) {
                 $condition = true;

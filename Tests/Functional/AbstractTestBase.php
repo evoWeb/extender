@@ -46,7 +46,7 @@ class AbstractTestBase extends FunctionalTestCase
             '###BASE_PATH###' => str_replace(Environment::getPublicPath(), '', $basePath),
             '###EXTEND_PATH###' => str_replace(Environment::getPublicPath(), '', $extendPath),
         ];
-        $subject = trim(file_get_contents($filePath));
+        $subject = trim((string)file_get_contents($filePath));
         return str_replace(array_keys($searchAndReplace), array_values($searchAndReplace), $subject);
     }
 
@@ -68,6 +68,7 @@ class AbstractTestBase extends FunctionalTestCase
     {
         $classLoader = null;
         try {
+            /** @var ClassLoader $classLoader */
             $classLoader = GeneralUtility::getContainer()->get(ClassLoader::class);
         } catch (ContainerExceptionInterface) {
         }
@@ -78,6 +79,7 @@ class AbstractTestBase extends FunctionalTestCase
     {
         $classRegister = null;
         try {
+            /** @var ClassRegister $classRegister */
             $classRegister = GeneralUtility::getContainer()->get(ClassRegister::class);
         } catch (ContainerExceptionInterface) {
         }

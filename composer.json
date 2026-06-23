@@ -34,7 +34,7 @@
 		"symfony/cache-contracts": "^2.5.3",
 		"symfony/console": "^7.2 || ^7.4.8",
 		"symfony/dependency-injection": "^7.2 || ^7.4",
-		"symfony/event-dispatcher-contracts": "^3.1 || ^3.6.0",
+		"symfony/event-dispatcher-contracts": "^3.4.2 || ^3.6.0",
 		"symfony/var-exporter": "^7.2 || ^7.4.8"
 	},
 	"require-dev": {
@@ -68,7 +68,7 @@
 			"sed -i \"s/version' => '.*'/version' => '$(echo ${GITHUB_REF} | cut -d / -f 3)'/\" ext_emconf.php\n"
 		],
 		"post-install-cmd": [
-			"ln -sf vendor/typo3/testing-framework/Resources/Core/Build/ Build/phpunit;"
+			"ln -sf ../vendor/typo3/testing-framework/Resources/Core/Build/ Build/phpunit;"
 		],
 		"post-update-cmd": [
 			"@post-install-cmd"

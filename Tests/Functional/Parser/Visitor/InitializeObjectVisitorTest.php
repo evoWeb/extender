@@ -42,7 +42,7 @@ class InitializeObjectVisitorTest extends AbstractTestBase
         $traverser->addVisitor($visitor);
         $traverser->traverse([$class]);
 
-        $this->assertEquals($initializeObjectMethode, $fileSegments->getInitializeObject());
+        self::assertEquals($initializeObjectMethode, $fileSegments->getInitializeObject());
     }
 
     #[Test]
@@ -65,8 +65,8 @@ CODE;
 
         $traverser = new NodeTraverser();
         $traverser->addVisitor($visitor);
-        $traverser->traverse($ast);
+        $traverser->traverse($ast ?? []);
 
-        $this->assertEquals('initializeObject', $fileSegments->getInitializeObject()->name);
+        self::assertEquals('initializeObject', $fileSegments->getInitializeObject()?->name);
     }
 }

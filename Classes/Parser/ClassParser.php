@@ -15,7 +15,7 @@ declare(strict_types=1);
 
 namespace Evoweb\Extender\Parser;
 
-use Exception;
+use Evoweb\Extender\Parser\Visitor\AbstractVisitor;
 use PhpParser\NodeTraverser;
 use PhpParser\ParserFactory;
 use PhpParser\PhpVersion;
@@ -37,25 +37,26 @@ class ClassParser
         Visitor\ClassMethodVisitor::class,
     ];
 
-    public function __construct(protected ParserFactory $parserFactory)
-    {
-    }
+    public function __construct(protected ParserFactory $parserFactory) {}
 
     public function getFileSegments(string $filePath): FileSegments
     {
         $fileSegments = new FileSegments();
         $fileSegments->setFilePath($filePath);
-        $fileSegments->setCode(file_get_contents($filePath));
+        $fileSegments->setCode((string)file_get_contents($filePath));
 
         try {
             // @extensionScannerIgnoreLine
             $parser = $this->parserFactory->createForVersion(PhpVersion::fromComponents(8, 2));
-            $fileSegments->setStatements($parser->parse($fileSegments->getCode()));
+            $statement = $parser->parse($fileSegments->getCode());
+            if ($statement) {
+                $fileSegments->setStatements($statement);
+            }
 
             foreach ($this->visitors as $visitor) {
                 $this->traverseStatements($fileSegments, $visitor);
             }
-        } catch (Exception) {
+        } catch (\Exception) {
         }
 
         return $fileSegments;
@@ -65,8 +66,10 @@ class ClassParser
     {
         $visitor = new $visitorClassName($fileSegment);
 
-        $traverser = new NodeTraverser();
-        $traverser->addVisitor($visitor);
-        $traverser->traverse($fileSegment->getStatements());
+        if ($visitor instanceof AbstractVisitor) {
+            $traverser = new NodeTraverser();
+            $traverser->addVisitor($visitor);
+            $traverser->traverse($fileSegment->getStatements());
+        }
     }
 }

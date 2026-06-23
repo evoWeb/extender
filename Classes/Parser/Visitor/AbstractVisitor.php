@@ -20,7 +20,5 @@ use PhpParser\NodeVisitorAbstract;
 
 abstract class AbstractVisitor extends NodeVisitorAbstract
 {
-    public function __construct(protected FileSegments $fileSegment)
-    {
-    }
+    public function __construct(protected FileSegments $fileSegment) {}
 }

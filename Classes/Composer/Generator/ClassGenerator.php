@@ -31,6 +31,10 @@ class ClassGenerator implements GeneratorInterface
     public function generate(array $statements, array $fileSegments): array
     {
         $namespace = $this->getNamespace($statements);
+        if ($namespace === null) {
+            return $statements;
+        }
+
         $class = $this->getClass($fileSegments);
 
         if ($class) {
@@ -55,7 +59,8 @@ class ClassGenerator implements GeneratorInterface
         $implements = [];
         foreach ($fileSegments as $fileSegment) {
             /** @var Name $currentImplement */
-            foreach ($fileSegment->getClass()->implements as $currentImplement) {
+            $implements = ($fileSegment->getClass()->implements ?? []);
+            foreach ($implements as $currentImplement) {
                 if (isset($implements[(string)$currentImplement])) {
                     continue;
                 }

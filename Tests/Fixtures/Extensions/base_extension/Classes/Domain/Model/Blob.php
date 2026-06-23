@@ -19,6 +19,10 @@ class Blob extends AbstractEntity
 {
     protected string $property = '';
 
+    protected string $secondProperty = '';
+
+    protected string $thirdProperty = '';
+
     public function __construct(string $property = 'a')
     {
         $this->property = $property;
@@ -33,10 +37,6 @@ class Blob extends AbstractEntity
     {
         $this->property = $property;
     }
-
-    protected string $secondProperty = '';
-
-    protected string $thirdProperty = '';
 
     public function getSecondProperty(): string
     {

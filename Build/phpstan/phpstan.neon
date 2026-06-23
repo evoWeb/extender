@@ -12,5 +12,6 @@ parameters:
 
   paths:
     - ../../Classes
+    - ../../Tests
 
   treatPhpDocTypesAsCertain: false

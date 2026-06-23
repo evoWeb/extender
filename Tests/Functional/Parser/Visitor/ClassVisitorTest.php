@@ -36,7 +36,7 @@ class ClassVisitorTest extends AbstractTestBase
         $traverser->addVisitor($visitor);
         $traverser->traverse([$class]);
 
-        $this->assertEquals($class, $fileSegments->getClass());
+        self::assertEquals($class, $fileSegments->getClass());
     }
 
     #[Test]
@@ -57,8 +57,8 @@ CODE;
 
         $traverser = new NodeTraverser();
         $traverser->addVisitor($visitor);
-        $traverser->traverse($ast);
+        $traverser->traverse($ast ?? []);
 
-        $this->assertEquals('TestClass', $fileSegments->getClass()->name);
+        self::assertEquals('TestClass', $fileSegments->getClass()?->name);
     }
 }

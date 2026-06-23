@@ -26,8 +26,7 @@ class ClearCacheHook
     public function __construct(
         #[Autowire(service: 'cache.extender')]
         protected PhpFrontend $classCache
-    ) {
-    }
+    ) {}
 
     /**
      * @param array<non-empty-string, string|string[]> $parameters
