@@ -44,7 +44,6 @@ cgl: ##@ Coding guideline check with
 	echo "Coding guideline check with php-cs-fixer started"
 	Build/Scripts/runTests.sh -p ${PHP_VERSION} -s cgl -n
 	echo "Coding guideline check with php-cs-fixer finished"
-	echo "Checking with phpstan finished"
 
 
 .PHONY: functional-tests
