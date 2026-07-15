@@ -31,7 +31,7 @@
 		"nikic/php-parser": "^5.4",
 		"psr/container": "^2.0",
 		"psr/event-dispatcher": "^1.0",
-		"symfony/cache-contracts": "^2.5.3",
+		"symfony/cache-contracts": "^3.6",
 		"symfony/console": "^7.2 || ^7.4.8",
 		"symfony/dependency-injection": "^7.2 || ^7.4",
 		"symfony/event-dispatcher-contracts": "^3.4.2 || ^3.6.0",
