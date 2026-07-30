@@ -42,6 +42,8 @@ def check_resources() -> None:
     print(' Checking documentation files')
     print('################################################################')
     run(f'./runTests.sh -p {php} -s composerInstall')
+    run(f'./runTests.sh -p {php} -s lintYaml')
+    run(f'./runTests.sh -p {php} -s lintServicesYaml')
     run(f'./runTests.sh -p {php} -s phpstan')
     run(f'./runTests.sh -p {php} -s cgl -n')
     run(f'./runTests.sh -p {php} -s checkRstRenderingSingle')
