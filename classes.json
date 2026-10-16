@@ -1,0 +1,19 @@
+{
+    "project": {
+        "title": "extender",
+        "version": "11.1.3",
+        "permalink": "https://docs.typo3.org/permalink/evoweb/extender:{anchor}@11.1.3"
+    },
+    "classes": {
+        "\\Fixture\\BaseClass\\Domain\\Model\\BaseModel": {
+            "places": [
+                {
+                    "path": "Introduction/Index",
+                    "anchor": "introduction",
+                    "section": "wrong",
+                    "kind": "code"
+                }
+            ]
+        }
+    }
+}

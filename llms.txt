@@ -1,0 +1,21 @@
+# extender
+
+> Version 11.1.3 of this manual.
+> Every page is also available as Markdown: the same path with .md instead of .html.
+> The permalink of an anchor is https://docs.typo3.org/permalink/evoweb/extender:{anchor}@11.1.3.
+
+## Indexes
+
+- [toc.json](toc.json): Table of contents: every page in order, with its title and permalink anchor
+- [classes.json](classes.json): Every PHP class the manual speaks of, and where
+- [objects.inv.json](objects.inv.json): Every link target, as the interlinks of other manuals use them
+
+## Pages
+
+- [Extender: Extbase class extending on steroids](Index.md)
+  - [Introduction](Introduction/Index.md)
+  - [Installation](Installation/Index.md)
+  - [Configuration](Configuration/Index.md)
+  - [Breaking change](Breaking/Index.md)
+  - [Testing](Testing/Index.md)
+  - [Sitemap](Sitemap.md)

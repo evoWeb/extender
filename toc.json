@@ -1,0 +1,60 @@
+{
+    "project": {
+        "title": "extender",
+        "version": "11.1.3",
+        "permalink": "https://docs.typo3.org/permalink/evoweb/extender:{anchor}@11.1.3"
+    },
+    "pages": [
+        {
+            "path": "Index",
+            "html": "Index.html",
+            "md": "Index.md",
+            "title": "Extender: Extbase class extending on steroids",
+            "anchor": "start",
+            "pages": [
+                {
+                    "path": "Introduction/Index",
+                    "html": "Introduction/Index.html",
+                    "md": "Introduction/Index.md",
+                    "title": "Introduction",
+                    "anchor": "introduction"
+                },
+                {
+                    "path": "Installation/Index",
+                    "html": "Installation/Index.html",
+                    "md": "Installation/Index.md",
+                    "title": "Installation",
+                    "anchor": "installation"
+                },
+                {
+                    "path": "Configuration/Index",
+                    "html": "Configuration/Index.html",
+                    "md": "Configuration/Index.md",
+                    "title": "Configuration",
+                    "anchor": "configuration"
+                },
+                {
+                    "path": "Breaking/Index",
+                    "html": "Breaking/Index.html",
+                    "md": "Breaking/Index.md",
+                    "title": "Breaking change",
+                    "anchor": "breaking-changes"
+                },
+                {
+                    "path": "Testing/Index",
+                    "html": "Testing/Index.html",
+                    "md": "Testing/Index.md",
+                    "title": "Testing",
+                    "anchor": "testing"
+                },
+                {
+                    "path": "Sitemap",
+                    "html": "Sitemap.html",
+                    "md": "Sitemap.md",
+                    "title": "Sitemap",
+                    "anchor": "sitemap"
+                }
+            ]
+        }
+    ]
+}
