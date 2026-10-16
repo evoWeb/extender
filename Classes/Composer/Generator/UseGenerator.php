@@ -31,6 +31,9 @@ class UseGenerator implements GeneratorInterface
     public function generate(array $statements, array $fileSegments): array
     {
         $namespace = $this->getNamespace($statements);
+        if ($namespace === null) {
+            return $statements;
+        }
 
         $uses = $this->getUniqueUses($fileSegments);
         foreach ($uses as $use) {

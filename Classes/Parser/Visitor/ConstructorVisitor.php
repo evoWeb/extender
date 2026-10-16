@@ -23,7 +23,7 @@ class ConstructorVisitor extends AbstractVisitor
     /**
      * @return int|Node|Node[]|null
      */
-    public function enterNode(Node $node): int|null|Node|array
+    public function enterNode(Node $node): int|Node|array|null
     {
         if ($node instanceof ClassMethod && (string)$node->name === '__construct') {
             $this->fileSegment->setConstructor($node);

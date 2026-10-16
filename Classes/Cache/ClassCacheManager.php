@@ -22,7 +22,6 @@ use Evoweb\Extender\Exception\BaseFileNotFoundException;
 use Evoweb\Extender\Exception\ExtendingFileNotFoundException;
 use Evoweb\Extender\Parser\ClassParser;
 use Evoweb\Extender\Parser\FileSegments;
-use Exception;
 use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use TYPO3\CMS\Core\Cache\CacheManager;
 use TYPO3\CMS\Core\Cache\Frontend\FrontendInterface;
@@ -37,8 +36,7 @@ class ClassCacheManager
         protected ClassParser $classParser,
         protected ClassComposer $classComposer,
         protected ClassRegister $classRegister
-    ) {
-    }
+    ) {}
 
     /**
      * Build merged file and cache for base and extending files
@@ -76,10 +74,13 @@ class ClassCacheManager
         return $filesSegments;
     }
 
+    /**
+     * @param class-string<\Throwable> $exceptionClass
+     */
     protected function getFileSegments(string $className, bool $baseClass, string $exceptionClass): FileSegments
     {
         $type = $baseClass ? 'base' : 'extend';
-        $filePath = $this->classLoader->findFile($className);
+        $filePath = (string)$this->classLoader->findFile($className);
         $filePath = realpath($filePath);
 
         if ($filePath === false) {
@@ -113,7 +114,7 @@ class ClassCacheManager
         try {
             $this->classCache->set($cacheEntryIdentifier, $code);
             GeneralUtility::makeInstance(CacheManager::class)->getCache('extbase')->flush();
-        } catch (Exception) {
+        } catch (\Exception) {
         }
     }
 }

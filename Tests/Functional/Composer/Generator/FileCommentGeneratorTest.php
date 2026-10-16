@@ -58,7 +58,7 @@ class FileCommentGeneratorTest extends AbstractTestBase
             $extendFileSegment,
         ];
 
-        $subject = new class () extends FileCommentGenerator {
+        $subject = new class extends FileCommentGenerator {
             /**
              * @param FileSegments[] $fileSegments
              */

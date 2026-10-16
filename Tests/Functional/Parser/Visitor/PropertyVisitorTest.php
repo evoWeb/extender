@@ -43,7 +43,7 @@ class PropertyVisitorTest extends AbstractTestBase
         $traverser->addVisitor($visitor);
         $traverser->traverse([$class]);
 
-        $this->assertEquals($property2, $fileSegments->getProperties()[1]);
+        self::assertEquals($property2, $fileSegments->getProperties()[1]);
     }
 
     #[Test]
@@ -68,8 +68,8 @@ CODE;
 
         $traverser = new NodeTraverser();
         $traverser->addVisitor($visitor);
-        $traverser->traverse($ast);
+        $traverser->traverse($ast ?? []);
 
-        $this->assertEquals('property2', $fileSegments->getProperties()[1]->props[0]->name);
+        self::assertEquals('property2', $fileSegments->getProperties()[1]->props[0]->name);
     }
 }

@@ -46,10 +46,10 @@ class ClassCacheManagerTest extends AbstractTestBase
             ->setConstructorArgs([$classCache, $classLoader, $classParser, $classComposer, $classRegister])
             ->getMock();
 
-        $subject->expects(self::once())->method('getBaseClassFileSegments')->willReturn(new FileSegments());
-        $subject->expects(self::once())->method('getExtendingClassesFileSegments')->willReturn([]);
-        $subject->expects(self::once())->method('getMergedFileCode')->willReturn('');
-        $subject->expects(self::once())->method('addFileToCache');
+        $subject->expects($this->once())->method('getBaseClassFileSegments')->willReturn(new FileSegments());
+        $subject->expects($this->once())->method('getExtendingClassesFileSegments')->willReturn([]);
+        $subject->expects($this->once())->method('getMergedFileCode')->willReturn('');
+        $subject->expects($this->once())->method('addFileToCache');
 
         $subject->build('test', Blob::class);
     }
@@ -100,7 +100,7 @@ class ClassCacheManagerTest extends AbstractTestBase
         $classComposer = $this->createMock(ClassComposer::class);
 
         $classRegister = $this->createMock(ClassRegister::class);
-        $classRegister->expects(self::once())->method('getExtendingClasses')->willReturn(['test2', 'test3']);
+        $classRegister->expects($this->once())->method('getExtendingClasses')->willReturn(['test2', 'test3']);
 
         $subject = new class (
             $classCache,
@@ -145,13 +145,13 @@ class ClassCacheManagerTest extends AbstractTestBase
         );
 
         $ClassLoader = $this->createMock(ClassLoader::class);
-        $ClassLoader->expects(self::once())->method('findFile')->willReturn($basePath);
+        $ClassLoader->expects($this->once())->method('findFile')->willReturn($basePath);
 
         $expected = new FileSegments();
         $expected->setBaseClass(true);
 
         $classParser = $this->createMock(ClassParser::class);
-        $classParser->expects(self::once())->method('getFileSegments')->willReturn($expected);
+        $classParser->expects($this->once())->method('getFileSegments')->willReturn($expected);
 
         $subject = new class (
             $classCache,
@@ -180,7 +180,7 @@ class ClassCacheManagerTest extends AbstractTestBase
         $classRegister = $this->createMock(ClassRegister::class);
 
         $classComposer = $this->createMock(ClassComposer::class);
-        $classComposer->expects(self::once())->method('composeMergedFileCode')->willReturn('');
+        $classComposer->expects($this->once())->method('composeMergedFileCode')->willReturn('');
 
         $subject = new class (
             $classCache,
@@ -214,7 +214,7 @@ class ClassCacheManagerTest extends AbstractTestBase
         $classRegister = $this->createMock(ClassRegister::class);
 
         $classCache = $this->createMock(FrontendInterface::class);
-        $classCache->expects(self::once())->method('set');
+        $classCache->expects($this->once())->method('set');
 
         $subject = new class (
             $classCache,

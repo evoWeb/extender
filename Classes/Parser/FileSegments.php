@@ -15,7 +15,7 @@ declare(strict_types=1);
 
 namespace Evoweb\Extender\Parser;
 
-use JsonSerializable;
+use PhpParser\Node;
 use PhpParser\Node\Name;
 use PhpParser\Node\Stmt\Class_;
 use PhpParser\Node\Stmt\ClassConst;
@@ -23,9 +23,8 @@ use PhpParser\Node\Stmt\ClassMethod;
 use PhpParser\Node\Stmt\Property;
 use PhpParser\Node\Stmt\TraitUse;
 use PhpParser\Node\UseItem;
-use PhpParser\Node;
 
-class FileSegments implements JsonSerializable
+class FileSegments implements \JsonSerializable
 {
     protected string $filePath = '';
 

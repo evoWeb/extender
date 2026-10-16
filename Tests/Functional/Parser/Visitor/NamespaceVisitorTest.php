@@ -41,7 +41,7 @@ class NamespaceVisitorTest extends AbstractTestBase
         $traverser->addVisitor($visitor);
         $traverser->traverse([$namespace, $class]);
 
-        $this->assertEquals($namespaceName, $fileSegments->getNamespace());
+        self::assertEquals($namespaceName, $fileSegments->getNamespace());
     }
 
     #[Test]
@@ -64,8 +64,8 @@ CODE;
 
         $traverser = new NodeTraverser();
         $traverser->addVisitor($visitor);
-        $traverser->traverse($ast);
+        $traverser->traverse($ast ?? []);
 
-        $this->assertEquals('TestVendor\TestNamespace', $fileSegments->getNamespace()->name);
+        self::assertEquals('TestVendor\TestNamespace', $fileSegments->getNamespace()?->name);
     }
 }

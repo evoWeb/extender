@@ -15,6 +15,4 @@ declare(strict_types=1);
 
 namespace Evoweb\Extender\Exception;
 
-class BaseFileNotFoundException extends \RuntimeException
-{
-}
+class BaseFileNotFoundException extends \RuntimeException {}

@@ -43,7 +43,7 @@ class TraitVisitorTest extends AbstractTestBase
         $traverser->addVisitor($visitor);
         $traverser->traverse([$class]);
 
-        $this->assertEquals($trait2, $fileSegments->getTraits()[1]);
+        self::assertEquals($trait2, $fileSegments->getTraits()[1]);
     }
 
     #[Test]
@@ -67,8 +67,8 @@ CODE;
 
         $traverser = new NodeTraverser();
         $traverser->addVisitor($visitor);
-        $traverser->traverse($ast);
+        $traverser->traverse($ast ?? []);
 
-        $this->assertEquals('TestTrait', $fileSegments->getTraits()[0]->traits[0]->name);
+        self::assertEquals('TestTrait', $fileSegments->getTraits()[0]->traits[0]->name);
     }
 }

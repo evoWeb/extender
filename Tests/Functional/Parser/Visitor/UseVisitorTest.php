@@ -40,7 +40,7 @@ class UseVisitorTest extends AbstractTestBase
         $traverser->addVisitor($visitor);
         $traverser->traverse([$use, $class]);
 
-        $this->assertEquals($use, $fileSegments->getUses()[0]);
+        self::assertEquals($use, $fileSegments->getUses()[0]);
     }
 
     #[Test]
@@ -65,9 +65,9 @@ CODE;
 
         $traverser = new NodeTraverser();
         $traverser->addVisitor($visitor);
-        $traverser->traverse($ast);
+        $traverser->traverse($ast ?? []);
 
         $use = $fileSegments->getUses()[0];
-        $this->assertEquals('Doctrine\DBAL\Connection', $use->name->name);
+        self::assertEquals('Doctrine\DBAL\Connection', $use->name->name);
     }
 }

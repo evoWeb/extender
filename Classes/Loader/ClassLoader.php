@@ -30,8 +30,7 @@ class ClassLoader implements SingletonInterface
         protected PhpFrontend $classCache,
         protected ClassCacheManager $classCacheManager,
         protected ClassRegister $classRegister
-    ) {
-    }
+    ) {}
 
     /**
      * Loads php files containing classes or interfaces part of the

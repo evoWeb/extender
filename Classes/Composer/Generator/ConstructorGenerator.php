@@ -19,6 +19,9 @@ use Evoweb\Extender\Parser\FileSegments;
 use PhpParser\Modifiers;
 use PhpParser\Node;
 use PhpParser\Node\Expr\StaticCall;
+use PhpParser\Node\Expr\Variable;
+use PhpParser\Node\Identifier;
+use PhpParser\Node\Name;
 use PhpParser\Node\Param;
 use PhpParser\Node\Stmt;
 use PhpParser\Node\Stmt\Class_;
@@ -36,6 +39,10 @@ class ConstructorGenerator implements GeneratorInterface
     public function generate(array $statements, array $fileSegments): array
     {
         $namespace = $this->getNamespace($statements);
+        if ($namespace === null) {
+            return $statements;
+        }
+
         $class = $this->getClass($namespace);
 
         if ($class && $this->hasConstructor($fileSegments)) {
@@ -55,7 +62,7 @@ class ConstructorGenerator implements GeneratorInterface
 
     /**
      * @param FileSegments[] $fileSegments
-     * @return array<Param[]|Stmt[]>
+     * @return array{0: Param[], 1: Stmt[]}
      */
     protected function getParamsAndStmts(array $fileSegments): array
     {
@@ -68,7 +75,9 @@ class ConstructorGenerator implements GeneratorInterface
             }
 
             $params = $this->getConstructorParameter($params, $constructor->params);
-            $stmts = $this->getConstructorStatements($stmts, $constructor->stmts, $fileSegment->isBaseClass());
+            if ($constructor->stmts !== null) {
+                $stmts = $this->getConstructorStatements($stmts, $constructor->stmts, $fileSegment->isBaseClass());
+            }
         }
 
         return [$params, $stmts];
@@ -82,10 +91,11 @@ class ConstructorGenerator implements GeneratorInterface
     protected function getConstructorParameter(array $result, array $params): array
     {
         foreach ($params as $param) {
-            if (isset($result[$param->var->name])) {
+            $name = $param->var instanceof Variable && is_string($param->var->name) ? $param->var->name : null;
+            if ($name === null || isset($result[$name])) {
                 continue;
             }
-            $result[$param->var->name] = $param;
+            $result[$name] = $param;
         }
 
         return $result;
@@ -102,14 +112,16 @@ class ConstructorGenerator implements GeneratorInterface
         if ($isBaseClass) {
             $result = [...$result, ...$stmts];
         } else {
-            /** @var Expression $stmt */
             foreach ($stmts as $stmt) {
+                /** @var Expression $stmt */
                 $expr = $stmt->expr;
                 if (
                     !(
                         $expr instanceof StaticCall
-                        && (string)$expr->class === 'parent'
-                        && (string)$expr->name === '__construct'
+                        && $expr->class instanceof Name
+                        && $expr->class->toString() === 'parent'
+                        && $expr->name instanceof Identifier
+                        && $expr->name->toString() === '__construct'
                     )
                 ) {
                     $result[] = $stmt;
