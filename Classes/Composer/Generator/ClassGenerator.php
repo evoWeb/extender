@@ -59,8 +59,8 @@ class ClassGenerator implements GeneratorInterface
         $implements = [];
         foreach ($fileSegments as $fileSegment) {
             /** @var Name $currentImplement */
-            $implements = ($fileSegment->getClass()->implements ?? []);
-            foreach ($implements as $currentImplement) {
+            $fileSegmentImplements = ($fileSegment->getClass()->implements ?? []);
+            foreach ($fileSegmentImplements as $currentImplement) {
                 if (isset($implements[(string)$currentImplement])) {
                     continue;
                 }
