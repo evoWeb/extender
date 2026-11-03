@@ -1,10 +1,10 @@
 ---
 title: "Breaking change"
 manual: "extender"
-version: "11.1.3"
-permalink: "https://docs.typo3.org/permalink/evoweb/extender:breaking-changes@11.1.3"
+version: "11.1.4"
+permalink: "https://docs.typo3.org/permalink/evoweb/extender:breaking-changes@11.1.4"
 source: "Breaking/Index.rst"
-rendered: "2026-10-16T14:34:39+00:00"
+rendered: "2026-11-03T20:38:10+00:00"
 ---
 
 # Breaking change {#breaking-changes}
