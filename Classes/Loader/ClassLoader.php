@@ -48,7 +48,12 @@ class ClassLoader implements SingletonInterface
                 $this->classCacheManager->build($cacheEntryIdentifier, $className);
             }
 
-            $this->classCache->requireOnce($cacheEntryIdentifier);
+            // A concurrent cache flush may remove the cache entry after has() returned true. Without
+            // the merged file, composer would silently load the base class without the extending classes.
+            if ($this->classCache->requireOnce($cacheEntryIdentifier) === false) {
+                $this->classCacheManager->build($cacheEntryIdentifier, $className);
+                $this->classCache->requireOnce($cacheEntryIdentifier);
+            }
             $return = true;
         }
 
