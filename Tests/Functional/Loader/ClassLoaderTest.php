@@ -40,6 +40,27 @@ class ClassLoaderTest extends AbstractTestBase
             ->getMock();
         $cacheMock->expects($this->once())->method('has')->willReturn(true);
         $cacheMock->expects($this->once())->method('requireOnce')->willReturn(true);
+        $classCacheManager->expects($this->never())->method('build');
+
+        $subject = new ClassLoader($cacheMock, $classCacheManager, $classRegister);
+
+        $condition = $subject->loadClass('test');
+
+        self::assertTrue($condition);
+    }
+
+    #[Test]
+    public function loadClassRebuildsCacheEntryRemovedByConcurrentFlush(): void
+    {
+        $classRegister = new ClassRegister(['test' => []]);
+        $classCacheManager = $this->createMock(ClassCacheManager::class);
+        $cacheBackend = $this->createMock(FileBackend::class);
+        $cacheMock = $this->getMockBuilder(PhpFrontend::class)
+            ->setConstructorArgs(['extender', $cacheBackend])
+            ->getMock();
+        $cacheMock->expects($this->once())->method('has')->willReturn(true);
+        $cacheMock->expects($this->exactly(2))->method('requireOnce')->willReturnOnConsecutiveCalls(false, true);
+        $classCacheManager->expects($this->once())->method('build')->with('test', 'test');
 
         $subject = new ClassLoader($cacheMock, $classCacheManager, $classRegister);
 
